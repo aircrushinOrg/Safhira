@@ -1,6 +1,7 @@
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
 import { MessageCircle, Shield, Home, BookOpen, HelpCircle, Award } from 'lucide-react';
+import { ThemeToggle } from './ThemeToggle';
 
 interface HeaderProps {
   currentSection: string;
@@ -10,7 +11,7 @@ interface HeaderProps {
 
 export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderProps) {
   return (
-    <header className="bg-white/80 backdrop-blur-md border-b border-green-100 sticky top-0 z-50">
+    <header className="bg-background/80 backdrop-blur-md border-b border-green-100 sticky top-0 z-50">
       <div className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
@@ -58,6 +59,7 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
               <Shield size={12} />
               <span className="text-xs">100% Private</span>
             </Badge>
+            <ThemeToggle />
             <Button
               className="md:hidden"
               variant="outline"
