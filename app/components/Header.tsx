@@ -1,6 +1,7 @@
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
 import { MessageCircle, Shield, Home, BookOpen, HelpCircle, Award } from 'lucide-react';
+import { ModeToggle } from './mode-toggle';
 
 interface HeaderProps {
   currentSection: string;
@@ -10,16 +11,16 @@ interface HeaderProps {
 
 export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderProps) {
   return (
-    <header className="bg-white/80 backdrop-blur-md border-b border-green-100 sticky top-0 z-50">
+    <header className="bg-background/80 backdrop-blur-md border-b border-border sticky top-0 z-50">
       <div className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-blue-500 rounded-full flex items-center justify-center">
-              <span className="font-bold text-white">S</span>
+            <div className="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center">
+              <span className="font-bold text-primary-foreground">S</span>
             </div>
             <div>
-              <h1 className="font-bold text-green-800 text-lg">Safhira</h1>
-              <p className="text-xs text-green-600">Modern Health Education</p>
+              <h1 className="font-bold text-foreground text-lg">Safhira</h1>
+              <p className="text-xs text-muted-foreground">Modern Health Education</p>
             </div>
           </div>
 
@@ -54,6 +55,7 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
           </nav>
 
           <div className="flex items-center space-x-3">
+            <ModeToggle />
             <Badge variant="secondary" className="flex items-center space-x-1 bg-green-100 text-green-800">
               <Shield size={12} />
               <span className="text-xs">100% Private</span>
