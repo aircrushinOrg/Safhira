@@ -45,7 +45,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-teal-50">
+    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <Header currentSection={currentSection} onSectionChange={setCurrentSection} onChatOpen={() => setIsChatOpen(true)} />
       
       <main className="relative">

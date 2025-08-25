@@ -1,7 +1,7 @@
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
-import { MessageCircle, Shield, Home, BookOpen, HelpCircle, Award } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
+import { MessageCircle, Shield, Home, BookOpen, HelpCircle, Award } from 'lucide-react';
 
 interface HeaderProps {
   currentSection: string;
@@ -11,7 +11,7 @@ interface HeaderProps {
 
 export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderProps) {
   return (
-    <header className="bg-background/80 backdrop-blur-md border-b border-green-100 sticky top-0 z-50">
+    <header className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-green-100 dark:border-gray-700 sticky top-0 z-50">
       <div className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
@@ -19,8 +19,8 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
               <span className="font-bold text-white">S</span>
             </div>
             <div>
-              <h1 className="font-bold text-green-800 text-lg">Safhira</h1>
-              <p className="text-xs text-green-600">Modern Health Education</p>
+              <h1 className="font-bold text-green-800 dark:text-green-400 text-lg">Safhira</h1>
+              <p className="text-xs text-green-600 dark:text-green-500">Modern Health Education</p>
             </div>
           </div>
 
@@ -47,7 +47,7 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
               variant="ghost"
               size="sm"
               onClick={onChatOpen}
-              className="flex items-center space-x-2 text-blue-600 hover:text-blue-700"
+              className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
             >
               <MessageCircle size={16} />
               <span>Private Chat</span>
@@ -55,11 +55,14 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
           </nav>
 
           <div className="flex items-center space-x-3">
-            <Badge variant="secondary" className="flex items-center space-x-1 bg-green-100 text-green-800">
+            <Badge variant="secondary" className="flex items-center space-x-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">
               <Shield size={12} />
               <span className="text-xs">100% Private</span>
             </Badge>
+            
+            {/* Theme Toggle Button */}
             <ThemeToggle />
+            
             <Button
               className="md:hidden"
               variant="outline"

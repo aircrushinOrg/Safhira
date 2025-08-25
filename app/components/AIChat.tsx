@@ -68,17 +68,17 @@ export function AIChat({ onClose }: AIChatProps) {
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <Card className="w-full max-w-2xl h-[600px] flex flex-col bg-white">
+      <Card className="w-full max-w-2xl h-[600px] flex flex-col bg-white dark:bg-gray-800">
         {/* Header */}
-        <div className="p-6 border-b bg-gradient-to-r from-green-50 to-blue-50">
+        <div className="p-6 border-b dark:border-gray-700 bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/30 dark:to-blue-900/30">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-blue-500 rounded-full flex items-center justify-center">
                 <Bot className="text-white" size={20} />
               </div>
               <div>
-                <h3 className="font-semibold text-gray-800">Jun Kang AI</h3>
-                <p className="text-xs text-gray-600">Personal Health Assistant</p>
+                <h3 className="font-semibold text-gray-800 dark:text-gray-100">Jun Kang AI</h3>
+                <p className="text-xs text-gray-600 dark:text-gray-400">Personal Health Assistant</p>
               </div>
             </div>
             <Button variant="ghost" size="sm" onClick={onClose}>
@@ -87,11 +87,11 @@ export function AIChat({ onClose }: AIChatProps) {
           </div>
           
           <div className="flex items-center space-x-4">
-            <Badge variant="secondary" className="bg-green-100 text-green-800 flex items-center space-x-1">
+            <Badge variant="secondary" className="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 flex items-center space-x-1">
               <Shield size={12} />
               <span className="text-xs">Private</span>
             </Badge>
-            <Badge variant="secondary" className="bg-blue-100 text-blue-800 flex items-center space-x-1">
+            <Badge variant="secondary" className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 flex items-center space-x-1">
               <Heart size={12} />
               <span className="text-xs">Stigma-Free</span>
             </Badge>
@@ -118,10 +118,10 @@ export function AIChat({ onClose }: AIChatProps) {
                   <div className={`rounded-lg p-3 ${
                     message.type === 'user'
                       ? 'bg-blue-500 text-white'
-                      : 'bg-gray-100 text-gray-800'
+                      : 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200'
                   }`}>
                     <p className="text-sm">{message.content}</p>
-                    <span className={`text-xs ${message.type === 'user' ? 'text-blue-100' : 'text-gray-500'} block mt-1`}>
+                    <span className={`text-xs ${message.type === 'user' ? 'text-blue-100' : 'text-gray-500 dark:text-gray-400'} block mt-1`}>
                       {message.timestamp.toLocaleTimeString('en-MY', { hour: '2-digit', minute: '2-digit' })}
                     </span>
                   </div>
@@ -135,11 +135,11 @@ export function AIChat({ onClose }: AIChatProps) {
                   <div className="w-8 h-8 rounded-full bg-gradient-to-br from-green-500 to-blue-500 flex items-center justify-center">
                     <Bot className="text-white" size={16} />
                   </div>
-                  <div className="bg-gray-100 rounded-lg p-3">
+                  <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-3">
                     <div className="flex space-x-1">
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                      <div className="w-2 h-2 bg-gray-400 dark:bg-gray-500 rounded-full animate-bounce"></div>
+                      <div className="w-2 h-2 bg-gray-400 dark:bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                      <div className="w-2 h-2 bg-gray-400 dark:bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                     </div>
                   </div>
                 </div>
@@ -149,20 +149,20 @@ export function AIChat({ onClose }: AIChatProps) {
         </ScrollArea>
 
         {/* Input */}
-        <div className="p-6 border-t bg-gray-50">
+        <div className="p-6 border-t dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50">
           <div className="flex space-x-3">
             <Input
               value={inputMessage}
               onChange={(e) => setInputMessage(e.target.value)}
               placeholder="Type your question here..."
               onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-              className="flex-1"
+              className="flex-1 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600"
             />
             <Button onClick={handleSendMessage} disabled={!inputMessage.trim() || isTyping}>
               <Send size={16} />
             </Button>
           </div>
-          <p className="text-xs text-gray-500 mt-3 text-center">
+          <p className="text-xs text-gray-500 dark:text-gray-400 mt-3 text-center">
             🔒 All conversations are private and not stored
           </p>
         </div>

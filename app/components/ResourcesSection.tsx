@@ -90,32 +90,32 @@ export function ResourcesSection() {
   };
 
   return (
-    <section className="py-16 px-4 bg-gradient-to-br from-gray-50 to-white">
+    <section className="py-16 px-4 bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-900">
       <div className="container mx-auto max-w-6xl">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-800 mb-4">
+          <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-4">
             Resources & Support
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             Contact information and reliable resources to get professional help 
             and additional support.
           </p>
         </div>
 
         {/* Emergency Information */}
-        <Card className="p-6 mb-12 bg-gradient-to-r from-red-50 to-orange-50 border-red-200">
-          <h3 className="text-xl font-semibold text-gray-800 mb-6 flex items-center space-x-2">
-            <AlertCircle className="text-red-500" size={24} />
+        <Card className="p-6 mb-12 bg-gradient-to-r from-red-50 to-orange-50 dark:from-red-900/30 dark:to-orange-900/30 border-red-200 dark:border-red-800">
+          <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-6 flex items-center space-x-2">
+            <AlertCircle className="text-red-500 dark:text-red-400" size={24} />
             <span>{emergencyInfo.title}</span>
           </h3>
           <div className="grid md:grid-cols-3 gap-4">
             {emergencyInfo.items.map((item, index) => (
-              <div key={index} className="bg-white rounded-lg p-4">
+              <div key={index} className="bg-white dark:bg-gray-800 rounded-lg p-4">
                 <div className="flex items-start space-x-3 mb-3">
-                  <item.icon className="text-red-500 flex-shrink-0 mt-1" size={20} />
+                  <item.icon className="text-red-500 dark:text-red-400 flex-shrink-0 mt-1" size={20} />
                   <div className="flex-1">
-                    <h4 className="font-semibold text-gray-800 text-sm mb-2">{item.title}</h4>
-                    <p className="text-gray-600 text-xs mb-3">{item.description}</p>
+                    <h4 className="font-semibold text-gray-800 dark:text-gray-100 text-sm mb-2">{item.title}</h4>
+                    <p className="text-gray-600 dark:text-gray-300 text-xs mb-3">{item.description}</p>
                     <Button size="sm" variant="outline" className="text-xs">
                       {item.action}
                     </Button>
@@ -129,24 +129,24 @@ export function ResourcesSection() {
         {/* Resource Grid */}
         <div className="grid md:grid-cols-2 gap-6 mb-12">
           {resources.map((resource, index) => (
-            <Card key={index} className="p-6 bg-white/80 backdrop-blur-sm">
+            <Card key={index} className="p-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
               <div className="flex items-start justify-between mb-4">
-                <div className={`w-12 h-12 rounded-full flex items-center justify-center bg-${resource.color}-100`}>
-                  <resource.icon className={`text-${resource.color}-600`} size={24} />
+                <div className={`w-12 h-12 rounded-full flex items-center justify-center bg-${resource.color}-100 dark:bg-${resource.color}-900`}>
+                  <resource.icon className={`text-${resource.color}-600 dark:text-${resource.color}-400`} size={24} />
                 </div>
                 <Badge variant="secondary" className="text-xs">
                   {resource.type}
                 </Badge>
               </div>
               
-              <h3 className="text-lg font-semibold text-gray-800 mb-2">{resource.title}</h3>
-              <p className="text-gray-600 text-sm mb-4">{resource.description}</p>
+              <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">{resource.title}</h3>
+              <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">{resource.description}</p>
               
               <div className="space-y-2 mb-6">
                 {resource.items.map((item, itemIndex) => (
                   <div key={itemIndex} className="flex items-center space-x-2 text-sm">
-                    <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
-                    <span className="text-gray-700">{item}</span>
+                    <div className="w-1 h-1 bg-gray-400 dark:bg-gray-500 rounded-full"></div>
+                    <span className="text-gray-700 dark:text-gray-300">{item}</span>
                   </div>
                 ))}
               </div>
@@ -160,27 +160,27 @@ export function ResourcesSection() {
         </div>
 
         {/* Operating Hours Info */}
-        <Card className="p-6 bg-gradient-to-r from-blue-50 to-green-50">
+        <Card className="p-6 bg-gradient-to-r from-blue-50 to-green-50 dark:from-blue-900/30 dark:to-green-900/30">
           <div className="text-center">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center justify-center space-x-2">
-              <Clock className="text-blue-500" size={20} />
+            <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4 flex items-center justify-center space-x-2">
+              <Clock className="text-blue-500 dark:text-blue-400" size={20} />
               <span>Clinic Operating Hours</span>
             </h3>
             <div className="grid md:grid-cols-3 gap-4 text-sm">
               <div>
-                <h4 className="font-semibold text-gray-800 mb-2">Government Health Clinics</h4>
-                <p className="text-gray-600">Monday - Friday: 8:00 AM - 5:00 PM</p>
-                <p className="text-gray-600">Saturday: 8:00 AM - 1:00 PM</p>
+                <h4 className="font-semibold text-gray-800 dark:text-gray-100 mb-2">Government Health Clinics</h4>
+                <p className="text-gray-600 dark:text-gray-300">Monday - Friday: 8:00 AM - 5:00 PM</p>
+                <p className="text-gray-600 dark:text-gray-300">Saturday: 8:00 AM - 1:00 PM</p>
               </div>
               <div>
-                <h4 className="font-semibold text-gray-800 mb-2">Government Hospitals</h4>
-                <p className="text-gray-600">24 Hours (Emergency)</p>
-                <p className="text-gray-600">Clinics: 8:00 AM - 5:00 PM</p>
+                <h4 className="font-semibold text-gray-800 dark:text-gray-100 mb-2">Government Hospitals</h4>
+                <p className="text-gray-600 dark:text-gray-300">24 Hours (Emergency)</p>
+                <p className="text-gray-600 dark:text-gray-300">Clinics: 8:00 AM - 5:00 PM</p>
               </div>
               <div>
-                <h4 className="font-semibold text-gray-800 mb-2">Private Clinics</h4>
-                <p className="text-gray-600">According to clinic schedule</p>
-                <p className="text-gray-600">Usually 9:00 AM - 9:00 PM</p>
+                <h4 className="font-semibold text-gray-800 dark:text-gray-100 mb-2">Private Clinics</h4>
+                <p className="text-gray-600 dark:text-gray-300">According to clinic schedule</p>
+                <p className="text-gray-600 dark:text-gray-300">Usually 9:00 AM - 9:00 PM</p>
               </div>
             </div>
           </div>
@@ -188,8 +188,8 @@ export function ResourcesSection() {
 
         {/* Privacy Reminder */}
         <div className="text-center mt-8">
-          <Card className="p-4 bg-green-50 border-green-200 inline-block">
-            <div className="flex items-center space-x-2 text-sm text-green-800">
+          <Card className="p-4 bg-green-50 dark:bg-green-900/30 border-green-200 dark:border-green-800 inline-block">
+            <div className="flex items-center space-x-2 text-sm text-green-800 dark:text-green-200">
               <Shield size={16} />
               <span>Reminder: All medical information is confidential and protected</span>
             </div>
