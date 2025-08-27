@@ -10,6 +10,16 @@ let description =
 export const metadata = {
   title,
   description,
+  icons: {
+    icon: [
+      {
+        url: '/favicon.ico',
+        sizes: '32x32',
+        type: 'image/x-icon',
+      },
+    ],
+    shortcut: '/favicon.ico',
+  },
   twitter: {
     card: 'summary_large_image',
     title,
