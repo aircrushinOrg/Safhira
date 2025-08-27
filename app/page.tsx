@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { PersonaSection } from './components/PersonaSection';
@@ -14,6 +14,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 export default function App() {
   const [currentSection, setCurrentSection] = useState('home');
   const [isChatOpen, setIsChatOpen] = useState(false);
+
+  // 监听currentSection变化，自动滚动到页面顶部
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [currentSection]);
 
   const pageVariants = {
     initial: { opacity: 0, y: 20 },
