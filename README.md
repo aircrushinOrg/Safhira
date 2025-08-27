@@ -24,7 +24,7 @@ This is a [Next.js](https://nextjs.org/) starter kit that uses [Drizzle](https:/
 ```bash
 # Clone the repository
 git clone https://github.com/aircrushinOrg/safhira.git
-cd fit5120-onborading
+cd safhira
 
 # Install dependencies
 pnpm install
