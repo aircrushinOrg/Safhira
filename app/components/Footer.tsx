@@ -81,17 +81,17 @@ export function Footer() {
             <div className="space-y-3 text-sm">
               <div className="flex items-center space-x-2">
                 <Globe size={14} className="text-gray-500 dark:text-gray-500" />
-                <span className="text-gray-600 dark:text-gray-400">www.safhira.my</span>
+                <span className="text-gray-600 dark:text-gray-400">www.safhira.vercel.app</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Mail size={14} className="text-gray-500 dark:text-gray-500" />
-                <span className="text-gray-600 dark:text-gray-400">info@safhira.my</span>
+                <span className="text-gray-600 dark:text-gray-400">hfuu0019@student.monash.edu</span>
               </div>
               <div className="bg-gray-100 dark:bg-gray-900 rounded-lg p-3 mt-4">
                 <p className="text-xs text-gray-500 dark:text-gray-500 mb-2">Developed in collaboration with:</p>
                 <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-1">
                   <li>• Malaysian Ministry of Health</li>
-                  <li>• University of Malaya</li>
+                  <li>• Monash University Malaysia</li>
                   <li>• Malaysian AIDS Foundation</li>
                 </ul>
               </div>
@@ -117,11 +117,11 @@ export function Footer() {
         <div className="border-t border-gray-300 dark:border-gray-800 pt-6">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-sm text-gray-500 dark:text-gray-500">
-              © 2024 Safhira. All rights reserved. Made with ❤️ for Malaysian teens.
+              © 2025 Safhira. All rights reserved. Made with ❤️ from FIT5120-TM01
             </div>
             <div className="flex items-center space-x-6 text-sm">
-              <a href="#" className="text-gray-500 dark:text-gray-500 hover:text-teal-600 dark:hover:text-white transition-colors">Privacy Policy</a>
-              <a href="#" className="text-gray-500 dark:text-gray-500 hover:text-teal-600 dark:hover:text-white transition-colors">Terms of Use</a>
+              <a href="/privacy-policy" className="text-gray-500 dark:text-gray-500 hover:text-teal-600 dark:hover:text-white transition-colors">Privacy Policy</a>
+              <a href="/terms-of-use" className="text-gray-500 dark:text-gray-500 hover:text-teal-600 dark:hover:text-white transition-colors">Terms of Use</a>
               <a href="#" className="text-gray-500 dark:text-gray-500 hover:text-teal-600 dark:hover:text-white transition-colors">Data Security</a>
             </div>
           </div>
