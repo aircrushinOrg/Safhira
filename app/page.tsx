@@ -55,7 +55,25 @@ export default function App() {
       <Footer />
 
       {isChatOpen && (
-        <AIChat onClose={() => setIsChatOpen(false)} />
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="relative w-full max-w-6xl h-full max-h-[90vh] m-4 bg-white rounded-lg shadow-xl">
+            <button
+              onClick={() => setIsChatOpen(false)}
+              className="absolute top-4 right-4 z-10 bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition-colors"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            <iframe
+              src="https://udify.app/chat/jR3TCPVG1DjZidxk"
+              style={{ width: '100%', height: '100%', minHeight: '400px' }}
+              frameBorder="0"
+              allow="microphone"
+              className='rounded-lg'            
+            />
+          </div>
+        </div>
       )}
     </div>
   );
