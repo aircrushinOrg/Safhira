@@ -5,7 +5,11 @@ import { MessageCircle, Heart, Star } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { motion } from 'framer-motion';
 
-export function PersonaSection() {
+interface PersonaSectionProps {
+  onChatOpen: () => void;
+}
+
+export function PersonaSection({ onChatOpen }: PersonaSectionProps) {
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -75,14 +79,14 @@ export function PersonaSection() {
             className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-4"
             variants={fadeInUp}
           >
-            Learn with Jun Kang
+            Learn with Your Guide
           </motion.h2>
           <motion.p 
             className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto"
             variants={fadeInUp}
           >
-            Meet Chong Jun Kang, a 19-year-old Chinese Malaysian university student in his first serious relationship. 
-            He&apos;ll guide your learning journey with relatable experiences and insights.
+            Meet our learning companion - a young Malaysian university student navigating their first serious relationship. 
+            They&apos;ll guide your learning journey with relatable experiences and insights.
           </motion.p>
         </motion.div>
 
@@ -103,11 +107,11 @@ export function PersonaSection() {
                   className="w-16 h-16 bg-gradient-to-br from-pink-500 to-teal-600 rounded-full flex items-center justify-center"
                   whileHover={{ rotate: 360, transition: { duration: 0.8 } }}
                 >
-                  <span className="text-white font-bold text-lg">JK</span>
+                  <span className="text-white font-bold text-lg">SG</span>
                 </motion.div>
                 <div className="flex-1">
                   <div className="flex items-center space-x-2 mb-2">
-                    <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-100">Chong Jun Kang</h3>
+                    <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-100">Student Guide</h3>
                     <motion.div
                       initial={{ scale: 0 }}
                       whileInView={{ scale: 1 }}
@@ -117,8 +121,8 @@ export function PersonaSection() {
                     </motion.div>
                   </div>
                   <p className="text-gray-600 dark:text-gray-300 mb-4">
-                    Business Administration student at Taylor&apos;s University in Shah Alam. Eldest of three siblings, 
-                    in his first serious relationship with Xin Yi for 3 months. Seeks reliable health information.
+                    University student studying in Malaysia. In their first serious relationship and actively 
+                    seeking reliable health information. Represents many young adults navigating similar experiences.
                   </p>
                   <motion.div 
                     className="flex flex-wrap gap-2 mb-4"
@@ -145,12 +149,12 @@ export function PersonaSection() {
               >
                 <div className="flex items-center space-x-2 mb-3">
                   <MessageCircle size={16} className="text-teal-600 dark:text-teal-400" />
-                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Jun Kang says:</span>
+                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Student says:</span>
                 </div>
                 <p className="text-gray-700 dark:text-gray-300 text-sm italic">
-                  &quot;At first I felt paiseh (shy) to ask about these things, especially with my traditional family background. 
-                  But after my mum&apos;s vague warnings about &apos;diseases&apos;, I realized I need proper knowledge to protect 
-                  myself and Xin Yi. Safhira gives me the facts without judgment.&quot;
+                  &quot;At first I felt paiseh (shy) to ask about these things, especially with traditional family backgrounds. 
+                  But after receiving vague warnings about &apos;diseases&apos;, I realized I need proper knowledge to protect 
+                  myself and my partner. Safhira gives me the facts without judgment.&quot;
                 </p>
               </motion.div>
 
@@ -201,7 +205,7 @@ export function PersonaSection() {
                   transition={{ delay: 0.3, duration: 0.6 }}
                 >
                   <Star className="text-yellow-500 dark:text-yellow-400" size={20} />
-                  <h4 className="font-semibold text-gray-800 dark:text-gray-100">Jun Kang&apos;s Learning Journey</h4>
+                  <h4 className="font-semibold text-gray-800 dark:text-gray-100">Learning Journey</h4>
                 </motion.div>
                 <motion.div 
                   className="space-y-3"
@@ -280,7 +284,7 @@ export function PersonaSection() {
                   transition={{ delay: 0.6, duration: 0.6 }}
                 >
                   <Heart className="text-red-500 dark:text-red-400" size={20} />
-                  <h4 className="font-semibold text-gray-800 dark:text-gray-100">Jun Kang&apos;s Tip</h4>
+                  <h4 className="font-semibold text-gray-800 dark:text-gray-100">Student&apos;s Tip</h4>
                 </motion.div>
                 <motion.p 
                   className="text-sm text-gray-700 dark:text-gray-300 mb-4"
@@ -288,8 +292,8 @@ export function PersonaSection() {
                   whileInView={{ opacity: 1 }}
                   transition={{ delay: 0.7, duration: 0.6 }}
                 >
-                  &quot;Don&apos;t feel malu (embarrassed) to learn about these things! Even though my family 
-                  rarely discussed it openly, sexual health is important for our future. The AI chat 
+                  &quot;Don&apos;t feel malu (embarrassed) to learn about these things! Even though families 
+                  rarely discuss it openly, sexual health is important for our future. The AI chat 
                   here helped me ask questions I was too shy to ask anyone else.&quot;
                 </motion.p>
                 <motion.div
@@ -301,8 +305,9 @@ export function PersonaSection() {
                     variant="outline" 
                     size="sm" 
                     className="text-teal-700 dark:text-teal-300 border-teal-300 dark:border-teal-600 hover:bg-teal-50 dark:hover:bg-teal-900/30"
+                    onClick={onChatOpen}
                   >
-                    Chat with Jun Kang AI
+                    Private Chat
                   </Button>
                 </motion.div>
               </Card>

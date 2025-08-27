@@ -43,7 +43,7 @@ export default function App() {
             transition={pageTransition}
           >
             <Hero />
-            <PersonaSection />
+            <PersonaSection onChatOpen={() => setIsChatOpen(true)} />
             <LearningModules onModuleClick={setCurrentSection} />
             <ResourcesSection />
           </motion.div>
@@ -88,7 +88,7 @@ export default function App() {
             transition={pageTransition}
           >
             <Hero />
-            <PersonaSection />
+            <PersonaSection onChatOpen={() => setIsChatOpen(true)} />
             <LearningModules onModuleClick={setCurrentSection} />
             <ResourcesSection />
           </motion.div>
@@ -118,7 +118,7 @@ export default function App() {
             transition={{ duration: 0.3 }}
           >
             <motion.div 
-              className="relative w-full max-w-6xl h-full max-h-[90vh] m-4 bg-white rounded-lg shadow-xl"
+              className="relative w-full max-w-7xl h-full max-h-[90vh] m-4 bg-white rounded-lg shadow-xl"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
