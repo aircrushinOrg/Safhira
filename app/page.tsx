@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { PersonaSection } from './components/PersonaSection';
@@ -13,7 +14,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 export default function App() {
   const [currentSection, setCurrentSection] = useState('home');
-  const [isChatOpen, setIsChatOpen] = useState(false);
+  const router = useRouter();
+
+  const handleChatOpen = () => {
+    router.push('/chat');
+  };
 
   // 监听currentSection变化，自动滚动到页面顶部
   useEffect(() => {
@@ -43,7 +48,7 @@ export default function App() {
             transition={pageTransition}
           >
             <Hero />
-            <PersonaSection onChatOpen={() => setIsChatOpen(true)} />
+            <PersonaSection onChatOpen={handleChatOpen} />
             <LearningModules onModuleClick={setCurrentSection} />
             <ResourcesSection />
           </motion.div>
@@ -88,7 +93,7 @@ export default function App() {
             transition={pageTransition}
           >
             <Hero />
-            <PersonaSection onChatOpen={() => setIsChatOpen(true)} />
+            <PersonaSection onChatOpen={handleChatOpen} />
             <LearningModules onModuleClick={setCurrentSection} />
             <ResourcesSection />
           </motion.div>
@@ -98,7 +103,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-      <Header currentSection={currentSection} onSectionChange={setCurrentSection} onChatOpen={() => setIsChatOpen(true)} />
+      <Header currentSection={currentSection} onSectionChange={setCurrentSection} onChatOpen={handleChatOpen} />
       
       <main className="relative">
         <AnimatePresence mode="wait">
@@ -107,43 +112,6 @@ export default function App() {
       </main>
 
       <Footer />
-
-      <AnimatePresence>
-        {isChatOpen && (
-          <motion.div 
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <motion.div 
-              className="relative w-full max-w-7xl h-full max-h-[90vh] m-4 bg-white rounded-lg shadow-xl"
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
-            >
-              <motion.button
-                onClick={() => setIsChatOpen(false)}
-                className="absolute top-4 right-4 z-10 bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition-colors"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </motion.button>
-              <iframe
-                src="https://udify.app/chat/jR3TCPVG1DjZidxk"
-                title="AI Chat Assistant"
-                className="w-full h-full min-h-[400px] rounded-lg border-0"
-                allow="microphone"
-              />
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 }
