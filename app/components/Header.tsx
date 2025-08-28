@@ -2,6 +2,7 @@ import { Button } from './ui/button';
 import { Badge } from './ui/badge';
 import { ThemeToggle } from './ThemeToggle';
 import { MessageCircle, Shield, Home, BookOpen, HelpCircle, Award } from 'lucide-react';
+import Link from 'next/link';
 
 interface HeaderProps {
   currentSection: string;
@@ -14,7 +15,10 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
     <header className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-green-100 dark:border-gray-700 sticky top-0 z-50">
       <div className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
+          <div 
+            className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity"
+            onClick={() => onSectionChange('home')}
+          >
             <div className="w-10 h-10 flex items-center justify-center">
               <svg width="40" height="40" viewBox="0 0 931 931" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
                 <path d="M545.81 645.172C543.322 642.175 518.216 625.3 510.333 621.327C479.057 605.562 373.444 564.836 330.333 551.915C272.596 534.611 220.704 513.863 181.501 492.409C116.997 457.11 70.7459 426.605 34.4076 365.517C15.9334 334.459 2.12807 286.152 0.728264 247.667C-0.619696 210.607 12.6375 81.9392 123.667 27.5516C139.834 19.6319 163.143 11.022 173.475 9.15289L187.281 6.50159L178.001 11.4518C176.016 12.5102 174.496 16.422 175.102 16.4464C175.708 16.4708 173.435 18.5888 171.101 20.5529C165.151 25.5597 151.26 43.2504 145.346 53.8262C142.618 58.704 135.764 69.1915 133.796 78.3848C127.328 108.601 124.958 101.023 123.058 131.339C122.187 145.242 121.267 152.149 122.366 165.764C123.045 174.177 123.138 168.743 126.33 179.716C132.76 201.82 132.175 189.674 137.6 204.571C141.266 214.638 145.386 224.216 150.472 229.726C162.515 242.769 192.78 270.491 211 281.943C247.539 304.909 314.746 331.703 386.152 351.773C447.646 369.057 493.157 387.208 525.565 407.374C587.126 445.68 618.954 499.05 615.923 558.889C614.451 587.946 606.624 607.572 589.85 624.259C574.684 639.349 550.505 650.83 545.81 645.172ZM806.401 573.333C806.118 572.417 805.511 562.667 805.053 551.667C802.375 487.351 785.308 432.869 752.316 383.317C737.696 361.359 726.365 347.591 707.051 328.317C670.529 291.872 624.785 260.258 568.021 232.233C557.559 227.068 548.446 222.294 547.769 221.624C545.786 219.66 548.737 214.792 560.121 201.252C589.252 166.604 623.555 144.66 663 135.44C705.709 125.456 771.317 133.384 814.926 153.799C843.572 167.209 872.55 192.145 890.023 218.421C905.526 241.734 919.958 275.834 927.939 308.008C930.931 320.067 930.886 360.437 927.859 380.74C922.168 418.91 910.658 455.759 896.749 480.333C872.414 523.328 848.006 552.571 823.173 568.481C813.122 574.921 807.404 576.576 806.401 573.333Z" fill="#F16972"/>
@@ -37,7 +41,17 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
               <Home size={16} />
               <span>Home</span>
             </Button>
-            <Button
+            <Link href="/stis">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="flex items-center space-x-2"
+              >
+                <BookOpen size={16} />
+                <span>Learn About STIs</span>
+              </Button>
+            </Link>
+            {/* <Button
               variant={currentSection === 'quiz' ? 'secondary' : 'ghost'}
               size="sm"
               onClick={() => onSectionChange('quiz')}
@@ -45,7 +59,7 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
             >
               <Award size={16} />
               <span>Quiz</span>
-            </Button>
+            </Button> */}
             <Button
               variant="ghost"
               size="sm"
