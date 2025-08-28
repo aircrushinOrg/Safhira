@@ -366,8 +366,8 @@ export function ResourcesSection() {
                 
                 <div className="mt-6 p-4 bg-green-50 dark:bg-green-900/30 rounded-lg">
                   <p className="text-sm text-green-800 dark:text-green-200">
-                    <strong>Remember:</strong> You're not alone. These services are confidential and 
-                    staffed by trained professionals who understand what you're going through.
+                    <strong>Remember:</strong> You&apos;re not alone. These services are confidential and 
+                    staffed by trained professionals who understand what you&apos;re going through.
                   </p>
                 </div>
               </div>
