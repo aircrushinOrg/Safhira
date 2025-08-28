@@ -1,7 +1,9 @@
 import './globals.css';
 
 import { GeistSans } from 'geist/font/sans';
+import { Suspense } from 'react';
 import { ThemeProvider } from './components/theme-provider';
+import { HeaderWrapper } from './components/HeaderWrapper';
 
 let title = 'Safhira - Safe Sexual Health for Malaysian Youth';
 let description =
@@ -42,6 +44,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <Suspense fallback={null}>
+            <HeaderWrapper />
+          </Suspense>
           {children}
         </ThemeProvider>
       </body>

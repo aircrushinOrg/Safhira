@@ -1,8 +1,7 @@
 'use client'
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { Header } from './components/Header';
+import { useState, useEffect, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Hero } from './components/Hero';
 import { PersonaSection } from './components/PersonaSection';
 import { LearningModules } from './components/LearningModules';
@@ -12,12 +11,26 @@ import { ResourcesSection } from './components/ResourcesSection';
 import { Footer } from './components/Footer';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export default function App() {
+function AppContent() {
   const [currentSection, setCurrentSection] = useState('home');
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const handleChatOpen = () => {
     router.push('/chat');
+  };
+
+  // Update current section based on URL params
+  useEffect(() => {
+    const section = searchParams.get('section') || 'home';
+    setCurrentSection(section);
+  }, [searchParams]);
+
+  // Handle section changes and update URL
+  const handleSectionChange = (section: string) => {
+    const newUrl = section === 'home' ? '/' : `/?section=${section}`;
+    router.push(newUrl);
+    setCurrentSection(section);
   };
 
   // 监听currentSection变化，自动滚动到页面顶部
@@ -49,7 +62,7 @@ export default function App() {
           >
             <Hero />
             <PersonaSection onChatOpen={handleChatOpen} />
-            <LearningModules onModuleClick={setCurrentSection} />
+            {/* <LearningModules onModuleClick={handleSectionChange} /> */}
             <ResourcesSection />
           </motion.div>
         );
@@ -63,7 +76,7 @@ export default function App() {
             variants={pageVariants}
             transition={pageTransition}
           >
-            <QuizSection onBack={() => setCurrentSection('home')} />
+            <QuizSection onBack={() => handleSectionChange('home')} />
           </motion.div>
         );
       case 'basics':
@@ -79,7 +92,7 @@ export default function App() {
             variants={pageVariants}
             transition={pageTransition}
           >
-            <LearningModules onModuleClick={setCurrentSection} currentModule={currentSection} onBack={() => setCurrentSection('home')} />
+            <LearningModules onModuleClick={handleSectionChange} currentModule={currentSection} onBack={() => handleSectionChange('home')} />
           </motion.div>
         );
       default:
@@ -94,7 +107,7 @@ export default function App() {
           >
             <Hero />
             <PersonaSection onChatOpen={handleChatOpen} />
-            <LearningModules onModuleClick={setCurrentSection} />
+            <LearningModules onModuleClick={handleSectionChange} />
             <ResourcesSection />
           </motion.div>
         );
@@ -103,8 +116,6 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-      <Header currentSection={currentSection} onSectionChange={setCurrentSection} onChatOpen={handleChatOpen} />
-      
       <main className="relative">
         <AnimatePresence mode="wait">
           {renderSection()}
@@ -113,5 +124,20 @@ export default function App() {
 
       <Footer />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-8 h-8 border-4 border-teal-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-gray-600 dark:text-gray-300">Loading...</p>
+        </div>
+      </div>
+    }>
+      <AppContent />
+    </Suspense>
   );
 }
