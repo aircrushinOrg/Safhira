@@ -331,7 +331,7 @@ export default function STIPreventionPage() {
                                 {example.situation}:
                               </p>
                               <p className="text-gray-700 dark:text-gray-300 text-sm italic">
-                                "{example.example}"
+                                &quot;{example.example}&quot;
                               </p>
                             </div>
                           ))}

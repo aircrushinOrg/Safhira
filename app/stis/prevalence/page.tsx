@@ -121,7 +121,7 @@ export default function STIPrevalencePage() {
                 <Heart className="text-blue-500 mt-1 flex-shrink-0" size={20} />
                 <div>
                   <h3 className="font-semibold text-blue-800 dark:text-blue-200 mb-2">
-                    You're Not Alone: Understanding Community Health
+                    You&apos;re Not Alone: Understanding Community Health
                   </h3>
                   <p className="text-blue-700 dark:text-blue-300 mb-3">
                     STIs affect millions of people worldwide, including many in Malaysia. These statistics 
@@ -498,7 +498,7 @@ export default function STIPrevalencePage() {
                           🌏 Regional Perspective
                         </h3>
                         <ul className="space-y-2 text-blue-700 dark:text-blue-300 text-sm">
-                          <li>• Malaysia's rates are comparable to other developed Southeast Asian countries</li>
+                          <li>• Malaysia&apos;s rates are comparable to other developed Southeast Asian countries</li>
                           <li>• Urban areas show patterns similar to Singapore and major Thai cities</li>
                           <li>• Detection rates reflect strong healthcare infrastructure</li>
                           <li>• Regional cooperation improves cross-border health initiatives</li>
@@ -521,7 +521,7 @@ export default function STIPrevalencePage() {
                     <Card className="p-6 bg-purple-50 dark:bg-purple-900/20 border-purple-200 dark:border-purple-800">
                       <div className="text-center">
                         <h3 className="font-semibold text-purple-800 dark:text-purple-200 mb-3">
-                          🤝 Community Health is Everyone's Health
+                          🤝 Community Health is Everyone&apos;s Health
                         </h3>
                         <p className="text-purple-700 dark:text-purple-300 mb-4">
                           These statistics represent a community where people care about their health and have 
