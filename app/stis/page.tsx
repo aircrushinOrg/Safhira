@@ -128,6 +128,63 @@ export default function STIsPage() {
             </Card>
           </div>
 
+          {/* Featured Learning Modules */}
+          <div className="grid lg:grid-cols-2 gap-6 mb-8">
+            {/* Prevention Learning Module */}
+            <Card className="p-6 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 border-green-200 dark:border-green-800">
+              <div className="flex items-start space-x-4">
+                <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg flex-shrink-0">
+                  <BookOpen className="text-green-600 dark:text-green-400" size={24} />
+                </div>
+                <div className="flex-1">
+                  <Badge className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 mb-2">
+                    Prevention Learning Module
+                  </Badge>
+                  <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-2">
+                    STI Prevention & Safe Sex Practices
+                  </h3>
+                  <p className="text-gray-700 dark:text-gray-300 text-sm mb-4">
+                    Evidence-based, culturally-sensitive information about prevention methods, 
+                    safe practices, and respectful communication.
+                  </p>
+                  <Link href="/stis/prevention">
+                    <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white">
+                      Start Learning
+                      <ChevronRight size={16} className="ml-2" />
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </Card>
+
+            {/* Prevalence Visualization Module */}
+            <Card className="p-6 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border-blue-200 dark:border-blue-800">
+              <div className="flex items-start space-x-4">
+                <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex-shrink-0">
+                  <Heart className="text-blue-600 dark:text-blue-400" size={24} />
+                </div>
+                <div className="flex-1">
+                  <Badge className="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 mb-2">
+                    Community Health Data
+                  </Badge>
+                  <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-2">
+                    STI Prevalence in Malaysia
+                  </h3>
+                  <p className="text-gray-700 dark:text-gray-300 text-sm mb-4">
+                    Interactive visualizations showing STI prevalence across Malaysian states. 
+                    Understand that sexual health concerns are common and treatable.
+                  </p>
+                  <Link href="/stis/prevalence">
+                    <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white">
+                      View Data
+                      <ChevronRight size={16} className="ml-2" />
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </Card>
+          </div>
+
           {/* STI Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             {stiList.map((sti, index) => (
