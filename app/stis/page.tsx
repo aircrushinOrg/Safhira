@@ -7,6 +7,7 @@ import { ArrowLeft, Heart, BookOpen, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 interface STIInfo {
   id: string;
@@ -101,13 +102,33 @@ export default function STIsPage() {
       <section className="py-16 px-4">
         <div className="container mx-auto max-w-6xl">
           <div className="mb-8">
-            <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-100 mb-4">
-              Learn About STIs
-            </h1>
-            <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
-              Comprehensive, judgment-free information about sexually transmitted infections. 
-              Knowledge empowers you to make informed decisions about your health.
-            </p>
+            <div className="grid lg:grid-cols-2 gap-8 items-center mb-8">
+              <div>
+                <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-100 mb-4">
+                  Learn About STIs
+                </h1>
+                <p className="text-lg text-gray-600 dark:text-gray-300">
+                  Comprehensive, judgment-free information about sexually transmitted infections. 
+                  Knowledge empowers you to make informed decisions about your health.
+                </p>
+              </div>
+              <div className="flex justify-center lg:justify-end">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                  className="w-72 h-64 relative"
+                >
+                  <Image
+                    src="/undraw_medicine_hqqg.svg"
+                    alt="Medical illustration representing healthcare and medicine"
+                    fill
+                    className="object-contain"
+                    priority
+                  />
+                </motion.div>
+              </div>
+            </div>
             
             {/* Supportive Message */}
             <Card className="p-6 bg-teal-50 dark:bg-teal-900/20 border-teal-200 dark:border-teal-800 mb-8">
