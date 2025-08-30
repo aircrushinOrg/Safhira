@@ -10,11 +10,23 @@ export function HeaderWrapper() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  // Update current section based on URL params
+  // Update current section based on pathname and URL params
   useEffect(() => {
-    const section = searchParams.get('section') || 'home';
-    setCurrentSection(section);
-  }, [searchParams]);
+    // Determine section based on pathname first
+    if (pathname === '/') {
+      const section = searchParams.get('section') || 'home';
+      setCurrentSection(section);
+    } else if (pathname.startsWith('/stis')) {
+      setCurrentSection('stis');
+    } else if (pathname.startsWith('/chat')) {
+      setCurrentSection('chat');
+    } else {
+      // For other pages, set a default or extract from pathname
+      const pathSegments = pathname.split('/').filter(Boolean);
+      const section = pathSegments[0] || 'home';
+      setCurrentSection(section);
+    }
+  }, [pathname, searchParams]);
 
   const handleChatOpen = () => {
     router.push('/chat');

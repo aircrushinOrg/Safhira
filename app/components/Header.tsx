@@ -43,7 +43,7 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
             </Button>
             <Link href="/stis">
               <Button
-                variant="ghost"
+                variant={currentSection === 'stis' ? 'secondary' : 'ghost'}
                 size="sm"
                 className="flex items-center space-x-2"
               >
@@ -77,8 +77,8 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
               <span className="text-xs">100% Private</span>
             </Badge>
             
-            {/* Theme Toggle Button */}
-            <ThemeToggle />
+            {/* Theme Toggle Button - Commented out to default to light mode */}
+            {/* <ThemeToggle /> */}
             
             <Button
               className="md:hidden"
