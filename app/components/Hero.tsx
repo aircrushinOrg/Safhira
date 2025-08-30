@@ -1,9 +1,14 @@
-import { Button } from './ui/button';
-import { Card } from './ui/card';
-import { Shield, Heart, Book, Users } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { DecorativeHearts } from './DecorativeHearts';
+import { FeatureLabels } from './FeatureLabels';
+import { Button } from './ui/button';
+import { BookOpen, MessageCircle } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 export function Hero() {
+  const router = useRouter();
+  
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -26,156 +31,101 @@ export function Hero() {
     }
   };
 
-  const featureVariants = {
+  const buttonVariants = {
     hidden: { scale: 0.8, opacity: 0 },
     visible: {
       scale: 1,
       opacity: 1,
       transition: {
-        duration: 0.5
+        duration: 0.6
       }
     }
   };
 
+  const handleLearnSTIs = () => {
+    router.push('/stis');
+  };
+
+  const handleChatAI = () => {
+    router.push('/chat');
+  };
+
   return (
-    <section className="py-16 px-4">
-      <div className="container mx-auto max-w-6xl">
+    <section className="min-h-screen max-w-screen flex justify-center items-center relative py-16 px-4 bg-gradient-to-br from-pink-100 via-white to-teal-100 dark:from-pink-950 dark:via-gray-800 dark:to-teal-950 overflow-hidden">
+      {/* Content */}
+      <div className="flex flex-col lg:flex-row gap-8 items-center h-full w-full max-w-7xl mx-auto px-4">
+        {/* Left Side - Text Content */}
         <motion.div 
-          className="text-center mb-12"
+          className="flex flex-col flex-1 gap-8 lg:pr-8 relative"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
         >
+          {/* Decorative Hearts around text */}
+          <DecorativeHearts variant="text" />
+
           <motion.h1 
-            className="text-4xl md:text-5xl font-bold text-gray-800 dark:text-gray-100 mb-4"
+            className="text-4xl text-center lg:text-left md:text-5xl lg:text-6xl font-bold text-gray-800 dark:text-gray-100 leading-tight"
             variants={itemVariants}
           >
-            Welcome to <span className="text-teal-600 dark:text-teal-400">Safhira</span>
+            Your Safe Space for <span className="bg-gradient-to-r from-rose-500 via-purple-500 to-teal-500 dark:from-rose-400 dark:via-purple-400 dark:to-teal-400 bg-clip-text text-transparent">Sexual Health</span>
           </motion.h1>
+          
           <motion.p 
-            className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-6"
+            className="text-lg text-center md:text-xl lg:text-left text-gray-600 dark:text-gray-300 leading-relaxed"
             variants={itemVariants}
           >
-            A safe and stigma-free learning platform for understanding reproductive health. 
-            Learn with confidence, grow with knowledge.
+            Built for young Malaysians, we're making conversations about relationships, consent, and reproductive health feel normal, kind, and stigma-free.
           </motion.p>
+
+          <FeatureLabels variants={itemVariants} />
+
+          <motion.div className="flex flex-row gap-4 justify-center lg:justify-start items-center" variants={buttonVariants}>
+            <Button 
+              size="lg"
+              variant="default"
+              className="px-6 py-6 md:py-8 bg-teal-600 hover:bg-teal-700 dark:bg-teal-400 dark:hover:bg-teal-500 dark:text-slate-800 text-md text-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 flex items-center space-x-2"
+              onClick={handleLearnSTIs}
+            >
+              <BookOpen size={24} />
+              <span>Learn About STIs</span>
+            </Button>
+            <Button 
+              size="lg"
+              variant="outline"
+              className="px-6 py-6 md:py-8 bg-transparent border-2 border-pink-500 text-pink-600 hover:bg-pink-500 hover:text-white text-md dark:border-pink-400 dark:text-pink-400 dark:hover:bg-pink-400 dark:hover:text-slate-800 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 flex items-center space-x-2"
+              onClick={handleChatAI}
+            >
+              <MessageCircle size={24} />
+              <span>Chat with AI</span>
+            </Button>
+          </motion.div>
+        </motion.div>
+
+        {/* Right Side - Image */}
+        <motion.div 
+          className="flex-shrink-0 relative"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+        >
+          {/* Main Image Container - Fixed size to prevent shrinking */}
           <motion.div 
-            className="flex flex-wrap justify-center gap-4 mb-8"
-            variants={containerVariants}
+            className=""
+            whileHover={{ scale: 1.02 }}
+            transition={{ duration: 0.3 }}
           >
-            <motion.div 
-              className="flex items-center space-x-2 text-teal-600 dark:text-teal-400"
-              variants={featureVariants}
-              whileHover={{ scale: 1.05 }}
-            >
-              <Shield size={20} />
-              <span>Private & Safe</span>
-            </motion.div>
-            <motion.div 
-              className="flex items-center space-x-2 text-pink-600 dark:text-pink-400"
-              variants={featureVariants}
-              whileHover={{ scale: 1.05 }}
-            >
-              <Heart size={20} />
-              <span>Stigma-Free</span>
-            </motion.div>
-            <motion.div 
-              className="flex items-center space-x-2 text-teal-600 dark:text-teal-400"
-              variants={featureVariants}
-              whileHover={{ scale: 1.05 }}
-            >
-              <Book size={20} />
-              <span>Science-Based</span>
-            </motion.div>
-            <motion.div 
-              className="flex items-center space-x-2 text-pink-600 dark:text-pink-400"
-              variants={featureVariants}
-              whileHover={{ scale: 1.05 }}
-            >
-              <Users size={20} />
-              <span>Teen-Friendly</span>
-            </motion.div>
-          </motion.div>
-        </motion.div>
-
-        <motion.div 
-          className="grid md:grid-cols-3 gap-6 mb-12"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-        >
-          <motion.div
-            variants={itemVariants}
-            whileHover={{ y: -8, transition: { duration: 0.3 } }}
-          >
-            <Card className="p-6 bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm border-teal-200 dark:border-teal-700 h-full">
-              <div className="text-center">
-                <motion.div 
-                  className="w-12 h-12 bg-teal-100 dark:bg-teal-900 rounded-full flex items-center justify-center mx-auto mb-4"
-                  whileHover={{ rotate: 360, transition: { duration: 0.6 } }}
-                >
-                  <Shield className="text-teal-600 dark:text-teal-400" size={24} />
-                </motion.div>
-                <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">Privacy Guaranteed</h3>
-                <p className="text-gray-600 dark:text-gray-300 text-sm">
-                  No personal data stored. All learning is anonymous and secure.
-                </p>
-              </div>
-            </Card>
+            <Image
+              src="/hero.png"
+              alt="Diverse group of young people smiling together"
+              width={500}
+              height={500}
+              className="object-cover w-full h-full rounded-3xl"
+            />
           </motion.div>
 
-          <motion.div
-            variants={itemVariants}
-            whileHover={{ y: -8, transition: { duration: 0.3 } }}
-          >
-            <Card className="p-6 bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm border-pink-200 dark:border-pink-700 h-full">
-              <div className="text-center">
-                <motion.div 
-                  className="w-12 h-12 bg-pink-100 dark:bg-pink-900 rounded-full flex items-center justify-center mx-auto mb-4"
-                  whileHover={{ rotate: 360, transition: { duration: 0.6 } }}
-                >
-                  <Book className="text-pink-600 dark:text-pink-400" size={24} />
-                </motion.div>
-                <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">Self-Paced Learning</h3>
-                <p className="text-gray-600 dark:text-gray-300 text-sm">
-                  Learn at your own pace with modules designed to be easy to understand.
-                </p>
-              </div>
-            </Card>
-          </motion.div>
-
-          <motion.div
-            variants={itemVariants}
-            whileHover={{ y: -8, transition: { duration: 0.3 } }}
-          >
-            <Card className="p-6 bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm border-teal-200 dark:border-teal-700 h-full">
-              <div className="text-center">
-                <motion.div 
-                  className="w-12 h-12 bg-teal-100 dark:bg-teal-900 rounded-full flex items-center justify-center mx-auto mb-4"
-                  whileHover={{ rotate: 360, transition: { duration: 0.6 } }}
-                >
-                  <Heart className="text-teal-600 dark:text-teal-400" size={24} />
-                </motion.div>
-                <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">24/7 Support</h3>
-                <p className="text-gray-600 dark:text-gray-300 text-sm">
-                  Chat with understanding AI for immediate and private answers.
-                </p>
-              </div>
-            </Card>
-          </motion.div>
-        </motion.div>
-
-        <motion.div 
-          className="text-center"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.8, duration: 0.6 }}
-        >
-          <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-            🏥 Supported by Malaysian health professionals | 🛡️ No data stored
-          </p>
+          {/* Additional decorative hearts */}
+          <DecorativeHearts variant="image" />
         </motion.div>
       </div>
     </section>
