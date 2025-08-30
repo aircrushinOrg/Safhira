@@ -5,6 +5,9 @@ export default {
   content: ['./app/**/*.{ts,tsx}', './content/**/*.mdx', './public/**/*.svg'],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['var(--font-poppins)', 'sans-serif'],
+      },
       colors: {
         border: 'var(--border)',
         input: 'var(--input)',

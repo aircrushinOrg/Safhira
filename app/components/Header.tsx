@@ -12,8 +12,8 @@ interface HeaderProps {
 
 export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderProps) {
   return (
-    <header className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-green-100 dark:border-gray-700 sticky top-0 z-50">
-      <div className="container mx-auto px-4 py-3">
+    <header className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 sticky top-0 z-50">
+      <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <div 
             className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity"
@@ -26,8 +26,8 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
               </svg>
             </div>
             <div>
-              <h1 className="font-bold text-green-800 dark:text-green-400 text-lg">Safhira</h1>
-              <p className="text-xs text-green-600 dark:text-green-500">Modern Health Education</p>
+              <h1 className="font-semibold text-slate-900 dark:text-slate-300 text-xl">Safhira</h1>
+              <p className="text-xs text-teal-600 dark:text-teal-500">Sexual Health, Made Simple & Kind.</p>
             </div>
           </div>
 
@@ -61,10 +61,14 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
               <span>Quiz</span>
             </Button> */}
             <Button
-              variant="ghost"
+              variant={currentSection === 'chat' ? 'secondary' : 'ghost'}
               size="sm"
               onClick={onChatOpen}
-              className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+              className={`flex items-center space-x-2 ${
+                currentSection === 'chat' 
+                  ? '' 
+                  : 'text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300'
+              }`}
             >
               <MessageCircle size={16} />
               <span>Private Chat</span>
@@ -78,7 +82,7 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
             </Badge>
             
             {/* Theme Toggle Button - Commented out to default to light mode */}
-            {/* <ThemeToggle /> */}
+            <ThemeToggle />
             
             <Button
               className="md:hidden"
