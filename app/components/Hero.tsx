@@ -75,7 +75,7 @@ export function Hero() {
             className="text-lg text-center md:text-xl lg:text-left text-gray-600 dark:text-gray-300 leading-relaxed"
             variants={itemVariants}
           >
-            Built for young Malaysians, we're making conversations about relationships, consent, and reproductive health feel normal, kind, and stigma-free.
+            Built for young Malaysians, we&apos;re making conversations about relationships, consent, and reproductive health feel normal, kind, and stigma-free.
           </motion.p>
 
           <FeatureLabels variants={itemVariants} />
