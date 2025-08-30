@@ -51,7 +51,7 @@ export function Hero() {
   };
 
   return (
-    <section className="min-h-screen max-w-screen flex justify-center items-center relative py-16 px-4 bg-gradient-to-br from-pink-100 via-white to-teal-100 dark:from-pink-950 dark:via-gray-800 dark:to-teal-950 overflow-hidden">
+    <section className="min-h-screen max-w-screen flex justify-center items-center relative py-16 px-4 bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-pink-950 dark:via-gray-800 dark:to-teal-950 overflow-hidden">
       {/* Content */}
       <div className="flex flex-col lg:flex-row gap-8 items-center h-full w-full max-w-7xl mx-auto px-4">
         {/* Left Side - Text Content */}
@@ -84,7 +84,7 @@ export function Hero() {
             <Button 
               size="lg"
               variant="default"
-              className="px-6 py-6 md:py-8 bg-teal-600 hover:bg-teal-700 dark:bg-teal-400 dark:hover:bg-teal-500 dark:text-slate-800 text-md text-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 flex items-center space-x-2"
+              className="px-6 py-6 md:py-8 bg-gradient-to-r from-rose-500 via-purple-500 to-teal-500 dark:from-rose-400 dark:via-purple-400 dark:to-teal-400 hover:from-rose-600 hover:via-purple-600 hover:to-teal-600 dark:hover:from-rose-500 dark:hover:via-purple-500 dark:hover:to-teal-500 text-md text-white dark:text-slate-800 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 flex items-center space-x-2"
               onClick={handleLearnSTIs}
             >
               <BookOpen size={24} />
