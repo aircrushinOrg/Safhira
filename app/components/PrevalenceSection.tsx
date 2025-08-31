@@ -22,7 +22,7 @@ export function PrevalenceSection() {
         <div className="container mx-auto max-w-7xl">
           <div className="mb-6 sm:mb-8">
             <div className="mb-4 sm:mb-6 text-center">
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-3 sm:mb-4 px-2">
+              <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-3 sm:mb-4 px-2">
                 STIs Are More Common Than You Think
               </h1>
             </div>

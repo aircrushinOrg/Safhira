@@ -13,7 +13,7 @@ import {
 export function Footer() {
   return (
     <footer className="bg-gradient-to-t from-pink-50/50 via-gray-50 to-teal-50/50 dark:from-pink-950/30 dark:via-gray-900 dark:to-teal-950/30 text-gray-800 dark:text-white py-12 px-4">
-      <div className="container mx-auto max-w-6xl">
+      <div className="container mx-auto">
         <div className="grid md:grid-cols-4 gap-8 mb-8">
           {/* Brand */}
           <div>
@@ -123,25 +123,6 @@ export function Footer() {
               <a href="/privacy-policy" className="text-gray-500 dark:text-gray-500 hover:text-teal-600 dark:hover:text-white transition-colors">Privacy Policy</a>
               <a href="/terms-of-use" className="text-gray-500 dark:text-gray-500 hover:text-teal-600 dark:hover:text-white transition-colors">Terms of Use</a>
               <a href="#" className="text-gray-500 dark:text-gray-500 hover:text-teal-600 dark:hover:text-white transition-colors">Data Security</a>
-            </div>
-          </div>
-          
-          <div className="mt-4 text-center">
-            <div className="flex justify-center items-center space-x-4 text-xs text-gray-500 dark:text-gray-600">
-              <div className="flex items-center space-x-1">
-                <Shield size={12} />
-                <span>SSL Encrypted</span>
-              </div>
-              <div>•</div>
-              <div className="flex items-center space-x-1">
-                <Heart size={12} />
-                <span>No Data Stored</span>
-              </div>
-              <div>•</div>
-              <div className="flex items-center space-x-1">
-                <Users size={12} />
-                <span>Anonymous Learning</span>
-              </div>
             </div>
           </div>
         </div>

@@ -68,7 +68,7 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
 
   return (
     <header className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 sticky top-0 z-50">
-      <div className="container mx-auto px-4 py-4">
+      <div className="mx-auto px-4 py-4 md:px-8">
         <div className="flex items-center justify-between">
           <div 
             className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity"

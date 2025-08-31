@@ -101,33 +101,33 @@ export default function STIPreventionPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-      <section className="py-16 px-4">
+      <section className="py-8 sm:py-12 md:py-16 px-4">
         <div className="container mx-auto max-w-6xl">
-          <div className="mb-8">
-            <Button variant="ghost" onClick={() => router.push('/stis')} className="mb-4">
+          <div className="mb-6 sm:mb-8">
+            <Button variant="ghost" onClick={() => router.push('/stis')} className="mb-4 text-sm sm:text-base">
               <ArrowLeft size={16} className="mr-2" />
               Back to STIs Overview
             </Button>
             
             <div className="mb-6">
-              <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-100 mb-4">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-3 sm:mb-4">
                 STI Prevention & Safe Sex Practices
               </h1>
-              <p className="text-lg text-gray-600 dark:text-gray-300">
+              <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
                 Evidence-based, culturally-sensitive information to help you make informed decisions 
                 about your sexual health while respecting your personal values and cultural background.
               </p>
             </div>
             
             {/* Cultural Sensitivity Statement */}
-            <Card className="p-6 bg-teal-50 dark:bg-teal-900/20 border-teal-200 dark:border-teal-800 mb-8">
+            <Card className="p-4 sm:p-6 bg-teal-50 dark:bg-teal-900/20 border-teal-200 dark:border-teal-800 mb-6 sm:mb-8">
               <div className="flex items-start space-x-3">
-                <Heart className="text-teal-500 mt-1 flex-shrink-0" size={20} />
+                <Heart className="text-teal-500 mt-1 flex-shrink-0" size={18} />
                 <div>
-                  <h3 className="font-semibold text-teal-800 dark:text-teal-200 mb-2">
+                  <h3 className="font-semibold text-teal-800 dark:text-teal-200 mb-2 text-sm sm:text-base">
                     Respectful & Inclusive Approach
                   </h3>
-                  <p className="text-teal-700 dark:text-teal-300">
+                  <p className="text-teal-700 dark:text-teal-300 text-sm sm:text-base leading-relaxed">
                     This information is presented with respect for diverse cultural backgrounds, 
                     religious beliefs, and personal values. Sexual health decisions are deeply personal, 
                     and everyone deserves access to accurate information without judgment. 
@@ -143,23 +143,31 @@ export default function STIPreventionPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <Card className="p-8">
+            <Card className="p-4 sm:p-6 md:p-8">
               <Tabs defaultValue="methods" className="w-full">
-                <TabsList className="grid w-full grid-cols-4">
-                  <TabsTrigger value="methods">Prevention Methods</TabsTrigger>
-                  <TabsTrigger value="practices">Safe Sex Practices</TabsTrigger>
-                  <TabsTrigger value="communication">Communication</TabsTrigger>
-                  <TabsTrigger value="resources">Resources</TabsTrigger>
+                <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 gap-1 h-auto p-1">
+                  <TabsTrigger value="methods" className="text-xs sm:text-sm px-2 py-2 data-[state=active]:bg-white">
+                    Prevention Methods
+                  </TabsTrigger>
+                  <TabsTrigger value="practices" className="text-xs sm:text-sm px-2 py-2 data-[state=active]:bg-white">
+                    Safe Sex Practices
+                  </TabsTrigger>
+                  <TabsTrigger value="communication" className="text-xs sm:text-sm px-2 py-2 data-[state=active]:bg-white">
+                    Communication
+                  </TabsTrigger>
+                  <TabsTrigger value="resources" className="text-xs sm:text-sm px-2 py-2 data-[state=active]:bg-white">
+                    Resources
+                  </TabsTrigger>
                 </TabsList>
 
-                <TabsContent value="methods" className="mt-8 space-y-8">
+                <TabsContent value="methods" className="mt-6 sm:mt-8 space-y-6 sm:space-y-8">
                   <div>
-                    <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-6 flex items-center">
-                      <Shield size={24} className="mr-3 text-green-500" />
+                    <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-4 sm:mb-6 flex items-center">
+                      <Shield size={20} className="mr-2 sm:mr-3 text-green-500 flex-shrink-0" />
                       Evidence-Based Prevention Methods
                     </h2>
                     
-                    <div className="space-y-6">
+                    <div className="space-y-4 sm:space-y-6">
                       {preventionMethods.map((method, index) => (
                         <motion.div
                           key={index}
@@ -167,50 +175,54 @@ export default function STIPreventionPage() {
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.3, delay: index * 0.1 }}
                         >
-                          <Card className="p-6 border-l-4 border-l-green-500">
+                          <Card className="p-4 sm:p-6 border-l-4 border-l-green-500">
                             <div className="mb-4">
-                              <div className="flex items-center justify-between mb-2">
-                                <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-100">
+                              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3 gap-2">
+                                <h3 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-100">
                                   {method.title}
                                 </h3>
-                                <Badge className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                                <Badge className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 self-start text-xs sm:text-sm">
                                   {method.effectiveness}
                                 </Badge>
                               </div>
-                              <p className="text-gray-600 dark:text-gray-300 mb-4">
+                              <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base mb-4 leading-relaxed">
                                 {method.description}
                               </p>
                             </div>
 
-                            <div className="grid md:grid-cols-2 gap-6">
-                              <div>
-                                <h4 className="font-medium text-gray-800 dark:text-gray-100 mb-3 flex items-center">
-                                  <Users size={16} className="mr-2 text-blue-500" />
-                                  Cultural Considerations
-                                </h4>
-                                <p className="text-gray-700 dark:text-gray-300 text-sm mb-4">
-                                  {method.culturalConsiderations}
-                                </p>
+                            <div className="grid gap-4 sm:gap-6 md:grid-cols-2">
+                              <div className="space-y-4">
+                                <div>
+                                  <h4 className="font-medium text-gray-800 dark:text-gray-100 mb-3 flex items-center text-sm sm:text-base">
+                                    <Users size={16} className="mr-2 text-blue-500 flex-shrink-0" />
+                                    Cultural Considerations
+                                  </h4>
+                                  <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+                                    {method.culturalConsiderations}
+                                  </p>
+                                </div>
 
-                                <h4 className="font-medium text-gray-800 dark:text-gray-100 mb-3 flex items-center">
-                                  <BookOpen size={16} className="mr-2 text-purple-500" />
-                                  Evidence Base
-                                </h4>
-                                <p className="text-gray-700 dark:text-gray-300 text-sm">
-                                  {method.evidence}
-                                </p>
+                                <div>
+                                  <h4 className="font-medium text-gray-800 dark:text-gray-100 mb-3 flex items-center text-sm sm:text-base">
+                                    <BookOpen size={16} className="mr-2 text-purple-500 flex-shrink-0" />
+                                    Evidence Base
+                                  </h4>
+                                  <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
+                                    {method.evidence}
+                                  </p>
+                                </div>
                               </div>
 
                               <div>
-                                <h4 className="font-medium text-gray-800 dark:text-gray-100 mb-3 flex items-center">
-                                  <Lightbulb size={16} className="mr-2 text-yellow-500" />
+                                <h4 className="font-medium text-gray-800 dark:text-gray-100 mb-3 flex items-center text-sm sm:text-base">
+                                  <Lightbulb size={16} className="mr-2 text-yellow-500 flex-shrink-0" />
                                   How to Use Effectively
                                 </h4>
-                                <ul className="space-y-2">
+                                <ul className="space-y-2 sm:space-y-3">
                                   {method.howToUse.map((step, stepIndex) => (
-                                    <li key={stepIndex} className="flex items-start space-x-2">
-                                      <CheckCircle size={16} className="text-green-500 mt-1 flex-shrink-0" />
-                                      <span className="text-gray-700 dark:text-gray-300 text-sm">{step}</span>
+                                    <li key={stepIndex} className="flex items-start space-x-2 sm:space-x-3">
+                                      <CheckCircle size={14} className="text-green-500 mt-1 flex-shrink-0" />
+                                      <span className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">{step}</span>
                                     </li>
                                   ))}
                                 </ul>
@@ -223,14 +235,14 @@ export default function STIPreventionPage() {
                   </div>
                 </TabsContent>
 
-                <TabsContent value="practices" className="mt-8">
+                <TabsContent value="practices" className="mt-6 sm:mt-8">
                   <div>
-                    <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-6 flex items-center">
-                      <Heart size={24} className="mr-3 text-pink-500" />
+                    <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-4 sm:mb-6 flex items-center">
+                      <Heart size={20} className="mr-2 sm:mr-3 text-pink-500 flex-shrink-0" />
                       Safe Sex Practices Timeline
                     </h2>
                     
-                    <div className="space-y-6">
+                    <div className="space-y-4 sm:space-y-6">
                       {safeSexPractices.map((section, index) => (
                         <motion.div
                           key={index}
@@ -238,20 +250,20 @@ export default function STIPreventionPage() {
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ duration: 0.3, delay: index * 0.1 }}
                         >
-                          <Card className="p-6">
-                            <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4 flex items-center">
-                              <div className="w-8 h-8 bg-pink-100 dark:bg-pink-900/20 rounded-full flex items-center justify-center mr-3">
-                                <span className="text-pink-600 dark:text-pink-400 font-semibold text-sm">
+                          <Card className="p-4 sm:p-6">
+                            <h3 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4 flex items-center">
+                              <div className="w-6 h-6 sm:w-8 sm:h-8 bg-pink-100 dark:bg-pink-900/20 rounded-full flex items-center justify-center mr-2 sm:mr-3 flex-shrink-0">
+                                <span className="text-pink-600 dark:text-pink-400 font-semibold text-xs sm:text-sm">
                                   {index + 1}
                                 </span>
                               </div>
-                              {section.category}
+                              <span className="text-sm sm:text-lg leading-tight">{section.category}</span>
                             </h3>
-                            <ul className="space-y-3">
+                            <ul className="space-y-2 sm:space-y-3">
                               {section.practices.map((practice, practiceIndex) => (
-                                <li key={practiceIndex} className="flex items-start space-x-3">
-                                  <CheckCircle size={16} className="text-pink-500 mt-1 flex-shrink-0" />
-                                  <span className="text-gray-700 dark:text-gray-300">{practice}</span>
+                                <li key={practiceIndex} className="flex items-start space-x-2 sm:space-x-3">
+                                  <CheckCircle size={14} className="text-pink-500 mt-1 flex-shrink-0" />
+                                  <span className="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed">{practice}</span>
                                 </li>
                               ))}
                             </ul>
@@ -261,14 +273,14 @@ export default function STIPreventionPage() {
                     </div>
 
                     {/* Cultural Adaptation Note */}
-                    <Card className="mt-8 p-6 bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800">
+                    <Card className="mt-6 sm:mt-8 p-4 sm:p-6 bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800">
                       <div className="flex items-start space-x-3">
-                        <Info className="text-blue-500 mt-1 flex-shrink-0" size={20} />
+                        <Info className="text-blue-500 mt-1 flex-shrink-0" size={18} />
                         <div>
-                          <h4 className="font-semibold text-blue-800 dark:text-blue-200 mb-2">
+                          <h4 className="font-semibold text-blue-800 dark:text-blue-200 mb-2 text-sm sm:text-base">
                             Adapting to Your Circumstances
                           </h4>
-                          <p className="text-blue-700 dark:text-blue-300">
+                          <p className="text-blue-700 dark:text-blue-300 text-sm sm:text-base leading-relaxed">
                             These practices can be adapted to fit your cultural background, relationship style, 
                             and personal comfort level. The key principles—communication, respect, and protection—
                             remain consistent while allowing for personal and cultural variations in implementation.
@@ -477,13 +489,13 @@ export default function STIPreventionPage() {
           </motion.div>
 
           {/* Bottom Navigation */}
-          <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-between">
-            <Button variant="outline" onClick={() => router.push('/stis')}>
+          <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-between">
+            <Button variant="outline" onClick={() => router.push('/stis')} className="w-full sm:w-auto text-sm sm:text-base">
               <ArrowLeft size={16} className="mr-2" />
               Return to STIs Overview
             </Button>
-            <Link href="/chat">
-              <Button className="bg-teal-600 hover:bg-teal-700 text-white">
+            <Link href="/chat" className="w-full sm:w-auto">
+              <Button className="bg-teal-600 hover:bg-teal-700 text-white w-full sm:w-auto text-sm sm:text-base">
                 Get Personalized Guidance
                 <MessageCircle size={16} className="ml-2" />
               </Button>

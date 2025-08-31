@@ -229,10 +229,10 @@ export function ResourcesSection() {
 
   return (
     <section className="py-16 px-4 bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-900">
-      <div className="container mx-auto max-w-6xl">
+      <div className="container mx-auto max-w-7xl">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-4">
-            Resources & Support
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-4">
+            We are here to help you
           </h2>
           <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             Contact information and reliable resources to get professional help 
