@@ -3,7 +3,6 @@
 import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Hero } from './components/Hero';
-import { PersonaSection } from './components/PersonaSection';
 import { PrevalenceSection } from './components/PrevalenceSection';
 import { LearningModules } from './components/LearningModules';
 import { AIChat } from './components/AIChat';
@@ -61,9 +60,7 @@ function AppContent() {
             transition={pageTransition}
           >
             <Hero />
-            <PersonaSection onChatOpen={handleChatOpen} />
             <PrevalenceSection />
-            {/* <LearningModules onModuleClick={handleSectionChange} /> */}
             <ResourcesSection />
           </motion.div>
         );
@@ -107,9 +104,7 @@ function AppContent() {
             transition={pageTransition}
           >
             <Hero />
-            <PersonaSection onChatOpen={handleChatOpen} />
             <PrevalenceSection />
-            <LearningModules onModuleClick={handleSectionChange} />
             <ResourcesSection />
           </motion.div>
         );

@@ -92,7 +92,7 @@ export function Hero() {
             <Button 
               size="lg"
               variant="outline"
-              className="flex w-full md:w-auto h-full py-3 md:py-4 bg-transparent border-2 border-pink-500 text-pink-600 hover:bg-pink-500 hover:text-white text-md dark:border-pink-400 dark:text-pink-400 dark:hover:bg-pink-400 dark:hover:text-slate-800 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 items-center space-x-2"
+              className="flex w-full md:w-auto h-full py-3 md:py-4 bg-transparent border-2 border-teal-500 text-teal-500 hover:bg-teal-500 hover:text-white text-md dark:border-teal-400 dark:text-teal-400 dark:hover:bg-teal-400 dark:hover:text-slate-800 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 items-center space-x-2"
               onClick={handleChatAI}
             >
               <MessageCircle size={24} />
