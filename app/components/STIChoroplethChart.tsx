@@ -5,9 +5,8 @@ import { motion } from 'framer-motion';
 import { Card } from './ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { Slider } from './ui/slider';
-import { Badge } from './ui/badge';
 import { Button } from './ui/button';
-import { Play, Pause } from 'lucide-react';
+import { Play, Pause, ZoomIn, ZoomOut } from 'lucide-react';
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
 import { 
   getStateData, 
@@ -25,6 +24,7 @@ export function STIChoroplethChart() {
   const [hoveredState, setHoveredState] = useState<string | null>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isPlaying, setIsPlaying] = useState(false);
+  const [position, setPosition] = useState({ coordinates: [109, 4], zoom: 1 });
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   // Load Malaysia GeoJSON data
@@ -64,6 +64,24 @@ export function STIChoroplethChart() {
 
   const togglePlayback = () => {
     setIsPlaying(!isPlaying);
+  };
+
+  const handleZoomIn = () => {
+    setPosition(prev => ({
+      ...prev,
+      zoom: Math.min(prev.zoom * 1.5, 8)
+    }));
+  };
+
+  const handleZoomOut = () => {
+    setPosition(prev => ({
+      ...prev,
+      zoom: Math.max(prev.zoom / 1.5, 1)
+    }));
+  };
+
+  const handleMoveEnd = (position: any) => {
+    setPosition(position);
   };
 
   const currentData = getStateData(selectedSTI, selectedYear);
@@ -118,10 +136,10 @@ export function STIChoroplethChart() {
   return (
     <Card className="p-6 bg-white dark:bg-gray-800 shadow-lg">
       <div className="flex flex-col mb-4 justify-center items-center">
-        <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-2">
+        <h3 className="text-center text-2xl font-bold text-gray-800 dark:text-gray-100 mb-2">
           STI Prevalence in Malaysia
         </h3>
-        <p className="text-gray-600 dark:text-gray-300 text-sm">
+        <p className="text-center text-gray-600 dark:text-gray-300 text-sm">
           Incidence rates per 100,000 population by state and year
         </p>
       </div>
@@ -157,7 +175,7 @@ export function STIChoroplethChart() {
               onClick={togglePlayback}
               size="sm"
               variant="outline"
-              className="flex items-center gap-1 text-xs"
+              className="flex items-center gap-1 text-xs bg-transparent dark:border-slate-600 dark:hover:bg-slate-700"
             >
               {isPlaying ? (
                 <>
@@ -191,11 +209,11 @@ export function STIChoroplethChart() {
 
       {/* Legend */}
       <div className="mb-2">
-        <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400">
+        <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400 gap-2 md:gap-8">
           <span>Incidence Rate (per 100,000 people) across All Years</span>
           <div className="flex items-center gap-2">
             <span>{minRate}</span>
-            <div className={`w-60 h-3 bg-gradient-to-r ${getLegendGradient()} rounded`}></div>
+            <div className={`w-40 md:w-60 h-3 bg-gradient-to-r ${getLegendGradient()} rounded`}></div>
             <span>{maxRate}</span>
           </div>
         </div>
@@ -203,6 +221,28 @@ export function STIChoroplethChart() {
 
       {/* Interactive Map */}
       <div className="bg-blue-50 dark:bg-blue-950/50 p-4 rounded-lg relative">
+        {/* Zoom Controls */}
+        <div className="absolute top-6 right-6 z-10 flex flex-col gap-2">
+          <Button
+            onClick={handleZoomIn}
+            size="sm"
+            variant="outline"
+            className="p-2 bg-white dark:bg-gray-800 dark:border-slate-600 dark:hover:bg-slate-700 shadow-lg hover:shadow-xl"
+            disabled={position.zoom >= 8}
+          >
+            <ZoomIn size={16} />
+          </Button>
+          <Button
+            onClick={handleZoomOut}
+            size="sm"
+            variant="outline"
+            className="p-2 bg-white dark:bg-gray-800 dark:border-slate-600 dark:hover:bg-slate-700 shadow-lg hover:shadow-xl"
+            disabled={position.zoom <= 1}
+          >
+            <ZoomOut size={16} />
+          </Button>
+        </div>
+
         {geoData ? (
           <motion.div
             initial={{ opacity: 0 }}
@@ -219,7 +259,11 @@ export function STIChoroplethChart() {
               height={300}
               className="w-full h-auto"
             >
-              <ZoomableGroup>
+              <ZoomableGroup
+                zoom={position.zoom}
+                center={position.coordinates as [number, number]}
+                onMoveEnd={handleMoveEnd}
+              >
                 <Geographies geography={geoData}>
                   {({ geographies }: { geographies: any[] }) =>
                     geographies.map((geo: any) => {
