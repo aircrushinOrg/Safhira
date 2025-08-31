@@ -3,6 +3,7 @@
 import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Hero } from './components/Hero';
+import { StigmaBreakingSection } from './components/StigmaBreakingSection';
 import { PrevalenceSection } from './components/PrevalenceSection';
 import { LearningModules } from './components/LearningModules';
 import { AIChat } from './components/AIChat';
@@ -34,7 +35,7 @@ function AppContent() {
     setCurrentSection(section);
   };
 
-  // 监听currentSection变化，自动滚动到页面顶部
+  // Scroll to current section on change
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [currentSection]);
@@ -72,6 +73,7 @@ function AppContent() {
             transition={pageTransition}
           >
             <Hero />
+            <StigmaBreakingSection />
             <PrevalenceSection />
             <ResourcesSection />
           </motion.div>
@@ -116,6 +118,7 @@ function AppContent() {
             transition={pageTransition}
           >
             <Hero />
+            <StigmaBreakingSection />
             <PrevalenceSection />
             <ResourcesSection />
           </motion.div>
