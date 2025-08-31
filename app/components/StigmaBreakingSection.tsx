@@ -48,7 +48,7 @@ export function StigmaBreakingSection() {
                     </div>
                   </div>
                   <p className="text-pink-700 dark:text-pink-300 text-sm sm:text-base leading-relaxed flex-grow mb-4">
-                    Ever felt afraid to talk to your family about sexual health? Or worried your friends might judge you? You&apos;re not alone. In Malaysia, these topics are often avoided - but silence only creates confusion and fear.
+                    It’s okay to feel unsure or afraid about your sexual health, many people do. But you don’t have to face it by yourself.
                   </p>
                   <div className="flex justify-center mb-4">
                     <Image
@@ -80,7 +80,7 @@ export function StigmaBreakingSection() {
                     </div>
                   </div>
                   <p className="text-purple-700 dark:text-purple-300 text-sm sm:text-base leading-relaxed flex-grow mb-4">
-                    We get it - talking about your body or relationships can feel awkward or risky. That&apos;s why Safhira is here: a safe, judgment-free space where you can ask anything and feel understood.
+                    Safhira is a safe, kind, and judgment-free space where you can ask anything sexual health related and feel supported.                
                   </p>
                   <div className="flex justify-center mb-4">
                     <Image
@@ -112,7 +112,7 @@ export function StigmaBreakingSection() {
                     </div>
                   </div>
                   <p className="text-teal-700 dark:text-teal-300 text-sm sm:text-base leading-relaxed flex-grow mb-4">
-                    When we open up, we see we&apos;re not alone. Sharing knowledge protects us, and supporting each other breaks the cycle of shame. Together, we can make sexual health part of everyday wellbeing.
+                    When we open up, we break shame. By learning and supporting each other, we make sexual health a normal part of life.
                   </p>
                   <div className="flex justify-center">
                     <Image

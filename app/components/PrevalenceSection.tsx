@@ -26,10 +26,7 @@ export function PrevalenceSection() {
                 STIs Are Nothing to be Ashamed Of
               </h1>
               <p className="text-md text-center md:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-                STIs affect millions of people worldwide, including many in Malaysia. 
-                The truth is, it’s more common than people think but talking about it is rare.
-                These statistics represent real people from all walks of life: students, professionals, parents, and community 
-                members.
+                STIs affect millions worldwide, including many in Malaysia. They’re more common than most realise, yet rarely talked about. Behind the numbers are real people — students, professionals, parents, and community members.
               </p>
             </div>
         </div>
