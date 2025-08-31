@@ -348,7 +348,7 @@ export default function STIPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <section className="py-8 sm:py-12 md:py-16 px-4">
-        <div className="container mx-auto max-w-6xl">
+        <div className="container mx-auto">
           <div className="mb-6 sm:mb-8">
             <Button variant="ghost" onClick={() => router.push('/stis')} className="mb-4 text-sm sm:text-base">
               <ArrowLeft size={16} className="mr-2" />

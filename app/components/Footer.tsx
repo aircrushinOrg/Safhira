@@ -9,6 +9,7 @@ import {
   BookOpen,
   AlertTriangle
 } from 'lucide-react';
+import Image from 'next/image';
 
 export function Footer() {
   return (
@@ -18,9 +19,13 @@ export function Footer() {
           {/* Brand */}
           <div>
             <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 bg-gradient-to-br from-teal-500 to-pink-500 rounded-full flex items-center justify-center">
-                <span className="font-bold text-white">S</span>
-              </div>
+              <Image 
+                src="/logo.svg" 
+                alt="Safhira Logo" 
+                width={40} 
+                height={40} 
+                className="w-10 h-10"
+              />
               <div>
                 <h3 className="font-bold text-lg">Safhira</h3>
                 <p className="text-xs text-gray-600 dark:text-gray-400">Modern Health Education</p>

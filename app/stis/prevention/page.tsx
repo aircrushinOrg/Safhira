@@ -8,6 +8,7 @@ import { ArrowLeft, Shield, Heart, Users, BookOpen, CheckCircle, Info, Lightbulb
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface PreventionMethod {
   title: string;
@@ -102,21 +103,39 @@ export default function STIPreventionPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <section className="py-8 sm:py-12 md:py-16 px-4">
-        <div className="container mx-auto max-w-6xl">
+        <div className="container mx-auto max-w-7xl">
           <div className="mb-6 sm:mb-8">
             <Button variant="ghost" onClick={() => router.push('/stis')} className="mb-4 text-sm sm:text-base">
               <ArrowLeft size={16} className="mr-2" />
               Back to STIs Overview
             </Button>
             
-            <div className="mb-6">
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-3 sm:mb-4">
-                STI Prevention & Safe Sex Practices
-              </h1>
-              <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-                Evidence-based, culturally-sensitive information to help you make informed decisions 
-                about your sexual health while respecting your personal values and cultural background.
-              </p>
+            <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 items-center mb-6">
+              <div>
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-3 sm:mb-4">
+                  STI Prevention & Safe Sex Practices
+                </h1>
+                <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+                  Evidence-based, culturally-sensitive information to help you make informed decisions 
+                  about your sexual health while respecting your personal values and cultural background.
+                </p>
+              </div>
+              <div className="flex justify-center lg:justify-end order-first lg:order-last">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                  className="w-48 h-36 sm:w-64 sm:h-48 md:w-72 md:h-64 relative"
+                >
+                  <Image
+                    src="/undraw_doctors.svg"
+                    alt="Medical professionals providing healthcare guidance and support"
+                    fill
+                    className="object-contain"
+                    priority
+                  />
+                </motion.div>
+              </div>
             </div>
             
             {/* Cultural Sensitivity Statement */}
@@ -175,7 +194,7 @@ export default function STIPreventionPage() {
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.3, delay: index * 0.1 }}
                         >
-                          <Card className="p-4 sm:p-6 border-l-4 border-l-green-500">
+                          <Card className="p-4 sm:p-6 shadow-sm hover:shadow-md transition-shadow duration-200 border border-gray-200 dark:border-gray-700">
                             <div className="mb-4">
                               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3 gap-2">
                                 <h3 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-100">
@@ -487,20 +506,6 @@ export default function STIPreventionPage() {
               </Tabs>
             </Card>
           </motion.div>
-
-          {/* Bottom Navigation */}
-          <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-between">
-            <Button variant="outline" onClick={() => router.push('/stis')} className="w-full sm:w-auto text-sm sm:text-base">
-              <ArrowLeft size={16} className="mr-2" />
-              Return to STIs Overview
-            </Button>
-            <Link href="/chat" className="w-full sm:w-auto">
-              <Button className="bg-teal-600 hover:bg-teal-700 text-white w-full sm:w-auto text-sm sm:text-base">
-                Get Personalized Guidance
-                <MessageCircle size={16} className="ml-2" />
-              </Button>
-            </Link>
-          </div>
         </div>
       </section>
     </div>
