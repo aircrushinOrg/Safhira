@@ -47,7 +47,7 @@ export function STIChoroplethChart() {
           const nextIndex = (currentIndex + 1) % years.length;
           return years[nextIndex];
         });
-      }, 800); // Change year every 800ms
+      }, 1200); // Slower transition - 1.2s for smoother viewing
     } else {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
@@ -69,14 +69,14 @@ export function STIChoroplethChart() {
   const handleZoomIn = () => {
     setPosition(prev => ({
       ...prev,
-      zoom: Math.min(prev.zoom * 1.5, 8)
+      zoom: Math.min(prev.zoom * 1.3, 8) // Smaller increment for smoother zoom
     }));
   };
 
   const handleZoomOut = () => {
     setPosition(prev => ({
       ...prev,
-      zoom: Math.max(prev.zoom / 1.5, 1)
+      zoom: Math.max(prev.zoom / 1.3, 1) // Smaller decrement for smoother zoom
     }));
   };
 
@@ -171,24 +171,35 @@ export function STIChoroplethChart() {
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
               Year: {selectedYear}
             </label>
-            <Button
-              onClick={togglePlayback}
-              size="sm"
-              variant="outline"
-              className="flex items-center gap-1 text-xs bg-transparent dark:border-slate-600 dark:hover:bg-slate-700"
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
             >
-              {isPlaying ? (
-                <>
-                  <Pause size={14} />
-                  Pause
-                </>
-              ) : (
-                <>
-                  <Play size={14} />
-                  Play
-                </>
-              )}
-            </Button>
+              <Button
+                onClick={togglePlayback}
+                size="sm"
+                variant="outline"
+                className="flex items-center gap-1 text-xs bg-transparent dark:border-slate-600 dark:hover:bg-slate-700 transition-all duration-200"
+              >
+                <motion.div
+                  key={isPlaying ? 'pause' : 'play'}
+                  initial={{ scale: 0, rotate: -90 }}
+                  animate={{ scale: 1, rotate: 0 }}
+                  transition={{ type: "spring", stiffness: 500, damping: 25 }}
+                >
+                  {isPlaying ? <Pause size={14} /> : <Play size={14} />}
+                </motion.div>
+                <motion.span
+                  key={isPlaying ? 'pause-text' : 'play-text'}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.1 }}
+                >
+                  {isPlaying ? 'Pause' : 'Play'}
+                </motion.span>
+              </Button>
+            </motion.div>
           </div>
           <Slider
             value={[selectedYear]}
@@ -223,24 +234,36 @@ export function STIChoroplethChart() {
       <div className="bg-blue-50 dark:bg-blue-950/50 p-4 rounded-lg relative">
         {/* Zoom Controls */}
         <div className="absolute top-6 right-6 z-10 flex flex-col gap-2">
-          <Button
-            onClick={handleZoomIn}
-            size="sm"
-            variant="outline"
-            className="p-2 bg-white dark:bg-gray-800 dark:border-slate-600 dark:hover:bg-slate-700 shadow-lg hover:shadow-xl"
-            disabled={position.zoom >= 8}
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 400, damping: 17 }}
           >
-            <ZoomIn size={16} />
-          </Button>
-          <Button
-            onClick={handleZoomOut}
-            size="sm"
-            variant="outline"
-            className="p-2 bg-white dark:bg-gray-800 dark:border-slate-600 dark:hover:bg-slate-700 shadow-lg hover:shadow-xl"
-            disabled={position.zoom <= 1}
+            <Button
+              onClick={handleZoomIn}
+              size="sm"
+              variant="outline"
+              className="p-2 bg-white dark:bg-gray-800 dark:border-slate-600 dark:hover:bg-slate-700 shadow-lg hover:shadow-xl transition-all duration-200"
+              disabled={position.zoom >= 8}
+            >
+              <ZoomIn size={16} />
+            </Button>
+          </motion.div>
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 400, damping: 17 }}
           >
-            <ZoomOut size={16} />
-          </Button>
+            <Button
+              onClick={handleZoomOut}
+              size="sm"
+              variant="outline"
+              className="p-2 bg-white dark:bg-gray-800 dark:border-slate-600 dark:hover:bg-slate-700 shadow-lg hover:shadow-xl transition-all duration-200"
+              disabled={position.zoom <= 1}
+            >
+              <ZoomOut size={16} />
+            </Button>
+          </motion.div>
         </div>
 
         {geoData ? (

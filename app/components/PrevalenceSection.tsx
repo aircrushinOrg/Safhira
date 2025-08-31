@@ -13,7 +13,7 @@ export function PrevalenceSection() {
   return (
     <motion.div 
       ref={ref}
-      className="min-h-screen bg-slate-50 dark:bg-slate-900"
+      className="bg-slate-50 dark:bg-slate-900"
       initial={{ opacity: 0, y: 50 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
@@ -25,11 +25,6 @@ export function PrevalenceSection() {
               <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-3 sm:mb-4 px-2">
                 STIs Are More Common Than You Think
               </h1>
-              <p className="text-sm sm:text-base lg:text-lg text-gray-600 dark:text-gray-300 max-w-4xl mx-auto px-4">
-                STIs are a public health issue, not a personal failure. 
-                Understanding the scale of STIs in our community helps reduce stigma and 
-                shows that sexual health concerns are common and treatable. 
-              </p>
             </div>
           
             {/* Supportive Context Statement */}

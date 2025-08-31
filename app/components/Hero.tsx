@@ -52,7 +52,7 @@ export function Hero() {
   };
 
   return (
-    <section className="min-h-screen max-w-screen flex justify-center items-center relative py-16 px-4 bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-pink-950 dark:via-gray-800 dark:to-teal-950 overflow-hidden">
+    <section className="min-h-screen max-w-screen flex justify-center items-center relative py-16 px-4 md:px-16 bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-pink-950 dark:via-gray-800 dark:to-teal-950 overflow-hidden">
       {/* Content */}
       <div className="flex flex-col lg:flex-row gap-8 items-center h-full w-full max-w-7xl mx-auto px-4">
         {/* Text Content */}
@@ -74,7 +74,7 @@ export function Hero() {
             className="text-lg text-center md:text-xl lg:text-left text-gray-600 dark:text-gray-300 leading-relaxed"
             variants={itemVariants}
           >
-            Built for young Malaysians, we&apos;re making conversations about relationships, consent, and reproductive health feel normal, kind, and stigma-free.
+            We&apos;re making conversations about relationships and reproductive health feel normal, kind, and stigma-free.
           </motion.p>
 
           <FeatureLabels variants={itemVariants} />
