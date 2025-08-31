@@ -70,7 +70,7 @@ export function Footer() {
             </h4>
             <ul className="space-y-2 text-sm">
               <li><a href="/chat" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-white transition-colors">Private AI Chat</a></li>
-              <li><a href="/stis" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-white transition-colors">Help Resources</a></li>
+              <li><a href="/chat/about" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-white transition-colors">About Safhira AI</a></li>
               <li><a href="/stis/prevalence" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-white transition-colors">Prevalence Data</a></li>
               <li><a href="/stis/prevention" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-white transition-colors">Prevention Guide</a></li>
               <li><a href="/?section=quiz" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-white transition-colors">Knowledge Quiz</a></li>

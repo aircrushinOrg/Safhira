@@ -3,6 +3,8 @@
 import { motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { useIframeManager } from '../components/IframeManager';
+import Link from 'next/link';
+import { Info } from 'lucide-react';
 
 export default function ChatPage() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -65,6 +67,20 @@ export default function ChatPage() {
         >
           Safhira may also make mistakes. Please verify important information.
         </motion.p>
+
+        {/* Floating About Button */}
+        <Link href="/chat/about">
+          <motion.button
+            className="hidden md:flex fixed bottom-12 md:bottom-16 right-6 md:right-8 w-8 h-8 md:w-10 md:h-10 bg-teal-500 hover:bg-teal-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200 items-center justify-center z-50"
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3, delay: 0.8 }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <Info className="w-5 h-5 md:w-6 md:h-6" />
+          </motion.button>
+        </Link>
       </div>
     </div>
   );
