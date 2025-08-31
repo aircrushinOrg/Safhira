@@ -15,7 +15,7 @@ export function Footer() {
   return (
     <footer className="bg-gradient-to-t from-pink-50/50 via-gray-50 to-teal-50/50 dark:from-pink-950/30 dark:via-gray-900 dark:to-teal-950/30 text-gray-800 dark:text-white py-12 px-4">
       <div className="container mx-auto">
-        <div className="grid md:grid-cols-4 gap-8 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
           {/* Brand */}
           <div>
             <div className="flex items-center space-x-3 mb-4">
