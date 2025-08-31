@@ -5,6 +5,7 @@ import { Button } from './ui/button';
 import { BookOpen, MessageCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import heroImage from '../../public/hero.png';
 
 export function Hero() {
   const router = useRouter();
@@ -116,11 +117,13 @@ export function Hero() {
             transition={{ duration: 0.3 }}
           >
             <Image
-              src="/hero.png"
+              src={heroImage}
               alt="Diverse group of young people smiling together"
               width={500}
               height={500}
               className="object-cover w-full h-full rounded-3xl"
+              priority
+              quality={85}
             />
           </motion.div>
 

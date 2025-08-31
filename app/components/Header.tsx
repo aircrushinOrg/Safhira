@@ -1,8 +1,13 @@
+"use client";
+
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
 import { ThemeToggle } from './ThemeToggle';
-import { MessageCircle, Shield, Home, BookOpen, HelpCircle, Award } from 'lucide-react';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from './ui/sheet';
+import { useIsMobile } from './ui/use-mobile';
+import { MessageCircle, Shield, Home, BookOpen, HelpCircle, Award, Menu } from 'lucide-react';
 import Link from 'next/link';
+import { useState } from 'react';
 
 interface HeaderProps {
   currentSection: string;
@@ -11,6 +16,56 @@ interface HeaderProps {
 }
 
 export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderProps) {
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const isMobile = useIsMobile();
+
+  const handleSectionChange = (section: string) => {
+    onSectionChange(section);
+    setIsSheetOpen(false); // 关闭抽屉
+  };
+
+  const handleChatOpen = () => {
+    onChatOpen();
+    setIsSheetOpen(false); // 关闭抽屉
+  };
+
+  const NavigationItems = () => (
+    <>
+      <Button
+        variant={currentSection === 'home' ? 'secondary' : 'ghost'}
+        size="sm"
+        onClick={() => handleSectionChange('home')}
+        className="flex items-center space-x-2 w-full justify-start md:w-auto md:justify-center"
+      >
+        <Home size={16} />
+        <span>Home</span>
+      </Button>
+      <Link href="/stis" className="w-full md:w-auto">
+        <Button
+          variant={currentSection === 'stis' ? 'secondary' : 'ghost'}
+          size="sm"
+          className="flex items-center space-x-2 w-full justify-start md:w-auto md:justify-center"
+        >
+          <BookOpen size={16} />
+          <span>Learn About STIs</span>
+        </Button>
+      </Link>
+      <Button
+        variant={currentSection === 'chat' ? 'secondary' : 'ghost'}
+        size="sm"
+        onClick={handleChatOpen}
+        className={`flex items-center space-x-2 w-full justify-start md:w-auto md:justify-center ${
+          currentSection === 'chat' 
+            ? '' 
+            : 'text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300'
+        }`}
+      >
+        <MessageCircle size={16} />
+        <span>Private Chat</span>
+      </Button>
+    </>
+  );
+
   return (
     <header className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 sticky top-0 z-50">
       <div className="container mx-auto px-4 py-4">
@@ -31,67 +86,50 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
             </div>
           </div>
 
+          {/* 桌面端导航 */}
           <nav className="hidden md:flex items-center space-x-6">
-            <Button
-              variant={currentSection === 'home' ? 'secondary' : 'ghost'}
-              size="sm"
-              onClick={() => onSectionChange('home')}
-              className="flex items-center space-x-2"
-            >
-              <Home size={16} />
-              <span>Home</span>
-            </Button>
-            <Link href="/stis">
-              <Button
-                variant={currentSection === 'stis' ? 'secondary' : 'ghost'}
-                size="sm"
-                className="flex items-center space-x-2"
-              >
-                <BookOpen size={16} />
-                <span>Learn About STIs</span>
-              </Button>
-            </Link>
-            {/* <Button
-              variant={currentSection === 'quiz' ? 'secondary' : 'ghost'}
-              size="sm"
-              onClick={() => onSectionChange('quiz')}
-              className="flex items-center space-x-2"
-            >
-              <Award size={16} />
-              <span>Quiz</span>
-            </Button> */}
-            <Button
-              variant={currentSection === 'chat' ? 'secondary' : 'ghost'}
-              size="sm"
-              onClick={onChatOpen}
-              className={`flex items-center space-x-2 ${
-                currentSection === 'chat' 
-                  ? '' 
-                  : 'text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300'
-              }`}
-            >
-              <MessageCircle size={16} />
-              <span>Private Chat</span>
-            </Button>
+            <NavigationItems />
           </nav>
 
+          {/* 移动端和右侧控件 */}
           <div className="flex items-center space-x-3">
             <Badge variant="secondary" className="flex items-center space-x-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">
               <Shield size={12} />
-              <span className="text-xs">100% Private</span>
+              <span className="text-xs hidden sm:inline">100% Private</span>
+              <span className="text-xs sm:hidden">Private</span>
             </Badge>
             
-            {/* Theme Toggle Button - Commented out to default to light mode */}
+            {/* Theme Toggle Button */}
             <ThemeToggle />
             
-            <Button
-              className="md:hidden"
-              variant="outline"
-              size="sm"
-              onClick={onChatOpen}
-            >
-              <MessageCircle size={16} />
-            </Button>
+            {/* 移动端菜单按钮 */}
+            <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
+              <SheetTrigger asChild>
+                <Button
+                  className="md:hidden"
+                  variant="outline"
+                  size="sm"
+                >
+                  <Menu size={16} />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left" className="w-72">
+                <SheetHeader>
+                  <SheetTitle className="flex items-center space-x-3">
+                    <div className="w-8 h-8 flex items-center justify-center">
+                      <svg width="32" height="32" viewBox="0 0 931 931" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+                        <path d="M545.81 645.172C543.322 642.175 518.216 625.3 510.333 621.327C479.057 605.562 373.444 564.836 330.333 551.915C272.596 534.611 220.704 513.863 181.501 492.409C116.997 457.11 70.7459 426.605 34.4076 365.517C15.9334 334.459 2.12807 286.152 0.728264 247.667C-0.619696 210.607 12.6375 81.9392 123.667 27.5516C139.834 19.6319 163.143 11.022 173.475 9.15289L187.281 6.50159L178.001 11.4518C176.016 12.5102 174.496 16.422 175.102 16.4464C175.708 16.4708 173.435 18.5888 171.101 20.5529C165.151 25.5597 151.26 43.2504 145.346 53.8262C142.618 58.704 135.764 69.1915 133.796 78.3848C127.328 108.601 124.958 101.023 123.058 131.339C122.187 145.242 121.267 152.149 122.366 165.764C123.045 174.177 123.138 168.743 126.33 179.716C132.76 201.82 132.175 189.674 137.6 204.571C141.266 214.638 145.386 224.216 150.472 229.726C162.515 242.769 192.78 270.491 211 281.943C247.539 304.909 314.746 331.703 386.152 351.773C447.646 369.057 493.157 387.208 525.565 407.374C587.126 445.68 618.954 499.05 615.923 558.889C614.451 587.946 606.624 607.572 589.85 624.259C574.684 639.349 550.505 650.83 545.81 645.172ZM806.401 573.333C806.118 572.417 805.511 562.667 805.053 551.667C802.375 487.351 785.308 432.869 752.316 383.317C737.696 361.359 726.365 347.591 707.051 328.317C670.529 291.872 624.785 260.258 568.021 232.233C557.559 227.068 548.446 222.294 547.769 221.624C545.786 219.66 548.737 214.792 560.121 201.252C589.252 166.604 623.555 144.66 663 135.44C705.709 125.456 771.317 133.384 814.926 153.799C843.572 167.209 872.55 192.145 890.023 218.421C905.526 241.734 919.958 275.834 927.939 308.008C930.931 320.067 930.886 360.437 927.859 380.74C922.168 418.91 910.658 455.759 896.749 480.333C872.414 523.328 848.006 552.571 823.173 568.481C813.122 574.921 807.404 576.576 806.401 573.333Z" fill="#F16972"/>
+                        <path d="M49.7341 754.879C-7.31755 645.783 74.9587 562.396 143.854 575.414C164.343 579.285 178.887 586.183 213.667 608.522C321.948 681.141 417.563 725.167 550.249 723.957C601.605 722.474 632.315 715.46 667.859 697.096C695.731 683.04 721.102 665.519 743.667 644.026C751 636.878 757.75 631.022 758.667 631.014C764.343 630.965 752.785 687.53 740.948 717.728C721.37 767.673 683.732 817.137 636.307 855.245C588.914 893.328 529.434 918.438 466.333 927.001C305.133 948.876 103.087 856.901 49.7341 754.879ZM611.612 681.578C611.129 680.796 614.593 676.146 619.311 671.245C642.12 647.549 655.424 620.738 661.04 587.148C663.896 570.071 663.176 527.812 659.71 509C655.971 488.709 649.662 465.399 645.637 457C616.939 397.127 534.602 341.871 436.333 316.537C322.268 287.13 241.452 249.406 197.669 205.129C186.791 194.128 186.151 193.705 181.669 194.536C174.532 195.86 166.55 199.639 161.473 204.097C157.382 207.689 154.712 212.416 149.796 224.771C148.97 226.846 147.554 228.301 146.648 228.006C143.752 227.062 133.917 209.661 129.713 198.044C124.341 183.197 121.666 167.167 121.668 149.825C121.669 133.459 123.789 108.735 125.853 101.013C126.635 98.087 127.482 94.187 127.735 92.3464C128.556 86.3746 136.365 66.61 142.408 55.2104C148.585 43.5567 162.864 24.262 169.348 18.8057C171.438 17.0474 172.994 15.8622 175.624 13.1943C178.414 10.3645 182.083 7.13626 199.97 3.51006C214.389 0.586849 220.578 0.0531775 240.333 0.0294075C275.438 -0.0127925 307.001 5.68104 346.913 19.2563C403.68 38.5646 453.53 77.672 480.035 123.692C491.942 144.366 501.026 172.631 504.384 199.453C506.026 212.573 505.503 261.81 503.657 267.797C502.88 270.319 504.016 271.019 515.231 274.922C582.515 298.339 635.672 329.41 674.592 368.071C728.716 421.836 757.734 492.505 759.287 574.333L759.667 594.333L753.441 602.333C743.919 614.57 728.948 628.843 715.667 638.346C694.567 653.443 659.276 670.063 628.176 679.549C615.706 683.353 612.92 683.694 611.612 681.578Z" fill="#6CC8BE"/>
+                      </svg>
+                    </div>
+                    <span>Safhira</span>
+                  </SheetTitle>
+                </SheetHeader>
+                <nav className="flex flex-col space-y-3 mt-6">
+                  <NavigationItems />
+                </nav>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
       </div>

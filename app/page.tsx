@@ -9,7 +9,6 @@ import { LearningModules } from './components/LearningModules';
 import { AIChat } from './components/AIChat';
 import { QuizSection } from './components/QuizSection';
 import { ResourcesSection } from './components/ResourcesSection';
-import { Footer } from './components/Footer';
 import { motion, AnimatePresence } from 'framer-motion';
 
 function AppContent() {
@@ -124,8 +123,6 @@ function AppContent() {
           {renderSection()}
         </AnimatePresence>
       </main>
-
-      <Footer />
     </div>
   );
 }

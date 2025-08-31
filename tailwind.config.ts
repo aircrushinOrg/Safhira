@@ -3,6 +3,10 @@ import type { Config } from 'tailwindcss';
 export default {
   darkMode: 'class',
   content: ['./app/**/*.{ts,tsx}', './content/**/*.mdx', './public/**/*.svg'],
+  safelist: [
+    'hide-scrollbar',
+    'scrollbar-thin',
+  ],
   theme: {
     extend: {
       fontFamily: {

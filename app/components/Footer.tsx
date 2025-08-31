@@ -12,7 +12,7 @@ import {
 
 export function Footer() {
   return (
-    <footer className="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-950 dark:to-gray-900 text-gray-800 dark:text-white py-12 px-4">
+    <footer className="bg-gradient-to-t from-pink-50/50 via-gray-50 to-teal-50/50 dark:from-pink-950/30 dark:via-gray-900 dark:to-teal-950/30 text-gray-800 dark:text-white py-12 px-4">
       <div className="container mx-auto max-w-6xl">
         <div className="grid md:grid-cols-4 gap-8 mb-8">
           {/* Brand */}

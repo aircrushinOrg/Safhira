@@ -273,7 +273,7 @@ export function ResourcesSection() {
         {/* Contact Doctor Modal */}
         {showContactModal && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-            <Card className="w-full max-w-2xl max-h-[80vh] overflow-y-auto bg-white dark:bg-gray-800">
+            <Card className="w-full max-w-2xl max-h-[80vh] overflow-y-auto scrollbar-thin bg-white dark:bg-gray-800">
               <div className="p-6">
                 <div className="flex items-center justify-between mb-6">
                   <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-100 flex items-center space-x-2">
@@ -323,7 +323,7 @@ export function ResourcesSection() {
         {/* Seek Help Modal */}
         {showSupportModal && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-            <Card className="w-full max-w-2xl max-h-[80vh] overflow-y-auto bg-white dark:bg-gray-800">
+            <Card className="w-full max-w-2xl max-h-[80vh] overflow-y-auto scrollbar-thin bg-white dark:bg-gray-800">
               <div className="p-6">
                 <div className="flex items-center justify-between mb-6">
                   <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-100 flex items-center space-x-2">
