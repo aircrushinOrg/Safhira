@@ -121,7 +121,7 @@ export function Footer() {
         <div className="border-t border-gray-300 dark:border-gray-800 pt-6">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-sm text-gray-500 dark:text-gray-500">
-              © 2025 Safhira. All rights reserved. Made with ❤️ from FIT5120-TM01
+              © 2025 Safhira. Made with ❤️ from FIT5120-TM01
             </div>
             <div className="flex items-center space-x-6 text-sm">
               <a href="/privacy-policy" className="text-gray-500 dark:text-gray-500 hover:text-teal-600 dark:hover:text-white transition-colors">Privacy Policy</a>

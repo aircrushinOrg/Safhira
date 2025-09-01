@@ -6,17 +6,14 @@ import { Hero } from './components/Hero';
 import { StigmaBreakingSection } from './components/StigmaBreakingSection';
 import { PrevalenceSection } from './components/PrevalenceSection';
 import { LearningModules } from './components/LearningModules';
-import { AIChat } from './components/AIChat';
 import { QuizSection } from './components/QuizSection';
 import { ResourcesSection } from './components/ResourcesSection';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useIframeManager } from './components/IframeManager';
 
 function AppContent() {
   const [currentSection, setCurrentSection] = useState('home');
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { createPreloadedIframe } = useIframeManager();
 
   const handleChatOpen = () => {
     router.push('/chat');
@@ -40,15 +37,6 @@ function AppContent() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [currentSection]);
 
-  // 预加载聊天iframe
-  useEffect(() => {
-    // 延迟几秒后开始预加载，避免影响初始页面加载
-    const timer = setTimeout(() => {
-      createPreloadedIframe('https://udify.app/chat/jR3TCPVG1DjZidxk', 'preloaded-chat-iframe');
-    }, 2000);
-
-    return () => clearTimeout(timer);
-  }, [createPreloadedIframe]);
 
   const pageVariants = {
     initial: { opacity: 0, y: 20 },

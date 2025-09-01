@@ -1,36 +1,12 @@
 'use client'
 
 import { motion } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
-import { useIframeManager } from '../components/IframeManager';
+import { useState } from 'react';
 import Link from 'next/link';
 import { Info } from 'lucide-react';
 
 export default function ChatPage() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [isIframeTransferred, setIsIframeTransferred] = useState(false);
-  const { transferIframe, isIframeLoaded, createPreloadedIframe } = useIframeManager();
-
-  useEffect(() => {
-    if (!containerRef.current) return;
-
-    // 尝试使用预加载的iframe
-    const success = transferIframe('chat-iframe-container', 'preloaded-chat-iframe');
-    
-    if (success) {
-      setIsIframeTransferred(true);
-    } else {
-      // 如果预加载的iframe不可用，创建新的iframe
-      const iframe = document.createElement('iframe');
-      iframe.src = 'https://udify.app/chat/jR3TCPVG1DjZidxk';
-      iframe.title = 'Safhira AI';
-      iframe.className = 'w-full h-full border-0';
-      iframe.allow = 'microphone';
-      
-      containerRef.current.appendChild(iframe);
-      setIsIframeTransferred(true);
-    }
-  }, [transferIframe]);
+  const [isIframeLoading, setIsIframeLoading] = useState(true);
 
   return (
     <div className="min-h-[calc(100vh-80px)] bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
@@ -42,19 +18,22 @@ export default function ChatPage() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.3, ease: "easeOut" }}
         >
-          <div 
-            ref={containerRef}
-            id="chat-iframe-container" 
-            className="h-full"
-          >
-            {!isIframeTransferred && (
-              <div className="flex items-center justify-center h-full">
+          <div className="h-full relative">
+            {isIframeLoading && (
+              <div className="absolute inset-0 flex items-center justify-center bg-white dark:bg-gray-800 z-10">
                 <div className="text-center">
                   <div className="w-8 h-8 border-4 border-teal-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
                   <p className="text-gray-600 dark:text-gray-300">Loading chat...</p>
                 </div>
               </div>
             )}
+            <iframe
+              src="https://udify.app/chat/jR3TCPVG1DjZidxk"
+              title="Safhira AI"
+              className="w-full h-full border-0"
+              allow="microphone"
+              onLoad={() => setIsIframeLoading(false)}
+            />
           </div>
         </motion.div>
 

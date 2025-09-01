@@ -5,7 +5,7 @@ import { Suspense } from 'react';
 import { ThemeProvider } from './components/theme-provider';
 import { HeaderWrapper } from './components/HeaderWrapper';
 import { FooterWrapper } from './components/FooterWrapper';
-import { IframeManagerProvider } from './components/IframeManager';
+
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -52,7 +52,6 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <IframeManagerProvider>
             <Suspense fallback={null}>
               <HeaderWrapper />
             </Suspense>
@@ -60,7 +59,6 @@ export default function RootLayout({
             <Suspense fallback={null}>
               <FooterWrapper />
             </Suspense>
-          </IframeManagerProvider>
         </ThemeProvider>
       </body>
     </html>
