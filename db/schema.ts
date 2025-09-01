@@ -27,7 +27,7 @@ export const stiState = pgTable('sti_state', {
   incidence: numeric('incidence', { precision: 10, scale: 2 }).notNull(),
 }, (table) => [
       primaryKey({ columns: [table.date, table.state, table.disease] }),        
-      index('idx_std_state_date').on(table.date),
-      index('idx_std_state_state').on(table.state),
-      index('idx_std_state_disease').on(table.disease),
+      index('idx_sti_state_date').on(table.date),
+      index('idx_sti_state_state').on(table.state),
+      index('idx_sti_state_disease').on(table.disease),
 ]);
