@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { Hero } from './components/Hero';
 import { StigmaBreakingSection } from './components/StigmaBreakingSection';
 import { PrevalenceSection } from './components/PrevalenceSection';
+import { FeaturesSection } from './components/FeaturesSection';
 import { LearningModules } from './components/LearningModules';
 import { QuizSection } from './components/QuizSection';
 import { ResourcesSection } from './components/ResourcesSection';
@@ -60,6 +61,7 @@ function AppContent() {
             <Hero />
             <StigmaBreakingSection />
             <PrevalenceSection />
+            <FeaturesSection />
             <ResourcesSection />
           </motion.div>
         );
@@ -105,6 +107,7 @@ function AppContent() {
             <Hero />
             <StigmaBreakingSection />
             <PrevalenceSection />
+            <FeaturesSection />
             <ResourcesSection />
           </motion.div>
         );

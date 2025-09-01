@@ -24,7 +24,7 @@ export function PrevalenceSection() {
                 The Reality Across Malaysia
               </h1>
               <p className="text-md text-center md:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-                The conversations we just talked about? They matter more than you might think. Across Malaysia, many young people lack access to judgment-free sexual health information. When we don&apos;t talk openly about these topics, it shows up in the data.
+                The lack of open conversations about sexual health has real consequences across Malaysia.
               </p>
             </div>
         </div>
