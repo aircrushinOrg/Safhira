@@ -56,9 +56,9 @@ export function Footer() {
             <ul className="space-y-2 text-sm">
               <li><a href="/stis" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-white transition-colors">STI Basics</a></li>
               <li><a href="/stis/prevention" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-white transition-colors">Prevention</a></li>
-              <li><a href="/?section=basics" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-white transition-colors">Testing & Treatment</a></li>
-              <li><a href="/?section=myths" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-white transition-colors">Myths vs Facts</a></li>
-              <li><a href="/?section=quiz" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-white transition-colors">Interactive Quiz</a></li>
+              {/* <li><a href="/?section=basics" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-white transition-colors">Testing & Treatment</a></li> */}
+              {/* <li><a href="/?section=myths" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-white transition-colors">Myths vs Facts</a></li> */}
+              {/* <li><a href="/?section=quiz" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-white transition-colors">Interactive Quiz</a></li> */}
             </ul>
           </div>
 
@@ -72,8 +72,6 @@ export function Footer() {
               <li><a href="/chat" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-white transition-colors">Private AI Chat</a></li>
               <li><a href="/chat/about" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-white transition-colors">About Safhira AI</a></li>
               <li><a href="/stis/prevalence" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-white transition-colors">Prevalence Data</a></li>
-              <li><a href="/stis/prevention" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-white transition-colors">Prevention Guide</a></li>
-              <li><a href="/?section=quiz" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-white transition-colors">Knowledge Quiz</a></li>
             </ul>
           </div>
 
@@ -92,13 +90,13 @@ export function Footer() {
                 <Mail size={14} className="text-gray-500 dark:text-gray-500" />
                 <span className="text-gray-600 dark:text-gray-400">info@safhira.vercel.app</span>
               </div>
-              <div className="bg-gray-100 dark:bg-gray-900 rounded-lg p-3 mt-4">
+              {/* <div className="bg-gray-100 dark:bg-gray-900 rounded-lg p-3 mt-4">
                 <p className="text-xs text-gray-500 dark:text-gray-500 mb-2">Developed in collaboration with:</p>
                 <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-1">
                   <li>• Monash University Malaysia</li>
                   <li>• Malaysian AIDS Foundation</li>
                 </ul>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -119,15 +117,15 @@ export function Footer() {
 
         {/* Bottom Bar */}
         <div className="border-t border-gray-300 dark:border-gray-800 pt-6">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+          <div className="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0">
             <div className="text-sm text-gray-500 dark:text-gray-500">
               © 2025 Safhira. Made with ❤️ from FIT5120-TM01
             </div>
-            <div className="flex items-center space-x-6 text-sm">
+            {/* <div className="flex items-center space-x-6 text-sm">
               <a href="/privacy-policy" className="text-gray-500 dark:text-gray-500 hover:text-teal-600 dark:hover:text-white transition-colors">Privacy Policy</a>
               <a href="/terms-of-use" className="text-gray-500 dark:text-gray-500 hover:text-teal-600 dark:hover:text-white transition-colors">Terms of Use</a>
               <a href="#" className="text-gray-500 dark:text-gray-500 hover:text-teal-600 dark:hover:text-white transition-colors">Data Security</a>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
