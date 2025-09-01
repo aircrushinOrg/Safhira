@@ -33,12 +33,14 @@ function AppContent() {
     const newUrl = section === 'home' ? '/' : `/?section=${section}`;
     router.push(newUrl);
     setCurrentSection(section);
-  };
+    // Only scroll to top when user intentionally changes sections
 
-  // Scroll to current section on change
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [currentSection]);
+    // Scroll to current section on change
+    useEffect(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, [currentSection]);
+
+  };
 
   // 预加载聊天iframe
   useEffect(() => {
@@ -73,8 +75,8 @@ function AppContent() {
             transition={pageTransition}
           >
             <Hero />
-            <StigmaBreakingSection />
             <PrevalenceSection />
+            <StigmaBreakingSection />
             <ResourcesSection />
           </motion.div>
         );
@@ -118,8 +120,8 @@ function AppContent() {
             transition={pageTransition}
           >
             <Hero />
-            <StigmaBreakingSection />
             <PrevalenceSection />
+            <StigmaBreakingSection />
             <ResourcesSection />
           </motion.div>
         );

@@ -6,7 +6,7 @@ import { Card } from './ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { Slider } from './ui/slider';
 import { Button } from './ui/button';
-import { Play, Pause, ZoomIn, ZoomOut } from 'lucide-react';
+import { Play, Pause, ZoomIn, ZoomOut, LocateFixed } from 'lucide-react';
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
 import { 
   getStateData, 
@@ -24,7 +24,7 @@ export function STIChoroplethChart() {
   const [hoveredState, setHoveredState] = useState<string | null>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isPlaying, setIsPlaying] = useState(false);
-  const [position, setPosition] = useState({ coordinates: [109, 4], zoom: 1 });
+  const [position, setPosition] = useState({ coordinates: [109.5, 4], zoom: 1 });
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   // Load Malaysia GeoJSON data
@@ -78,6 +78,13 @@ export function STIChoroplethChart() {
       ...prev,
       zoom: Math.max(prev.zoom / 1.3, 1) // Smaller decrement for smoother zoom
     }));
+  };
+
+  const handleRecenter = () => {
+    setPosition({
+      coordinates: [109.5, 4],
+      zoom: 1
+    });
   };
 
   const handleMoveEnd = (position: any) => {
@@ -153,10 +160,10 @@ export function STIChoroplethChart() {
           <Select 
             value={selectedSTI} 
             onValueChange={(value) => setSelectedSTI(value as STIType)}>
-            <SelectTrigger className="flex bg-slate-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600">
+            <SelectTrigger className="flex bg-slate-100 dark:bg-slate-700 border border-slate-300 dark:border-slate-600">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent className="flex bg-slate-100 dark:bg-gray-700">
+            <SelectContent className="flex bg-slate-100 dark:bg-slate-700">
               {Object.entries(stiTypes).map(([key, label]) => (
                 <SelectItem key={key} value={key}>
                   {label}
@@ -264,6 +271,21 @@ export function STIChoroplethChart() {
               <ZoomOut size={16} />
             </Button>
           </motion.div>
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 400, damping: 17 }}
+          >
+            <Button
+              onClick={handleRecenter}
+              size="sm"
+              variant="outline"
+              className="p-2 bg-white dark:bg-gray-800 dark:border-slate-600 dark:hover:bg-slate-700 shadow-lg hover:shadow-xl transition-all duration-200"
+              title="Reset view to center"
+            >
+              <LocateFixed size={16} />
+            </Button>
+          </motion.div>
         </div>
 
         {geoData ? (
@@ -276,7 +298,7 @@ export function STIChoroplethChart() {
               projection="geoMercator"
               projectionConfig={{
                 scale: 2200,
-                center: [109, 4]
+                center: [109.5, 4]
               }}
               width={800}
               height={300}

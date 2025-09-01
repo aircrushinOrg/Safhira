@@ -1,7 +1,5 @@
 'use client'
 
-import { Card } from './ui/card';
-import { Heart } from 'lucide-react';
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { STIChoroplethChart } from './STIChoroplethChart';
@@ -26,7 +24,7 @@ export function PrevalenceSection() {
                 STIs Are Nothing to be Ashamed Of
               </h1>
               <p className="text-md text-center md:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-                STIs affect millions worldwide, including many in Malaysia. They’re more common than most realise, yet rarely talked about. Behind the numbers are real people — students, professionals, parents, and community members.
+                Sexually Transmitted Infections (STIs) affect millions worldwide, including many in Malaysia. They’re more common than most realise, yet rarely talked about.
               </p>
             </div>
         </div>

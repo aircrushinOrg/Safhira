@@ -13,7 +13,7 @@ export function StigmaBreakingSection() {
   return (
     <motion.div 
       ref={ref}
-      className="bg-white dark:bg-pink-950/10 overflow-hidden"
+      className="bg-white dark:bg-slate-800 overflow-hidden max-w-screen"
       initial={{ opacity: 0, y: 50 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
@@ -26,6 +26,9 @@ export function StigmaBreakingSection() {
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-6">
               Breaking the Silence, <span className="bg-gradient-to-r from-rose-500 via-purple-500 to-teal-500 dark:from-rose-400 dark:via-purple-400 dark:to-teal-400 bg-clip-text text-transparent">Ending the Stigma</span>
             </h1>
+            <p className="text-md text-center md:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+              Ever felt like it’s hard to talk about sexual health? Safhira is your space to ask, share, and be heard.              
+            </p>
           </div>
 
           {/* Main Content Cards */}
