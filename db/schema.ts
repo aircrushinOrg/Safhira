@@ -31,3 +31,23 @@ export const stiState = pgTable('sti_state', {
       index('idx_sti_state_state').on(table.state),
       index('idx_sti_state_disease').on(table.disease),
 ]);
+
+// STI Information Table - Detailed information about each STI
+export const stiInfo = pgTable('sti_info', {
+  name: varchar('name', { length: 255 }).primaryKey(),
+  type: varchar('type', { length: 50 }).notNull(), // 'Bacterial', 'Viral', 'Parasitic'
+  severity: varchar('severity', { length: 20 }).notNull(), // 'Low', 'Medium', 'High'
+  treatability: varchar('treatability', { length: 20 }).notNull(), // 'Curable', 'Manageable', 'Preventable'
+  symptomsCommon: text('symptoms_common').notNull(), // JSON array as text
+  symptomsWomen: text('symptoms_women').notNull(), // JSON array as text
+  symptomsMen: text('symptoms_men').notNull(), // JSON array as text
+  symptomsGeneral: text('symptoms_general').notNull(), // JSON array as text
+  transmission: text('transmission').notNull(), // JSON array as text
+  healthEffects: text('health_effects').notNull(), // JSON array as text
+  prevention: text('prevention').notNull(), // JSON array as text
+  treatment: text('treatment').notNull(),
+  malaysianContext: text('malaysian_context').notNull(),
+}, (table) => [
+  index('idx_sti_info_type').on(table.type),
+  index('idx_sti_info_severity').on(table.severity),
+]);
