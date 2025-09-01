@@ -30,12 +30,9 @@ function AppContent() {
     const newUrl = section === 'home' ? '/' : `/?section=${section}`;
     router.push(newUrl);
     setCurrentSection(section);
-  };
-
-  // Scroll to current section on change
-  useEffect(() => {
+    // Only scroll to top when user intentionally changes sections
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [currentSection]);
+  };
 
 
   const pageVariants = {
@@ -61,8 +58,8 @@ function AppContent() {
             transition={pageTransition}
           >
             <Hero />
-            <StigmaBreakingSection />
             <PrevalenceSection />
+            <StigmaBreakingSection />
             <ResourcesSection />
           </motion.div>
         );
@@ -106,8 +103,8 @@ function AppContent() {
             transition={pageTransition}
           >
             <Hero />
-            <StigmaBreakingSection />
             <PrevalenceSection />
+            <StigmaBreakingSection />
             <ResourcesSection />
           </motion.div>
         );
