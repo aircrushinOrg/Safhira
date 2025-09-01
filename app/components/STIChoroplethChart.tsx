@@ -29,7 +29,7 @@ export function STIChoroplethChart() {
 
   // Load Malaysia GeoJSON data
   useEffect(() => {
-    import('@/app/data/my.json')
+    import('@/public/my.json')
       .then(data => {
         const geoJsonData = data.default || data;
         setGeoData(geoJsonData);
