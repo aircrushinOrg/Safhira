@@ -92,8 +92,8 @@ export function ReadyToStartSection() {
             transition={{ duration: 0.8, delay: 0.5 }}
           >
             <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-600 to-transparent max-w-md"></div>
-            <div className="mx-6">
-              <div className="w-3 h-3 bg-teal-400 dark:bg-teal-700 rounded-full"></div>
+            <div className="mx-6 text-rose-500 dark:text-rose-400">
+              <Heart size={16} fill="currentColor" />
             </div>
             <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-600 to-transparent max-w-md"></div>
           </motion.div>

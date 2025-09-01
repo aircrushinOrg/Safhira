@@ -100,18 +100,7 @@
   }
 
   /* Enhanced transitions for specific elements */
-  button, input, textarea, select {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  /* Smooth backdrop and overlay transitions */
-  [data-radix-popper-content-wrapper],
-  [data-state] {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  /* Theme transition animation for the entire page */
-  .theme-transition {
+  button {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
