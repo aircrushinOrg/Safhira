@@ -12,10 +12,6 @@ export function FeatureLabels({ variants }: FeatureLabelProps) {
       text: "Private & Safe",
     },
     {
-      icon: Heart,
-      text: "Stigma-Free",
-    },
-    {
       icon: Book,
       text: "Science-Based",
     },
