@@ -58,8 +58,8 @@ function AppContent() {
             transition={pageTransition}
           >
             <Hero />
-            <PrevalenceSection />
             <StigmaBreakingSection />
+            <PrevalenceSection />
             <ResourcesSection />
           </motion.div>
         );
@@ -103,8 +103,8 @@ function AppContent() {
             transition={pageTransition}
           >
             <Hero />
-            <PrevalenceSection />
             <StigmaBreakingSection />
+            <PrevalenceSection />
             <ResourcesSection />
           </motion.div>
         );

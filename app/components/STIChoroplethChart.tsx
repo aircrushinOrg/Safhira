@@ -6,7 +6,7 @@ import { Card } from './ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { Slider } from './ui/slider';
 import { Button } from './ui/button';
-import { Play, Pause, ZoomIn, ZoomOut, LocateFixed } from 'lucide-react';
+import { Play, Pause, ZoomIn, ZoomOut, LocateFixed, BadgeAlert } from 'lucide-react';
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
 import { 
   getStateData, 
@@ -400,6 +400,19 @@ export function STIChoroplethChart() {
           </div>
           <div className="text-xs text-gray-600 dark:text-gray-400">Average Rate</div>
         </div>
+      </div>
+      
+      <div className="flex w-full justify-center mt-6">
+        <Card className="p-6 bg-teal-50 dark:bg-teal-900/20 border-teal-200 dark:border-teal-800 h-full">
+          <div className="flex h-full">
+            <div className="flex items-start space-x-3">
+              <BadgeAlert className="text-teal-500 flex-shrink-0" size={20} />
+              <p className="text-teal-700 dark:text-teal-300 text-sm sm:text-base leading-relaxed flex-grow">
+                These numbers aren&apos;t just statistics - they represent real people who deserve support and accurate information. This is exactly why safe, stigma-free conversations matter.
+              </p>
+            </div>
+          </div>
+        </Card>
       </div>
     </Card>
   );

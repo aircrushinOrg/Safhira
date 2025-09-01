@@ -21,10 +21,10 @@ export function PrevalenceSection() {
           <div className="mb-6 sm:mb-8">
             <div className="mb-4 sm:mb-6 text-center flex flex-col w-full justify-center items-center">
               <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-3 sm:mb-4 px-2">
-                STIs Are Nothing to be Ashamed Of
+                The Reality Across Malaysia
               </h1>
               <p className="text-md text-center md:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-                Sexually Transmitted Infections (STIs) affect millions worldwide, including many in Malaysia. They’re more common than most realise, yet rarely talked about.
+                The conversations we just talked about? They matter more than you might think. Across Malaysia, many young people lack access to judgment-free sexual health information. When we don&apos;t talk openly about these topics, it shows up in the data.
               </p>
             </div>
         </div>
