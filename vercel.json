@@ -1,0 +1,13 @@
+{
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' data: mediastream: blob: filesystem: *.dify.dev *.dify.ai *.udify.app udify.app *.r2.cloudflarestorage.com https://paulrosen.github.io *.sentry.io http://localhost:* http://127.0.0.1:* https://analytics.google.com googletagmanager.com *.googletagmanager.com https://www.google-analytics.com https://api.github.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src 'self' fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' data: blob:; connect-src 'self' *.udify.app udify.app *.dify.dev *.dify.ai wss://udify.app wss://*.udify.app https://analytics.google.com; frame-src 'self' *.udify.app udify.app *.dify.dev *.dify.ai; worker-src 'self' blob:; child-src 'self' blob:; object-src 'none'; base-uri 'self';"
+        }
+      ]
+    }
+  ]
+}
