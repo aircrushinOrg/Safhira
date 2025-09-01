@@ -1,8 +1,8 @@
 export const malaysianStates = [
   'Johor', 'Kedah', 'Kelantan', 'Melaka', 'Negeri Sembilan', 
-  'Pahang', 'Penang', 'Perak', 'Perlis', 'Sabah', 
-  'Sarawak', 'Selangor', 'Terengganu', 'Kuala Lumpur', 
-  'Labuan', 'Putrajaya'
+  'Pahang', 'Pulau Pinang', 'Perak', 'Perlis', 'Sabah', 
+  'Sarawak', 'Selangor', 'Terengganu', 'W.P. Kuala Lumpur', 
+  'W.P. Labuan', 'Putrajaya'
 ];
 
 export const stiTypes = {

@@ -141,14 +141,8 @@ export function STIChoroplethChart() {
   const maxRate = allRatesForDisease.length > 0 ? Math.max(...allRatesForDisease) : 100;
   const minRate = allRatesForDisease.length > 0 ? Math.min(...allRatesForDisease) : 0;
 
-  // Map GeoJSON state names to our data state names
-  const stateNameMapping: Record<string, string> = {
-    'Pulau Pinang': 'Penang',
-    // All other names match exactly
-  };
-
   const normalizeStateName = (geoJsonName: string): string => {
-    return stateNameMapping[geoJsonName] || geoJsonName;
+    return geoJsonName;
   };
 
   // Create a lookup map for state data
@@ -432,24 +426,38 @@ export function STIChoroplethChart() {
       </div>
 
       {/* Summary Statistics */}
-      <div className="flex justify-around gap-4">
+      <div className="flex justify-around gap-4 mt-4">
         <div className="text-center">
-          <div className="text-2xl md:text-3xl font-bold text-rose-500 dark:text-rose-400">
+          <div className="text-xs text-gray-600 dark:text-gray-400">
+            Highest Rate
+          </div>
+          <div className="text-2xl md:text-3xl font-bold text-rose-500 dark:text-rose-400 mt-2">
             {currentData.length > 0 ? Math.max(...currentData.map(d => d.rate)) : 0}
           </div>
-          <div className="text-xs text-gray-600 dark:text-gray-400">Highest Rate</div>
+            {currentData.length > 0 && (
+              <div className="text-xs text-gray-500 dark:text-gray-500">
+                ({currentData.find(d => d.rate === Math.max(...currentData.map(r => r.rate)))?.state})
+              </div>
+            )}
         </div>
         <div className="text-center">
-          <div className="text-2xl md:text-3xl font-bold text-teal-500 dark:text-teal-400">
+          <div className="text-xs text-gray-600 dark:text-gray-400">
+            Lowest Rate
+          </div>
+          <div className="text-2xl md:text-3xl font-bold text-teal-500 dark:text-teal-400 mt-2">
             {currentData.length > 0 ? Math.min(...currentData.map(d => d.rate)) : 0}
           </div>
-          <div className="text-xs text-gray-600 dark:text-gray-400">Lowest Rate</div>
+          {currentData.length > 0 && (
+            <div className="text-xs text-gray-500 dark:text-gray-500">
+              ({currentData.find(d => d.rate === Math.min(...currentData.map(r => r.rate)))?.state})
+            </div>
+          )}
         </div>
         <div className="text-center">
-          <div className="text-2xl md:text-3xl font-bold text-purple-500 dark:text-purple-400">
+          <div className="text-xs text-gray-600 dark:text-gray-400">Average Rate</div>
+          <div className="text-2xl md:text-3xl font-bold text-purple-500 dark:text-purple-400 mt-2">
             {currentData.length > 0 ? Math.round(currentData.reduce((sum, d) => sum + d.rate, 0) / currentData.length) : 0}
           </div>
-          <div className="text-xs text-gray-600 dark:text-gray-400">Average Rate</div>
         </div>
       </div>
       

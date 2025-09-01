@@ -2,6 +2,7 @@
 
 import { db } from "../db";
 import { stiState } from "../../db/schema";
+import { ne } from "drizzle-orm";
 
 export async function getAllUniqueDates(): Promise<number[]> {
   try {
@@ -53,6 +54,7 @@ export async function getAllYearDiseaseIncidences(): Promise<{ year: number, dis
         incidence: stiState.incidence
       })
       .from(stiState)
+      .where(ne(stiState.state, 'Malaysia')) // Exclude Malaysia
       .orderBy(stiState.date);
 
     if (results.length === 0) {
