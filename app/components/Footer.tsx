@@ -90,12 +90,11 @@ export function Footer() {
               </div>
               <div className="flex items-center space-x-2">
                 <Mail size={14} className="text-gray-500 dark:text-gray-500" />
-                <span className="text-gray-600 dark:text-gray-400">hfuu0019@student.monash.edu</span>
+                <span className="text-gray-600 dark:text-gray-400">info@safhira.vercel.app</span>
               </div>
               <div className="bg-gray-100 dark:bg-gray-900 rounded-lg p-3 mt-4">
                 <p className="text-xs text-gray-500 dark:text-gray-500 mb-2">Developed in collaboration with:</p>
                 <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-1">
-                  <li>• Malaysian Ministry of Health</li>
                   <li>• Monash University Malaysia</li>
                   <li>• Malaysian AIDS Foundation</li>
                 </ul>
