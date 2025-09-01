@@ -53,6 +53,19 @@ export function FeaturesSection() {
 
   const availableFeatures: AvailableFeature[] = [
     {
+      id: 'chatbot',
+      title: 'Private AI Assistant',
+      description: 'Get judgment-free guidance on sexual health questions. Available 24/7 in a completely private environment.',
+      icon: MessageCircle,
+      color: 'from-teal-500 to-teal-600 dark:from-teal-400 dark:to-teal-500',
+      bgColor: 'bg-teal-50 dark:bg-teal-900/20',
+      borderColor: 'border-teal-200 dark:border-teal-800',
+      textColor: 'text-teal-700 dark:text-teal-300',
+      iconColor: 'text-teal-500',
+      action: () => router.push('/chat'),
+      buttonText: 'Start Conversation'
+    },
+    {
       id: 'education',
       title: 'STI Education Hub',
       description: 'Comprehensive, medically-accurate information about sexually transmitted infections in Malaysia.',
@@ -64,19 +77,6 @@ export function FeaturesSection() {
       iconColor: 'text-purple-500',
       action: () => router.push('/stis'),
       buttonText: 'Explore Education'
-    },
-    {
-      id: 'chatbot',
-      title: 'Private AI Assistant',
-      description: 'Get personalized, judgment-free guidance on sexual health questions. Available 24/7 in a completely private environment.',
-      icon: MessageCircle,
-      color: 'from-teal-500 to-teal-600 dark:from-teal-400 dark:to-teal-500',
-      bgColor: 'bg-teal-50 dark:bg-teal-900/20',
-      borderColor: 'border-teal-200 dark:border-teal-800',
-      textColor: 'text-teal-700 dark:text-teal-300',
-      iconColor: 'text-teal-500',
-      action: () => router.push('/chat'),
-      buttonText: 'Start Conversation'
     }
   ];
 
@@ -124,7 +124,7 @@ export function FeaturesSection() {
   return (
     <motion.div 
       ref={ref}
-      className="bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-pink-950 dark:via-gray-800 dark:to-teal-950 overflow-hidden"
+      className="bg-white dark:bg-slate-800 overflow-hidden"
       initial={{ opacity: 0, y: 50 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
       transition={{ duration: 0.8, ease: "easeOut" }}

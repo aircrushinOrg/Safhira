@@ -9,6 +9,7 @@ import { FeaturesSection } from './components/FeaturesSection';
 import { LearningModules } from './components/LearningModules';
 import { QuizSection } from './components/QuizSection';
 import { ResourcesSection } from './components/ResourcesSection';
+import { ReadyToStartSection } from './components/ReadyToStartSection';
 import { motion, AnimatePresence } from 'framer-motion';
 
 function AppContent() {
@@ -62,7 +63,8 @@ function AppContent() {
             <StigmaBreakingSection />
             <PrevalenceSection />
             <FeaturesSection />
-            <ResourcesSection />
+            {/* <ResourcesSection /> */}
+            <ReadyToStartSection />
           </motion.div>
         );
       case 'quiz':
@@ -108,7 +110,8 @@ function AppContent() {
             <StigmaBreakingSection />
             <PrevalenceSection />
             <FeaturesSection />
-            <ResourcesSection />
+            {/* <ResourcesSection /> */}
+            <ReadyToStartSection />
           </motion.div>
         );
     }
