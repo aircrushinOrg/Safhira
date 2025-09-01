@@ -15,6 +15,13 @@
       "when": 1756712872521,
       "tag": "0001_chemical_natasha_romanoff",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1756738137455,
+      "tag": "0002_bitter_excalibur",
+      "breakpoints": true
     }
   ]
 }
