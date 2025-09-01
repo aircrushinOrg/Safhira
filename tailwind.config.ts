@@ -67,5 +67,7 @@ export default {
   future: {
     hoverOnlyWhenSupported: true,
   },
-  plugins: [],
+  plugins: [
+    require("tailwindcss-animate"),
+  ],
 } satisfies Config;

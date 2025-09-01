@@ -83,10 +83,44 @@
 
   * {
     @apply border-border;
+    transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   body {
     @apply bg-background text-foreground font-sans;
+    transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Smooth transitions for all elements that use CSS variables */
+  html {
+    transition: color-scheme 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Enhanced transitions for specific elements */
+  button, input, textarea, select {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Smooth backdrop and overlay transitions */
+  [data-radix-popper-content-wrapper],
+  [data-state] {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Theme transition animation for the entire page */
+  .theme-transition {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Smooth card and component transitions */
+  [class*="bg-"], [class*="border-"], [class*="text-"] {
+    transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
 

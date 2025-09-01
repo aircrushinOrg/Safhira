@@ -113,7 +113,7 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
                   <Menu size={16} />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left" className="w-72">
+              <SheetContent side="left" className="w-72 backdrop-blur-md bg-white/95 dark:bg-gray-900/95">
                 <SheetHeader>
                   <SheetTitle className="flex items-center space-x-3">
                     <div className="w-8 h-8 flex items-center justify-center">
