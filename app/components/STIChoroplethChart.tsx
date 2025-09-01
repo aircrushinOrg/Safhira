@@ -8,18 +8,15 @@ import { Slider } from './ui/slider';
 import { Button } from './ui/button';
 import { Play, Pause, ZoomIn, ZoomOut, LocateFixed, BadgeAlert } from 'lucide-react';
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
-import { 
-  getStateData, 
-  getMaxRate, 
-  getMinRate, 
-  stiTypes, 
-  type STIType, 
-  type Year 
-} from '@/lib/sti-prevalence-data';
+import { stiTypes, type STIType, type Year } from '@/lib/sti-prevalence-data';
+import { getAllUniqueDates, getAllUniqueDiseases, getAllYearDiseaseIncidences } from '../actions/prevalence_actions';
 
 export function STIChoroplethChart() {
+  const [diseases, setDiseases] = useState<string[]>([]);
   const [selectedSTI, setSelectedSTI] = useState<STIType>('hiv');
-  const [selectedYear, setSelectedYear] = useState<Year>(2010);
+  const [years, setYears] = useState<number[]>([]);
+  const [selectedYear, setSelectedYear] = useState<Year>(2017);
+  const [allIncidenceData, setAllIncidenceData] = useState<{ year: number, disease: string, state: string, incidence: number }[]>([]);
   const [geoData, setGeoData] = useState<any>(null);
   const [hoveredState, setHoveredState] = useState<string | null>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -27,7 +24,39 @@ export function STIChoroplethChart() {
   const [position, setPosition] = useState({ coordinates: [109.5, 4], zoom: 1 });
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Load Malaysia GeoJSON data
+  // Filter function to get incidence data by year and disease
+  const getFilteredIncidenceData = (year: number, disease: string) => {
+    return allIncidenceData.filter(item => 
+      item.year === year && item.disease === disease
+    );
+  };
+
+  // Fetch data from the database
+  async function fetchData() {
+    try {
+      const [yearData, diseaseData, incidenceData] = await Promise.all([
+        getAllUniqueDates(),
+        getAllUniqueDiseases(),
+        getAllYearDiseaseIncidences()
+      ]);
+      
+      setYears(yearData);
+      setDiseases(diseaseData);
+      setAllIncidenceData(incidenceData);
+      
+      if (yearData.length > 0) {
+        setSelectedYear(yearData[0] as Year); // Set to the earliest year available
+      }
+      
+      if (diseaseData.length > 0) {
+        setSelectedSTI(diseaseData[0].toLowerCase().replace(/[^a-z0-9]/g, '') as STIType);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }
+
+  // Load Malaysia GeoJSON data and fetch available years/diseases from the database on mount
   useEffect(() => {
     import('@/public/my.json')
       .then(data => {
@@ -35,17 +64,17 @@ export function STIChoroplethChart() {
         setGeoData(geoJsonData);
       })
       .catch(error => console.error('Error loading map data:', error));
+    fetchData();
   }, []);
 
   // Auto-play functionality
   useEffect(() => {
-    if (isPlaying) {
+    if (isPlaying && years.length > 0) {
       intervalRef.current = setInterval(() => {
         setSelectedYear(prevYear => {
-          const years: Year[] = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022];
           const currentIndex = years.indexOf(prevYear);
           const nextIndex = (currentIndex + 1) % years.length;
-          return years[nextIndex];
+          return years[nextIndex] as Year;
         });
       }, 1200); // Slower transition - 1.2s for smoother viewing
     } else {
@@ -60,7 +89,7 @@ export function STIChoroplethChart() {
         clearInterval(intervalRef.current);
       }
     };
-  }, [isPlaying]);
+  }, [isPlaying, years]);
 
   const togglePlayback = () => {
     setIsPlaying(!isPlaying);
@@ -91,9 +120,26 @@ export function STIChoroplethChart() {
     setPosition(position);
   };
 
-  const currentData = getStateData(selectedSTI, selectedYear);
-  const maxRate = getMaxRate(selectedSTI);
-  const minRate = getMinRate(selectedSTI);
+  // Get current data from database instead of static data
+  const selectedDiseaseFromDb = diseases.find(d => 
+    d.toLowerCase().replace(/[^a-z0-9]/g, '') === selectedSTI
+  ) || diseases[0] || 'HIV/AIDS';
+  
+  const rawCurrentData = getFilteredIncidenceData(selectedYear, selectedDiseaseFromDb);
+  
+  // Transform database data to match expected structure (state, rate)
+  const currentData = rawCurrentData.map(item => ({
+    state: item.state,
+    rate: item.incidence
+  }));
+  
+  // Calculate min/max rates from all data for the selected disease
+  const allRatesForDisease = allIncidenceData
+    .filter(item => item.disease === selectedDiseaseFromDb)
+    .map(item => item.incidence);
+  
+  const maxRate = allRatesForDisease.length > 0 ? Math.max(...allRatesForDisease) : 100;
+  const minRate = allRatesForDisease.length > 0 ? Math.min(...allRatesForDisease) : 0;
 
   // Map GeoJSON state names to our data state names
   const stateNameMapping: Record<string, string> = {
@@ -122,9 +168,11 @@ export function STIChoroplethChart() {
     const rate = stateDataMap[stateName] || 0;
     const intensity = getColorIntensity(rate);
     const colors = {
-      hiv: `rgba(220, 38, 38, ${intensity})`, // Red
+      hiv: `rgba(219, 39, 119, ${intensity})`, // Pink
       gonorrhea: `rgba(37, 99, 235, ${intensity})`, // Blue  
-      syphilis: `rgba(147, 51, 234, ${intensity})` // Purple
+      syphillis: `rgba(147, 51, 234, ${intensity})`, // Purple
+      chancroid: `rgba(234, 88, 12, ${intensity})`, // Orange
+      aids: `rgba(220, 38, 38, ${intensity})`, // Red
     };
     return colors[selectedSTI];
   };
@@ -132,13 +180,14 @@ export function STIChoroplethChart() {
   // Get gradient colors for legend based on selected STI
   const getLegendGradient = () => {
     const gradients = {
-      hiv: 'from-red-600/10 to-red-600/100', // Red gradient
+      hiv: 'from-pink-600/10 to-pink-600/100', // Red gradient
       gonorrhea: 'from-blue-600/10 to-blue-600/100', // Blue gradient
-      syphilis: 'from-purple-600/10 to-purple-600/100' // Purple gradient
+      syphillis: 'from-purple-600/10 to-purple-600/100', // Purple gradient
+      chancroid: 'from-orange-600/10 to-orange-600/100', // Orange gradient
+      aids: 'from-red-600/10 to-red-600/100', // Red gradient
     };
     return gradients[selectedSTI];
   };
-
 
   return (
     <Card className="p-6 bg-white dark:bg-gray-800 shadow-lg">
@@ -164,7 +213,9 @@ export function STIChoroplethChart() {
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="flex bg-slate-100 dark:bg-slate-700">
-              {Object.entries(stiTypes).map(([key, label]) => (
+              {Object.entries(stiTypes)
+                .sort(([, a], [, b]) => a.localeCompare(b))
+                .map(([key, label]) => (
                 <SelectItem key={key} value={key}>
                   {label}
                 </SelectItem>
@@ -214,13 +265,13 @@ export function STIChoroplethChart() {
               setSelectedYear(value[0] as Year);
               if (isPlaying) setIsPlaying(false); // Stop playing when manually changing
             }}
-            min={2010}
-            max={2022}
+            min={years.length > 0 ? Math.min(...years) : 2017}
+            max={years.length > 0 ? Math.max(...years) : 2022}
             step={1}
           />
           <div className="flex justify-between text-xs text-gray-500 mt-1">
-            <span>2010</span>
-            <span>2022</span>
+            <span>{years.length > 0 ? Math.min(...years) : 2017}</span>
+            <span>{years.length > 0 ? Math.max(...years) : 2022}</span>
           </div>
         </div>
       </div>
@@ -365,7 +416,7 @@ export function STIChoroplethChart() {
                 }}
               >
                 <div className="font-semibold">{hoveredState}</div>
-                <div>{stiTypes[selectedSTI]}: {stateDataMap[normalizeStateName(hoveredState)] || 0}/100k</div>
+                <div>{selectedDiseaseFromDb}: {stateDataMap[normalizeStateName(hoveredState)] || 0}/100k</div>
                 <div className="text-gray-300">Year: {selectedYear}</div>
               </motion.div>
             )}
@@ -384,19 +435,19 @@ export function STIChoroplethChart() {
       <div className="flex justify-around gap-4">
         <div className="text-center">
           <div className="text-2xl md:text-3xl font-bold text-rose-500 dark:text-rose-400">
-            {Math.max(...currentData.map(d => d.rate))}
+            {currentData.length > 0 ? Math.max(...currentData.map(d => d.rate)) : 0}
           </div>
           <div className="text-xs text-gray-600 dark:text-gray-400">Highest Rate</div>
         </div>
         <div className="text-center">
           <div className="text-2xl md:text-3xl font-bold text-teal-500 dark:text-teal-400">
-            {Math.min(...currentData.map(d => d.rate))}
+            {currentData.length > 0 ? Math.min(...currentData.map(d => d.rate)) : 0}
           </div>
           <div className="text-xs text-gray-600 dark:text-gray-400">Lowest Rate</div>
         </div>
         <div className="text-center">
           <div className="text-2xl md:text-3xl font-bold text-purple-500 dark:text-purple-400">
-            {Math.round(currentData.reduce((sum, d) => sum + d.rate, 0) / currentData.length)}
+            {currentData.length > 0 ? Math.round(currentData.reduce((sum, d) => sum + d.rate, 0) / currentData.length) : 0}
           </div>
           <div className="text-xs text-gray-600 dark:text-gray-400">Average Rate</div>
         </div>

@@ -2,107 +2,72 @@
 
 import { db } from "../db";
 import { stiState } from "../../db/schema";
-import { eq, like, and, sql } from "drizzle-orm";
 
-export interface IngredientSearchResult {
-  ing_id: number;
-  ing_name: string;
-  ing_risk_summary: string;
-  ing_risk_type: 'B' | 'H' | 'L' | 'N';
+export async function getAllUniqueDates(): Promise<number[]> {
+  try {
+    const results = await db
+      .selectDistinct({
+        date: stiState.date
+      })
+      .from(stiState)
+      .orderBy(stiState.date);
+
+    if (results.length === 0) {
+      return [];
+    }
+
+    return results.map(r => r.date);
+  } catch (error) {
+    console.error("Error fetching unique dates:", error);
+    throw new Error("Failed to fetch unique dates");
+  }
 }
 
-export interface BannedTrendData {
-  year: number;
-  banned_count: number;
+export async function getAllUniqueDiseases(): Promise<string[]> {
+  try {
+    const results = await db
+      .selectDistinct({
+        disease: stiState.disease
+      })
+      .from(stiState)
+      .orderBy(stiState.disease);
+      
+    if (results.length === 0) {
+      return [];
+    }
+    return results.map(r => r.disease);
+  }
+  catch (error) {
+    console.error("Error fetching unique diseases:", error);
+    throw new Error("Failed to fetch unique diseases");
+  }
 }
 
-export interface IngredientTrends {
-  ingredient_name: string;
-  total_banned_count: number;
-  yearly_trends: BannedTrendData[];
-}
-
-export async function searchIngredientAction(ingredientName: string): Promise<IngredientSearchResult | null> {
+export async function getAllYearDiseaseIncidences(): Promise<{ year: number, disease: string, state: string, incidence: number }[]> {
   try {
     const results = await db
       .select({
-        ing_id: ingredientTable.ing_id,
-        ing_name: ingredientTable.ing_name,
-        ing_risk_summary: ingredientTable.ing_risk_summary,
-        ing_risk_type: ingredientTable.ing_risk_type
+        year: stiState.date,
+        disease: stiState.disease,
+        state: stiState.state,
+        incidence: stiState.incidence
       })
-      .from(ingredientTable)
-      .where(like(sql`lower(${ingredientTable.ing_name})`, `%${ingredientName.toLowerCase()}%`));
+      .from(stiState)
+      .orderBy(stiState.date);
 
     if (results.length === 0) {
-      return null;
+      return [];
     }
 
-    if (results.length === 1) {
-      return results[0] as IngredientSearchResult;
-    }
-
-    // Multiple results - calculate relevance scores
-    const searchTerm = ingredientName.toLowerCase().trim();
-    
-    const scoredResults = results.map(result => {
-      const ingName = result.ing_name.toLowerCase();
-      let score = 0;
-      
-      // Exact match gets highest score
-      if (ingName === searchTerm) {
-        score = 1000;
-      }
-      // Starts with search term gets high score
-      else if (ingName.startsWith(searchTerm)) {
-        score = 800;
-      }
-      // Ends with search term gets medium-high score
-      else if (ingName.endsWith(searchTerm)) {
-        score = 600;
-      }
-      // Contains search term as whole word gets medium score
-      else if (ingName.includes(` ${searchTerm} `) || 
-               ingName.includes(`-${searchTerm}-`) ||
-               ingName.includes(`_${searchTerm}_`)) {
-        score = 400;
-      }
-      // Contains search term gets lower score
-      else if (ingName.includes(searchTerm)) {
-        score = 200;
-      }
-      // Fallback score (shouldn't happen due to LIKE query, but just in case)
-      else {
-        score = 100;
-      }
-      
-      // Boost score for shorter names (more specific matches)
-      const lengthPenalty = Math.max(0, ingName.length - searchTerm.length) * 2;
-      score -= lengthPenalty;
-      
-      // Additional scoring factors
-      // Boost score if search term is at word boundaries
-      const wordBoundaryRegex = new RegExp(`\\b${searchTerm}\\b`);
-      if (wordBoundaryRegex.test(ingName)) {
-        score += 300;
-      }
-      
-      return {
-        ...result,
-        relevanceScore: score
-      };
-    });
-    
-    // Sort by relevance score (highest first) and return the top result
-    scoredResults.sort((a, b) => b.relevanceScore - a.relevanceScore);
-    
-    // Remove the relevanceScore property before returning
-    const { relevanceScore, ...topResult } = scoredResults[0];
-    
-    return topResult as IngredientSearchResult;
-
+    // Convert incidence from string to number
+    return results.map(r => ({
+      year: r.year,
+      disease: r.disease,
+      state: r.state,
+      incidence: Number(r.incidence)
+    }));
   } catch (error) {
-    console.error("Error searching ingredient:", error);
-    throw new Error("Failed to search ingredient");
+    console.error("Error fetching year-disease incidences:", error);
+    throw new Error("Failed to fetch year-disease incidences");
   }
 }
