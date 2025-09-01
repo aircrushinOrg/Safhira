@@ -1,7 +1,17 @@
 import './globals.css';
 
-import { GeistSans } from 'geist/font/sans';
+import { Poppins } from 'next/font/google';
+import { Suspense } from 'react';
 import { ThemeProvider } from './components/theme-provider';
+import { HeaderWrapper } from './components/HeaderWrapper';
+import { FooterWrapper } from './components/FooterWrapper';
+import { IframeManagerProvider } from './components/IframeManager';
+
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-poppins',
+});
 
 let title = 'Safhira - Safe Sexual Health for Malaysian Youth';
 let description =
@@ -13,12 +23,12 @@ export const metadata = {
   icons: {
     icon: [
       {
-        url: '/favicon.ico',
+        url: '/logo.svg',
         sizes: '32x32',
         type: 'image/x-icon',
       },
     ],
-    shortcut: '/favicon.ico',
+    shortcut: '/logo.svg',
   },
   twitter: {
     card: 'summary_large_image',
@@ -35,14 +45,22 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={GeistSans.variable}>
+      <body className={poppins.variable}>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <IframeManagerProvider>
+            <Suspense fallback={null}>
+              <HeaderWrapper />
+            </Suspense>
+            {children}
+            <Suspense fallback={null}>
+              <FooterWrapper />
+            </Suspense>
+          </IframeManagerProvider>
         </ThemeProvider>
       </body>
     </html>

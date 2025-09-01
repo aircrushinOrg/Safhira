@@ -3,8 +3,15 @@ import type { Config } from 'tailwindcss';
 export default {
   darkMode: 'class',
   content: ['./app/**/*.{ts,tsx}', './content/**/*.mdx', './public/**/*.svg'],
+  safelist: [
+    'hide-scrollbar',
+    'scrollbar-thin',
+  ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['var(--font-poppins)', 'sans-serif'],
+      },
       colors: {
         border: 'var(--border)',
         input: 'var(--input)',

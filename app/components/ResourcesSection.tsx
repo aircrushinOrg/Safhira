@@ -12,8 +12,143 @@ import {
   Users,
   AlertCircle
 } from 'lucide-react';
+import { useState } from 'react';
 
 export function ResourcesSection() {
+  const [isLocationLoading, setIsLocationLoading] = useState(false);
+  const [showContactModal, setShowContactModal] = useState(false);
+  const [showSupportModal, setShowSupportModal] = useState(false);
+
+  const findNearestHospital = async () => {
+    setIsLocationLoading(true);
+    
+    try {
+      // Check if geolocation is supported
+      if (!navigator.geolocation) {
+        alert('Geolocation is not supported by this browser.');
+        return;
+      }
+
+      // Get user's current location
+      const position = await new Promise<GeolocationPosition>((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject, {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 60000
+        });
+      });
+
+      const { latitude, longitude } = position.coords;
+      
+      // Open Google Maps with search for hospitals/clinics near the user's location
+      const googleMapsUrl = `https://www.google.com/maps/search/hospital+clinic+medical+center/@${latitude},${longitude},15z`;
+      
+      // Open in new tab
+      window.open(googleMapsUrl, '_blank');
+      
+    } catch (error) {
+      console.error('Error getting location:', error);
+      
+      if (error instanceof GeolocationPositionError) {
+        switch (error.code) {
+          case error.PERMISSION_DENIED:
+            alert('Location access denied. Please enable location services and try again.');
+            break;
+          case error.POSITION_UNAVAILABLE:
+            alert('Location information is unavailable.');
+            break;
+          case error.TIMEOUT:
+            alert('Location request timed out.');
+            break;
+          default:
+            alert('An unknown error occurred while retrieving location.');
+            break;
+        }
+      } else {
+        alert('Failed to get your location. Please try again.');
+      }
+      
+      // Fallback: Open Google Maps with general hospital search in Malaysia
+      const fallbackUrl = 'https://www.google.com/maps/search/hospital+clinic+kuala+lumpur+malaysia';
+      window.open(fallbackUrl, '_blank');
+    } finally {
+      setIsLocationLoading(false);
+    }
+  };
+
+  const contactDoctor = () => {
+    setShowContactModal(true);
+  };
+
+  const seekHelp = () => {
+    setShowSupportModal(true);
+  };
+
+  const callNumber = (number: string) => {
+    window.open(`tel:${number}`, '_self');
+  };
+
+  const openWhatsApp = (number: string, message: string) => {
+    const whatsappUrl = `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+  };
+
+  const doctorContacts = [
+    {
+      name: 'KL General Hospital Emergency',
+      phone: '03-2615-5555',
+      description: '24/7 Emergency services',
+      type: 'Emergency'
+    },
+    {
+      name: 'University Malaya Medical Centre',
+      phone: '03-7949-4422',
+      description: 'Specialist consultations available',
+      type: 'Hospital'
+    },
+    {
+      name: 'DoctorOnCall Hotline',
+      phone: '03-4141-3818',
+      description: 'Free medical advice hotline',
+      type: 'Hotline'
+    },
+    {
+      name: 'MySejahtera Telehealth',
+      phone: 'Via MySejahtera App',
+      description: 'Government telehealth service',
+      type: 'Online'
+    }
+  ];
+
+  const supportContacts = [
+    {
+      name: 'Befrienders KL',
+      phone: '03-7956-8145',
+      description: '24/7 emotional support & suicide prevention',
+      whatsapp: '60127962423',
+      type: 'Crisis Support'
+    },
+    {
+      name: 'Talian Kasih',
+      phone: '15999',
+      description: 'Government counseling helpline',
+      type: 'Counseling'
+    },
+    {
+      name: 'Women\'s Aid Organisation',
+      phone: '03-3000-8858',
+      description: 'Support for women in crisis',
+      whatsapp: '60162377769',
+      type: 'Women Support'
+    },
+    {
+      name: 'Malaysian Mental Health Association',
+      phone: '03-2780-6803',
+      description: 'Mental health support and counseling',
+      type: 'Mental Health'
+    }
+  ];
+
   const resources = [
     {
       title: 'Malaysian Health Clinics',
@@ -72,29 +207,32 @@ export function ResourcesSection() {
         icon: AlertCircle,
         title: 'If you experience severe symptoms',
         description: 'Severe pain, high fever, or bleeding - go to hospital immediately',
-        action: 'Nearest Hospital'
+        action: 'Nearest Hospital',
+        onClick: findNearestHospital
       },
       {
         icon: Shield,
         title: 'After unprotected exposure',
         description: 'PEP (Post-Exposure Prophylaxis) must be started within 72 hours',
-        action: 'Contact Doctor'
+        action: 'Contact Doctor',
+        onClick: contactDoctor
       },
       {
         icon: Heart,
         title: 'Emotional support',
         description: 'Don\'t face this alone. Get support from counselors or friends',
-        action: 'Seek Help'
+        action: 'Seek Help',
+        onClick: seekHelp
       }
     ]
   };
 
   return (
     <section className="py-16 px-4 bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-900">
-      <div className="container mx-auto max-w-6xl">
+      <div className="container mx-auto max-w-7xl">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-4">
-            Resources & Support
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-4">
+            We are here to help you
           </h2>
           <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             Contact information and reliable resources to get professional help 
@@ -116,8 +254,14 @@ export function ResourcesSection() {
                   <div className="flex-1">
                     <h4 className="font-semibold text-gray-800 dark:text-gray-100 text-sm mb-2">{item.title}</h4>
                     <p className="text-gray-600 dark:text-gray-300 text-xs mb-3">{item.description}</p>
-                    <Button size="sm" variant="outline" className="text-xs">
-                      {item.action}
+                    <Button 
+                      size="sm" 
+                      variant="outline" 
+                      className="text-xs"
+                      onClick={item.onClick}
+                      disabled={index === 0 && isLocationLoading}
+                    >
+                      {index === 0 && isLocationLoading ? 'Finding Location...' : item.action}
                     </Button>
                   </div>
                 </div>
@@ -125,6 +269,111 @@ export function ResourcesSection() {
             ))}
           </div>
         </Card>
+
+        {/* Contact Doctor Modal */}
+        {showContactModal && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <Card className="w-full max-w-2xl max-h-[80vh] overflow-y-auto scrollbar-thin bg-white dark:bg-gray-800">
+              <div className="p-6">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-100 flex items-center space-x-2">
+                    <Shield className="text-blue-500" size={24} />
+                    <span>Contact Medical Professionals</span>
+                  </h3>
+                  <Button variant="ghost" size="sm" onClick={() => setShowContactModal(false)}>
+                    ✕
+                  </Button>
+                </div>
+                
+                <div className="space-y-4">
+                  {doctorContacts.map((contact, index) => (
+                    <div key={index} className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
+                      <div className="flex items-start justify-between mb-2">
+                        <h4 className="font-semibold text-gray-800 dark:text-gray-100">{contact.name}</h4>
+                        <Badge variant="secondary" className="text-xs">{contact.type}</Badge>
+                      </div>
+                      <p className="text-gray-600 dark:text-gray-300 text-sm mb-3">{contact.description}</p>
+                      <div className="flex space-x-2">
+                        {contact.phone !== 'Via MySejahtera App' ? (
+                          <Button size="sm" onClick={() => callNumber(contact.phone)} className="flex items-center space-x-1">
+                            <Phone size={14} />
+                            <span>Call {contact.phone}</span>
+                          </Button>
+                        ) : (
+                          <Button size="sm" variant="outline">
+                            Open MySejahtera App
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                
+                <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/30 rounded-lg">
+                  <p className="text-sm text-blue-800 dark:text-blue-200">
+                    <strong>Important:</strong> For PEP (Post-Exposure Prophylaxis), time is critical. 
+                    Contact a doctor within 72 hours of potential exposure for maximum effectiveness.
+                  </p>
+                </div>
+              </div>
+            </Card>
+          </div>
+        )}
+
+        {/* Seek Help Modal */}
+        {showSupportModal && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <Card className="w-full max-w-2xl max-h-[80vh] overflow-y-auto scrollbar-thin bg-white dark:bg-gray-800">
+              <div className="p-6">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-100 flex items-center space-x-2">
+                    <Heart className="text-pink-500" size={24} />
+                    <span>Emotional Support & Counseling</span>
+                  </h3>
+                  <Button variant="ghost" size="sm" onClick={() => setShowSupportModal(false)}>
+                    ✕
+                  </Button>
+                </div>
+                
+                <div className="space-y-4">
+                  {supportContacts.map((contact, index) => (
+                    <div key={index} className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
+                      <div className="flex items-start justify-between mb-2">
+                        <h4 className="font-semibold text-gray-800 dark:text-gray-100">{contact.name}</h4>
+                        <Badge variant="secondary" className="text-xs">{contact.type}</Badge>
+                      </div>
+                      <p className="text-gray-600 dark:text-gray-300 text-sm mb-3">{contact.description}</p>
+                      <div className="flex space-x-2">
+                        <Button size="sm" onClick={() => callNumber(contact.phone)} className="flex items-center space-x-1">
+                          <Phone size={14} />
+                          <span>Call {contact.phone}</span>
+                        </Button>
+                        {contact.whatsapp && (
+                          <Button 
+                            size="sm" 
+                            variant="outline" 
+                            onClick={() => openWhatsApp(contact.whatsapp!, 'Hello, I need some support and guidance.')}
+                            className="flex items-center space-x-1"
+                          >
+                            <span>💬</span>
+                            <span>WhatsApp</span>
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                
+                <div className="mt-6 p-4 bg-green-50 dark:bg-green-900/30 rounded-lg">
+                  <p className="text-sm text-green-800 dark:text-green-200">
+                    <strong>Remember:</strong> You&apos;re not alone. These services are confidential and 
+                    staffed by trained professionals who understand what you&apos;re going through.
+                  </p>
+                </div>
+              </div>
+            </Card>
+          </div>
+        )}
 
         {/* Resource Grid */}
         <div className="grid md:grid-cols-2 gap-6 mb-12">
