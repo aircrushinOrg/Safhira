@@ -34,12 +34,7 @@ function AppContent() {
     router.push(newUrl);
     setCurrentSection(section);
     // Only scroll to top when user intentionally changes sections
-
-    // Scroll to current section on change
-    useEffect(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, [currentSection]);
-
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   // 预加载聊天iframe
