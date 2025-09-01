@@ -48,11 +48,12 @@ const stiData: Record<string, STIInfo> = {
       men: [
         'Clear or cloudy discharge from penis',
         'Burning or itching around opening of penis',
-        'Pain and swelling in testicles'
+        'Pain and swelling in testicles',
+        'Painful or burning sensation '
       ],
       general: [
         'Rectal pain, discharge, or bleeding (if infected through anal contact)',
-        'Throat infection (if infected through oral contact)'
+        'Throat infection usually show no symptoms'
       ]
     },
     transmission: [
@@ -65,7 +66,7 @@ const stiData: Record<string, STIInfo> = {
       'Can lead to infertility in both men and women',
       'Increases risk of HIV infection',
       'Can cause ectopic pregnancy',
-      'Eye infections in newborns'
+      'Eye and lung infections in newborns'
     ],
     prevention: [
       'Use condoms consistently and correctly',
