@@ -2,6 +2,7 @@
 
 import { Button } from '@/app/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/app/components/ui/card';
+import { Alert, AlertDescription, AlertTitle } from '@/app/components/ui/alert';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
@@ -82,6 +83,40 @@ export default function ChatAboutPage() {
               <span className="text-primary font-semibold">Retrieval-Augmented Generation</span>, and{' '}
               <span className="text-primary font-semibold">Real-time Intelligence</span>
             </p>
+
+            {/* Hero CTAs */}
+            <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+              <Button asChild size="lg">
+                <Link href="/chat">
+                  <svg viewBox="0 0 24 24" fill="currentColor" className="size-5">
+                    <path d="M20 2H4C2.897 2 2 2.897 2 4V22L6 18H20C21.103 18 22 17.103 22 16V4C22 2.897 21.103 2 20 2Z"/>
+                  </svg>
+                  Start Chatting
+                </Link>
+              </Button>
+              <Button asChild variant="outline" size="lg">
+                <Link href="/privacy-policy">
+                  <svg viewBox="0 0 24 24" fill="currentColor" className="size-5">
+                    <path d="M12 2L4 5v6c0 5 3.8 9.7 8 11 4.2-1.3 8-6 8-11V5l-8-3zM12 20c-2.8-1.1-6-4.9-6-9V6.3l6-2.2 6 2.2V11c0 4.1-3.2 7.9-6 9z"/>
+                  </svg>
+                  Privacy & Safety
+                </Link>
+              </Button>
+            </div>
+
+            {/* Safety Notice */}
+            <div className="mt-8 max-w-3xl mx-auto">
+              <Alert className="border-primary/20 bg-primary/5">
+                <svg viewBox="0 0 24 24" fill="currentColor" className="size-5">
+                  <path d="M1 21h22L12 2 1 21zm12-3h-2v2h2v-2zm0-8h-2v6h2V10z"/>
+                </svg>
+                <AlertTitle>Not a substitute for professional care</AlertTitle>
+                <AlertDescription>
+                  Safhira provides educational information and general guidance. For medical
+                  emergencies or diagnosis, consult a licensed healthcare professional.
+                </AlertDescription>
+              </Alert>
+            </div>
           </motion.div>
 
           {/* Technical Architecture Cards */}
@@ -210,6 +245,69 @@ export default function ChatAboutPage() {
                 </div>
               </CardContent>
             </Card>
+          </motion.div>
+
+          {/* Capabilities Section */}
+          <motion.div
+            variants={itemVariants}
+            className="mb-6"
+          >
+            <div className="text-center mb-8">
+              <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">What Safhira Can Help With</h2>
+              <p className="text-muted-foreground mt-2">Practical support designed for clarity, privacy, and care.</p>
+            </div>
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[
+                {
+                  title: 'Understand STIs & prevention',
+                  desc: 'Explain symptoms, transmission, testing, and prevention in simple language.',
+                  hue: 'from-teal-500 to-emerald-500',
+                },
+                {
+                  title: 'Find nearby services',
+                  desc: 'Locate clinics, testing centers, and support services around you.',
+                  hue: 'from-sky-500 to-indigo-500',
+                },
+                {
+                  title: 'Stay up-to-date',
+                  desc: 'Summarize reliable guidance from trusted health sources.',
+                  hue: 'from-violet-500 to-fuchsia-500',
+                },
+                {
+                  title: 'Private & respectful',
+                  desc: 'Conversations remain confidential and stigma-free by design.',
+                  hue: 'from-rose-500 to-orange-500',
+                },
+                {
+                  title: 'Actionable answers',
+                  desc: 'Step-by-step suggestions you can follow with confidence.',
+                  hue: 'from-amber-500 to-yellow-500',
+                },
+                {
+                  title: 'Clear next steps',
+                  desc: 'Know when to test, who to see, and what to prepare.',
+                  hue: 'from-cyan-500 to-teal-500',
+                },
+              ].map((item, i) => (
+                <Card key={i} className="relative overflow-hidden hover:shadow-lg transition-all duration-300">
+                  <div className={`absolute inset-x-0 -top-1 h-px bg-gradient-to-r ${item.hue} opacity-70`} />
+                  <CardHeader>
+                    <div className="flex items-start gap-3">
+                      <div className={`shrink-0 w-10 h-10 rounded-lg bg-gradient-to-br ${item.hue} text-white flex items-center justify-center`}> 
+                        <svg viewBox="0 0 24 24" fill="currentColor" className="size-5">
+                          <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm-1 15l-5-5 1.41-1.41L11 13.17l6.59-6.59L19 8l-8 9z"/>
+                        </svg>
+                      </div>
+                      <div>
+                        <CardTitle className="text-base">{item.title}</CardTitle>
+                        <CardDescription>{item.desc}</CardDescription>
+                      </div>
+                    </div>
+                  </CardHeader>
+                </Card>
+              ))}
+            </div>
           </motion.div>
         </motion.div>
       </div>
