@@ -2,15 +2,15 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Card } from './ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
-import { Slider } from './ui/slider';
-import { Button } from './ui/button';
+import { Card } from '../ui/card';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
+import { Slider } from '../ui/slider';
+import { Button } from '../ui/button';
 import { Play, Pause, ZoomIn, ZoomOut, LocateFixed, BadgeAlert } from 'lucide-react';
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
 import { stiTypes, type STIType, type Year } from '@/lib/sti-prevalence-data';
-import { getAllUniqueDates, getAllUniqueDiseases, getAllYearDiseaseIncidences } from '../actions/prevalence_actions';
-import { useIsMobile } from './ui/use-mobile';
+import { getAllUniqueDates, getAllUniqueDiseases, getAllYearDiseaseIncidences } from '../../actions/prevalence_actions';
+import { useIsMobile } from '../ui/use-mobile';
 
 export function STIChoroplethChart() {
   const [diseases, setDiseases] = useState<string[]>([]);

@@ -2,14 +2,14 @@
 
 import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Hero } from './components/Hero';
-import { StigmaBreakingSection } from './components/StigmaBreakingSection';
-import { PrevalenceSection } from './components/PrevalenceSection';
-import { FeaturesSection } from './components/FeaturesSection';
+import { Hero } from './components/landing/Hero';
+import { StigmaBreakingSection } from './components/landing/BreakingStigmaSection';
+import { PrevalenceSection } from './components/landing/PrevalenceSection';
+import { FeaturesSection } from './components/landing/FeaturesSection';
 import { LearningModules } from './components/LearningModules';
 import { QuizSection } from './components/QuizSection';
 import { ResourcesSection } from './components/ResourcesSection';
-import { ReadyToStartSection } from './components/ReadyToStartSection';
+import { ReadyToStartSection } from './components/landing/FinalNoteSection';
 import { motion, AnimatePresence } from 'framer-motion';
 
 function AppContent() {

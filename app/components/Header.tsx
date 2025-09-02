@@ -68,7 +68,7 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
 
   return (
     <header className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 sticky top-0 z-50">
-      <div className="mx-auto px-4 py-4 md:px-8">
+      <div className="mx-auto px-8 py-4 md:px-16">
         <div className="flex items-center justify-between">
           <div 
             className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity"
@@ -82,7 +82,7 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
             </div>
             <div>
               <h1 className="font-semibold text-slate-900 dark:text-slate-300 text-xl">Safhira</h1>
-              <p className="text-xs text-teal-600 dark:text-teal-500">Sexual Health, Made Simple & Kind.</p>
+              <p className="w-[120px] sm:w-auto text-xs text-teal-600 dark:text-teal-500">Sexual Health, Made Simple & Kind.</p>
             </div>
           </div>
 
@@ -93,12 +93,6 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
 
           {/* 移动端和右侧控件 */}
           <div className="flex items-center space-x-3">
-            <Badge variant="secondary" className="flex items-center space-x-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">
-              <Shield size={12} />
-              <span className="text-xs hidden sm:inline">100% Private</span>
-              <span className="text-xs sm:hidden">Private</span>
-            </Badge>
-            
             {/* Theme Toggle Button */}
             <ThemeToggle />
             

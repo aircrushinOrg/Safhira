@@ -1,11 +1,11 @@
 import { motion } from 'framer-motion';
-import { DecorativeHearts } from './DecorativeHearts';
-import { FeatureLabels } from './FeatureLabels';
-import { Button } from './ui/button';
+import { DecorativeHearts } from './HeroDecorativeHearts';
+import { FeatureLabels } from './HeroFeatureLabels';
+import { Button } from '../ui/button';
 import { BookOpen, MessageCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import heroImage from '../../public/hero.png';
+import heroImage from '../../../public/hero.png';
 
 export function Hero() {
   const router = useRouter();

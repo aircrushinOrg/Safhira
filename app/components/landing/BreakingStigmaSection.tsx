@@ -1,6 +1,6 @@
 'use client'
 
-import { Card } from './ui/card';
+import { Card } from '../ui/card';
 import { Heart, MessageCircle, Users } from 'lucide-react';
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
