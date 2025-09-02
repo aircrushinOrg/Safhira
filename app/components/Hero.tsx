@@ -52,9 +52,9 @@ export function Hero() {
   };
 
   return (
-    <section className="min-h-screen max-w-screen flex justify-center items-center relative py-16 px-4 md:px-16 bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-pink-950 dark:via-gray-800 dark:to-teal-950 overflow-hidden">
+    <section className="min-h-screen max-w-screen flex justify-center items-center relative py-16 px-8 md:px-16 bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-pink-950 dark:via-gray-800 dark:to-teal-950 overflow-hidden">
       {/* Content */}
-      <div className="flex flex-col lg:flex-row gap-8 items-center h-full w-full max-w-7xl mx-auto px-4">
+      <div className="flex flex-col lg:flex-row gap-8 items-center h-full w-full max-w-7xl mx-auto">
         {/* Text Content */}
         <motion.div 
           className="flex flex-col flex-1 gap-8 lg:pr-8 relative w-full"

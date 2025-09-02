@@ -10,6 +10,7 @@ import { Play, Pause, ZoomIn, ZoomOut, LocateFixed, BadgeAlert } from 'lucide-re
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
 import { stiTypes, type STIType, type Year } from '@/lib/sti-prevalence-data';
 import { getAllUniqueDates, getAllUniqueDiseases, getAllYearDiseaseIncidences } from '../actions/prevalence_actions';
+import { useIsMobile } from './ui/use-mobile';
 
 export function STIChoroplethChart() {
   const [diseases, setDiseases] = useState<string[]>([]);
@@ -23,6 +24,7 @@ export function STIChoroplethChart() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [position, setPosition] = useState({ coordinates: [109.5, 4], zoom: 1 });
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const isMobile = useIsMobile(); 
 
   // Filter function to get incidence data by year and disease
   const getFilteredIncidenceData = (year: number, disease: string) => {
@@ -276,7 +278,7 @@ export function STIChoroplethChart() {
           <span>Incidence Rate (per 100,000 people) across All Years</span>
           <div className="flex items-center gap-2">
             <span>{minRate}</span>
-            <div className={`w-40 md:w-60 h-3 bg-gradient-to-r ${getLegendGradient()} rounded`}></div>
+            <div className={`w-20 md:w-60 h-3 bg-gradient-to-r ${getLegendGradient()} rounded`}></div>
             <span>{maxRate}</span>
           </div>
         </div>
@@ -346,7 +348,7 @@ export function STIChoroplethChart() {
                 center: [109.5, 4]
               }}
               width={800}
-              height={300}
+              height={isMobile ? 800: 300}
               className="w-full h-auto"
             >
               <ZoomableGroup

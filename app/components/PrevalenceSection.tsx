@@ -16,7 +16,7 @@ export function PrevalenceSection() {
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
     >
-      <section className="py-8 sm:py-12 lg:py-16 px-3 sm:px-4">
+      <section className="py-8 sm:py-12 lg:py-16 px-8 md:px-16">
         <div className="container mx-auto max-w-7xl">
           <div className="mb-6 sm:mb-8">
             <div className="mb-4 sm:mb-6 text-center flex flex-col w-full justify-center items-center">

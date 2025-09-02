@@ -56,7 +56,7 @@ export function ReadyToStartSection() {
         <div className="absolute bottom-16 right-32 w-10 h-10 bg-teal-600/20 dark:bg-teal-200/20 rounded-full"></div>
       </div>
 
-      <section className="py-12 lg:py-24 px-3 sm:px-4 relative">
+      <section className="py-12 lg:py-24 px-8 md:px-16 relative">
         <div className="container mx-auto max-w-6xl">
           
           {/* Header */}
@@ -106,8 +106,14 @@ export function ReadyToStartSection() {
             transition={{ duration: 0.6, delay: 0.6 }}
           >
             <div className="flex flex-col items-center text-center">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-800/30 dark:to-blue-700/30 rounded-full flex items-center justify-center mb-3">
-                <UserCheck size={24} className="text-blue-600 dark:text-blue-400" />
+              <div className="w-12 h-12 bg-gradient-to-br from-pink-100 to-pink-200 dark:from-pink-800/30 dark:to-pink-700/30 rounded-full flex items-center justify-center mb-3">
+                <Heart size={24} className="text-pink-600 dark:text-pink-400" />
+              </div>
+              <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 px-6">Questions welcomed, judgment left at the door</span>
+            </div>
+            <div className="flex flex-col items-center text-center">
+              <div className="w-12 h-12 bg-gradient-to-br from-purple-100 to-purple-200 dark:from-purple-800/30 dark:to-purple-700/30 rounded-full flex items-center justify-center mb-3">
+                <UserCheck size={24} className="text-purple-600 dark:text-purple-400" />
               </div>
               <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 px-6">Supported by Malaysian health professionals</span>
             </div>
@@ -116,12 +122,6 @@ export function ReadyToStartSection() {
                 <Shield size={24} className="text-teal-600 dark:text-teal-400" />
               </div>
               <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 px-6">Completely anonymous - no data stored</span>
-            </div>
-            <div className="flex flex-col items-center text-center">
-              <div className="w-12 h-12 bg-gradient-to-br from-pink-100 to-pink-200 dark:from-pink-800/30 dark:to-pink-700/30 rounded-full flex items-center justify-center mb-3">
-                <Heart size={24} className="text-pink-600 dark:text-pink-400" />
-              </div>
-              <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 px-6">Questions welcomed, judgment left at the door</span>
             </div>
           </motion.div>
         </div>
