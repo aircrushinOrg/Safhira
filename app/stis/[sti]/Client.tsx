@@ -74,26 +74,25 @@ export default function STIClient({ stiInfo }: { stiInfo: STIInfo }) {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 gap-4 text-gray-600 dark:text-gray-300 text-xs sm:text-sm">
-              <div className="flex items-center gap-2">
-                <Info size={16} />
-                <span>
-                  People often feel anxious about STIs. You&#39;re not alone. Seeking accurate information and care is a strong and responsible step.
-                </span>
+            <Card className="p-4 sm:p-6 bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800 mb-6 sm:mb-8">
+              <div className="flex items-start space-x-3">
+                <Info className="text-blue-500 mt-1 flex-shrink-0" size={18} />
+                <div>
+                  <h3 className="font-semibold text-blue-800 dark:text-blue-200 mb-2 text-sm sm:text-base">
+                    Malaysian Context
+                  </h3>
+                  <p className="text-blue-700 dark:text-blue-300 text-sm sm:text-base leading-relaxed">
+                    {stiInfo.malaysianContext}
+                  </p>
+                </div>
               </div>
-              <div className="flex items-center gap-2">
-                <Shield size={16} />
-                <span>
-                  With the right treatment and support, most STIs can be cured or managed effectively.
-                </span>
-              </div>
-            </div>
+            </Card>
           </div>
 
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-            <Card className="shadow-lg border border-gray-200 dark:border-gray-700">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
+            <Card className="p-4 sm:p-6 md:p-8">
               <Tabs defaultValue="symptoms" className="w-full">
-                <TabsList className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 bg-gray-100 dark:bg-gray-800 p-1 rounded-lg">
+                <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-1 h-auto p-1">
                   <TabsTrigger value="symptoms" className="text-xs sm:text-sm px-2 py-2 data-[state=active]:bg-white">
                     Symptoms
                   </TabsTrigger>
@@ -243,7 +242,6 @@ export default function STIClient({ stiInfo }: { stiInfo: STIInfo }) {
               </Tabs>
             </Card>
           </motion.div>
-
           <Card className="mt-6 sm:mt-8 p-4 sm:p-6 bg-gradient-to-r from-teal-50 to-blue-50 dark:from-teal-900/20 dark:to-blue-900/20">
             <div className="flex items-start space-x-3">
               <Heart className="text-teal-500 mt-1 flex-shrink-0" size={18} />
