@@ -70,8 +70,9 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
     <header className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 sticky top-0 z-50">
       <div className="mx-auto px-8 py-4 md:px-16">
         <div className="flex items-center justify-between">
+          {/* Logo */}
           <div 
-            className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity"
+            className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity flex-1"
             onClick={() => onSectionChange('home')}
           >
             <div className="w-10 h-10 flex items-center justify-center">
@@ -86,13 +87,13 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
             </div>
           </div>
 
-          {/* 桌面端导航 */}
-          <nav className="hidden md:flex items-center space-x-6">
+          {/* 桌面端导航 - 居中 */}
+          <nav className="hidden md:flex items-center justify-center space-x-6 flex-1">
             <NavigationItems />
           </nav>
 
-          {/* 移动端和右侧控件 */}
-          <div className="flex items-center space-x-3">
+          {/* 右侧控件 */}
+          <div className="flex items-center space-x-3 flex-1 justify-end">
             {/* Theme Toggle Button */}
             <ThemeToggle />
             
