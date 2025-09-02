@@ -55,7 +55,7 @@ export function StigmaBreakingSection() {
                   </p>
                   <div className="flex justify-center mb-4">
                     <Image
-                      src="/question.png"
+                      src="/landing-question.png"
                       alt="People asking questions about sexual health"
                       width={200}
                       height={200}
@@ -87,7 +87,7 @@ export function StigmaBreakingSection() {
                   </p>
                   <div className="flex justify-center mb-4">
                     <Image
-                      src="/here-for-you.png"
+                      src="/landing-here-for-you.png"
                       alt="Support and being there for each other"
                       width={200}
                       height={200}
@@ -119,7 +119,7 @@ export function StigmaBreakingSection() {
                   </p>
                   <div className="flex justify-center">
                     <Image
-                      src="/work-together.png"
+                      src="/landing-work-together.png"
                       alt="People working together and supporting each other"
                       width={200}
                       height={200}
