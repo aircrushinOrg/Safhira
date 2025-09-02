@@ -8,8 +8,8 @@ import { Slider } from '../ui/slider';
 import { Button } from '../ui/button';
 import { Play, Pause, ZoomIn, ZoomOut, LocateFixed, BadgeAlert } from 'lucide-react';
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
-import { stiTypes, type STIType, type Year } from '@/lib/sti-prevalence-data';
-import { getAllUniqueDates, getAllUniqueDiseases, getAllYearDiseaseIncidences } from '../../actions/prevalence_actions';
+import { stiTypes, type STIType, type Year } from '@/app/constants/sti-prevalence';
+import { getAllUniqueDates, getAllUniqueDiseases, getAllYearDiseaseIncidences } from '../../actions/prevalence-actions';
 import { useIsMobile } from '../ui/use-mobile';
 
 export function STIChoroplethChart() {
@@ -60,7 +60,7 @@ export function STIChoroplethChart() {
 
   // Load Malaysia GeoJSON data and fetch available years/diseases from the database on mount
   useEffect(() => {
-    import('@/public/my.json')
+    import('@/public/landing-my-map.json')
       .then(data => {
         const geoJsonData = data.default || data;
         setGeoData(geoJsonData);
