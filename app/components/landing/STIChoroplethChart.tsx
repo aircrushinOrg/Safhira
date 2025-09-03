@@ -36,11 +36,14 @@ export function STIChoroplethChart() {
   // Fetch data from the database
   async function fetchData() {
     try {
-      const [yearData, diseaseData, incidenceData] = await Promise.all([
+      const [yearData, diseaseData, tempIncidenceData] = await Promise.all([
         getAllUniqueDates(),
         getAllUniqueDiseases(),
         getAllYearDiseaseIncidences()
       ]);
+
+      // Filter for incidence data not in Malaysia
+      const incidenceData = tempIncidenceData.filter(item => item.state !== 'Malaysia');
       
       setYears(yearData);
       setDiseases(diseaseData);
