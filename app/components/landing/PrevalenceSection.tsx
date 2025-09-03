@@ -1,12 +1,62 @@
 'use client'
 
 import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { STIChoroplethChart } from './STIChoroplethChart';
+import STITrendsChart from './STITrendsChart';
+import { Card, CardContent } from '../ui/card';
+import { getAllUniqueStates, getAllUniqueDiseases, getAllYearDiseaseIncidences } from '../../actions/prevalence-actions';
+
+interface SharedData {
+  states: string[];
+  diseases: string[];
+  incidenceData: { year: number; disease: string; state: string; incidence: number }[];
+  years: number[];
+  loading: boolean;
+}
 
 export function PrevalenceSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.1 });
+  const [activeTab, setActiveTab] = useState("choropleth");
+  
+  // Shared data state
+  const [sharedData, setSharedData] = useState<SharedData>({
+    states: [],
+    diseases: [],
+    incidenceData: [],
+    years: [],
+    loading: true,
+  });
+
+  // Fetch data once when component mounts
+  useEffect(() => {
+    const fetchSharedData = async () => {
+      try {
+        const [statesData, diseasesData, incidenceData] = await Promise.all([
+          getAllUniqueStates(),
+          getAllUniqueDiseases(),
+          getAllYearDiseaseIncidences()
+        ]);
+        
+        // Extract unique years from incidence data
+        const years = Array.from(new Set(incidenceData.map(item => item.year))).sort();
+        
+        setSharedData({
+          states: statesData,
+          diseases: diseasesData,
+          incidenceData,
+          years,
+          loading: false,
+        });
+      } catch (error) {
+        console.error("Error fetching shared data:", error);
+        setSharedData(prev => ({ ...prev, loading: false }));
+      }
+    };
+
+    fetchSharedData();
+  }, []);
 
   return (
     <motion.div 
@@ -34,7 +84,67 @@ export function PrevalenceSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
         >
-          <STIChoroplethChart />
+          {sharedData.loading ? (
+            <Card className="w-full bg-white dark:bg-gray-800 shadow-lg">
+              <CardContent className="flex items-center justify-center h-96">
+                <div className="text-center">
+                  <div className="w-8 h-8 border-4 border-teal-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                  <p className="text-gray-600 dark:text-gray-300">Loading STI data...</p>
+                </div>
+              </CardContent>
+            </Card>
+          ) : (
+            <div className="w-full">
+              {/* Custom Tab Navigation with Sliding Indicator */}
+              <div className="relative bg-slate-100 dark:bg-gray-800 rounded-full p-1 mb-6 inline-flex w-full">
+                {/* Sliding Background Indicator */}
+                <motion.div
+                  className="absolute top-1 bottom-1 bg-white dark:bg-slate-700 shadow-sm rounded-full"
+                  animate={{
+                    x: activeTab === "choropleth" ? "0%" : "100%"
+                  }}
+                  transition={{
+                    type: "tween",
+                    ease: "easeInOut",
+                    duration: 0.3
+                  }}
+                  style={{ width: "calc(50% - 4px)" }}
+                />
+                
+                {/* Tab Buttons */}
+                <button
+                  onClick={() => setActiveTab("choropleth")}
+                  className={`relative z-10 flex-1 text-sm sm:text-md px-4 py-2 rounded-full transition-colors duration-200 ${
+                    activeTab === "choropleth" 
+                      ? "text-gray-800 dark:text-gray-100 font-medium" 
+                      : "text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100"
+                  }`}
+                >
+                  STI Prevalence
+                </button>
+                
+                <button
+                  onClick={() => setActiveTab("trends")}
+                  className={`relative z-10 flex-1 text-sm sm:text-md px-4 py-2 rounded-full transition-colors duration-200 ${
+                    activeTab === "trends" 
+                      ? "text-gray-800 dark:text-gray-100 font-medium" 
+                      : "text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100"
+                  }`}
+                >
+                  STI Trends
+                </button>
+              </div>
+              
+              {/* Tab Content */}
+              <div className="space-y-4">
+                {activeTab === "choropleth" ? (
+                  <STIChoroplethChart sharedData={sharedData} />
+                ) : (
+                  <STITrendsChart sharedData={sharedData} />
+                )}
+              </div>
+            </div>
+          )}
         </motion.div>
         </div>
       </section>

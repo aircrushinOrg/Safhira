@@ -51,6 +51,7 @@ export async function getAllUniqueStates(): Promise<string[]> {
         state: stiState.state
       })
       .from(stiState)
+      .where(ne(stiState.state, "Malaysia"))
       .orderBy(stiState.state);
       
     if (results.length === 0) {
@@ -74,6 +75,7 @@ export async function getAllYearDiseaseIncidences(): Promise<{ year: number, dis
         incidence: stiState.incidence
       })
       .from(stiState)
+      .where(ne(stiState.state, "Malaysia"))
       .orderBy(stiState.date);
 
     if (results.length === 0) {
