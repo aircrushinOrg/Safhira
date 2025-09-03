@@ -58,6 +58,7 @@ export default function STITrendsChart({ sharedData }: STITrendsChartProps) {
   const [selectedStates, setSelectedStates] = useState<string[]>([]);
   const [selectedDisease, setSelectedDisease] = useState<string>("AIDS");
   const [fontFamily, setFontFamily] = useState<string>('Poppins, sans-serif');
+  const [loaded, setLoaded] = useState(false);
 
   // Determine if we're in dark mode
   const isDarkMode = theme === 'dark' || (theme === 'system' && systemTheme === 'dark');
@@ -100,7 +101,8 @@ export default function STITrendsChart({ sharedData }: STITrendsChartProps) {
       const firstDiseaseDisplayName = getDisplayNameFromDbKey(diseases[0]);
       setSelectedDisease(firstDiseaseDisplayName);
     }
-    if (!loading && states.length > 0 && selectedStates.length === 0) {
+    if (!loading && !loaded && states.length > 0 && selectedStates.length === 0) {
+      setLoaded(true);
       setSelectedStates([states[0]]);
     }
   }, [loading, diseases, states, selectedDisease, selectedStates.length]);
@@ -291,16 +293,15 @@ export default function STITrendsChart({ sharedData }: STITrendsChartProps) {
           <div className="flex-1">
             <div className="flex items-center justify-between mb-2">
               <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Select States</label>
-              {selectedStates.length > 0 && (
-                <Button
-                  onClick={handleClearAllStates}
-                  size="sm"
-                  variant="outline"
-                  className="flex items-center gap-1 text-xs bg-transparent dark:border-slate-600 dark:hover:bg-slate-700 transition-all duration-200"
-                >
-                  Clear
-                </Button>
-              )}
+              <Button
+                onClick={handleClearAllStates}
+                size="sm"
+                variant="outline"
+                className="flex items-center gap-1 text-xs bg-transparent dark:border-slate-600 dark:hover:bg-slate-700 transition-all duration-200"
+                disabled={selectedStates.length === 0}
+              >
+                Clear
+              </Button>
             </div>
             <Select>
               <SelectTrigger className="!h-auto w-full bg-slate-100 dark:bg-slate-700 border border-slate-300 dark:border-slate-600">
