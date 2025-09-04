@@ -14,7 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/chat/about',
     '/privacy-policy',
     '/terms-of-use',
-    '/sexual-health-rights',
+    '/rights',
   ]
 
   // Key STI details that have dedicated dynamic pages

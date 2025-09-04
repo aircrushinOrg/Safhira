@@ -54,19 +54,23 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
   );
 
   // Chat button component to reuse in both desktop and mobile views
-  const ChatButton = () => (
+  const ChatButton = ({ isMobileMenu = false }) => (
     <Button
-      variant={currentSection === 'chat' ? 'secondary' : 'outline'}
+      variant={currentSection === 'chat' ? 'secondary' : (isMobileMenu ? 'ghost' : 'outline')}
       size="sm"
       onClick={handleChatOpen}
-      className={`flex items-center space-x-1 hover:scale-105 ${
-        currentSection === 'chat' 
-          ? 'bg-blue-100 dark:bg-blue-900/30' 
-          : 'border-blue-300 dark:border-blue-700 text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 hover:border-blue-400 dark:hover:border-blue-500'
-      }`}
+      className={`flex items-center space-x-2 ${
+        isMobileMenu 
+          ? 'w-full justify-start text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900/20' 
+          : `hover:scale-105 ${
+              currentSection === 'chat' 
+                ? 'bg-blue-100 dark:bg-blue-900/30' 
+                : 'border-blue-300 dark:border-blue-700 text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 hover:border-blue-400 dark:hover:border-blue-500'
+            }`
+      } ${isMobileMenu ? 'md:w-auto md:justify-center' : ''}`}
     >
       <MessageCircle size={16} className={`${currentSection !== 'chat' && 'text-blue-500 dark:text-blue-400'}`} />
-      <span className="md:hidden lg:inline">Private Chat</span>
+      <span className={isMobileMenu ? '' : 'md:hidden lg:inline'}>Private Chat</span>
     </Button>
   );
 
@@ -132,7 +136,7 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
                 <nav className="flex flex-col space-y-3 mt-6">
                   <NavigationItems />
                   {/* Chat Button in Mobile Menu */}
-                  <ChatButton />
+                  <ChatButton isMobileMenu={true} />
                 </nav>
               </SheetContent>
             </Sheet>
