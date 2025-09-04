@@ -65,8 +65,8 @@ export default function NotFound() {
 
             <motion.div variants={itemVariants}>
               <p className="text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto text-base md:text-lg leading-relaxed">
-                The page you're looking for doesn't exist or may have been moved. 
-                Don't worry, we're here to help you find what you need for your sexual health journey.
+                The page you&apos;re looking for doesn&apos;t exist or may have been moved. 
+                Don&apos;t worry, we&apos;re here to help you find what you need for your sexual health journey.
               </p>
             </motion.div>
 

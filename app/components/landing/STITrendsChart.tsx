@@ -105,7 +105,7 @@ export default function STITrendsChart({ sharedData }: STITrendsChartProps) {
       setLoaded(true);
       setSelectedStates([states[0]]);
     }
-  }, [loading, diseases, states, selectedDisease, selectedStates.length]);
+  }, [loading, diseases, states, selectedDisease, selectedStates.length, loaded]);
 
   const handleAddState = (state: string) => {
     if (!selectedStates.includes(state)) {

@@ -67,7 +67,7 @@ export default function STINotFound() {
             
             <motion.div variants={itemVariants}>
               <p className="text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto text-base md:text-lg leading-relaxed">
-                The STI information you're looking for doesn't exist or may have been moved. 
+                The STI information you&apos;re looking for doesn&apos;t exist or may have been moved. 
                 Please check the URL or browse our available STI information below.
               </p>
             </motion.div>
@@ -124,7 +124,7 @@ export default function STINotFound() {
             <motion.div variants={itemVariants}>
               <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
                 <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Can't find what you're looking for? Try our AI assistant for personalized sexual health information.
+                  Can&apos;t find what you&apos;re looking for? Try our AI assistant for personalized sexual health information.
                 </p>
               </div>
             </motion.div>
