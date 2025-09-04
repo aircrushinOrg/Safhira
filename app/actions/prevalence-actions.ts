@@ -44,6 +44,27 @@ export async function getAllUniqueDiseases(): Promise<string[]> {
   }
 }
 
+export async function getAllUniqueStates(): Promise<string[]> {
+  try {
+    const results = await db
+      .selectDistinct({
+        state: stiState.state
+      })
+      .from(stiState)
+      .where(ne(stiState.state, "Malaysia"))
+      .orderBy(stiState.state);
+      
+    if (results.length === 0) {
+      return [];
+    }
+    return results.map(r => r.state);
+  }
+  catch (error) {
+    console.error("Error fetching unique states:", error);
+    throw new Error("Failed to fetch unique states");
+  }
+}
+
 export async function getAllYearDiseaseIncidences(): Promise<{ year: number, disease: string, state: string, incidence: number }[]> {
   try {
     const results = await db
@@ -54,7 +75,7 @@ export async function getAllYearDiseaseIncidences(): Promise<{ year: number, dis
         incidence: stiState.incidence
       })
       .from(stiState)
-      .where(ne(stiState.state, 'Malaysia')) // Exclude Malaysia
+      .where(ne(stiState.state, "Malaysia"))
       .orderBy(stiState.date);
 
     if (results.length === 0) {
