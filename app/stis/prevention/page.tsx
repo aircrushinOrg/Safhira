@@ -423,6 +423,16 @@ export default function STIPreventionPage() {
                               Free or low-cost STI testing and treatment available at all government 
                               health clinics nationwide. Services are confidential and professional.
                             </p>
+                            <div className="mt-3">
+                              <a
+                                href="https://www.moh.gov.my/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-600 dark:text-blue-400 text-sm hover:underline"
+                              >
+                                Ministry of Health Malaysia (MOH) – Official Portal
+                              </a>
+                            </div>
                           </div>
                           
                           <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
@@ -433,6 +443,16 @@ export default function STIPreventionPage() {
                               Provides counseling, testing, and support services. Offers culturally 
                               sensitive care and education programs.
                             </p>
+                            <div className="mt-3">
+                              <a
+                                href="https://maf.org.my/V2/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-600 dark:text-blue-400 text-sm hover:underline"
+                              >
+                                Malaysian AIDS Foundation (MAF) – Official Site
+                              </a>
+                            </div>
                           </div>
 
                           <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
@@ -443,6 +463,16 @@ export default function STIPreventionPage() {
                               Many university health centers offer confidential STI testing and 
                               education specifically designed for young adults.
                             </p>
+                            <div className="mt-3">
+                              <a
+                                href="https://www.mohe.gov.my/en"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-600 dark:text-blue-400 text-sm hover:underline"
+                              >
+                                Ministry of Higher Education (MOHE) – Official Portal
+                              </a>
+                            </div>
                           </div>
                         </div>
                       </Card>
@@ -460,6 +490,16 @@ export default function STIPreventionPage() {
                               Global standards for STI prevention and treatment guidelines that 
                               inform this content.
                             </p>
+                            <div className="mt-3 space-y-1">
+                              <a
+                                href="https://www.who.int/health-topics/sexually-transmitted-infections"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="block text-blue-600 dark:text-blue-400 text-sm hover:underline"
+                              >
+                                WHO – Sexually Transmitted Infections (STIs)
+                              </a>
+                            </div>
                           </div>
                           
                           <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
@@ -470,6 +510,16 @@ export default function STIPreventionPage() {
                               Official Malaysian clinical guidelines for STI prevention and treatment 
                               adapted for local context.
                             </p>
+                            <div className="mt-3 space-y-1">
+                              <a
+                                href="https://www.moh.gov.my/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="block text-blue-600 dark:text-blue-400 text-sm hover:underline"
+                              >
+                                MOH – Official Portal
+                              </a>
+                            </div>
                           </div>
 
                           <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
@@ -480,6 +530,24 @@ export default function STIPreventionPage() {
                               International best practices and research evidence for STI prevention 
                               strategies and effectiveness data.
                             </p>
+                            <div className="mt-3 space-y-1">
+                              <a
+                                href="https://www.cdc.gov/sti/index.html"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="block text-blue-600 dark:text-blue-400 text-sm hover:underline"
+                              >
+                                CDC – Sexually Transmitted Infections (STIs)
+                              </a>
+                              <a
+                                href="https://www.cdc.gov/std/treatment-guidelines/default.htm"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="block text-blue-600 dark:text-blue-400 text-sm hover:underline"
+                              >
+                                CDC – STI Treatment Guidelines (2021)
+                              </a>
+                            </div>
                           </div>
                         </div>
                       </Card>
