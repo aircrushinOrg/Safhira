@@ -50,20 +50,24 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
           <span>Learn About STIs</span>
         </Button>
       </Link>
-      <Button
-        variant={currentSection === 'chat' ? 'secondary' : 'ghost'}
-        size="sm"
-        onClick={handleChatOpen}
-        className={`flex items-center space-x-2 w-full justify-start md:w-auto md:justify-center ${
-          currentSection === 'chat' 
-            ? '' 
-            : 'text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300'
-        }`}
-      >
-        <MessageCircle size={16} />
-        <span>Private Chat</span>
-      </Button>
     </>
+  );
+
+  // Chat button component to reuse in both desktop and mobile views
+  const ChatButton = () => (
+    <Button
+      variant={currentSection === 'chat' ? 'secondary' : 'outline'}
+      size="sm"
+      onClick={handleChatOpen}
+      className={`flex items-center space-x-1 hover:scale-105 ${
+        currentSection === 'chat' 
+          ? 'bg-blue-100 dark:bg-blue-900/30' 
+          : 'border-blue-300 dark:border-blue-700 text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 hover:border-blue-400 dark:hover:border-blue-500'
+      }`}
+    >
+      <MessageCircle size={16} className={`${currentSection !== 'chat' && 'text-blue-500 dark:text-blue-400'}`} />
+      <span className="md:hidden lg:inline">Private Chat</span>
+    </Button>
   );
 
   return (
@@ -94,6 +98,11 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
 
           {/* 右侧控件 */}
           <div className="flex items-center space-x-3 flex-1 justify-end">
+            {/* Chat Button - Desktop */}
+            <div className="hidden md:block relative">
+              <ChatButton />
+            </div>
+            
             {/* Theme Toggle Button */}
             <ThemeToggle />
             
@@ -122,6 +131,8 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
                 </SheetHeader>
                 <nav className="flex flex-col space-y-3 mt-6">
                   <NavigationItems />
+                  {/* Chat Button in Mobile Menu */}
+                  <ChatButton />
                 </nav>
               </SheetContent>
             </Sheet>
