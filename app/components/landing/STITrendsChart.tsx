@@ -19,7 +19,7 @@ import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { Check } from "lucide-react";
 import { useTheme } from "next-themes";
-import { stiTypes } from '@/app/constants/sti-prevalence';
+import { stiTypes } from '@/constants/sti-prevalence';
 
 ChartJS.register(
   CategoryScale,
