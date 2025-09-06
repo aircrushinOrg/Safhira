@@ -3,6 +3,7 @@
 import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Hero } from './components/landing/Hero';
+import { HeroAnimation } from './components/HeroAnimation';
 import { StigmaBreakingSection } from './components/landing/BreakingStigmaSection';
 import { PrevalenceSection } from './components/landing/PrevalenceSection';
 import { FeaturesSection } from './components/landing/FeaturesSection';
@@ -59,7 +60,8 @@ function AppContent() {
             variants={pageVariants}
             transition={pageTransition}
           >
-            <Hero />
+            {/* <Hero /> */}
+            <HeroAnimation />
             <StigmaBreakingSection />
             <PrevalenceSection />
             <FeaturesSection />
@@ -106,7 +108,8 @@ function AppContent() {
             variants={pageVariants}
             transition={pageTransition}
           >
-            <Hero />
+            {/* <Hero /> */}
+            <HeroAnimation />
             <StigmaBreakingSection />
             <PrevalenceSection />
             <FeaturesSection />

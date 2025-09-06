@@ -5,7 +5,7 @@ import { Button } from '../ui/button';
 import { BookOpen, MessageCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import heroImage from '../../../public/landing-hero.png';
+import heroImage from '../../../public/landing-hero-1.png';
 
 export function Hero() {
   const router = useRouter();
@@ -67,7 +67,7 @@ export function Hero() {
             className="text-4xl text-center lg:text-left md:text-5xl lg:text-6xl font-bold text-gray-800 dark:text-gray-100 leading-tight"
             variants={itemVariants}
           >
-            Your Safe Space for <span className="bg-gradient-to-r from-rose-500 via-purple-500 to-teal-500 dark:from-rose-400 dark:via-purple-400 dark:to-teal-400 bg-clip-text text-transparent">Sexual Health</span>
+            Your Safe Space for <span className="bg-gradient-to-r from-rose-500 via-purple-500 to-teal-500 dark:from-rose-400 dark:via-purple-400 dark:to-teal-400 bg-clip-text text-transparent">Learning Sexual Health</span>
           </motion.h1>
           
           <motion.p 
