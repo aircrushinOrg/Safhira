@@ -38,7 +38,7 @@ Safhira is a comprehensive sexual health education platform specifically designe
 - **Language**: TypeScript with strict type checking
 - **Styling**: Tailwind CSS + Shadcn/ui + Radix UI components
 - **Animations**: Framer Motion for smooth transitions
-- **Charts**: Recharts for time series, React Simple Maps for choropleth visualizations
+- **Charts**: Chart.js for time series, React Simple Maps for choropleth visualizations
 - **Theme**: Next Themes with system preference support
 - **Icons**: Lucide React for consistent iconography
 - **Fonts**: Geist font family for modern typography
