@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import heroImage from '../../../public/landing-hero.png';
 
-export function Hero() {
+export function HeroSection() {
   const router = useRouter();
   
   const containerVariants = {

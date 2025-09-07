@@ -2,14 +2,13 @@
 
 import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Hero } from './components/landing/Hero';
-import { StigmaBreakingSection } from './components/landing/BreakingStigmaSection';
+import { HeroSection } from './components/landing/HeroSection';
+import { BreakingStigmaSection } from './components/landing/BreakingStigmaSection';
 import { PrevalenceSection } from './components/landing/PrevalenceSection';
 import { FeaturesSection } from './components/landing/FeaturesSection';
 import { LearningModules } from './components/LearningModules';
 import { QuizSection } from './components/QuizSection';
-import { ResourcesSection } from './components/ResourcesSection';
-import { ReadyToStartSection } from './components/landing/FinalNoteSection';
+import { FinalNoteSection } from './components/landing/FinalNoteSection';
 import { motion, AnimatePresence } from 'framer-motion';
 
 function AppContent() {
@@ -59,12 +58,11 @@ function AppContent() {
             variants={pageVariants}
             transition={pageTransition}
           >
-            <Hero />
-            <StigmaBreakingSection />
+            <HeroSection />
+            <BreakingStigmaSection />
             <PrevalenceSection />
             <FeaturesSection />
-            {/* <ResourcesSection /> */}
-            <ReadyToStartSection />
+            <FinalNoteSection />
           </motion.div>
         );
       case 'quiz':
@@ -106,12 +104,11 @@ function AppContent() {
             variants={pageVariants}
             transition={pageTransition}
           >
-            <Hero />
-            <StigmaBreakingSection />
+            <HeroSection />
+            <BreakingStigmaSection />
             <PrevalenceSection />
             <FeaturesSection />
-            {/* <ResourcesSection /> */}
-            <ReadyToStartSection />
+            <FinalNoteSection />
           </motion.div>
         );
     }

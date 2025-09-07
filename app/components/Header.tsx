@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from './ui/button';
-import { Badge } from './ui/badge';
 import { ThemeToggle } from './ThemeToggle';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from './ui/sheet';
 import { useIsMobile } from './ui/use-mobile';
@@ -21,12 +20,12 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
 
   const handleSectionChange = (section: string) => {
     onSectionChange(section);
-    setIsSheetOpen(false); // 关闭抽屉
+    setIsSheetOpen(false); // Close drawer
   };
 
   const handleChatOpen = () => {
     onChatOpen();
-    setIsSheetOpen(false); // 关闭抽屉
+    setIsSheetOpen(false); // Close drawer
   };
 
   const NavigationItems = () => (
@@ -95,12 +94,12 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
             </div>
           </div>
 
-          {/* 桌面端导航 - 居中 */}
+          {/* Desktop navigation - centered */}
           <nav className="hidden md:flex items-center justify-center space-x-6 flex-1">
             <NavigationItems />
           </nav>
 
-          {/* 右侧控件 */}
+          {/* Right-side controls */}
           <div className="flex items-center space-x-3 flex-1 justify-end">
             {/* Chat Button - Desktop */}
             <div className="hidden md:block relative">
@@ -110,7 +109,7 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
             {/* Theme Toggle Button */}
             <ThemeToggle />
             
-            {/* 移动端菜单按钮 */}
+            {/* Mobile menu button */}
             <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
               <SheetTrigger asChild>
                 <Button

@@ -2,7 +2,7 @@ import './globals.css';
 
 import { Poppins } from 'next/font/google';
 import { Suspense } from 'react';
-import { ThemeProvider } from './components/theme-provider';
+import { ThemeProvider } from './providers/theme-provider';
 import { HeaderWrapper } from './components/HeaderWrapper';
 import { FooterWrapper } from './components/FooterWrapper';
 

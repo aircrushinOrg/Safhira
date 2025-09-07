@@ -4,7 +4,7 @@ import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { Shield, Heart, UserCheck } from 'lucide-react';
 
-export function ReadyToStartSection() {
+export function FinalNoteSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.1 });
 
