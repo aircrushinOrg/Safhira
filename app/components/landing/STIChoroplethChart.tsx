@@ -52,7 +52,7 @@ export function STIChoroplethChart({ sharedData }: STIChoroplethChartProps) {
     if (!loading && diseases.length > 0) {
       setSelectedSTI(diseases[0].toLowerCase().replace(/[^a-z0-9]/g, '') as STIType);
     }
-  }, [loading, years, diseases, selectedYear]);
+  }, [loading, years, diseases]);
 
   // Load Malaysia GeoJSON data on mount
   useEffect(() => {
