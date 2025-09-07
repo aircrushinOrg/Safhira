@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Shield, Heart, Book, Users } from 'lucide-react';
+import { Shield, Book, Users } from 'lucide-react';
 
 interface FeatureLabelProps {
   variants: any;
