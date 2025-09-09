@@ -83,6 +83,3 @@ Constraint: No automated tests; early-stage visibility and community traction li
 - Safeguard users: Implement privacy guardrails, moderation workflows, and clear disclaimers around non‑diagnostic content.
 - Harden the stack: Add basic e2e smoke checks, caching, rate limits, and safe migrations with `db/migrations`.
 - Grow visibility intentionally: Run small partner pilots and measured social campaigns; track acquisition and retention with analytics.
-
-If helpful, we can draft a lightweight risk register (owner, likelihood, impact, early signals, mitigations) and a 4‑week mitigation plan mapped to `pnpm` tasks and repo paths (`app/`, `db/`, `lib/`).
-

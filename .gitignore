@@ -39,3 +39,5 @@ yarn-error.log*
 #vibe coding
 .claude
 .cursorrules
+AGENTS.md
+CLAUDE.md
