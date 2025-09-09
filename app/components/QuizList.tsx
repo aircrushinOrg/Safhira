@@ -1,20 +1,27 @@
-import { TiltedScroll } from "./ui/tilted-scroll"
+"use client"
+
+import { useEffect, useState } from "react"
+import MythListClient from "./MythListClient"
+
+type Item = { id: string; text: string; fact?: string }
 
 export function TiltedScrollDemo() {
-  const customItems = [
-    { id: "1", text: "Feature One" },
-    { id: "2", text: "Feature Two" },
-    { id: "3", text: "Feature Three" },
-    { id: "4", text: "Feature Four" },
-    { id: "5", text: "Feature Five" },
-  ]
+  const [items, setItems] = useState<Item[]>([])
 
-  return (
-    <div className="space-y-8">
-      <TiltedScroll 
-        items={customItems}
-        className="mt-8"
-      />
-    </div>
-  )
+  useEffect(() => {
+    let active = true
+    fetch("/api/myths")
+      .then((res) => res.json())
+      .then((data: { id: string; myth: string; fact: string }[]) => {
+        if (!active) return
+        const mapped = data.map((d) => ({ id: d.id, text: d.myth, fact: d.fact }))
+        setItems(mapped)
+      })
+      .catch(() => setItems([]))
+    return () => {
+      active = false
+    }
+  }, [])
+
+  return <MythListClient items={items} />
 }

@@ -16,7 +16,6 @@ import {
   Accordion, AccordionContent, AccordionItem, AccordionTrigger 
 } from '@/app/components/ui/accordion'
 import { Alert, AlertDescription, AlertTitle } from '@/app/components/ui/alert'
-import { TiltedScrollDemo } from '@/app/components/QuizList'
 
 export default function SexualHealthRightsPage() {
   const [isLocating, setIsLocating] = useState(false)
@@ -160,10 +159,7 @@ export default function SexualHealthRightsPage() {
             </Card>
           </div>
 
-          {/* Quiz List Component */}
-          <div className="mb-8">
-            <TiltedScrollDemo />
-          </div>
+          
 
           <Card className="mb-8 bg-white/90 dark:bg-gray-800/80 backdrop-blur">
             <CardHeader>
@@ -319,4 +315,3 @@ export default function SexualHealthRightsPage() {
     </div>
   )
 }
-
