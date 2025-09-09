@@ -103,20 +103,6 @@ export default function ChatAboutPage() {
                 </Link>
               </Button>
             </div>
-
-            {/* Safety Notice */}
-            <div className="mt-8 max-w-3xl mx-auto">
-              <Alert className="border-primary/20 bg-primary/5">
-                <svg viewBox="0 0 24 24" fill="currentColor" className="size-5">
-                  <path d="M1 21h22L12 2 1 21zm12-3h-2v2h2v-2zm0-8h-2v6h2V10z"/>
-                </svg>
-                <AlertTitle>Not a substitute for professional care</AlertTitle>
-                <AlertDescription>
-                  Safhira provides educational information and general guidance. For medical
-                  emergencies or diagnosis, consult a licensed healthcare professional.
-                </AlertDescription>
-              </Alert>
-            </div>
           </motion.div>
 
           {/* Technical Architecture Cards */}
@@ -279,55 +265,6 @@ export default function ChatAboutPage() {
                 </p>
               </CardContent>
             </Card>
-
-            {/* Performance Metrics Grid */}
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-              {[
-                {
-                  metric: "Positive Questions",
-                  value: "20/20",
-                  description: "Accurate responses to health questions",
-                  color: "from-blue-500 to-cyan-500",
-                  bgColor: "from-blue-50/50 to-cyan-50/50 dark:from-blue-950/30 dark:to-cyan-950/30",
-                  borderColor: "border-blue-200/50 dark:border-blue-800/50"
-                },
-                {
-                  metric: "Safety Tests",
-                  value: "10/10",
-                  description: "Correctly handled misleading or harmful queries",
-                  color: "from-emerald-500 to-teal-500",
-                  bgColor: "from-emerald-50/50 to-teal-50/50 dark:from-emerald-950/30 dark:to-teal-950/30",
-                  borderColor: "border-emerald-200/50 dark:border-emerald-800/50"
-                },
-                {
-                  metric: "Tone & Empathy",
-                  value: "Excellent",
-                  description: "Non-judgmental, supportive responses",
-                  color: "from-purple-500 to-pink-500",
-                  bgColor: "from-purple-50/50 to-pink-50/50 dark:from-purple-950/30 dark:to-pink-950/30",
-                  borderColor: "border-purple-200/50 dark:border-purple-800/50"
-                },
-                {
-                  metric: "Boundary Recognition",
-                  value: "Perfect",
-                  description: "Identifies and manages off-topic questions",
-                  color: "from-orange-500 to-red-500",
-                  bgColor: "from-orange-50/50 to-red-50/50 dark:from-orange-950/30 dark:to-red-950/30",
-                  borderColor: "border-orange-200/50 dark:border-orange-800/50"
-                }
-              ].map((item, i) => (
-                <Card key={i} className={`${item.bgColor} ${item.borderColor} hover:shadow-lg transition-all duration-300`}>
-                  <CardContent className="p-6 text-center">
-                    <div className={`w-12 h-12 rounded-full bg-gradient-to-r ${item.color} mx-auto mb-4 flex items-center justify-center text-white font-bold text-lg`}>
-                      {item.value.includes('/') ? item.value.split('/')[0] : item.value.charAt(0)}
-                    </div>
-                    <h3 className="font-semibold text-lg mb-2">{item.metric}</h3>
-                    <p className="text-2xl font-bold mb-2 bg-gradient-to-r text-transparent bg-clip-text">{item.value}</p>
-                    <p className="text-sm text-muted-foreground">{item.description}</p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
 
             {/* Benchmark Table */}
             <Card className="mb-6">
