@@ -1,41 +1,14 @@
 'use client'
 
-import { useState, useEffect, Suspense } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 import { HeroSection } from './components/landing/HeroSection';
 import { BreakingStigmaSection } from './components/landing/BreakingStigmaSection';
 import { PrevalenceSection } from './components/landing/PrevalenceSection';
 import { FeaturesSection } from './components/landing/FeaturesSection';
-import { LearningModules } from './components/LearningModules';
-import { QuizSection } from './components/QuizSection';
 import { FinalNoteSection } from './components/landing/FinalNoteSection';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 function AppContent() {
-  const [currentSection, setCurrentSection] = useState('home');
-  const router = useRouter();
-  const searchParams = useSearchParams();
-
-  const handleChatOpen = () => {
-    router.push('/chat');
-  };
-
-  // Update current section based on URL params
-  useEffect(() => {
-    const section = searchParams.get('section') || 'home';
-    setCurrentSection(section);
-  }, [searchParams]);
-
-  // Handle section changes and update URL
-  const handleSectionChange = (section: string) => {
-    const newUrl = section === 'home' ? '/' : `/?section=${section}`;
-    router.push(newUrl);
-    setCurrentSection(section);
-    // Only scroll to top when user intentionally changes sections
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-
   const pageVariants = {
     initial: { opacity: 0, y: 20 },
     in: { opacity: 1, y: 0 },
@@ -46,80 +19,23 @@ function AppContent() {
     duration: 0.4
   };
 
-  const renderSection = () => {
-    switch (currentSection) {
-      case 'home':
-        return (
-          <motion.div
-            key="home"
-            initial="initial"
-            animate="in"
-            exit="out"
-            variants={pageVariants}
-            transition={pageTransition}
-          >
-            <HeroSection />
-            <BreakingStigmaSection />
-            <PrevalenceSection />
-            <FeaturesSection />
-            <FinalNoteSection />
-          </motion.div>
-        );
-      case 'quiz':
-        return (
-          <motion.div
-            key="quiz"
-            initial="initial"
-            animate="in"
-            exit="out"
-            variants={pageVariants}
-            transition={pageTransition}
-          >
-            <QuizSection onBack={() => handleSectionChange('home')} />
-          </motion.div>
-        );
-      case 'basics':
-      case 'prevention':
-      case 'testing':
-      case 'myths':
-        return (
-          <motion.div
-            key={currentSection}
-            initial="initial"
-            animate="in"
-            exit="out"
-            variants={pageVariants}
-            transition={pageTransition}
-          >
-            <LearningModules onModuleClick={handleSectionChange} currentModule={currentSection} onBack={() => handleSectionChange('home')} />
-          </motion.div>
-        );
-      default:
-        return (
-          <motion.div
-            key="default"
-            initial="initial"
-            animate="in"
-            exit="out"
-            variants={pageVariants}
-            transition={pageTransition}
-          >
-            <HeroSection />
-            <BreakingStigmaSection />
-            <PrevalenceSection />
-            <FeaturesSection />
-            <FinalNoteSection />
-          </motion.div>
-        );
-    }
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <main className="relative">
-        <AnimatePresence mode="wait">
-          {renderSection()}
-        </AnimatePresence>
+        <motion.div
+          key="home"
+          initial="initial"
+          animate="in"
+          exit="out"
+          variants={pageVariants}
+          transition={pageTransition}
+        >
+          <HeroSection />
+          <BreakingStigmaSection />
+          <PrevalenceSection />
+          <FeaturesSection />
+          <FinalNoteSection />
+        </motion.div>
       </main>
     </div>
   );

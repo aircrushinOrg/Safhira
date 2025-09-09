@@ -93,7 +93,7 @@ export default function NotFound() {
                   </Button>
                 </Link>
 
-                <Link href="/?section=quiz" className="w-full">
+                <Link href="/quiz" className="w-full">
                   <Button variant="secondary" className="w-full">
                     <Search size={16} className="mr-2" />
                     Take Quiz
@@ -109,25 +109,25 @@ export default function NotFound() {
                 </h3>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm">
                   <Link 
-                    href="/?section=basics" 
+                    href="/stis" 
                     className="text-teal-600 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300 p-2 rounded hover:bg-teal-50 dark:hover:bg-teal-900/20 transition-colors"
                   >
                     STI Basics
                   </Link>
                   <Link 
-                    href="/?section=prevention" 
+                    href="/stis/prevention" 
                     className="text-teal-600 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300 p-2 rounded hover:bg-teal-50 dark:hover:bg-teal-900/20 transition-colors"
                   >
                     Prevention
                   </Link>
                   <Link 
-                    href="/?section=testing" 
+                    href="/rights" 
                     className="text-teal-600 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300 p-2 rounded hover:bg-teal-50 dark:hover:bg-teal-900/20 transition-colors"
                   >
                     Testing
                   </Link>
                   <Link 
-                    href="/?section=myths" 
+                    href="/quiz" 
                     className="text-teal-600 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300 p-2 rounded hover:bg-teal-50 dark:hover:bg-teal-900/20 transition-colors"
                   >
                     Myths & Facts

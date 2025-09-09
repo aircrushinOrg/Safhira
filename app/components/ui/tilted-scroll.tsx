@@ -27,7 +27,8 @@ export function TiltedScroll({
             <div
               key={item.id}
               onClick={() => onItemClick?.(item)}
-              className="group flex items-center gap-3 cursor-pointer rounded-md border border-border/40 bg-card p-5 md:p-6 shadow-sm transition-all duration-200 ease-in-out hover:scale-[1.015] hover:-translate-y-0.5 hover:shadow-md dark:border-border"
+              aria-label={`Open myth ${item.text}`}
+              className="group flex items-center gap-3 cursor-pointer rounded-md border border-border/40 bg-card p-5 md:p-6 shadow-sm transition-all duration-200 ease-in-out hover:scale-[1.015] active:scale-[0.985] hover:-translate-y-0.5 hover:shadow-md hover:rotate-[0.3deg] dark:border-border"
             >
               <CheckCircleIcon className="h-7 w-7 md:h-8 md:w-8 mr-2 stroke-foreground/40 transition-colors group-hover:stroke-foreground" />
               <p className="text-foreground/80 text-base md:text-lg">

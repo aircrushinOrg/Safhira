@@ -2,7 +2,6 @@
 
 import { Button } from '@/app/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/app/components/ui/card';
-import { Alert, AlertDescription, AlertTitle } from '@/app/components/ui/alert';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';

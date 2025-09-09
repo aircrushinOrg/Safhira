@@ -1,21 +1,18 @@
 'use client'
 
 import { useState, useEffect } from 'react';
-import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { Header } from './Header';
 
 export function HeaderWrapper() {
   const [currentSection, setCurrentSection] = useState('home');
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
 
-  // Update current section based on pathname and URL params
+  // Update current section based on pathname
   useEffect(() => {
-    // Determine section based on pathname first
     if (pathname === '/') {
-      const section = searchParams.get('section') || 'home';
-      setCurrentSection(section);
+      setCurrentSection('home');
     } else if (pathname.startsWith('/stis')) {
       setCurrentSection('stis');
     } else if (pathname.startsWith('/chat')) {
@@ -26,21 +23,18 @@ export function HeaderWrapper() {
       const section = pathSegments[0] || 'home';
       setCurrentSection(section);
     }
-  }, [pathname, searchParams]);
+  }, [pathname]);
 
   const handleChatOpen = () => {
     router.push('/chat');
   };
 
   const handleSectionChange = (section: string) => {
-    if (pathname !== '/') {
-      // If we're not on the home page, navigate to home with section param
-      router.push(`/?section=${section}`);
-    } else {
-      // Update URL with section parameter
-      const newUrl = section === 'home' ? '/' : `/?section=${section}`;
-      router.push(newUrl);
-    }
+    // Map known sections to routes without query params
+    if (section === 'home') router.push('/');
+    else if (section === 'stis') router.push('/stis');
+    else if (section === 'quiz') router.push('/quiz');
+    else router.push(`/${section}`);
     setCurrentSection(section);
   };
 
