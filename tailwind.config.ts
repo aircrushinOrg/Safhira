@@ -12,6 +12,19 @@ export default {
       fontFamily: {
         sans: ['var(--font-poppins)', 'sans-serif'],
       },
+      animation: {
+        'skew-scroll': 'skew-scroll 20s linear infinite',
+      },
+      keyframes: {
+        'skew-scroll': {
+          '0%': {
+            transform: 'rotateX(20deg) rotateZ(-20deg) skewX(20deg)',
+          },
+          '100%': {
+            transform: 'rotateX(20deg) rotateZ(-20deg) skewX(20deg) translateY(-100%)',
+          },
+        },
+      },
       colors: {
         border: 'var(--border)',
         input: 'var(--input)',
