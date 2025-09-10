@@ -156,7 +156,7 @@ export default function MythListClient({ items }: { items: Item[] }) {
   }, [quizOpen, finished, answered, current, questions, answer, goNext]);
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-16">
       <TiltedScroll items={items} onItemClick={handleClick} className="mt-4" />
 
       <div className="flex justify-center">
