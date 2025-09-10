@@ -95,19 +95,19 @@ export default function STIClient({ stiInfo }: { stiInfo: STIInfo }) {
             <Card className="p-4 sm:p-6 md:p-8">
               <Tabs defaultValue="symptoms" className="w-full">
                 <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-1 h-auto p-1">
-                  <TabsTrigger value="symptoms" className="text-xs sm:text-sm px-2 py-2 data-[state=active]:bg-white">
+                  <TabsTrigger value="symptoms" className="text-xs sm:text-sm px-2 py-2 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 dark:data-[state=active]:text-gray-100">
                     {t('tabs.symptoms')}
                   </TabsTrigger>
-                  <TabsTrigger value="transmission" className="text-xs sm:text-sm px-2 py-2 data-[state=active]:bg-white">
+                  <TabsTrigger value="transmission" className="text-xs sm:text-sm px-2 py-2 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 dark:data-[state=active]:text-gray-100">
                     {t('tabs.transmission')}
                   </TabsTrigger>
-                  <TabsTrigger value="effects" className="text-xs sm:text-sm px-2 py-2 data-[state=active]:bg-white">
+                  <TabsTrigger value="effects" className="text-xs sm:text-sm px-2 py-2 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 dark:data-[state=active]:text-gray-100">
                     {t('tabs.effects')}
                   </TabsTrigger>
-                  <TabsTrigger value="prevention" className="text-xs sm:text-sm px-2 py-2 data-[state=active]:bg-white">
+                  <TabsTrigger value="prevention" className="text-xs sm:text-sm px-2 py-2 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 dark:data-[state=active]:text-gray-100">
                     {t('tabs.prevention')}
                   </TabsTrigger>
-                  <TabsTrigger value="treatment" className="text-xs sm:text-sm px-2 py-2 data-[state=active]:bg-white">
+                  <TabsTrigger value="treatment" className="text-xs sm:text-sm px-2 py-2 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 dark:data-[state=active]:text-gray-100">
                     {t('tabs.treatment')}
                   </TabsTrigger>
                 </TabsList>

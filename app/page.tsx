@@ -6,6 +6,7 @@ import { BreakingStigmaSection } from './components/landing/BreakingStigmaSectio
 import { PrevalenceSection } from './components/landing/PrevalenceSection';
 import { FeaturesSection } from './components/landing/FeaturesSection';
 import { FinalNoteSection } from './components/landing/FinalNoteSection';
+import { FAQSection } from './components/landing/FAQSection';
 import { motion } from 'framer-motion';
 
 function AppContent() {
@@ -34,6 +35,7 @@ function AppContent() {
           <BreakingStigmaSection />
           <PrevalenceSection />
           <FeaturesSection />
+          <FAQSection />
           <FinalNoteSection />
         </motion.div>
       </main>
