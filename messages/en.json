@@ -76,7 +76,8 @@
         "supported": "Supported by Malaysian health professionals",
         "anonymous": "Completely anonymous - no data stored"
       }
-    },
+    }
+  },
   "Header": {
     "tagline": "Sexual Health, Made Simple & Kind.",
     "chat": "Private Chat",
@@ -401,4 +402,3 @@
       "button": "Chat with Our AI Assistant"
     }
   }
-}
