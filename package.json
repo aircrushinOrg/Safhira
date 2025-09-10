@@ -47,6 +47,7 @@
     "geist": "^1.2.0",
     "lucide-react": "^0.541.0",
     "next": "^15.0.0",
+    "next-intl": "^4.3.7",
     "next-themes": "^0.4.6",
     "postgres": "^3.4.3",
     "radix-ui": "^1.4.3",
@@ -69,10 +70,17 @@
     "@types/react-simple-maps": "^3.0.6",
     "autoprefixer": "^10.4.16",
     "drizzle-kit": "^0.31.4",
-    "eslint": "8.56.0",
+    "eslint": "^9.22.0",
     "eslint-config-next": "^15.0.0",
     "postcss": "^8.4.32",
     "tailwindcss": "^3.4.0",
     "typescript": "^5.5.0"
+  },
+  "peerDependenciesStrict": false,
+  "overrides": {
+    "react-simple-maps": {
+      "react": "$react",
+      "react-dom": "$react-dom"
+    }
   }
 }

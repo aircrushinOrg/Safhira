@@ -1,12 +1,14 @@
 'use client'
 
 import { motion } from 'framer-motion';
+import {useTranslations} from 'next-intl';
 import { useState } from 'react';
-import Link from 'next/link';
+import {Link} from '../../i18n/routing';
 import { Info } from 'lucide-react';
 
 export default function ChatPage() {
   const [isIframeLoading, setIsIframeLoading] = useState(true);
+  const t = useTranslations('Chat');
 
   return (
     <div className="min-h-[calc(100vh-80px)] bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
@@ -23,7 +25,7 @@ export default function ChatPage() {
               <div className="absolute inset-0 flex items-center justify-center bg-white dark:bg-gray-800 z-10">
                 <div className="text-center">
                   <div className="w-8 h-8 border-4 border-teal-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-                  <p className="text-gray-600 dark:text-gray-300">Loading chat...</p>
+                  <p className="text-gray-600 dark:text-gray-300">{t('page.loading')}</p>
                 </div>
               </div>
             )}
@@ -44,7 +46,7 @@ export default function ChatPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.5 }}
         >
-          Safhira may also make mistakes. Please verify important information.
+          {t('page.disclaimer')}
         </motion.p>
 
         {/* Floating About Button */}

@@ -1,13 +1,21 @@
 'use client'
 
-import { usePathname } from 'next/navigation';
-import { Footer } from './Footer';
+import {usePathname} from '../../i18n/routing';
+import {Footer} from './Footer';
+import {locales} from '../../i18n/routing';
 
 export function FooterWrapper() {
   const pathname = usePathname();
+  const isChatPath = () => {
+    const segments = pathname.split('/').filter(Boolean);
+    if (segments.length === 0) return false;
+    const [first, ...rest] = segments;
+    const pathAfterLocale = (locales as readonly string[]).includes(first) ? `/${rest.join('/')}` : `/${segments.join('/')}`;
+    return pathAfterLocale === '/chat' || pathAfterLocale.startsWith('/chat/');
+  };
   
   // Don't show footer on chat page
-  if (pathname === '/chat') {
+  if (isChatPath()) {
     return null;
   }
 

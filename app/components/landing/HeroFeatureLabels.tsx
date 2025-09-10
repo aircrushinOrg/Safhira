@@ -1,23 +1,27 @@
+"use client";
+
 import { motion } from 'framer-motion';
 import { Shield, Book, Users } from 'lucide-react';
+import {useTranslations} from 'next-intl';
 
 interface FeatureLabelProps {
   variants: any;
 }
 
 export function FeatureLabels({ variants }: FeatureLabelProps) {
+  const t = useTranslations('Landing');
   const features = [
     {
       icon: Shield,
-      text: "Private & Safe",
+      text: t('hero.labels.private'),
     },
     {
       icon: Book,
-      text: "Science-Based",
+      text: t('hero.labels.science'),
     },
     {
       icon: Users,
-      text: "Teen-Friendly",
+      text: t('hero.labels.teen'),
     }
   ];
 

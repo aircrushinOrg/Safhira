@@ -5,7 +5,8 @@ import { useRef } from 'react';
 import { Card } from '../ui/card';
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
-import { useRouter } from 'next/navigation';
+import {useRouter} from '../../../i18n/routing';
+import {useTranslations} from 'next-intl';
 import { 
   BookOpen, 
   MessageCircle, 
@@ -20,6 +21,7 @@ export function FeaturesSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.1 });
   const router = useRouter();
+  const t = useTranslations('Landing');
 
   interface AvailableFeature {
     id: string;
@@ -54,8 +56,8 @@ export function FeaturesSection() {
   const availableFeatures: AvailableFeature[] = [
     {
       id: 'chatbot',
-      title: 'Private AI Assistant',
-      description: 'Get judgment-free guidance on sexual health questions. Available 24/7 in a completely private environment.',
+      title: t('features.chatbot.title'),
+      description: t('features.chatbot.description'),
       icon: MessageCircle,
       color: 'from-teal-500 to-teal-600 dark:from-teal-400 dark:to-teal-500',
       bgColor: 'bg-teal-50 dark:bg-teal-900/20',
@@ -63,12 +65,12 @@ export function FeaturesSection() {
       textColor: 'text-teal-700 dark:text-teal-300',
       iconColor: 'text-teal-500',
       action: () => router.push('/chat'),
-      buttonText: 'Start Conversation'
+      buttonText: t('features.chatbot.button')
     },
     {
       id: 'education',
-      title: 'STI Education Hub',
-      description: 'Comprehensive, medically-accurate information about sexually transmitted infections in Malaysia.',
+      title: t('features.education.title'),
+      description: t('features.education.description'),
       icon: BookOpen,
       color: 'from-purple-500 to-purple-600 dark:from-purple-400 dark:to-purple-500',
       bgColor: 'bg-purple-50 dark:bg-purple-900/20',
@@ -76,15 +78,15 @@ export function FeaturesSection() {
       textColor: 'text-purple-700 dark:text-purple-300',
       iconColor: 'text-purple-500',
       action: () => router.push('/stis'),
-      buttonText: 'Explore Education'
+      buttonText: t('features.education.button')
     }
   ];
 
   const upcomingFeatures: UpcomingFeature[] = [
     {
       id: 'quiz',
-      title: 'Myth vs Truth Quiz',
-      description: 'Test your knowledge and debunk common misconceptions about sexual health.',
+      title: t('features.quiz.title'),
+      description: t('features.quiz.description'),
       icon: HelpCircle,
       color: 'from-pink-500 to-pink-600 dark:from-pink-400 dark:to-pink-500',
       bgColor: 'bg-gray-100 dark:bg-gray-700/50',
@@ -95,8 +97,8 @@ export function FeaturesSection() {
     },
     {
       id: 'mapper',
-      title: 'Clinic Mapper',
-      description: 'Find nearby sexual health clinics and testing centers with privacy ratings.',
+      title: t('features.mapper.title'),
+      description: t('features.mapper.description'),
       icon: MapPin,
       color: 'from-orange-500 to-orange-600 dark:from-orange-400 dark:to-orange-500',
       bgColor: 'bg-gray-100 dark:bg-gray-700/50',
@@ -107,8 +109,8 @@ export function FeaturesSection() {
     },
     {
       id: 'simulator',
-      title: 'Conversation Simulator',
-      description: 'Practice discussing sexual health topics with healthcare providers in a safe environment.',
+      title: t('features.simulator.title'),
+      description: t('features.simulator.description'),
       icon: Monitor,
       color: 'from-indigo-500 to-indigo-600 dark:from-indigo-400 dark:to-indigo-500',
       bgColor: 'bg-gray-100 dark:bg-gray-700/50',
@@ -140,7 +142,7 @@ export function FeaturesSection() {
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.6, delay: 0.1 }}
             >
-              How We&apos;re Breaking Down Barriers
+              {t('features.title')}
             </motion.h1>
             <motion.p 
               className="text-md text-center md:text-lg text-gray-600 dark:text-gray-300 leading-relaxed max-w-3xl mx-auto"
@@ -148,7 +150,7 @@ export function FeaturesSection() {
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              We built a safe space where young Malaysians reach out about sexual health without fear of judgment. Here&apos;s how we support you:
+              {t('features.subtitle')}
             </motion.p>
           </div>
 
@@ -180,7 +182,7 @@ export function FeaturesSection() {
                         {feature.comingSoon && (
                           <Badge variant="secondary" className="text-xs">
                             <Lock size={12} className="mr-1" />
-                            Launching Soon
+                            {t('features.comingSoon')}
                           </Badge>
                         )}
                       </div>
@@ -204,14 +206,14 @@ export function FeaturesSection() {
                             disabled 
                             className="w-full bg-gray-300 text-gray-500 dark:text-gray-800 cursor-not-allowed"
                           >
-                            Launching Soon
+                            {t('features.comingSoon')}
                           </Button>
                         ) : (
                           <Button
                             onClick={'action' in feature ? feature.action : undefined}
                             className={`w-full bg-gradient-to-r ${feature.color} hover:opacity-90 text-white dark:text-gray-800 transition-all duration-200 group`}
                           >
-                            {'buttonText' in feature ? feature.buttonText : 'Learn More'}
+                            {'buttonText' in feature ? feature.buttonText : t('features.learnMore')}
                             <ArrowRight size={16} className="ml-1 group-hover:translate-x-1 transition-transform" />
                           </Button>
                         )}

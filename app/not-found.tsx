@@ -3,11 +3,13 @@
 import { Card } from './components/ui/card';
 import { Button } from './components/ui/button';
 import { Home, Search, MessageCircle, BookOpen } from 'lucide-react';
-import Link from 'next/link';
+import {Link} from '../i18n/routing';
 import { motion } from 'framer-motion';
+import {useTranslations} from 'next-intl';
 import Image from 'next/image';
 
 export default function NotFound() {
+  const t = useTranslations('NotFound');
   const containerVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
@@ -75,28 +77,28 @@ export default function NotFound() {
                 <Link href="/" className="w-full">
                   <Button className="w-full bg-teal-600 hover:bg-teal-700 text-white">
                     <Home size={16} className="mr-2" />
-                    Go Home
+                    {t('home')}
                   </Button>
                 </Link>
                 
                 <Link href="/stis" className="w-full">
                   <Button variant="outline" className="w-full">
                     <BookOpen size={16} className="mr-2" />
-                    Learn about STIs
+                    {t('learnStis')}
                   </Button>
                 </Link>
                 
                 <Link href="/chat" className="w-full">
                   <Button variant="outline" className="w-full">
                     <MessageCircle size={16} className="mr-2" />
-                    Chat with AI
+                    {t('chatAi')}
                   </Button>
                 </Link>
 
                 <Link href="/quiz" className="w-full">
                   <Button variant="secondary" className="w-full">
                     <Search size={16} className="mr-2" />
-                    Take Quiz
+                    {t('takeQuiz')}
                   </Button>
                 </Link>
               </div>
@@ -105,44 +107,44 @@ export default function NotFound() {
             <motion.div variants={itemVariants}>
               <div className="pt-8 border-t border-gray-200 dark:border-gray-700">
                 <h3 className="font-semibold text-gray-800 dark:text-gray-100 mb-4">
-                  Popular Resources:
+                  {t('popular')}
                 </h3>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm">
                   <Link 
                     href="/stis" 
                     className="text-teal-600 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300 p-2 rounded hover:bg-teal-50 dark:hover:bg-teal-900/20 transition-colors"
                   >
-                    STI Basics
+                    {t('stiBasics')}
                   </Link>
                   <Link 
                     href="/stis/prevention" 
                     className="text-teal-600 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300 p-2 rounded hover:bg-teal-50 dark:hover:bg-teal-900/20 transition-colors"
                   >
-                    Prevention
+                    {t('prevention')}
                   </Link>
                   <Link 
                     href="/rights" 
                     className="text-teal-600 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300 p-2 rounded hover:bg-teal-50 dark:hover:bg-teal-900/20 transition-colors"
                   >
-                    Testing
+                    {t('testing')}
                   </Link>
                   <Link 
                     href="/quiz" 
                     className="text-teal-600 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300 p-2 rounded hover:bg-teal-50 dark:hover:bg-teal-900/20 transition-colors"
                   >
-                    Myths & Facts
+                    {t('mythsFacts')}
                   </Link>
                   <Link 
                     href="/stis/chlamydia" 
                     className="text-teal-600 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300 p-2 rounded hover:bg-teal-50 dark:hover:bg-teal-900/20 transition-colors"
                   >
-                    Chlamydia Info
+                    {t('chlamydia')}
                   </Link>
                   <Link 
                     href="/stis/hiv" 
                     className="text-teal-600 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300 p-2 rounded hover:bg-teal-50 dark:hover:bg-teal-900/20 transition-colors"
                   >
-                    HIV Info
+                    {t('hiv')}
                   </Link>
                 </div>
               </div>

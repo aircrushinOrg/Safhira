@@ -1,0 +1,396 @@
+{
+  "Common": {
+    "loading": "Memuat..."
+  },
+  "Landing": {
+    "hero": {
+      "titlePrefix": "Ruang Selamat untuk",
+      "titleHighlight": "Kesihatan Seksual",
+      "subtitle": "Kami menjadikan perbualan tentang hubungan dan kesihatan reproduktif lebih normal, mesra dan bebas stigma.",
+      "learn": "Ketahui tentang STI",
+      "chat": "Sembang dengan AI",
+      "labels": {
+        "private": "Peribadi & Selamat",
+        "science": "Berteraskan Sains",
+        "teen": "Mesra Remaja"
+      }
+    },
+    "stigma": {
+      "titlePrefix": "Memecahkan Kesunyian",
+      "titleHighlight": "Mengakhiri Stigma",
+      "subtitle": "Pernah rasa sukar untuk bercakap tentang kesihatan seksual? Safhira ialah ruang untuk bertanya, berkongsi dan didengari.",
+      "card1": {
+        "title": "Anda Tidak Bersendirian",
+        "text": "Tidak mengapa berasa tidak pasti atau takut tentang kesihatan seksual—ramai yang merasainya. Tetapi anda tidak perlu hadapi seorang diri."
+      },
+      "card2": {
+        "title": "Kami Ada Untuk Anda",
+        "text": "Safhira ialah ruang yang selamat, mesra dan bebas penghakiman untuk bertanya apa sahaja tentang kesihatan seksual dan menerima sokongan."
+      },
+      "card3": {
+        "title": "Bersama-sama Kita Memecahkan Kesunyian",
+        "text": "Bila kita berkongsi, kita menghapuskan rasa malu. Dengan belajar dan saling menyokong, kita jadikan kesihatan seksual sebahagian normal dalam hidup."
+      }
+    },
+    "prevalence": {
+      "title": "Realiti di Seluruh Malaysia",
+      "subtitle": "Kekurangan perbualan terbuka tentang kesihatan seksual memberi kesan nyata di Malaysia.",
+      "tabPrevalence": "Prevalens STI",
+      "tabTrends": "Tren STI",
+      "loading": "Memuat data STI..."
+    },
+    "features": {
+      "title": "Bagaimana Kami Mengurangkan Halangan",
+      "subtitle": "Kami membina ruang selamat supaya anak muda Malaysia boleh mendapatkan bantuan berkaitan kesihatan seksual tanpa dinilai. Inilah cara kami menyokong anda:",
+      "comingSoon": "Akan Datang",
+      "learnMore": "Ketahui Lagi",
+      "chatbot": {
+        "title": "Pembantu AI Peribadi",
+        "description": "Dapatkan panduan tanpa penghakiman untuk soalan kesihatan seksual. Tersedia 24/7 dalam persekitaran yang benar-benar peribadi.",
+        "button": "Mulakan Perbualan"
+      },
+      "education": {
+        "title": "Hab Pendidikan STI",
+        "description": "Maklumat menyeluruh dan tepat tentang jangkitan penyakit kelamin di Malaysia.",
+        "button": "Terokai Pendidikan"
+      },
+      "quiz": {
+        "title": "Kuiz Mitos vs Fakta",
+        "description": "Uji pengetahuan anda dan betulkan salah faham umum tentang kesihatan seksual."
+      },
+      "mapper": {
+        "title": "Pemetaan Klinik",
+        "description": "Cari klinik dan pusat ujian kesihatan seksual berdekatan beserta penilaian privasi."
+      },
+      "simulator": {
+        "title": "Simulator Perbualan",
+        "description": "Berlatih membincangkan topik kesihatan seksual dengan penyedia perkhidmatan kesihatan dalam persekitaran yang selamat."
+      }
+    },
+    "final": {
+      "titlePrefix": "Safhira Sentiasa Ada",
+      "titleHighlight": "Bila Anda Bersedia",
+      "paragraph": "Kesihatan seksual tidak sepatutnya anda hadapi seorang diri atau dengan rasa malu. Sama ada anda muda atau berusia, masih mencari atau yakin, setiap rakyat Malaysia berhak mendapat akses kepada maklumat dan sokongan tanpa penghakiman.",
+      "trust": {
+        "questions": "Soalan dialu-alukan, penghakiman dibiarkan di luar",
+        "supported": "Disokong oleh profesional kesihatan Malaysia",
+        "anonymous": "Sepenuhnya anonim — tiada data disimpan"
+      }
+    }
+  },
+  "Header": {
+    "tagline": "Kesihatan Seksual, Ringkas & Mesra",
+    "chat": "Sembang Peribadi",
+    "nav": {
+      "home": "Laman Utama",
+      "learnStis": "Ketahui tentang STI"
+    }
+  },
+  "Footer": {
+    "brand": {
+      "tagline": "Pendidikan Kesihatan Moden",
+      "description": "Platform pembelajaran yang selamat dan bebas stigma untuk memahami kesihatan reproduktif bagi remaja Malaysia."
+    },
+    "badges": {
+      "private": "Peribadi",
+      "safe": "Selamat"
+    },
+    "sections": {
+      "learning": "Pembelajaran",
+      "support": "Sokongan",
+      "contact": "Hubungi Kami"
+    },
+    "links": {
+      "stiBasics": "Asas STI",
+      "prevention": "Pencegahan",
+      "quiz": "Kuiz Interaktif",
+      "privateChat": "Sembang AI Peribadi",
+      "aboutAi": "Tentang Safhira AI",
+      "prevalence": "Data Prevalens"
+    },
+    "disclaimer": {
+      "title": "Penafian Penting",
+      "text": "Maklumat di laman web ini adalah untuk tujuan pendidikan sahaja dan bukan pengganti nasihat perubatan profesional. Sila berjumpa doktor untuk diagnosis dan rawatan yang betul."
+    }
+  }
+  ,
+  "NotFound": {
+    "home": "Ke Laman Utama",
+    "learnStis": "Ketahui tentang STI",
+    "chatAi": "Sembang dengan AI",
+    "takeQuiz": "Mulakan Kuiz",
+    "popular": "Sumber Popular:",
+    "stiBasics": "Asas STI",
+    "prevention": "Pencegahan",
+    "testing": "Ujian",
+    "mythsFacts": "Mitos & Fakta",
+    "chlamydia": "Info Klamidia",
+    "hiv": "Info HIV"
+  },
+  "STIs": {
+    "startLearning": "Mula Belajar",
+    "viewData": "Lihat Data",
+    "learnMore": "Ketahui Lagi"
+  },
+  "Learning": {
+    "finished": "Sudah selesai membaca?",
+    "prompt": "Uji kefahaman anda dengan kuiz atau tanya AI jika ada soalan.",
+    "takeQuiz": "Mulakan Kuiz",
+    "chatAi": "Sembang dengan AI",
+    "startLearning": "Mula Belajar",
+    "review": "Ulangkaji",
+    "continue": "Teruskan"
+  }
+  ,
+  "Chat": {
+    "page": {
+      "loading": "Memuat sembang...",
+      "disclaimer": "Safhira juga mungkin membuat kesilapan. Sila sahkan maklumat penting."
+    },
+    "about": {
+      "start": "Mula Bersembang",
+      "privacy": "Privasi & Keselamatan"
+    }
+  }
+  ,
+  "STIDetail": {
+    "back": "Kembali ke Gambaran STI",
+    "risk": "Risiko",
+    "malaysianContext": "Konteks Malaysia",
+    "tabs": {
+      "symptoms": "Gejala",
+      "transmission": "Cara Penularan",
+      "effects": "Kesan Kesihatan",
+      "prevention": "Pencegahan",
+      "treatment": "Rawatan"
+    },
+    "symptoms": {
+      "women": "Gejala pada Wanita",
+      "men": "Gejala pada Lelaki",
+      "other": "Gejala Lain"
+    },
+    "transmission": {
+      "title": "Bagaimana {name} Menular"
+    },
+    "effects": {
+      "title": "Kesan Kesihatan yang Mungkin"
+    },
+    "prevention": {
+      "title": "Kaedah Pencegahan"
+    },
+    "treatment": {
+      "title": "Maklumat Rawatan"
+    },
+    "support": {
+      "title": "Perlukan Sokongan atau Ada Soalan?",
+      "text": "Mencari maklumat dan rawatan menunjukkan tanggungjawab serta penjagaan diri. Profesional kesihatan di Malaysia terlatih untuk memberi penjagaan sulit tanpa penghakiman.",
+      "cta": "Tanya Pembantu AI Kami"
+    }
+  },
+  "Charts": {
+    "choropleth": {
+      "title": "Prevalens STI di Malaysia",
+      "subtitle": "Kadar insiden setiap 100,000 penduduk mengikut negeri dan tahun",
+      "selectSti": "Pilih STI",
+      "year": "Tahun",
+      "play": "Main",
+      "pause": "Jeda",
+      "legend": "Kadar insiden (setiap 100,000 orang) merentas semua tahun",
+      "loading": "Memuat peta...",
+      "highest": "Kadar Tertinggi",
+      "lowest": "Kadar Terendah",
+      "average": "Kadar Purata",
+      "note": "Angka-angka ini bukan sekadar statistik — ia mewakili insan sebenar yang memerlukan sokongan dan maklumat tepat. Inilah sebabnya perbualan yang selamat dan bebas stigma itu penting."
+    },
+    "trends": {
+      "title": "Tren STI di Malaysia",
+      "subtitle": "Trend kadar insiden setiap 100,000 penduduk mengikut negeri dan penyakit merentasi tahun",
+      "selectSti": "Pilih STI",
+      "chooseDisease": "Pilih penyakit",
+      "selectStates": "Pilih Negeri",
+      "clear": "Kosongkan",
+      "chooseStates": "Pilih negeri",
+      "selectPrompt": "Sila pilih penyakit untuk melihat carta",
+      "axis": {
+        "x": "Tahun",
+        "y": "Kadar Insiden (setiap 100,000)"
+      }
+    }
+  }
+  ,
+  "Prevention": {
+    "hero": {
+      "title": "Pencegahan STI & Amalan Seks Selamat",
+      "subtitle": "Maklumat berasaskan bukti dan sensitif budaya untuk membantu anda membuat keputusan bermaklumat sambil menghormati nilai peribadi."
+    },
+    "cultural": {
+      "title": "Pendekatan yang Menghormati & Inklusif",
+      "text": "Maklumat ini disampaikan dengan menghormati kepelbagaian budaya, kepercayaan agama dan nilai peribadi. Keputusan kesihatan seksual adalah sangat peribadi, dan semua orang berhak mendapat maklumat yang tepat tanpa penghakiman. Anda boleh menyesuaikan amalan ini mengikut nilai dan keadaan anda."
+    },
+    "tabs": {
+      "methods": "Kaedah Pencegahan",
+      "practices": "Amalan Seks Selamat",
+      "communication": "Komunikasi",
+      "resources": "Sumber"
+    },
+    "methods": {
+      "heading": "Kaedah Pencegahan Berasaskan Bukti",
+      "cultural": "Pertimbangan Budaya",
+      "evidence": "Asas Bukti",
+      "how": "Cara Penggunaan Berkesan"
+    },
+    "practices": {
+      "heading": "Garis Masa Amalan Seks Selamat"
+    },
+    "adapt": {
+      "title": "Menyesuaikan dengan Keadaan Anda",
+      "text": "Amalan ini boleh disesuaikan dengan latar budaya, gaya hubungan dan tahap keselesaan peribadi anda. Prinsip utama—komunikasi, hormat dan perlindungan—kekal konsisten sambil membenarkan variasi pelaksanaan yang peribadi dan budaya."
+    },
+    "comm": {
+      "heading": "Komunikasi Berhemah tentang Kesihatan Seksual",
+      "start": "Memulakan Perbualan",
+      "samples": "Contoh Permulaan Perbualan",
+      "cultural": "Kepekaan Budaya dalam Komunikasi",
+      "styles": "Menghormati Gaya Komunikasi Berbeza",
+      "navigate": "Menangani Perbezaan Budaya"
+    },
+    "resources": {
+      "heading": "Sumber & Sokongan Tambahan",
+      "evidence": {
+        "heading": "Sumber Bukti & Garis Panduan",
+        "who": {
+          "title": "Pertubuhan Kesihatan Sedunia (WHO)",
+          "desc": "Standard global untuk pencegahan dan garis panduan rawatan STI yang memaklumkan kandungan ini.",
+          "links": ["WHO – Jangkitan Penyakit Kelamin (STI)"]
+        },
+        "moh": {
+          "title": "Kementerian Kesihatan Malaysia",
+          "desc": "Garis panduan klinikal rasmi Malaysia untuk pencegahan dan rawatan STI yang disesuaikan dengan konteks tempatan.",
+          "links": ["KKM – Portal Rasmi"]
+        },
+        "cdc": {
+          "title": "Pusat Kawalan Penyakit (CDC)",
+          "desc": "Amalan terbaik antarabangsa dan bukti penyelidikan untuk strategi pencegahan STI serta data keberkesanan.",
+          "links": [
+            "CDC – Jangkitan Penyakit Kelamin (STI)",
+            "CDC – Garis Panduan Rawatan STI (2021)"
+          ]
+        }
+      },
+      "extra": {
+        "moh": {"link": "Kementerian Kesihatan Malaysia (KKM) – Portal Rasmi"},
+        "maf": {
+          "title": "Yayasan AIDS Malaysia (MAF)",
+          "desc": "Menyediakan perkhidmatan kaunseling, ujian dan sokongan dengan penjagaan serta program pendidikan yang sensitif budaya.",
+          "link": "Yayasan AIDS Malaysia (MAF) – Laman Rasmi"
+        },
+        "uni": {
+          "title": "Pusat Kesihatan Universiti",
+          "desc": "Banyak pusat kesihatan universiti menyediakan ujian STI yang sulit dan pendidikan khusus untuk golongan muda.",
+          "link": "Kementerian Pendidikan Tinggi (MOHE) – Portal Rasmi"
+        }
+      }
+    },
+    "personal": {
+      "title": "Perlu Panduan Peribadi?",
+      "text": "Pembantu AI kami boleh memberikan panduan pencegahan STI yang diperibadikan dan sulit, selaras dengan keadaan serta latar budaya anda.",
+      "button": "Sembang dengan Pembantu AI Kami"
+    }
+    ,
+    "lists": {
+      "methods": [
+        {
+          "title": "Kaedah Penghalang (Kondom)",
+          "effectiveness": "85–98% berkesan untuk kebanyakan STI",
+          "description": "Halangan fizikal yang mengelakkan sentuhan langsung antara pasangan semasa hubungan seksual",
+          "culturalConsiderations": "Menghormati autonomi peribadi dan boleh digunakan secara discreet. Serasi dengan pelbagai pandangan budaya dan agama mengenai perancangan keluarga.",
+          "howToUse": [
+            "Gunakan kondom baharu setiap kali hubungan seksual",
+            "Semak tarikh luput dan integriti pembungkusan",
+            "Tinggalkan ruang di hujung dan gulung sehingga habis",
+            "Tanggalkan dengan berhati‑hati untuk elak tumpahan",
+            "Buang dengan bertanggungjawab"
+          ],
+          "evidence": "Data WHO dan CDC menunjukkan keberkesanan tinggi apabila digunakan dengan betul dan konsisten."
+        },
+        {
+          "title": "Komunikasi dan Persetujuan",
+          "effectiveness": "Asas penting bagi semua pencegahan",
+          "description": "Perbualan jujur dan terbuka tentang kesihatan seksual, had dan status ujian",
+          "culturalConsiderations": "Menghormati nilai budaya dalam komunikasi sambil mengutamakan kesihatan. Boleh disesuaikan mengikut gaya komunikasi berbeza.",
+          "howToUse": [
+            "Bincang sejarah ujian STI sebelum hubungan intim",
+            "Kongsi had peribadi dan tahap keselesaan",
+            "Bincang kaedah pencegahan yang kedua‑dua selesa",
+            "Kerap berbincang tentang keselesaan dan persetujuan",
+            "Berbual dengan hormat dan prihatin"
+          ],
+          "evidence": "Kajian menunjukkan pasangan yang berkomunikasi tentang kesihatan seksual mempunyai kadar penularan lebih rendah dan kepuasan hubungan lebih tinggi."
+        },
+        {
+          "title": "Ujian Berkala",
+          "effectiveness": "Penting untuk pengesanan dan rawatan awal",
+          "description": "Saringan rutin STI berdasarkan umur, faktor risiko dan aktiviti seksual",
+          "culturalConsiderations": "Penjagaan kesihatan ialah tanggungjawab peribadi yang bermanfaat kepada individu dan komuniti.",
+          "howToUse": [
+            "Buat ujian sekurang‑kurangnya sekali setahun jika aktif seksual",
+            "Ujian sebelum memulakan hubungan baharu jika boleh",
+            "Ikuti kekerapan yang disyorkan penyedia kesihatan",
+            "Termasuk ujian untuk pelbagai STI, bukan hanya HIV",
+            "Kongsi keputusan dengan pasangan jika sesuai"
+          ],
+          "evidence": "Garis panduan KKM dan antarabangsa mengesyorkan saringan berkala sebagai teras pencegahan STI."
+        }
+      ],
+      "practices": [
+        {"category": "Sebelum Aktiviti Seksual", "practices": [
+          "Berbual terbuka tentang kesihatan seksual dan had",
+          "Buat ujian bersama dan kongsi keputusan",
+          "Bincang dan persetujui kaedah pencegahan",
+          "Pastikan kedua‑dua pihak selesa dan dihormati",
+          "Sediakan perlindungan dan mudah dicapai"
+        ]},
+        {"category": "Semasa Aktiviti Seksual", "practices": [
+          "Guna kaedah penghalang secara konsisten dan betul",
+          "Hormati had yang dipersetujui dan saling peka",
+          "Elak amalan yang meningkatkan risiko kecederaan tisu",
+          "Guna pelincir yang sesuai untuk elak koyakan",
+          "Tukar penghalang baharu apabila menukar aktiviti"
+        ]},
+        {"category": "Selepas Aktiviti Seksual", "practices": [
+          "Buang perlindungan yang digunakan dengan betul",
+          "Membersih dengan lembut tanpa produk keras",
+          "Pantau sebarang gejala luar biasa",
+          "Teruskan komunikasi tentang keselesaan dan kesihatan",
+          "Dapatkan rawatan jika ada kebimbangan"
+        ]}
+      ],
+      "comm": {
+        "tips": [
+          "Pilih suasana yang selesa dan privasi",
+          "Mulakan topik ketika kedua‑dua pihak tenang",
+          "Guna pernyataan 'saya' untuk luah perasaan",
+          "Jujur tentang kesihatan dan sejarah ujian diri",
+          "Dengar secara aktif dan hormati jawapan pasangan"
+        ],
+        "samples": [
+          {"situation": "Membincangkan ujian", "example": "Saya ambil berat tentang kesihatan kita. Bila ujian STI anda yang terakhir? Saya buat pada [jangka masa] dan semuanya baik."},
+          {"situation": "Bercakap tentang perlindungan", "example": "Saya lebih selesa menggunakan perlindungan. Apa pandangan anda?"},
+          {"situation": "Menetapkan had", "example": "Saya selesa dengan [aktiviti tertentu] tetapi lebih suka menangguhkan [aktiviti lain]. Apa pendapat anda?"}
+        ],
+        "styles": [
+          "Sesetengah budaya lebih suka komunikasi tidak langsung",
+          "Ada yang menekankan perbualan yang terus terang",
+          "Isyarat bukan lisan juga penting",
+          "Mungkin perlu masa dan kesabaran untuk selesa"
+        ],
+        "navigate": [
+          "Hormati latar belakang yang berbeza",
+          "Cari titik persamaan pada kesihatan dan penjagaan",
+          "Hormati pertimbangan agama atau budaya",
+          "Utamakan kefahaman berbanding penghakiman"
+        ]
+      }
+    }
+  }
+}

@@ -1,25 +1,34 @@
 'use client'
 
-import { useState, useEffect } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
-import { Header } from './Header';
+import {useState, useEffect} from 'react';
+import {useRouter, usePathname} from '../../i18n/routing';
+import {Header} from './Header';
+import {locales} from '../../i18n/routing';
 
 export function HeaderWrapper() {
   const [currentSection, setCurrentSection] = useState('home');
   const router = useRouter();
   const pathname = usePathname();
 
+  const stripLocale = (path: string) => {
+    const segments = path.split('/').filter(Boolean);
+    if (segments.length === 0) return '/';
+    const [first, ...rest] = segments;
+    return (locales as readonly string[]).includes(first) ? `/${rest.join('/')}` || '/' : `/${segments.join('/')}`;
+  };
+
   // Update current section based on pathname
   useEffect(() => {
-    if (pathname === '/') {
+    const normalized = stripLocale(pathname);
+    if (normalized === '/') {
       setCurrentSection('home');
-    } else if (pathname.startsWith('/stis')) {
+    } else if (normalized.startsWith('/stis')) {
       setCurrentSection('stis');
-    } else if (pathname.startsWith('/chat')) {
+    } else if (normalized.startsWith('/chat')) {
       setCurrentSection('chat');
     } else {
       // For other pages, set a default or extract from pathname
-      const pathSegments = pathname.split('/').filter(Boolean);
+      const pathSegments = normalized.split('/').filter(Boolean);
       const section = pathSegments[0] || 'home';
       setCurrentSection(section);
     }
