@@ -22,16 +22,17 @@ function chooseBySlug(results: STIInfo[], slug: string): STIInfo | null {
   return results[0] ?? null;
 }
 
-export default async function Page({ params }: { params: { sti: string } }) {
-  const slug = params.sti.toLowerCase();
+export default async function Page({ params }: { params: Promise<{ sti: string }> }) {
+  const { sti } = await params;
+  const slug = sti.toLowerCase();
 
   const results = await searchSTIs(slug);
-  const sti = chooseBySlug(results as STIInfo[], slug);
+  const stiInfo = chooseBySlug(results as STIInfo[], slug);
 
-  if (!sti) {
+  if (!stiInfo) {
     notFound();
   }
 
-  return <Client stiInfo={sti} />;
+  return <Client stiInfo={stiInfo} />;
 }
 

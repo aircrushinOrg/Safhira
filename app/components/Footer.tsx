@@ -10,6 +10,7 @@ import {
   AlertTriangle
 } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export function Footer() {
   return (
@@ -54,9 +55,9 @@ export function Footer() {
               <span>Learning</span>
             </h4>
             <ul className="space-y-2 text-sm">
-              <li><a href="/stis" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-white transition-colors">STI Basics</a></li>
-              <li><a href="/stis/prevention" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-white transition-colors">Prevention</a></li>
-              <li><a href="/quiz" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-white transition-colors">Interactive Quiz</a></li>
+              <li><Link href="/stis" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-white transition-colors">STI Basics</Link></li>
+              <li><Link href="/stis/prevention" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-white transition-colors">Prevention</Link></li>
+              <li><Link href="/quiz" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-white transition-colors">Interactive Quiz</Link></li>
               {/* <li><a href="/?section=basics" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-white transition-colors">Testing & Treatment</a></li> */}
               {/* <li><a href="/?section=myths" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-white transition-colors">Myths vs Facts</a></li> */}
             </ul>
@@ -69,9 +70,9 @@ export function Footer() {
               <span>Support</span>
             </h4>
             <ul className="space-y-2 text-sm">
-              <li><a href="/chat" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-white transition-colors">Private AI Chat</a></li>
-              <li><a href="/chat/about" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-white transition-colors">About Safhira AI</a></li>
-              <li><a href="/stis/prevalence" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-white transition-colors">Prevalence Data</a></li>
+              <li><Link href="/chat" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-white transition-colors">Private AI Chat</Link></li>
+              <li><Link href="/chat/about" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-white transition-colors">About Safhira AI</Link></li>
+              <li><Link href="/stis/prevalence" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-white transition-colors">Prevalence Data</Link></li>
             </ul>
           </div>
 

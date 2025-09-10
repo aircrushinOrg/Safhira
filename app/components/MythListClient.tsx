@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { TiltedScroll } from "./ui/tilted-scroll";
 import { motion } from "framer-motion";
 import {
@@ -74,7 +74,7 @@ export default function MythListClient({ items }: { items: Item[] }) {
     setQuizOpen(true);
   };
 
-  const answer = (userSaysTrue: boolean) => {
+  const answer = useCallback((userSaysTrue: boolean) => {
     const q = questions[current];
     if (!q) return;
     if (answered) return;
@@ -82,9 +82,9 @@ export default function MythListClient({ items }: { items: Item[] }) {
     setIsCorrect(correct);
     setAnswered(true);
     if (correct) setScore((s) => s + 1);
-  };
+  }, [questions, current, answered]);
 
-  const goNext = () => {
+  const goNext = useCallback(() => {
     if (!answered) return;
     const next = current + 1;
     if (next >= questions.length) {
@@ -101,7 +101,7 @@ export default function MythListClient({ items }: { items: Item[] }) {
       setAnswered(false);
       setIsCorrect(null);
     }
-  };
+  }, [answered, current, questions.length, score]);
 
   const achievement = useMemo(() => {
     const total = questions.length || 5;
@@ -153,7 +153,7 @@ export default function MythListClient({ items }: { items: Item[] }) {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [quizOpen, finished, answered, current, questions]);
+  }, [quizOpen, finished, answered, current, questions, answer, goNext]);
 
   return (
     <div className="space-y-10">
@@ -275,7 +275,7 @@ export default function MythListClient({ items }: { items: Item[] }) {
               </div>
 
               {!answered ? (
-                <div className="flex gap-3 justify-end">
+                <div className="flex gap-3 justify-end mt-8">
                   <Button
                     variant="outline"
                     onClick={() => answer(false)}
