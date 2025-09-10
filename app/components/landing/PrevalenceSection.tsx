@@ -6,6 +6,7 @@ import { STIChoroplethChart } from './STIChoroplethChart';
 import STITrendsChart from './STITrendsChart';
 import { Card, CardContent } from '../ui/card';
 import { getAllUniqueStates, getAllUniqueDiseases, getAllYearDiseaseIncidences } from '../../actions/prevalence-actions';
+import {useTranslations} from 'next-intl';
 
 interface SharedData {
   states: string[];
@@ -19,6 +20,7 @@ export function PrevalenceSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.1 });
   const [activeTab, setActiveTab] = useState("choropleth");
+  const t = useTranslations('Landing');
   
   // Shared data state
   const [sharedData, setSharedData] = useState<SharedData>({
@@ -71,10 +73,10 @@ export function PrevalenceSection() {
           <div className="mb-6 sm:mb-8">
             <div className="mb-4 sm:mb-6 text-center flex flex-col w-full justify-center items-center">
               <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-3 sm:mb-4 px-2">
-                The Reality Across Malaysia
+                {t('prevalence.title')}
               </h1>
               <p className="text-md text-center md:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-                The lack of open conversations about sexual health has real consequences across Malaysia.
+                {t('prevalence.subtitle')}
               </p>
             </div>
         </div>
@@ -89,7 +91,7 @@ export function PrevalenceSection() {
               <CardContent className="flex items-center justify-center h-96">
                 <div className="text-center">
                   <div className="w-8 h-8 border-4 border-teal-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-                  <p className="text-gray-600 dark:text-gray-300">Loading STI data...</p>
+                  <p className="text-gray-600 dark:text-gray-300">{t('prevalence.loading')}</p>
                 </div>
               </CardContent>
             </Card>
@@ -120,7 +122,7 @@ export function PrevalenceSection() {
                       : "text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100"
                   }`}
                 >
-                  STI Prevalence
+                  {t('prevalence.tabPrevalence')}
                 </button>
                 
                 <button
@@ -131,7 +133,7 @@ export function PrevalenceSection() {
                       : "text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-100"
                   }`}
                 >
-                  STI Trends
+                  {t('prevalence.tabTrends')}
                 </button>
               </div>
               

@@ -1,3 +1,5 @@
+"use client";
+
 import { motion } from 'framer-motion';
 import { DecorativeHearts } from './HeroDecorativeHearts';
 import { FeatureLabels } from './HeroFeatureLabels';
@@ -6,9 +8,11 @@ import { BookOpen, MessageCircle } from 'lucide-react';
 import {useRouter} from '../../../i18n/routing';
 import Image from 'next/image';
 import heroImage from '../../../public/landing-hero.png';
+import {useTranslations} from 'next-intl';
 
 export function HeroSection() {
   const router = useRouter();
+  const t = useTranslations('Landing');
   
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -67,14 +71,14 @@ export function HeroSection() {
             className="text-4xl text-center lg:text-left md:text-5xl lg:text-6xl font-bold text-gray-800 dark:text-gray-100 leading-tight"
             variants={itemVariants}
           >
-            Your Safe Space for <span className="bg-gradient-to-r from-rose-500 via-purple-500 to-teal-500 dark:from-rose-400 dark:via-purple-400 dark:to-teal-400 bg-clip-text text-transparent">Sexual Health</span>
+            {t('hero.titlePrefix')} <span className="bg-gradient-to-r from-rose-500 via-purple-500 to-teal-500 dark:from-rose-400 dark:via-purple-400 dark:to-teal-400 bg-clip-text text-transparent">{t('hero.titleHighlight')}</span>
           </motion.h1>
           
           <motion.p 
             className="text-lg text-center md:text-xl lg:text-left text-gray-600 dark:text-gray-300 leading-relaxed"
             variants={itemVariants}
           >
-            We&apos;re making conversations about relationships and reproductive health feel normal, kind, and stigma-free.
+            {t('hero.subtitle')}
           </motion.p>
 
           <FeatureLabels variants={itemVariants} />
@@ -87,7 +91,7 @@ export function HeroSection() {
               onClick={handleLearnSTIs}
             >
               <BookOpen size={24} />
-              <span>Learn About STIs</span>
+              <span>{t('hero.learn')}</span>
             </Button>
             <Button 
               size="lg"
@@ -96,7 +100,7 @@ export function HeroSection() {
               onClick={handleChatAI}
             >
               <MessageCircle size={24} />
-              <span>Chat with AI</span>
+              <span>{t('hero.chat')}</span>
             </Button>
           </motion.div>
 

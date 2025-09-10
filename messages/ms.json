@@ -1,6 +1,81 @@
 {
   "Common": {
     "loading": "Memuat..."
+  },
+  "Landing": {
+    "hero": {
+      "titlePrefix": "Ruang Selamat untuk",
+      "titleHighlight": "Kesihatan Seksual",
+      "subtitle": "Kami menjadikan perbualan tentang hubungan dan kesihatan reproduktif lebih normal, mesra dan bebas stigma.",
+      "learn": "Ketahui tentang STI",
+      "chat": "Sembang dengan AI",
+      "labels": {
+        "private": "Peribadi & Selamat",
+        "science": "Berteraskan Sains",
+        "teen": "Mesra Remaja"
+      }
+    },
+    "stigma": {
+      "titlePrefix": "Memecahkan Kesunyian",
+      "titleHighlight": "Mengakhiri Stigma",
+      "subtitle": "Pernah rasa sukar untuk bercakap tentang kesihatan seksual? Safhira ialah ruang untuk bertanya, berkongsi dan didengari.",
+      "card1": {
+        "title": "Anda Tidak Bersendirian",
+        "text": "Tidak mengapa berasa tidak pasti atau takut tentang kesihatan seksual—ramai yang merasainya. Tetapi anda tidak perlu hadapi seorang diri."
+      },
+      "card2": {
+        "title": "Kami Ada Untuk Anda",
+        "text": "Safhira ialah ruang yang selamat, mesra dan bebas penghakiman untuk bertanya apa sahaja tentang kesihatan seksual dan menerima sokongan."
+      },
+      "card3": {
+        "title": "Bersama-sama Kita Memecahkan Kesunyian",
+        "text": "Bila kita berkongsi, kita menghapuskan rasa malu. Dengan belajar dan saling menyokong, kita jadikan kesihatan seksual sebahagian normal dalam hidup."
+      }
+    },
+    "prevalence": {
+      "title": "Realiti di Seluruh Malaysia",
+      "subtitle": "Kekurangan perbualan terbuka tentang kesihatan seksual memberi kesan nyata di Malaysia.",
+      "tabPrevalence": "Prevalens STI",
+      "tabTrends": "Tren STI",
+      "loading": "Memuat data STI..."
+    },
+    "features": {
+      "title": "Bagaimana Kami Mengurangkan Halangan",
+      "subtitle": "Kami membina ruang selamat supaya anak muda Malaysia boleh mendapatkan bantuan berkaitan kesihatan seksual tanpa dinilai. Inilah cara kami menyokong anda:",
+      "comingSoon": "Akan Datang",
+      "learnMore": "Ketahui Lagi",
+      "chatbot": {
+        "title": "Pembantu AI Peribadi",
+        "description": "Dapatkan panduan tanpa penghakiman untuk soalan kesihatan seksual. Tersedia 24/7 dalam persekitaran yang benar-benar peribadi.",
+        "button": "Mulakan Perbualan"
+      },
+      "education": {
+        "title": "Hab Pendidikan STI",
+        "description": "Maklumat menyeluruh dan tepat tentang jangkitan penyakit kelamin di Malaysia.",
+        "button": "Terokai Pendidikan"
+      },
+      "quiz": {
+        "title": "Kuiz Mitos vs Fakta",
+        "description": "Uji pengetahuan anda dan betulkan salah faham umum tentang kesihatan seksual."
+      },
+      "mapper": {
+        "title": "Pemetaan Klinik",
+        "description": "Cari klinik dan pusat ujian kesihatan seksual berdekatan beserta penilaian privasi."
+      },
+      "simulator": {
+        "title": "Simulator Perbualan",
+        "description": "Berlatih membincangkan topik kesihatan seksual dengan penyedia perkhidmatan kesihatan dalam persekitaran yang selamat."
+      }
+    },
+    "final": {
+      "titlePrefix": "Safhira Sentiasa Ada",
+      "titleHighlight": "Bila Anda Bersedia",
+      "paragraph": "Kesihatan seksual tidak sepatutnya anda hadapi seorang diri atau dengan rasa malu. Sama ada anda muda atau berusia, masih mencari atau yakin, setiap rakyat Malaysia berhak mendapat akses kepada maklumat dan sokongan tanpa penghakiman.",
+      "trust": {
+        "questions": "Soalan dialu-alukan, penghakiman dibiarkan di luar",
+        "supported": "Disokong oleh profesional kesihatan Malaysia",
+        "anonymous": "Sepenuhnya anonim — tiada data disimpan"
+      }
+    }
   }
 }
-

@@ -3,10 +3,12 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { Shield, Heart, UserCheck } from 'lucide-react';
+import {useTranslations} from 'next-intl';
 
 export function FinalNoteSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.1 });
+  const t = useTranslations('Landing');
 
   return (
     <motion.div 
@@ -67,7 +69,7 @@ export function FinalNoteSection() {
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ duration: 0.6, delay: 0.1 }}
             >
-              Safhira Is Here <span className="bg-gradient-to-r from-rose-500 via-purple-500 to-teal-500 dark:from-rose-400 dark:via-purple-400 dark:to-teal-400 bg-clip-text text-transparent">When You&apos;re Ready</span>
+              {t('final.titlePrefix')} <span className="bg-gradient-to-r from-rose-500 via-purple-500 to-teal-500 dark:from-rose-400 dark:via-purple-400 dark:to-teal-400 bg-clip-text text-transparent">{t('final.titleHighlight')}</span>
             </motion.h1>
           </div>
 
@@ -78,9 +80,8 @@ export function FinalNoteSection() {
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-
             <p className="text-base sm:text-lg lg:text-xl leading-relaxed text-gray-700 dark:text-gray-300 mb-6 sm:mb-8">
-              Sexual health shouldn&apos;t be something you figure out alone or feel ashamed about. Whether you&apos;re young or old, questioning or confident, every Malaysian deserves access to judgment-free information and support.
+              {t('final.paragraph')}
             </p>
           </motion.div>
 
@@ -109,19 +110,19 @@ export function FinalNoteSection() {
               <div className="w-12 h-12 bg-gradient-to-br from-pink-100 to-pink-200 dark:from-pink-800/30 dark:to-pink-700/30 rounded-full flex items-center justify-center mb-3">
                 <Heart size={24} className="text-pink-600 dark:text-pink-400" />
               </div>
-              <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 px-6">Questions welcomed, judgment left at the door</span>
+              <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 px-6">{t('final.trust.questions')}</span>
             </div>
             <div className="flex flex-col items-center text-center">
               <div className="w-12 h-12 bg-gradient-to-br from-purple-100 to-purple-200 dark:from-purple-800/30 dark:to-purple-700/30 rounded-full flex items-center justify-center mb-3">
                 <UserCheck size={24} className="text-purple-600 dark:text-purple-400" />
               </div>
-              <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 px-6">Supported by Malaysian health professionals</span>
+              <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 px-6">{t('final.trust.supported')}</span>
             </div>
             <div className="flex flex-col items-center text-center">
               <div className="w-12 h-12 bg-gradient-to-br from-teal-100 to-teal-200 dark:from-teal-800/30 dark:to-teal-700/30 rounded-full flex items-center justify-center mb-3">
                 <Shield size={24} className="text-teal-600 dark:text-teal-400" />
               </div>
-              <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 px-6">Completely anonymous - no data stored</span>
+              <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 px-6">{t('final.trust.anonymous')}</span>
             </div>
           </motion.div>
         </div>

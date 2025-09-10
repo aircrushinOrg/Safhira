@@ -1,6 +1,81 @@
 {
   "Common": {
     "loading": "加载中..."
+  },
+  "Landing": {
+    "hero": {
+      "titlePrefix": "你的",
+      "titleHighlight": "性健康安心空间",
+      "subtitle": "我们让关于关系与生殖健康的对话变得自然、友善、无污名。",
+      "learn": "了解性传播感染",
+      "chat": "与 AI 聊天",
+      "labels": {
+        "private": "私密安全",
+        "science": "科学依据",
+        "teen": "适合青少年"
+      }
+    },
+    "stigma": {
+      "titlePrefix": "打破沉默",
+      "titleHighlight": "结束污名",
+      "subtitle": "是否觉得很难谈论性健康？Safhira 是你可以提问、分享、被倾听的地方。",
+      "card1": {
+        "title": "你并不孤单",
+        "text": "对性健康感到不确定或害怕是正常的——很多人都是如此。但你不必独自面对。"
+      },
+      "card2": {
+        "title": "我们在这里支持你",
+        "text": "Safhira 是一个安全、友善、无评判的空间，你可以放心提问并获得支持。"
+      },
+      "card3": {
+        "title": "一起打破沉默",
+        "text": "当我们开口交流，就能打破羞耻。通过学习与互相支持，让性健康成为生活中的常态。"
+      }
+    },
+    "prevalence": {
+      "title": "放眼全马的现实",
+      "subtitle": "缺乏关于性健康的公开对话，在马来西亚造成了真实影响。",
+      "tabPrevalence": "STI 流行情况",
+      "tabTrends": "STI 趋势",
+      "loading": "正在加载 STI 数据…"
+    },
+    "features": {
+      "title": "我们如何拆除障碍",
+      "subtitle": "我们打造了一个安全空间，让马来西亚的年轻人可以无惧评判地寻求性健康相关的帮助。以下是我们如何支持你：",
+      "comingSoon": "即将上线",
+      "learnMore": "了解更多",
+      "chatbot": {
+        "title": "私密 AI 助手",
+        "description": "为你的性健康问题提供无评判的指导。全天候 24/7，完全私密。",
+        "button": "开始对话"
+      },
+      "education": {
+        "title": "STI 学习中心",
+        "description": "关于马来西亚性传播感染的全面、准确的医学信息。",
+        "button": "探索学习"
+      },
+      "quiz": {
+        "title": "谣言与真相测验",
+        "description": "检验你的知识，澄清关于性健康的常见误解。"
+      },
+      "mapper": {
+        "title": "诊所地图",
+        "description": "查找附近的性健康诊所与检测中心，并查看隐私评分。"
+      },
+      "simulator": {
+        "title": "对话模拟器",
+        "description": "在安全环境中练习与医护人员讨论性健康话题。"
+      }
+    },
+    "final": {
+      "titlePrefix": "当你准备好，Safhira 就在",
+      "titleHighlight": "你的身边",
+      "paragraph": "性健康不该让你独自摸索或感到羞耻。无论你年轻或年长，自我探索或充满自信，每一位马来西亚人都应该获得无评判的信息与支持。",
+      "trust": {
+        "questions": "欢迎提问，拒绝评判",
+        "supported": "由马来西亚医疗专业人士支持",
+        "anonymous": "完全匿名——不存储数据"
+      }
+    }
   }
 }
-
