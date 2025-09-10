@@ -4,10 +4,12 @@ import { Button } from '@/app/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/app/components/ui/card';
 import {Link} from '../../../i18n/routing';
 import { motion } from 'framer-motion';
+import {useTranslations} from 'next-intl';
 import { useState, useEffect } from 'react';
 
 export default function ChatAboutPage() {
   const [isLoaded, setIsLoaded] = useState(false);
+  const t = useTranslations('Chat');
 
   useEffect(() => {
     setIsLoaded(true);
@@ -90,7 +92,7 @@ export default function ChatAboutPage() {
                   <svg viewBox="0 0 24 24" fill="currentColor" className="size-5">
                     <path d="M20 2H4C2.897 2 2 2.897 2 4V22L6 18H20C21.103 18 22 17.103 22 16V4C22 2.897 21.103 2 20 2Z"/>
                   </svg>
-                  Start Chatting
+                  {t('about.start')}
                 </Link>
               </Button>
               <Button asChild variant="outline" size="lg">
@@ -98,7 +100,7 @@ export default function ChatAboutPage() {
                   <svg viewBox="0 0 24 24" fill="currentColor" className="size-5">
                     <path d="M12 2L4 5v6c0 5 3.8 9.7 8 11 4.2-1.3 8-6 8-11V5l-8-3zM12 20c-2.8-1.1-6-4.9-6-9V6.3l6-2.2 6 2.2V11c0 4.1-3.2 7.9-6 9z"/>
                   </svg>
-                  Privacy & Safety
+                  {t('about.privacy')}
                 </Link>
               </Button>
             </div>

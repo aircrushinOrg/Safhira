@@ -78,4 +78,320 @@
       }
     }
   }
+  ,
+  "Header": {
+    "tagline": "更简单、更温暖的性健康",
+    "chat": "私密聊天",
+    "nav": {
+      "home": "首页",
+      "learnStis": "了解性传播感染"
+    }
+  },
+  "Footer": {
+    "brand": {
+      "tagline": "现代健康教育",
+      "description": "一个安全、无污名的学习平台，帮助马来西亚青少年了解生殖健康。"
+    },
+    "badges": {
+      "private": "私密",
+      "safe": "安全"
+    },
+    "sections": {
+      "learning": "学习",
+      "support": "支持",
+      "contact": "联系我们"
+    },
+    "links": {
+      "stiBasics": "STI 基础",
+      "prevention": "预防",
+      "quiz": "互动测验",
+      "privateChat": "私密 AI 聊天",
+      "aboutAi": "关于 Safhira AI",
+      "prevalence": "流行数据"
+    },
+    "disclaimer": {
+      "title": "重要声明",
+      "text": "本网站信息仅供教育用途，不可替代专业医疗建议。如需诊断和治疗，请咨询医生。"
+    }
+  }
+  ,
+  "NotFound": {
+    "home": "返回首页",
+    "learnStis": "了解性传播感染",
+    "chatAi": "与 AI 聊天",
+    "takeQuiz": "开始测验",
+    "popular": "热门资源：",
+    "stiBasics": "STI 基础",
+    "prevention": "预防",
+    "testing": "检测",
+    "mythsFacts": "谣言与真相",
+    "chlamydia": "衣原体信息",
+    "hiv": "HIV 信息"
+  },
+  "STIs": {
+    "startLearning": "开始学习",
+    "viewData": "查看数据",
+    "learnMore": "了解更多"
+  },
+  "Learning": {
+    "finished": "读完了吗？",
+    "prompt": "用测验检验你的理解，或向 AI 提问。",
+    "takeQuiz": "开始测验",
+    "chatAi": "与 AI 聊天",
+    "startLearning": "开始学习",
+    "review": "复习",
+    "continue": "继续"
+  }
+  ,
+  "Chat": {
+    "page": {
+      "loading": "正在加载聊天…",
+      "disclaimer": "Safhira 也可能出错。请核实重要信息。"
+    },
+    "about": {
+      "start": "开始聊天",
+      "privacy": "隐私与安全"
+    }
+  }
+  ,
+  "STIDetail": {
+    "back": "返回 STI 总览",
+    "risk": "风险",
+    "malaysianContext": "马来西亚背景",
+    "tabs": {
+      "symptoms": "症状",
+      "transmission": "传播方式",
+      "effects": "健康影响",
+      "prevention": "预防",
+      "treatment": "治疗"
+    },
+    "symptoms": {
+      "women": "女性症状",
+      "men": "男性症状",
+      "other": "其他症状"
+    },
+    "transmission": {
+      "title": "{name} 如何传播"
+    },
+    "effects": {
+      "title": "可能的健康影响"
+    },
+    "prevention": {
+      "title": "预防方法"
+    },
+    "treatment": {
+      "title": "治疗信息"
+    },
+    "support": {
+      "title": "需要帮助或有问题？",
+      "text": "寻求信息和治疗体现了责任与自我关爱。马来西亚的医护人员接受过保密、无评判的专业训练。",
+      "cta": "咨询我们的 AI 助手"
+    }
+  },
+  "Charts": {
+    "choropleth": {
+      "title": "马来西亚的 STI 流行情况",
+      "subtitle": "按州和年份统计，每10万人中的发病率",
+      "selectSti": "选择 STI",
+      "year": "年份",
+      "play": "播放",
+      "pause": "暂停",
+      "legend": "各年度每10万人发病率",
+      "loading": "正在加载地图…",
+      "highest": "最高发病率",
+      "lowest": "最低发病率",
+      "average": "平均发病率",
+      "note": "这些数字不只是统计数据——它们代表着需要支持与准确信息的真实人群。这正是安全、无污名对话的重要性。"
+    },
+    "trends": {
+      "title": "马来西亚的 STI 趋势",
+      "subtitle": "按州和疾病统计的历年发病率趋势（每10万人）",
+      "selectSti": "选择 STI",
+      "chooseDisease": "选择一种疾病",
+      "selectStates": "选择州属",
+      "clear": "清除",
+      "chooseStates": "选择州属",
+      "selectPrompt": "请选择一种疾病以查看图表",
+      "axis": {
+        "x": "年份",
+        "y": "发病率（每10万人）"
+      }
+    }
+  }
+  ,
+  "Prevention": {
+    "hero": {
+      "title": "STI 预防与安全性行为",
+      "subtitle": "以循证、具文化敏感度的信息，帮助你在尊重个人价值的前提下做出明智决定。"
+    },
+    "cultural": {
+      "title": "尊重且包容的方式",
+      "text": "我们尊重多元文化背景、宗教信仰与个人价值。性健康决策非常个人化，每个人都应获得无评判、准确的信息。你可以根据自身情况与价值观进行调整。"
+    },
+    "tabs": {
+      "methods": "预防方法",
+      "practices": "安全性行为实践",
+      "communication": "沟通",
+      "resources": "资源"
+    },
+    "methods": {
+      "heading": "循证的预防方法",
+      "cultural": "文化考量",
+      "evidence": "证据基础",
+      "how": "有效使用的方法"
+    },
+    "practices": {
+      "heading": "安全性行为时间线"
+    },
+    "adapt": {
+      "title": "因应你的处境",
+      "text": "这些做法可根据你的文化背景、关系模式与个人舒适度进行调整。核心原则——沟通、尊重与保护——保持一致，同时允许不同的个人与文化实施方式。"
+    },
+    "comm": {
+      "heading": "关于性健康的尊重沟通",
+      "start": "开启对话",
+      "samples": "对话示例",
+      "cultural": "沟通中的文化敏感性",
+      "styles": "尊重不同的沟通风格",
+      "navigate": "处理文化差异"
+    },
+    "resources": {
+      "heading": "更多资源与支持",
+      "evidence": {
+        "heading": "证据来源与指南",
+        "who": {
+          "title": "世界卫生组织（WHO）",
+          "desc": "用于制定本内容的 STI 预防与治疗全球标准与指南。",
+          "links": ["WHO – 性传播感染（STIs）"]
+        },
+        "moh": {
+          "title": "马来西亚卫生部",
+          "desc": "适配本地语境的马来西亚 STI 预防与治疗临床指南。",
+          "links": ["卫生部（MOH）– 官方门户"]
+        },
+        "cdc": {
+          "title": "美国疾控中心（CDC）",
+          "desc": "STI 预防的国际最佳实践与研究证据，以及效果数据。",
+          "links": [
+            "CDC – 性传播感染（STIs）",
+            "CDC – STI 治疗指南（2021）"
+          ]
+        }
+      },
+      "extra": {
+        "moh": {"link": "马来西亚卫生部（MOH）– 官方门户"},
+        "maf": {
+          "title": "马来西亚艾滋病基金会（MAF）",
+          "desc": "提供咨询、检测与支持服务，开展具文化敏感度的关怀与教育项目。",
+          "link": "MAF – 官方网站"
+        },
+        "uni": {
+          "title": "大学医疗中心",
+          "desc": "许多大学医疗中心为青年提供保密的 STI 检测与教育服务。",
+          "link": "高等教育部（MOHE）– 官方门户"
+        }
+      }
+    },
+    "personal": {
+      "title": "需要个性化指导？",
+      "text": "我们的 AI 助手可在尊重你具体情况与文化背景的前提下，提供个性化、保密的 STI 预防指导。",
+      "button": "与我们的 AI 助手聊天"
+    }
+    ,
+    "lists": {
+      "methods": [
+        {
+          "title": "屏障方法（避孕套）",
+          "effectiveness": "对大多数 STI 有 85–98% 的防护效果",
+          "description": "在性行为中阻隔伴侣直接接触的物理屏障",
+          "culturalConsiderations": "尊重个人自主，可低调使用，兼容不同文化与宗教对生育规划的看法。",
+          "howToUse": [
+            "每次性行为都使用新的避孕套",
+            "检查有效期与包装完整",
+            "顶部留出空间并完全向下展开",
+            "取下时小心，避免泄漏",
+            "妥善处理，不随意丢弃"
+          ],
+          "evidence": "WHO 与 CDC 的数据一致表明：正确且持续使用时，保护效果显著。"
+        },
+        {
+          "title": "沟通与同意",
+          "effectiveness": "所有预防的基础",
+          "description": "就性健康、界限与检测状况进行开放、诚实的对话",
+          "culturalConsiderations": "在促进健康的同时尊重沟通上的文化差异，可按不同沟通风格调整。",
+          "howToUse": [
+            "亲密接触前先交流 STI 检测史",
+            "分享个人界限与舒适程度",
+            "讨论双方都能接受的预防方式",
+            "定期互相关心舒适度与同意",
+            "以尊重与关怀的态度沟通"
+          ],
+          "evidence": "研究显示：讨论性健康的伴侣，STI 传播率更低、关系满意度更高。"
+        },
+        {
+          "title": "定期检测",
+          "effectiveness": "对早发现与早治疗至关重要",
+          "description": "依据年龄、风险与性行为情况进行常规筛查",
+          "culturalConsiderations": "医疗保健是个人责任，也惠及社会整体健康。",
+          "howToUse": [
+            "若有性生活，至少每年检测一次",
+            "在新关系开始前尽量检测",
+            "遵循医护人员建议的频率",
+            "检测项目涵盖多种 STI，不仅仅是 HIV",
+            "在适当情况下与伴侣分享结果"
+          ],
+          "evidence": "卫生部与国际指南建议：定期筛查是 STI 预防的基石。"
+        }
+      ],
+      "practices": [
+        {"category": "性行为前", "practices": [
+          "就性健康与界限进行开放沟通",
+          "一起检测并分享结果",
+          "讨论并达成预防方式的共识",
+          "确保双方都感到被尊重与舒适",
+          "准备好并容易取得的防护用品"
+        ]},
+        {"category": "性行为中", "practices": [
+          "持续且正确地使用屏障方法",
+          "尊重既定界限并与伴侣互相关心",
+          "避免增加组织损伤风险的行为",
+          "使用合适润滑以避免撕裂",
+          "更换活动时使用新的屏障"
+        ]},
+        {"category": "性行为后", "practices": [
+          "妥善处理用过的防护用品",
+          "温和清洁，避免刺激性产品",
+          "留意任何异常症状",
+          "保持关于舒适与健康的沟通",
+          "如有担忧及时就医"
+        ]}
+      ],
+      "comm": {
+        "tips": [
+          "选择舒适、私密的环境",
+          "在双方放松时再讨论",
+          "用“我”的表述表达感受",
+          "如实说明自身健康与检测史",
+          "积极倾听并尊重对方回应"
+        ],
+        "samples": [
+          {"situation": "讨论检测", "example": "我很在意我们双方的健康。你上次做 STI 检测是什么时候？我在【时间】做过，结果一切正常。"},
+          {"situation": "谈论防护", "example": "使用防护让我更安心。你觉得怎么样？"},
+          {"situation": "设定界限", "example": "我对【具体活动】感到舒适，但想暂缓【其他活动】。你的想法呢？"}
+        ],
+        "styles": [
+          "有些文化偏好含蓄表达",
+          "也有文化重视直接、明确的讨论",
+          "非语言线索同样重要",
+          "需要时间与耐心来建立舒适感"
+        ],
+        "navigate": [
+          "尊重不同背景",
+          "以健康与关怀为共同点",
+          "尊重宗教或文化考量",
+          "寻求理解而非评判"
+        ]
+      }
+    }
+  }
 }

@@ -9,6 +9,7 @@ import { motion } from 'framer-motion';
 import {useRouter} from '../../../i18n/routing';
 import {Link} from '../../../i18n/routing';
 import Image from 'next/image';
+import {useTranslations} from 'next-intl';
 
 interface PreventionMethod {
   title: string;
@@ -99,6 +100,8 @@ const safeSexPractices = [
 
 export default function STIPreventionPage() {
   const router = useRouter();
+  const t = useTranslations('Prevention');
+  const tDetail = useTranslations('STIDetail');
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
@@ -107,17 +110,16 @@ export default function STIPreventionPage() {
           <div className="mb-6 sm:mb-8">
             <Button variant="ghost" onClick={() => router.push('/stis')} className="mb-4 text-sm sm:text-base">
               <ArrowLeft size={16} className="mr-2" />
-              Back to STIs Overview
+              {tDetail('back')}
             </Button>
             
             <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 items-center mb-6">
               <div>
                 <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-3 sm:mb-4">
-                  STI Prevention & Safe Sex Practices
+                  {t('hero.title')}
                 </h1>
                 <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-                  Evidence-based, culturally-sensitive information to help you make informed decisions 
-                  about your sexual health while respecting your personal values and cultural background.
+                  {t('hero.subtitle')}
                 </p>
               </div>
               <div className="flex justify-center lg:justify-end order-first lg:order-last">
@@ -144,13 +146,10 @@ export default function STIPreventionPage() {
                 <Heart className="text-teal-500 mt-1 flex-shrink-0" size={18} />
                 <div>
                   <h3 className="font-semibold text-teal-800 dark:text-teal-200 mb-2 text-sm sm:text-base">
-                    Respectful & Inclusive Approach
+                    {t('cultural.title')}
                   </h3>
                   <p className="text-teal-700 dark:text-teal-300 text-sm sm:text-base leading-relaxed">
-                    This information is presented with respect for diverse cultural backgrounds, 
-                    religious beliefs, and personal values. Sexual health decisions are deeply personal, 
-                    and everyone deserves access to accurate information without judgment. 
-                    You can adapt these practices to align with your values and circumstances.
+                    {t('cultural.text')}
                   </p>
                 </div>
               </div>
@@ -166,16 +165,16 @@ export default function STIPreventionPage() {
               <Tabs defaultValue="methods" className="w-full">
                 <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 gap-1 h-auto p-1">
                   <TabsTrigger value="methods" className="text-xs sm:text-sm px-2 py-2 data-[state=active]:bg-white">
-                    Prevention Methods
+                    {t('tabs.methods')}
                   </TabsTrigger>
                   <TabsTrigger value="practices" className="text-xs sm:text-sm px-2 py-2 data-[state=active]:bg-white">
-                    Safe Sex Practices
+                    {t('tabs.practices')}
                   </TabsTrigger>
                   <TabsTrigger value="communication" className="text-xs sm:text-sm px-2 py-2 data-[state=active]:bg-white">
-                    Communication
+                    {t('tabs.communication')}
                   </TabsTrigger>
                   <TabsTrigger value="resources" className="text-xs sm:text-sm px-2 py-2 data-[state=active]:bg-white">
-                    Resources
+                    {t('tabs.resources')}
                   </TabsTrigger>
                 </TabsList>
 
@@ -183,7 +182,7 @@ export default function STIPreventionPage() {
                   <div>
                     <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-4 sm:mb-6 flex items-center">
                       <Shield size={20} className="mr-2 sm:mr-3 text-green-500 flex-shrink-0" />
-                      Evidence-Based Prevention Methods
+                      {t('methods.heading')}
                     </h2>
                     
                     <div className="space-y-4 sm:space-y-6">
@@ -214,7 +213,7 @@ export default function STIPreventionPage() {
                                 <div>
                                   <h4 className="font-medium text-gray-800 dark:text-gray-100 mb-3 flex items-center text-sm sm:text-base">
                                     <Users size={16} className="mr-2 text-blue-500 flex-shrink-0" />
-                                    Cultural Considerations
+                                    {t('methods.cultural')}
                                   </h4>
                                   <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
                                     {method.culturalConsiderations}
@@ -224,7 +223,7 @@ export default function STIPreventionPage() {
                                 <div>
                                   <h4 className="font-medium text-gray-800 dark:text-gray-100 mb-3 flex items-center text-sm sm:text-base">
                                     <BookOpen size={16} className="mr-2 text-purple-500 flex-shrink-0" />
-                                    Evidence Base
+                                    {t('methods.evidence')}
                                   </h4>
                                   <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
                                     {method.evidence}
@@ -235,7 +234,7 @@ export default function STIPreventionPage() {
                               <div>
                                 <h4 className="font-medium text-gray-800 dark:text-gray-100 mb-3 flex items-center text-sm sm:text-base">
                                   <Lightbulb size={16} className="mr-2 text-yellow-500 flex-shrink-0" />
-                                  How to Use Effectively
+                                  {t('methods.how')}
                                 </h4>
                                 <ul className="space-y-2 sm:space-y-3">
                                   {method.howToUse.map((step, stepIndex) => (
@@ -258,7 +257,7 @@ export default function STIPreventionPage() {
                   <div>
                     <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-4 sm:mb-6 flex items-center">
                       <Heart size={20} className="mr-2 sm:mr-3 text-pink-500 flex-shrink-0" />
-                      Safe Sex Practices Timeline
+                      {t('practices.heading')}
                     </h2>
                     
                     <div className="space-y-4 sm:space-y-6">
@@ -297,12 +296,10 @@ export default function STIPreventionPage() {
                         <Info className="text-blue-500 mt-1 flex-shrink-0" size={18} />
                         <div>
                           <h4 className="font-semibold text-blue-800 dark:text-blue-200 mb-2 text-sm sm:text-base">
-                            Adapting to Your Circumstances
+                            {t('adapt.title')}
                           </h4>
                           <p className="text-blue-700 dark:text-blue-300 text-sm sm:text-base leading-relaxed">
-                            These practices can be adapted to fit your cultural background, relationship style, 
-                            and personal comfort level. The key principles—communication, respect, and protection—
-                            remain consistent while allowing for personal and cultural variations in implementation.
+                            {t('adapt.text')}
                           </p>
                         </div>
                       </div>
@@ -314,13 +311,13 @@ export default function STIPreventionPage() {
                   <div>
                     <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-6 flex items-center">
                       <MessageCircle size={24} className="mr-3 text-blue-500" />
-                      Respectful Communication About Sexual Health
+                      {t('comm.heading')}
                     </h2>
                     
                     <div className="grid md:grid-cols-2 gap-8 mb-8">
                       <Card className="p-6">
                         <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">
-                          Starting the Conversation
+                          {t('comm.start')}
                         </h3>
                         <ul className="space-y-3">
                           {[
@@ -340,7 +337,7 @@ export default function STIPreventionPage() {
 
                       <Card className="p-6">
                         <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">
-                          Sample Conversation Starters
+                          {t('comm.samples')}
                         </h3>
                         <div className="space-y-4">
                           {[
@@ -372,12 +369,12 @@ export default function STIPreventionPage() {
 
                     <Card className="p-6 bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800">
                       <h3 className="font-semibold text-green-800 dark:text-green-200 mb-3">
-                        Cultural Sensitivity in Communication
+                        {t('comm.cultural')}
                       </h3>
                       <div className="grid md:grid-cols-2 gap-6">
                         <div>
                           <h4 className="font-medium text-green-800 dark:text-green-200 mb-2">
-                            Respecting Different Communication Styles
+                            {t('comm.styles')}
                           </h4>
                           <ul className="space-y-2 text-green-700 dark:text-green-300 text-sm">
                             <li>• Some cultures prefer indirect communication</li>
@@ -388,7 +385,7 @@ export default function STIPreventionPage() {
                         </div>
                         <div>
                           <h4 className="font-medium text-green-800 dark:text-green-200 mb-2">
-                            Navigating Cultural Differences
+                            {t('comm.navigate')}
                           </h4>
                           <ul className="space-y-2 text-green-700 dark:text-green-300 text-sm">
                             <li>• Acknowledge different backgrounds respectfully</li>
@@ -406,7 +403,7 @@ export default function STIPreventionPage() {
                   <div>
                     <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-6 flex items-center">
                       <BookOpen size={24} className="mr-3 text-purple-500" />
-                      Additional Resources & Support
+                      {t('resources.heading')}
                     </h2>
                     
                     <div className="grid md:grid-cols-2 gap-8">
@@ -430,19 +427,14 @@ export default function STIPreventionPage() {
                                 rel="noopener noreferrer"
                                 className="text-blue-600 dark:text-blue-400 text-sm hover:underline"
                               >
-                                Ministry of Health Malaysia (MOH) – Official Portal
+                                {t('resources.extra.moh.link')}
                               </a>
                             </div>
                           </div>
                           
                           <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                            <h4 className="font-medium text-gray-800 dark:text-gray-100 mb-2">
-                              Malaysian AIDS Foundation (MAF)
-                            </h4>
-                            <p className="text-gray-700 dark:text-gray-300 text-sm">
-                              Provides counseling, testing, and support services. Offers culturally 
-                              sensitive care and education programs.
-                            </p>
+                            <h4 className="font-medium text-gray-800 dark:text-gray-100 mb-2">{t('resources.extra.maf.title')}</h4>
+                            <p className="text-gray-700 dark:text-gray-300 text-sm">{t('resources.extra.maf.desc')}</p>
                             <div className="mt-3">
                               <a
                                 href="https://maf.org.my/V2/"
@@ -450,19 +442,14 @@ export default function STIPreventionPage() {
                                 rel="noopener noreferrer"
                                 className="text-blue-600 dark:text-blue-400 text-sm hover:underline"
                               >
-                                Malaysian AIDS Foundation (MAF) – Official Site
+                                {t('resources.extra.maf.link')}
                               </a>
                             </div>
                           </div>
 
                           <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                            <h4 className="font-medium text-gray-800 dark:text-gray-100 mb-2">
-                              University Health Centers
-                            </h4>
-                            <p className="text-gray-700 dark:text-gray-300 text-sm">
-                              Many university health centers offer confidential STI testing and 
-                              education specifically designed for young adults.
-                            </p>
+                            <h4 className="font-medium text-gray-800 dark:text-gray-100 mb-2">{t('resources.extra.uni.title')}</h4>
+                            <p className="text-gray-700 dark:text-gray-300 text-sm">{t('resources.extra.uni.desc')}</p>
                             <div className="mt-3">
                               <a
                                 href="https://www.mohe.gov.my/en"
@@ -470,7 +457,7 @@ export default function STIPreventionPage() {
                                 rel="noopener noreferrer"
                                 className="text-blue-600 dark:text-blue-400 text-sm hover:underline"
                               >
-                                Ministry of Higher Education (MOHE) – Official Portal
+                                {t('resources.extra.uni.link')}
                               </a>
                             </div>
                           </div>
@@ -478,18 +465,13 @@ export default function STIPreventionPage() {
                       </Card>
 
                       <Card className="p-6">
-                        <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">
-                          Evidence Sources & Guidelines
-                        </h3>
+                        <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">{t('resources.evidence.heading')}</h3>
                         <div className="space-y-4">
                           <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
                             <h4 className="font-medium text-gray-800 dark:text-gray-100 mb-2">
-                              World Health Organization (WHO)
+                              {t('resources.evidence.who.title')}
                             </h4>
-                            <p className="text-gray-700 dark:text-gray-300 text-sm">
-                              Global standards for STI prevention and treatment guidelines that 
-                              inform this content.
-                            </p>
+                            <p className="text-gray-700 dark:text-gray-300 text-sm">{t('resources.evidence.who.desc')}</p>
                             <div className="mt-3 space-y-1">
                               <a
                                 href="https://www.who.int/health-topics/sexually-transmitted-infections"
@@ -497,19 +479,16 @@ export default function STIPreventionPage() {
                                 rel="noopener noreferrer"
                                 className="block text-blue-600 dark:text-blue-400 text-sm hover:underline"
                               >
-                                WHO – Sexually Transmitted Infections (STIs)
+                                {t('resources.evidence.who.links.0')}
                               </a>
                             </div>
                           </div>
                           
                           <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
                             <h4 className="font-medium text-gray-800 dark:text-gray-100 mb-2">
-                              Malaysia Ministry of Health
+                              {t('resources.evidence.moh.title')}
                             </h4>
-                            <p className="text-gray-700 dark:text-gray-300 text-sm">
-                              Official Malaysian clinical guidelines for STI prevention and treatment 
-                              adapted for local context.
-                            </p>
+                            <p className="text-gray-700 dark:text-gray-300 text-sm">{t('resources.evidence.moh.desc')}</p>
                             <div className="mt-3 space-y-1">
                               <a
                                 href="https://www.moh.gov.my/"
@@ -517,19 +496,16 @@ export default function STIPreventionPage() {
                                 rel="noopener noreferrer"
                                 className="block text-blue-600 dark:text-blue-400 text-sm hover:underline"
                               >
-                                MOH – Official Portal
+                                {t('resources.evidence.moh.links.0')}
                               </a>
                             </div>
                           </div>
 
                           <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
                             <h4 className="font-medium text-gray-800 dark:text-gray-100 mb-2">
-                              Centers for Disease Control (CDC)
+                              {t('resources.evidence.cdc.title')}
                             </h4>
-                            <p className="text-gray-700 dark:text-gray-300 text-sm">
-                              International best practices and research evidence for STI prevention 
-                              strategies and effectiveness data.
-                            </p>
+                            <p className="text-gray-700 dark:text-gray-300 text-sm">{t('resources.evidence.cdc.desc')}</p>
                             <div className="mt-3 space-y-1">
                               <a
                                 href="https://www.cdc.gov/sti/index.html"
@@ -537,7 +513,7 @@ export default function STIPreventionPage() {
                                 rel="noopener noreferrer"
                                 className="block text-blue-600 dark:text-blue-400 text-sm hover:underline"
                               >
-                                CDC – Sexually Transmitted Infections (STIs)
+                                {t('resources.evidence.cdc.links.0')}
                               </a>
                               <a
                                 href="https://www.cdc.gov/std/treatment-guidelines/default.htm"
@@ -545,7 +521,7 @@ export default function STIPreventionPage() {
                                 rel="noopener noreferrer"
                                 className="block text-blue-600 dark:text-blue-400 text-sm hover:underline"
                               >
-                                CDC – STI Treatment Guidelines (2021)
+                                {t('resources.evidence.cdc.links.1')}
                               </a>
                             </div>
                           </div>
@@ -556,15 +532,14 @@ export default function STIPreventionPage() {
                     <Card className="mt-8 p-6 bg-purple-50 dark:bg-purple-900/20 border-purple-200 dark:border-purple-800">
                       <div className="text-center">
                         <h3 className="font-semibold text-purple-800 dark:text-purple-200 mb-3">
-                          Need Personalized Guidance?
+                          {t('personal.title')}
                         </h3>
                         <p className="text-purple-700 dark:text-purple-300 mb-4">
-                          Our AI assistant can provide personalized, confidential guidance about STI prevention 
-                          that respects your specific circumstances and cultural background.
+                          {t('personal.text')}
                         </p>
                         <Link href="/chat">
                           <Button className="bg-purple-600 hover:bg-purple-700 text-white">
-                            Chat with Our AI Assistant
+                            {t('personal.button')}
                           </Button>
                         </Link>
                       </div>

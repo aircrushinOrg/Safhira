@@ -14,6 +14,7 @@ import {
   ChevronRight
 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import {useTranslations} from 'next-intl';
 
 interface LearningModulesProps {
   onModuleClick: (moduleId: string) => void;
@@ -158,6 +159,7 @@ const moduleContent = {
 };
 
 export function LearningModules({ onModuleClick, currentModule, onBack }: LearningModulesProps) {
+  const t = useTranslations('Learning');
   if (currentModule && moduleContent[currentModule as keyof typeof moduleContent]) {
     const content = moduleContent[currentModule as keyof typeof moduleContent];
     
@@ -192,14 +194,14 @@ export function LearningModules({ onModuleClick, currentModule, onBack }: Learni
 
           <div className="mt-12 text-center">
             <Card className="p-6 bg-gradient-to-r from-pink-100 to-teal-100 dark:from-pink-900/30 dark:to-teal-900/30">
-              <h4 className="font-semibold text-gray-800 dark:text-gray-100 mb-2">Finished reading?</h4>
-              <p className="text-gray-600 dark:text-gray-300 mb-4">Test your understanding with a quiz or ask AI if you have questions.</p>
+              <h4 className="font-semibold text-gray-800 dark:text-gray-100 mb-2">{t('finished')}</h4>
+              <p className="text-gray-600 dark:text-gray-300 mb-4">{t('prompt')}</p>
               <div className="flex justify-center space-x-4">
                 <Button onClick={() => onModuleClick('quiz')} className="bg-teal-600 hover:bg-teal-700 dark:bg-teal-600 dark:hover:bg-teal-700">
-                  Take Quiz
+                  {t('takeQuiz')}
                 </Button>
                 <Button variant="outline">
-                  Chat with AI
+                  {t('chatAi')}
                 </Button>
               </div>
             </Card>
@@ -384,7 +386,7 @@ export function LearningModules({ onModuleClick, currentModule, onBack }: Learni
                   whileTap={{ scale: 0.95 }}
                 >
                   <Button variant="outline" size="sm" className="w-full group">
-                    {module.progress === 0 ? 'Start Learning' : module.progress === 100 ? 'Review' : 'Continue'}
+                    {module.progress === 0 ? t('startLearning') : module.progress === 100 ? t('review') : t('continue')}
                     <ChevronRight size={16} className="ml-2 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </motion.div>

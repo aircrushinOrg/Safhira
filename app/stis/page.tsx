@@ -6,6 +6,7 @@ import { Badge } from '../components/ui/badge';
 import { ArrowLeft, Heart, BookOpen, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import {Link, useRouter} from '../../i18n/routing';
+import {useTranslations} from 'next-intl';
 import Image from 'next/image';
 
 interface STIInfo {
@@ -95,6 +96,7 @@ const getTreatabilityColor = (treatability: string) => {
 
 export default function STIsPage() {
   const router = useRouter();
+  const t = useTranslations('STIs');
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
@@ -169,7 +171,7 @@ export default function STIsPage() {
                   </p>
                   <Link href="/stis/prevention">
                     <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white w-full sm:w-auto">
-                      Start Learning
+                      {t('startLearning')}
                       <ChevronRight size={16} className="ml-2" />
                     </Button>
                   </Link>
@@ -196,7 +198,7 @@ export default function STIsPage() {
                   </p>
                   <Link href="/stis/prevalence">
                     <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white w-full sm:w-auto">
-                      View Data
+                      {t('viewData')}
                       <ChevronRight size={16} className="ml-2" />
                     </Button>
                   </Link>
@@ -247,7 +249,7 @@ export default function STIsPage() {
                         <strong>Prevalence:</strong> {sti.prevalence}
                       </p>
                       <Button variant="outline" size="sm" className="w-full text-sm">
-                        Learn More
+                        {t('learnMore')}
                       </Button>
                     </div>
                   </Card>

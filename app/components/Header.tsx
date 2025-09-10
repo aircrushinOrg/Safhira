@@ -8,6 +8,7 @@ import { MessageCircle, Shield, Home, BookOpen, HelpCircle, Award, Menu } from '
 import {Link} from '../../i18n/routing';
 import {LocaleSwitcher} from './LocaleSwitcher';
 import { useState } from 'react';
+import {useTranslations} from 'next-intl';
 
 interface HeaderProps {
   currentSection: string;
@@ -16,6 +17,7 @@ interface HeaderProps {
 }
 
 export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderProps) {
+  const t = useTranslations('Header');
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const isMobile = useIsMobile();
 
@@ -38,7 +40,7 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
         className="flex items-center space-x-2 w-full justify-start md:w-auto md:justify-center"
       >
         <Home size={16} />
-        <span>Home</span>
+        <span>{t('nav.home')}</span>
       </Button>
       <Link href="/stis" className="w-full md:w-auto">
         <Button
@@ -47,7 +49,7 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
           className="flex items-center space-x-2 w-full justify-start md:w-auto md:justify-center"
         >
           <BookOpen size={16} />
-          <span>Learn About STIs</span>
+          <span>{t('nav.learnStis')}</span>
         </Button>
       </Link>
     </>
@@ -70,7 +72,7 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
       } ${isMobileMenu ? 'md:w-auto md:justify-center' : ''}`}
     >
       <MessageCircle size={16} className={`${currentSection !== 'chat' && 'text-blue-500 dark:text-blue-400'}`} />
-      <span className={isMobileMenu ? '' : 'md:hidden lg:inline'}>Private Chat</span>
+      <span className={isMobileMenu ? '' : 'md:hidden lg:inline'}>{t('chat')}</span>
     </Button>
   );
 
@@ -91,7 +93,7 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
             </div>
             <div>
               <h1 className="font-semibold text-slate-900 dark:text-slate-300 text-xl">Safhira</h1>
-              <p className="w-[120px] sm:w-auto text-xs text-teal-600 dark:text-teal-500">Sexual Health, Made Simple & Kind.</p>
+              <p className="w-[120px] sm:w-auto text-xs text-teal-600 dark:text-teal-500">{t('tagline')}</p>
             </div>
           </div>
 

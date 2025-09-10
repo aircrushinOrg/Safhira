@@ -10,6 +10,7 @@ import { Play, Pause, ZoomIn, ZoomOut, LocateFixed, BadgeAlert } from 'lucide-re
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
 import { stiTypes, type STIType, type Year } from '@/constants/sti-prevalence';
 import { useIsMobile } from '../ui/use-mobile';
+import {useTranslations} from 'next-intl';
 
 interface SharedData {
   states: string[];
@@ -24,6 +25,7 @@ interface STIChoroplethChartProps {
 }
 
 export function STIChoroplethChart({ sharedData }: STIChoroplethChartProps) {
+  const t = useTranslations('Charts');
   const [selectedSTI, setSelectedSTI] = useState<STIType>('hiv');
   const [selectedYear, setSelectedYear] = useState<Year>(2017);
   const [geoData, setGeoData] = useState<any>(null);
@@ -185,10 +187,10 @@ export function STIChoroplethChart({ sharedData }: STIChoroplethChartProps) {
     <Card className="p-6 bg-white dark:bg-gray-800 shadow-lg">
       <div className="flex flex-col mb-4 justify-center items-center">
         <h3 className="text-center text-2xl font-bold text-gray-800 dark:text-gray-100 mb-2">
-          STI Prevalence in Malaysia
+          {t('choropleth.title')}
         </h3>
         <p className="text-center text-gray-600 dark:text-gray-300 text-sm">
-          Incidence rates per 100,000 population by state and year
+          {t('choropleth.subtitle')}
         </p>
       </div>
 
@@ -196,7 +198,7 @@ export function STIChoroplethChart({ sharedData }: STIChoroplethChartProps) {
       <div className="flex flex-col md:flex-row gap-6 md:gap-12 mb-2">
         <div className="flex-1">
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Select STI
+            {t('choropleth.selectSti')}
           </label>
           <Select 
             value={selectedSTI} 
@@ -219,7 +221,7 @@ export function STIChoroplethChart({ sharedData }: STIChoroplethChartProps) {
         <div className="flex-1">
           <div className="flex items-center justify-between mb-2">
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Year: {selectedYear}
+              {t('choropleth.year')}: {selectedYear}
             </label>
             <motion.div
               whileHover={{ scale: 1.02 }}
@@ -246,7 +248,7 @@ export function STIChoroplethChart({ sharedData }: STIChoroplethChartProps) {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.1 }}
                 >
-                  {isPlaying ? 'Pause' : 'Play'}
+                  {isPlaying ? t('choropleth.pause') : t('choropleth.play')}
                 </motion.span>
               </Button>
             </motion.div>
@@ -271,7 +273,7 @@ export function STIChoroplethChart({ sharedData }: STIChoroplethChartProps) {
       {/* Legend */}
       <div className="mb-2">
         <div className="flex flex-col items-end justify-end text-sm text-gray-600 dark:text-gray-400 gap-2 md:gap-2">
-          <span className="text-sm text-end">Incidence Rate (per 100,000 people) across All Years</span>
+          <span className="text-sm text-end">{t('choropleth.legend')}</span>
           <div className="flex items-center gap-2">
             <span>{minRate}</span>
             <div className={`w-40 md:w-60 h-3 bg-gradient-to-r ${getLegendGradient()} rounded`}></div>
@@ -417,7 +419,7 @@ export function STIChoroplethChart({ sharedData }: STIChoroplethChartProps) {
           <div className="flex items-center justify-center h-96">
             <div className="text-center">
               <div className="w-8 h-8 border-4 border-teal-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-              <p className="text-gray-600 dark:text-gray-300">Loading map...</p>
+              <p className="text-gray-600 dark:text-gray-300">{t('choropleth.loading')}</p>
             </div>
           </div>
         )}
@@ -427,7 +429,7 @@ export function STIChoroplethChart({ sharedData }: STIChoroplethChartProps) {
       <div className="flex justify-around gap-4 mt-4">
         <div className="text-center">
           <div className="text-xs text-gray-600 dark:text-gray-400">
-            Highest Rate
+            {t('choropleth.highest')}
           </div>
           <div className="text-2xl md:text-3xl font-bold text-rose-500 dark:text-rose-400 mt-2">
             {currentData.length > 0 ? Math.max(...currentData.map(d => d.rate)) : 0}
@@ -440,7 +442,7 @@ export function STIChoroplethChart({ sharedData }: STIChoroplethChartProps) {
         </div>
         <div className="text-center">
           <div className="text-xs text-gray-600 dark:text-gray-400">
-            Lowest Rate
+            {t('choropleth.lowest')}
           </div>
           <div className="text-2xl md:text-3xl font-bold text-teal-500 dark:text-teal-400 mt-2">
             {currentData.length > 0 ? Math.min(...currentData.map(d => d.rate)) : 0}
@@ -452,7 +454,7 @@ export function STIChoroplethChart({ sharedData }: STIChoroplethChartProps) {
           )}
         </div>
         <div className="text-center">
-          <div className="text-xs text-gray-600 dark:text-gray-400">Average Rate</div>
+          <div className="text-xs text-gray-600 dark:text-gray-400">{t('choropleth.average')}</div>
           <div className="text-2xl md:text-3xl font-bold text-purple-500 dark:text-purple-400 mt-2">
             {currentData.length > 0 ? Math.round(currentData.reduce((sum, d) => sum + d.rate, 0) / currentData.length) : 0}
           </div>
@@ -465,7 +467,7 @@ export function STIChoroplethChart({ sharedData }: STIChoroplethChartProps) {
             <div className="flex items-start space-x-3">
               <BadgeAlert className="text-teal-500 flex-shrink-0" size={20} />
               <p className="text-teal-700 dark:text-teal-300 text-sm sm:text-base leading-relaxed flex-grow">
-                These numbers aren&apos;t just statistics - they represent real people who deserve support and accurate information. This is exactly why safe, stigma-free conversations matter.
+                {t('choropleth.note')}
               </p>
             </div>
           </div>
