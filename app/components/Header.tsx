@@ -5,7 +5,8 @@ import { ThemeToggle } from './ThemeToggle';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from './ui/sheet';
 import { useIsMobile } from './ui/use-mobile';
 import { MessageCircle, Shield, Home, BookOpen, HelpCircle, Award, Menu } from 'lucide-react';
-import Link from 'next/link';
+import {Link} from '../../i18n/routing';
+import {LocaleSwitcher} from './LocaleSwitcher';
 import { useState } from 'react';
 
 interface HeaderProps {
@@ -106,7 +107,8 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
               <ChatButton />
             </div>
             
-            {/* Theme Toggle Button */}
+            {/* Locale & Theme */}
+            <LocaleSwitcher />
             <ThemeToggle />
             
             {/* Mobile menu button */}

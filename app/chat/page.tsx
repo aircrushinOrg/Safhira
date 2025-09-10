@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import Link from 'next/link';
+import {Link} from '../../i18n/routing';
 import { Info } from 'lucide-react';
 
 export default function ChatPage() {

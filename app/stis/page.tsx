@@ -5,8 +5,7 @@ import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
 import { ArrowLeft, Heart, BookOpen, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import {Link, useRouter} from '../../i18n/routing';
 import Image from 'next/image';
 
 interface STIInfo {

@@ -6,7 +6,7 @@ import { Badge } from '../../components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/tabs';
 import { ArrowLeft, CheckCircle, AlertTriangle, Heart, Shield, Users, Info } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { useRouter } from 'next/navigation';
+import {useRouter} from '../../../i18n/routing';
 
 export interface STIInfo {
   name: string;

@@ -6,8 +6,8 @@ import { Badge } from '../../components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/tabs';
 import { ArrowLeft, Shield, Heart, Users, BookOpen, CheckCircle, Info, Lightbulb, MessageCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
+import {useRouter} from '../../../i18n/routing';
+import {Link} from '../../../i18n/routing';
 import Image from 'next/image';
 
 interface PreventionMethod {

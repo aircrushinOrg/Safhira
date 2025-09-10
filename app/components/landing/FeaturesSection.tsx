@@ -5,7 +5,7 @@ import { useRef } from 'react';
 import { Card } from '../ui/card';
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
-import { useRouter } from 'next/navigation';
+import {useRouter} from '../../../i18n/routing';
 import { 
   BookOpen, 
   MessageCircle, 

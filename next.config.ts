@@ -1,4 +1,7 @@
 import type { NextConfig } from 'next';
+import createNextIntlPlugin from 'next-intl/plugin';
+
+const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
   // Ensure Next/Turbopack treats this directory as the workspace root
@@ -8,5 +11,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
-
+export default withNextIntl(nextConfig);

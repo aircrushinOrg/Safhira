@@ -3,7 +3,7 @@ import { DecorativeHearts } from './HeroDecorativeHearts';
 import { FeatureLabels } from './HeroFeatureLabels';
 import { Button } from '../ui/button';
 import { BookOpen, MessageCircle } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import {useRouter} from '../../../i18n/routing';
 import Image from 'next/image';
 import heroImage from '../../../public/landing-hero.png';
 

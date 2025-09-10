@@ -1,6 +1,6 @@
 'use client'
 
-import { Suspense } from 'react';
+import {Suspense} from 'react';
 import { HeroSection } from './components/landing/HeroSection';
 import { BreakingStigmaSection } from './components/landing/BreakingStigmaSection';
 import { PrevalenceSection } from './components/landing/PrevalenceSection';

@@ -3,7 +3,7 @@
 import { Card } from './components/ui/card';
 import { Button } from './components/ui/button';
 import { Home, Search, MessageCircle, BookOpen } from 'lucide-react';
-import Link from 'next/link';
+import {Link} from '../i18n/routing';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 

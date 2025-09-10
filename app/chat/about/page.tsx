@@ -2,7 +2,7 @@
 
 import { Button } from '@/app/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/app/components/ui/card';
-import Link from 'next/link';
+import {Link} from '../../../i18n/routing';
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 
