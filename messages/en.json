@@ -77,6 +77,66 @@
         "anonymous": "Completely anonymous - no data stored"
       }
     }
+    ,
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "subtitle": "Common sexual health questions and answers about this website.",
+      "categories": {
+        "sexual": "Sexual Health",
+        "website": "About Safhira"
+      },
+      "items": {
+        "sexual": {
+          "q1": {
+            "q": "What are STIs and how are they transmitted?",
+            "a": "STIs (sexually transmitted infections) are infections that pass between people through sexual contact, including vaginal, anal, and oral sex. Some can also spread through skin-to-skin contact or sharing needles."
+          },
+          "q2": {
+            "q": "Can I get an STI from oral sex?",
+            "a": "Yes. Infections like chlamydia, gonorrhea, syphilis, and HPV can be transmitted through oral sex. Using protection (e.g., condoms or dental dams) reduces risk."
+          },
+          "q3": {
+            "q": "Do I need testing if I have no symptoms?",
+            "a": "Many STIs have no symptoms. Regular testing is recommended if you are sexually active, especially with new or multiple partners. Early detection protects you and your partners."
+          },
+          "q4": {
+            "q": "Are STIs treatable or curable?",
+            "a": "Many STIs are treatable and some (like chlamydia and gonorrhea) are curable with antibiotics. Others (like HIV and herpes) can be managed with treatment to stay healthy and reduce transmission."
+          },
+          "q5": {
+            "q": "How can I protect myself and my partner?",
+            "a": "Use condoms correctly, get tested regularly, communicate openly with partners, and avoid sex when experiencing symptoms. Vaccines (e.g., HPV, hepatitis B) also help prevent some infections."
+          }
+        },
+        "website": {
+          "q1": {
+            "q": "Is my conversation private and anonymous?",
+            "a": "Yes. Safhira is designed to be private and anonymous. We do not store personal chat histories."
+          },
+          "q2": {
+            "q": "Is the information medically accurate?",
+            "a": "We base our content on guidelines from trusted health organizations and review it to ensure clarity and cultural sensitivity for Malaysians."
+          },
+          "q3": {
+            "q": "Can this replace a doctor?",
+            "a": "No. Safhira provides educational information only and cannot replace professional medical advice, diagnosis, or treatment. Please consult a healthcare professional for concerns."
+          },
+          "q4": {
+            "q": "Who is Safhira for?",
+            "a": "Safhira is for anyone seeking judgment-free sexual health information, especially Malaysian teens and young adults."
+          }
+        }
+      },
+      "more": {
+        "title": "Still have questions?",
+        "subtitle": "Chat with our private AI assistant."
+      },
+      "badges": {
+        "accurate": "Guided by health guidelines",
+        "private": "Private and anonymous",
+        "notMedical": "Educational content, not medical advice"
+      }
+    }
   },
   "Header": {
     "tagline": "Sexual Health, Made Simple & Kind.",

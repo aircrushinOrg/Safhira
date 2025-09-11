@@ -96,19 +96,19 @@ export default function STIPreventionPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <Card className="p-4 sm:p-6 md:p-8">
+            <Card className="p-4 sm:p-6 md:p-8 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
               <Tabs defaultValue="methods" className="w-full">
-                <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 gap-1 h-auto p-1">
-                  <TabsTrigger value="methods" className="text-xs sm:text-sm px-2 py-2 data-[state=active]:bg-white">
+                <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 gap-1 h-auto p-1 bg-gray-100 dark:bg-gray-800">
+                  <TabsTrigger value="methods" className="text-xs sm:text-sm px-2 py-2 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:text-gray-900 dark:data-[state=active]:text-gray-100">
                     {t('tabs.methods')}
                   </TabsTrigger>
-                  <TabsTrigger value="practices" className="text-xs sm:text-sm px-2 py-2 data-[state=active]:bg-white">
+                  <TabsTrigger value="practices" className="text-xs sm:text-sm px-2 py-2 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:text-gray-900 dark:data-[state=active]:text-gray-100">
                     {t('tabs.practices')}
                   </TabsTrigger>
-                  <TabsTrigger value="communication" className="text-xs sm:text-sm px-2 py-2 data-[state=active]:bg-white">
+                  <TabsTrigger value="communication" className="text-xs sm:text-sm px-2 py-2 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:text-gray-900 dark:data-[state=active]:text-gray-100">
                     {t('tabs.communication')}
                   </TabsTrigger>
-                  <TabsTrigger value="resources" className="text-xs sm:text-sm px-2 py-2 data-[state=active]:bg-white">
+                  <TabsTrigger value="resources" className="text-xs sm:text-sm px-2 py-2 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:text-gray-900 dark:data-[state=active]:text-gray-100">
                     {t('tabs.resources')}
                   </TabsTrigger>
                 </TabsList>
@@ -128,7 +128,7 @@ export default function STIPreventionPage() {
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.3, delay: index * 0.1 }}
                         >
-                          <Card className="p-4 sm:p-6 shadow-sm hover:shadow-md transition-shadow duration-200 border border-gray-200 dark:border-gray-700">
+                          <Card className="p-4 sm:p-6 shadow-sm hover:shadow-md transition-shadow duration-200 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
                             <div className="mb-4">
                               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3 gap-2">
                                 <h3 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-100">
@@ -203,7 +203,7 @@ export default function STIPreventionPage() {
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ duration: 0.3, delay: index * 0.1 }}
                         >
-                          <Card className="p-4 sm:p-6">
+                          <Card className="p-4 sm:p-6 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
                             <h3 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4 flex items-center">
                               <div className="w-6 h-6 sm:w-8 sm:h-8 bg-pink-100 dark:bg-pink-900/20 rounded-full flex items-center justify-center mr-2 sm:mr-3 flex-shrink-0">
                                 <span className="text-pink-600 dark:text-pink-400 font-semibold text-xs sm:text-sm">
@@ -250,7 +250,7 @@ export default function STIPreventionPage() {
                     </h2>
                     
                     <div className="grid md:grid-cols-2 gap-8 mb-8">
-                      <Card className="p-6">
+                      <Card className="p-6 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
                         <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">
                           {t('comm.start')}
                         </h3>
@@ -264,7 +264,7 @@ export default function STIPreventionPage() {
                         </ul>
                       </Card>
 
-                      <Card className="p-6">
+                      <Card className="p-6 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
                         <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">
                           {t('comm.samples')}
                         </h3>
@@ -321,9 +321,9 @@ export default function STIPreventionPage() {
                     </h2>
                     
                     <div className="grid md:grid-cols-2 gap-8">
-                      <Card className="p-6">
+                      <Card className="p-6 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
                         <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">
-                          {t('resources.my.title')}
+                          {t('resources.local')}
                         </h3>
                         <div className="space-y-4">
                           <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
@@ -377,7 +377,7 @@ export default function STIPreventionPage() {
                         </div>
                       </Card>
 
-                      <Card className="p-6">
+                      <Card className="p-6 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
                         <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">{t('resources.evidence.heading')}</h3>
                         <div className="space-y-4">
                           <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
@@ -467,3 +467,4 @@ export default function STIPreventionPage() {
     </div>
   );
 }
+

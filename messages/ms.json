@@ -77,6 +77,66 @@
         "anonymous": "Sepenuhnya anonim — tiada data disimpan"
       }
     }
+    ,
+    "faq": {
+      "title": "Soalan Lazim",
+      "subtitle": "Soalan umum tentang kesihatan seksual dan maklumat mengenai laman web ini.",
+      "categories": {
+        "sexual": "Kesihatan Seksual",
+        "website": "Tentang Safhira"
+      },
+      "items": {
+        "sexual": {
+          "q1": {
+            "q": "Apakah itu STI dan bagaimana ia merebak?",
+            "a": "STI (jangkitan penyakit kelamin) ialah jangkitan yang menular melalui hubungan seksual termasuk seks faraj, dubur dan oral. Sesetengahnya juga boleh merebak melalui sentuhan kulit ke kulit atau perkongsian jarum."
+          },
+          "q2": {
+            "q": "Adakah saya boleh dijangkiti STI melalui seks oral?",
+            "a": "Ya. Jangkitan seperti klamidia, gonorea, sifilis dan HPV boleh menular melalui seks oral. Penggunaan perlindungan (contohnya kondom atau dental dam) mengurangkan risiko."
+          },
+          "q3": {
+            "q": "Perlukah saya menjalani ujian jika tiada gejala?",
+            "a": "Banyak STI tidak menunjukkan gejala. Ujian berkala disyorkan jika anda aktif secara seksual, terutamanya dengan pasangan baharu atau berganda. Pengesanan awal melindungi anda dan pasangan."
+          },
+          "q4": {
+            "q": "Adakah STI boleh dirawat atau disembuhkan?",
+            "a": "Banyak STI boleh dirawat dan sebahagiannya (seperti klamidia dan gonorea) boleh disembuhkan dengan antibiotik. Yang lain (seperti HIV dan herpes) boleh diuruskan dengan rawatan untuk kekal sihat dan mengurangkan penularan."
+          },
+          "q5": {
+            "q": "Bagaimana saya boleh melindungi diri dan pasangan?",
+            "a": "Gunakan kondom dengan betul, jalani ujian secara berkala, berkomunikasi secara terbuka dengan pasangan, dan elakkan hubungan seks apabila mengalami gejala. Vaksin (contohnya HPV, hepatitis B) juga membantu mencegah sesetengah jangkitan."
+          }
+        },
+        "website": {
+          "q1": {
+            "q": "Adakah perbualan saya peribadi dan anonim?",
+            "a": "Ya. Safhira direka bentuk untuk peribadi dan anonim. Kami tidak menyimpan sejarah sembang peribadi."
+          },
+          "q2": {
+            "q": "Adakah maklumat di sini tepat dari segi perubatan?",
+            "a": "Kandungan kami berpandukan garis panduan organisasi kesihatan yang dipercayai dan disemak agar jelas serta sensitif terhadap budaya di Malaysia."
+          },
+          "q3": {
+            "q": "Bolehkah ini menggantikan doktor?",
+            "a": "Tidak. Safhira menyediakan maklumat pendidikan sahaja dan tidak boleh menggantikan nasihat, diagnosis atau rawatan perubatan profesional. Sila rujuk profesional kesihatan untuk sebarang kebimbangan."
+          },
+          "q4": {
+            "q": "Safhira untuk siapa?",
+            "a": "Safhira untuk sesiapa yang mencari maklumat kesihatan seksual tanpa penghakiman, khususnya remaja dan belia Malaysia."
+          }
+        }
+      },
+      "more": {
+        "title": "Masih ada soalan?",
+        "subtitle": "Sembang dengan pembantu AI peribadi kami."
+      },
+      "badges": {
+        "accurate": "Berpandukan garis panduan kesihatan",
+        "private": "Peribadi dan anonim",
+        "notMedical": "Maklumat pendidikan, bukan nasihat perubatan"
+      }
+    }
   },
   "Header": {
     "tagline": "Kesihatan Seksual, Ringkas & Mesra",
