@@ -243,9 +243,9 @@ export default function MythListClient({ items }: { items: Item[] }) {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="sm:max-w-xl">
           <DialogHeader>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
               <Badge variant="secondary">Myth</Badge>
-              <DialogTitle className="text-balance">
+              <DialogTitle className="text-balance text-xl font-semibold">
                 {selected?.text || "Myth"}
               </DialogTitle>
             </div>
@@ -253,10 +253,10 @@ export default function MythListClient({ items }: { items: Item[] }) {
               Tap outside the dialog to close.
             </DialogDescription>
           </DialogHeader>
-          <div className="rounded-md border bg-card p-4">
+          <div className="rounded-xl border bg-muted/20 p-4 shadow-sm">
             <div className="mb-2 flex items-center gap-2">
               <Badge>Fact</Badge>
-              <span className="text-sm text-muted-foreground">
+              <span className="text-sm font-medium text-muted-foreground">
                 The truth behind the myth
               </span>
             </div>

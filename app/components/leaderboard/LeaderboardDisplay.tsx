@@ -113,18 +113,27 @@ export default function LeaderboardDisplay({
                 onClick={fetchLeaderboard}
                 disabled={loading}
               >
-                {loading ? "Refreshing..." : "Refresh"}
+                {loading ? (
+                  <div className="flex items-center gap-2">
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-current"></div>
+                    Refreshing...
+                  </div>
+                ) : (
+                  "Refresh"
+                )}
               </Button>
             </div>
 
             {/* Leaderboard List */}
             {loading ? (
-              <div className="space-y-3">
-                {Array.from({ length: 10 }).map((_, i) => (
-                  <div key={i} className="animate-pulse">
-                    <div className="h-16 bg-muted rounded-lg"></div>
+              <div className="flex items-center justify-center py-16">
+                <div className="flex flex-col items-center gap-4">
+                  <div className="relative">
+                    <div className="animate-spin rounded-full h-12 w-12 border-4 border-gray-200 dark:border-gray-700"></div>
+                    <div className="animate-spin rounded-full h-12 w-12 border-4 border-teal-500 border-t-transparent absolute top-0 left-0"></div>
                   </div>
-                ))}
+                  <p className="text-sm text-muted-foreground animate-pulse">Loading leaderboard...</p>
+                </div>
               </div>
             ) : (
               <div className="space-y-2">
