@@ -19,63 +19,6 @@ interface STIInfo {
   prevalence: string;
 }
 
-const stiList: STIInfo[] = [
-  {
-    id: 'chlamydia',
-    name: 'Chlamydia',
-    type: 'Bacterial',
-    severity: 'Medium',
-    treatability: 'Curable',
-    description: 'One of the most common STIs, often without symptoms but easily treatable with antibiotics.',
-    prevalence: 'Very common among young adults'
-  },
-  {
-    id: 'gonorrhea',
-    name: 'Gonorrhea',
-    type: 'Bacterial',
-    severity: 'Medium',
-    treatability: 'Curable',
-    description: 'Bacterial infection that can affect genitals, rectum, and throat. Curable but some strains are becoming resistant.',
-    prevalence: 'Common, especially in urban areas'
-  },
-  {
-    id: 'herpes',
-    name: 'Herpes (HSV-1 & HSV-2)',
-    type: 'Viral',
-    severity: 'Low',
-    treatability: 'Manageable',
-    description: 'Common viral infection causing periodic outbreaks. Very manageable with modern medications.',
-    prevalence: 'Extremely common worldwide'
-  },
-  {
-    id: 'hpv',
-    name: 'Human Papillomavirus (HPV)',
-    type: 'Viral',
-    severity: 'Medium',
-    treatability: 'Preventable',
-    description: 'Most common STI. Usually clears naturally, but high-risk types can cause cancer. Vaccine available.',
-    prevalence: 'Most sexually active people get HPV'
-  },
-  {
-    id: 'hiv',
-    name: 'Human Immunodeficiency Virus (HIV)',
-    type: 'Viral',
-    severity: 'High',
-    treatability: 'Manageable',
-    description: 'Attacks immune system but highly manageable with modern treatment. People live normal lifespans.',
-    prevalence: 'Significant in certain populations'
-  },
-  {
-    id: 'syphilis',
-    name: 'Syphilis',
-    type: 'Bacterial',
-    severity: 'High',
-    treatability: 'Curable',
-    description: 'Bacterial infection that progresses through stages. Completely curable with early treatment.',
-    prevalence: 'Increasing in Malaysia'
-  }
-];
-
 const getSeverityColor = (severity: string) => {
   switch (severity) {
     case 'Low': return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
@@ -97,6 +40,13 @@ const getTreatabilityColor = (treatability: string) => {
 export default function STIsPage() {
   const router = useRouter();
   const t = useTranslations('STIs');
+  const tPage = useTranslations('STIsPage');
+  const tPrev = useTranslations('Prevention');
+  const tDetail = useTranslations('STIDetail');
+
+  const stiList = tPage.raw('list') as STIInfo[];
+  const whereToGet = tPage.raw('resources.where.items') as string[];
+  const reminders = tPage.raw('resources.reminders.items') as string[];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
@@ -106,11 +56,10 @@ export default function STIsPage() {
             <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 items-center mb-6 sm:mb-8">
               <div>
                 <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-3 sm:mb-4">
-                  Learn About STIs
+                  {tPage('hero.title')}
                 </h1>
                 <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-                  Comprehensive, judgment-free information about sexually transmitted infections. 
-                  Knowledge empowers you to make informed decisions about your health.
+                  {tPage('hero.subtitle')}
                 </p>
               </div>
               <div className="flex justify-center lg:justify-end order-first lg:order-last">
@@ -122,7 +71,7 @@ export default function STIsPage() {
                 >
                   <Image
                     src="/undraw_medicine_hqqg.svg"
-                    alt="Medical illustration representing healthcare and medicine"
+                    alt={tPage('hero.imageAlt')}
                     fill
                     className="object-contain"
                     priority
@@ -137,13 +86,10 @@ export default function STIsPage() {
                 <Heart className="text-teal-500 mt-1 flex-shrink-0" size={18} />
                 <div>
                   <h3 className="font-semibold text-teal-800 dark:text-teal-200 mb-2 text-sm sm:text-base">
-                    You&apos;re Taking a Positive Step
+                    {tPage('support.title')}
                   </h3>
                   <p className="text-teal-700 dark:text-teal-300 text-sm sm:text-base leading-relaxed">
-                    Learning about STIs shows maturity and responsibility. This information is presented 
-                    without judgment, recognizing that sexual health is an important part of overall wellbeing. 
-                    Remember: having an STI doesn&apos;t reflect your character - it&apos;s simply a health condition 
-                    that can be treated or managed.
+                    {tPage('support.text')}
                   </p>
                 </div>
               </div>
@@ -160,14 +106,13 @@ export default function STIsPage() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <Badge className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 mb-2 text-xs">
-                    Prevention Learning Module
+                    {tPage('modules.prevention.badge')}
                   </Badge>
                   <h3 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-100 mb-2">
-                    STI Prevention & Safe Sex Practices
+                    {tPrev('hero.title')}
                   </h3>
                   <p className="text-gray-700 dark:text-gray-300 text-sm mb-4 leading-relaxed">
-                    Evidence-based, culturally-sensitive information about prevention methods, 
-                    safe practices, and respectful communication.
+                    {tPrev('hero.subtitle')}
                   </p>
                   <Link href="/stis/prevention">
                     <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white w-full sm:w-auto">
@@ -187,14 +132,13 @@ export default function STIsPage() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <Badge className="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 mb-2 text-xs">
-                    Community Health Data
+                    {tPage('modules.prevalence.badge')}
                   </Badge>
                   <h3 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-100 mb-2">
-                    STI Prevalence in Malaysia
+                    {tPage('modules.prevalence.title')}
                   </h3>
                   <p className="text-gray-700 dark:text-gray-300 text-sm mb-4 leading-relaxed">
-                    Interactive visualizations showing STI prevalence across Malaysian states. 
-                    Understand that sexual health concerns are common and treatable.
+                    {tPage('modules.prevalence.desc')}
                   </p>
                   <Link href="/stis/prevalence">
                     <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white w-full sm:w-auto">
@@ -230,13 +174,13 @@ export default function STIsPage() {
                     
                     <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-4">
                       <Badge className={`${getSeverityColor(sti.severity)} text-xs`} variant="secondary">
-                        {sti.severity} Risk
+                        {tPage(`badges.severity.${sti.severity}`)} {tDetail('risk')}
                       </Badge>
                       <Badge className={`${getTreatabilityColor(sti.treatability)} text-xs`} variant="secondary">
-                        {sti.treatability}
+                        {tPage(`badges.treatability.${sti.treatability}`)}
                       </Badge>
                       <Badge variant="outline" className="text-xs">
-                        {sti.type}
+                        {tPage(`badges.type.${sti.type}`)}
                       </Badge>
                     </div>
 
@@ -246,7 +190,7 @@ export default function STIsPage() {
 
                     <div className="mt-auto">
                       <p className="text-xs text-gray-500 dark:text-gray-400 mb-3 leading-relaxed">
-                        <strong>Prevalence:</strong> {sti.prevalence}
+                        <strong>{tPage('prevalenceLabel')}:</strong> {sti.prevalence}
                       </p>
                       <Button variant="outline" size="sm" className="w-full text-sm">
                         {t('learnMore')}
@@ -261,53 +205,33 @@ export default function STIsPage() {
           {/* Additional Resources */}
           <Card className="p-4 sm:p-6 md:p-8 bg-gradient-to-r from-teal-50 to-blue-50 dark:from-teal-900/20 dark:to-blue-900/20">
             <h3 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4 sm:mb-6">
-              Remember: Getting Help is a Sign of Strength
+              {tPage('resources.title')}
             </h3>
             <div className="grid gap-6 sm:gap-8 md:grid-cols-2">
               <div>
                 <h4 className="font-medium text-gray-800 dark:text-gray-100 mb-3 text-sm sm:text-base">
-                  In Malaysia, you can get tested and treated at:
+                  {tPage('resources.where.title')}
                 </h4>
                 <ul className="space-y-2 sm:space-y-3 text-gray-700 dark:text-gray-300 text-sm sm:text-base">
-                  <li className="flex items-start space-x-2 sm:space-x-3">
-                    <div className="w-2 h-2 bg-teal-500 rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="leading-relaxed">Government health clinics (free or low-cost)</span>
-                  </li>
-                  <li className="flex items-start space-x-2 sm:space-x-3">
-                    <div className="w-2 h-2 bg-teal-500 rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="leading-relaxed">Government hospitals</span>
-                  </li>
-                  <li className="flex items-start space-x-2 sm:space-x-3">
-                    <div className="w-2 h-2 bg-teal-500 rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="leading-relaxed">Private clinics</span>
-                  </li>
-                  <li className="flex items-start space-x-2 sm:space-x-3">
-                    <div className="w-2 h-2 bg-teal-500 rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="leading-relaxed">NGO health centers</span>
-                  </li>
+                  {whereToGet.map((item, i) => (
+                    <li key={i} className="flex items-start space-x-2 sm:space-x-3">
+                      <div className="w-2 h-2 bg-teal-500 rounded-full mt-2 flex-shrink-0"></div>
+                      <span className="leading-relaxed">{item}</span>
+                    </li>
+                  ))}
                 </ul>
               </div>
               <div>
                 <h4 className="font-medium text-gray-800 dark:text-gray-100 mb-3 text-sm sm:text-base">
-                  Important reminders:
+                  {tPage('resources.reminders.title')}
                 </h4>
                 <ul className="space-y-2 sm:space-y-3 text-gray-700 dark:text-gray-300 text-sm sm:text-base">
-                  <li className="flex items-start space-x-2 sm:space-x-3">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="leading-relaxed">All treatment is confidential</span>
-                  </li>
-                  <li className="flex items-start space-x-2 sm:space-x-3">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="leading-relaxed">Healthcare workers are trained to be non-judgmental</span>
-                  </li>
-                  <li className="flex items-start space-x-2 sm:space-x-3">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="leading-relaxed">Early treatment leads to better outcomes</span>
-                  </li>
-                  <li className="flex items-start space-x-2 sm:space-x-3">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="leading-relaxed">You deserve respectful, quality care</span>
-                  </li>
+                  {reminders.map((item, i) => (
+                    <li key={i} className="flex items-start space-x-2 sm:space-x-3">
+                      <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                      <span className="leading-relaxed">{item}</span>
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>

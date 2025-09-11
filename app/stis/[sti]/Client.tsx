@@ -48,6 +48,7 @@ const getTreatabilityColor = (treatability: string) => {
 export default function STIClient({ stiInfo }: { stiInfo: STIInfo }) {
   const router = useRouter();
   const t = useTranslations('STIDetail');
+  const tPage = useTranslations('STIsPage');
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
@@ -65,13 +66,13 @@ export default function STIClient({ stiInfo }: { stiInfo: STIInfo }) {
               </h1>
               <div className="flex flex-wrap gap-2 sm:gap-3">
                 <Badge className={`${getSeverityColor(stiInfo.severity)} text-xs sm:text-sm`}>
-                  {stiInfo.severity} {t('risk')}
+                  {tPage(`badges.severity.${stiInfo.severity}`)} {t('risk')}
                 </Badge>
                 <Badge className={`${getTreatabilityColor(stiInfo.treatability)} text-xs sm:text-sm`}>
-                  {stiInfo.treatability}
+                  {tPage(`badges.treatability.${stiInfo.treatability}`)}
                 </Badge>
                 <Badge variant="outline" className="text-xs sm:text-sm">
-                  {stiInfo.type}
+                  {tPage(`badges.type.${stiInfo.type}`)}
                 </Badge>
               </div>
             </div>
@@ -181,7 +182,7 @@ export default function STIClient({ stiInfo }: { stiInfo: STIInfo }) {
                   <div>
                     <h3 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4 sm:mb-6 flex items-center">
                       <Users size={18} className="mr-2 sm:mr-3 text-orange-500 flex-shrink-0" />
-                      How {stiInfo.name} Spreads
+                      {t('transmission.title', { name: stiInfo.name })}
                     </h3>
                     <ul className="space-y-3 sm:space-y-4">
                       {stiInfo.transmission.map((method, index) => (
@@ -198,7 +199,7 @@ export default function STIClient({ stiInfo }: { stiInfo: STIInfo }) {
                   <div>
                     <h3 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4 sm:mb-6 flex items-center">
                       <AlertTriangle size={18} className="mr-2 sm:mr-3 text-red-500 flex-shrink-0" />
-                      Potential Health Effects
+                      {t('effects.title')}
                     </h3>
                     <ul className="space-y-3 sm:space-y-4">
                       {stiInfo.healthEffects.map((effect, index) => (
@@ -215,7 +216,7 @@ export default function STIClient({ stiInfo }: { stiInfo: STIInfo }) {
                   <div>
                     <h3 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4 sm:mb-6 flex items-center">
                       <Shield size={18} className="mr-2 sm:mr-3 text-green-500 flex-shrink-0" />
-                      Prevention Methods
+                      {t('prevention.title')}
                     </h3>
                     <ul className="space-y-3 sm:space-y-4">
                       {stiInfo.prevention.map((method, index) => (

@@ -20,20 +20,23 @@ interface PreventionMethod {
   evidence: string;
 }
 
-// Localized prevention methods are loaded from messages
-
-// Localized safe sex practices are loaded from messages
+interface PracticeSection {
+  category: string;
+  practices: string[];
+}
 
 export default function STIPreventionPage() {
   const router = useRouter();
   const t = useTranslations('Prevention');
   const tDetail = useTranslations('STIDetail');
-  const preventionMethods = t.raw('lists.methods') as PreventionMethod[];
-  const safeSexPractices = t.raw('lists.practices') as { category: string; practices: string[] }[];
-  const commTips = t.raw('comm.tips') as string[];
-  const commSamples = t.raw('comm.samples') as { situation: string; example: string }[];
-  const commStyles = t.raw('comm.styles') as string[];
-  const commNavigate = t.raw('comm.navigate') as string[];
+  const tLists = useTranslations('Prevention.lists');
+
+  const preventionMethods = tLists.raw('methods') as PreventionMethod[];
+  const safeSexPractices = tLists.raw('practices') as PracticeSection[];
+  const commTips = tLists.raw('comm.tips') as string[];
+  const commSamples = tLists.raw('comm.samples') as { situation: string; example: string }[];
+  const commStyles = tLists.raw('comm.styles') as string[];
+  const commNavigate = tLists.raw('comm.navigate') as string[];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
@@ -289,13 +292,21 @@ export default function STIPreventionPage() {
                           <h4 className="font-medium text-green-800 dark:text-green-200 mb-2">
                             {t('comm.styles')}
                           </h4>
-                          <ul className="space-y-2 text-green-700 dark:text-green-300 text-sm">{commNavigate.map((item, idx) => (<li key={idx}>{item}</li>))}</ul>
+                          <ul className="space-y-2 text-green-700 dark:text-green-300 text-sm">
+                            {commStyles.map((item, i) => (
+                              <li key={i}>• {item}</li>
+                            ))}
+                          </ul>
                         </div>
                         <div>
                           <h4 className="font-medium text-green-800 dark:text-green-200 mb-2">
                             {t('comm.navigate')}
                           </h4>
-                          <ul className="space-y-2 text-green-700 dark:text-green-300 text-sm">{commStyles.map((item, idx) => (<li key={idx}>{item}</li>))}</ul>
+                          <ul className="space-y-2 text-green-700 dark:text-green-300 text-sm">
+                            {commNavigate.map((item, i) => (
+                              <li key={i}>• {item}</li>
+                            ))}
+                          </ul>
                         </div>
                       </div>
                     </Card>
@@ -316,8 +327,12 @@ export default function STIPreventionPage() {
                         </h3>
                         <div className="space-y-4">
                           <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                            <h4 className="font-medium text-gray-800 dark:text-gray-100 mb-2">{t('resources.extra.moh.title')}</h4>
-                            <p className="text-gray-700 dark:text-gray-300 text-sm">{t('resources.extra.moh.desc')}</p>
+                            <h4 className="font-medium text-gray-800 dark:text-gray-100 mb-2">
+                              {t('resources.my.clinics.title')}
+                            </h4>
+                            <p className="text-gray-700 dark:text-gray-300 text-sm">
+                              {t('resources.my.clinics.desc')}
+                            </p>
                             <div className="mt-3">
                               <a
                                 href="https://www.moh.gov.my/"

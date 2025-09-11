@@ -192,6 +192,122 @@
     "viewData": "查看数据",
     "learnMore": "了解更多"
   },
+  "STIsPage": {
+    "hero": {
+      "title": "了解性传播感染",
+      "subtitle": "提供全面、无评判的 STI 信息，帮助你做出明智健康决策。知识让你更有力量。",
+      "imageAlt": "与医疗与健康相关的插画"
+    },
+    "support": {
+      "title": "你正在迈出积极一步",
+      "text": "学习 STI 体现成熟与责任。本页面以无评判的方式呈现信息，认识到性健康是整体健康的重要组成。请记住：感染 STI 并不代表你的品格——这只是可以被治疗或管理的健康状况。"
+    },
+    "modules": {
+      "prevention": {
+        "badge": "预防学习模块"
+      },
+      "prevalence": {
+        "badge": "社区健康数据",
+        "title": "马来西亚的 STI 流行情况",
+        "desc": "通过交互式可视化查看马来西亚各州的 STI 流行情况。理解性健康问题很常见且可治疗。"
+      }
+    },
+    "badges": {
+      "severity": {
+        "Low": "低",
+        "Medium": "中",
+        "High": "高"
+      },
+      "treatability": {
+        "Curable": "可治愈",
+        "Manageable": "可控",
+        "Preventable": "可预防"
+      },
+      "type": {
+        "Bacterial": "细菌性",
+        "Viral": "病毒性",
+        "Parasitic": "寄生虫性"
+      }
+    },
+    "prevalenceLabel": "流行情况",
+    "resources": {
+      "title": "记住：寻求帮助是力量的表现",
+      "where": {
+        "title": "在马来西亚，你可以在以下机构进行检测与治疗：",
+        "items": [
+          "政府医疗诊所（免费或低费用）",
+          "政府医院",
+          "私人诊所",
+          "非政府组织健康中心"
+        ]
+      },
+      "reminders": {
+        "title": "重要提醒：",
+        "items": [
+          "所有治疗均严格保密",
+          "医护人员受过不带偏见的专业训练",
+          "越早治疗，效果越好",
+          "你值得被尊重并获得高质量照护"
+        ]
+      }
+    },
+    "list": [
+      {
+        "id": "chlamydia",
+        "name": "衣原体感染（Chlamydia）",
+        "type": "Bacterial",
+        "severity": "Medium",
+        "treatability": "Curable",
+        "description": "最常见的 STI 之一，常常无症状，可用抗生素轻松治疗。",
+        "prevalence": "在年轻人群中非常常见"
+      },
+      {
+        "id": "gonorrhea",
+        "name": "淋病（Gonorrhea）",
+        "type": "Bacterial",
+        "severity": "Medium",
+        "treatability": "Curable",
+        "description": "可影响生殖器、直肠与咽喉的细菌感染。可治愈，但部分菌株耐药性上升。",
+        "prevalence": "常见，城市地区更为普遍"
+      },
+      {
+        "id": "herpes",
+        "name": "疱疹（HSV-1 / HSV-2）",
+        "type": "Viral",
+        "severity": "Low",
+        "treatability": "Manageable",
+        "description": "常见的病毒感染，周期性爆发。用现代药物可很好地管理。",
+        "prevalence": "在全球范围内极为常见"
+      },
+      {
+        "id": "hpv",
+        "name": "人乳头瘤病毒（HPV）",
+        "type": "Viral",
+        "severity": "Medium",
+        "treatability": "Preventable",
+        "description": "最常见的 STI。多能自清除，但高危型可能致癌；可接种疫苗预防。",
+        "prevalence": "多数有性生活的人都会感染过 HPV"
+      },
+      {
+        "id": "hiv",
+        "name": "人类免疫缺陷病毒（HIV）",
+        "type": "Viral",
+        "severity": "High",
+        "treatability": "Manageable",
+        "description": "攻击免疫系统，但在现代治疗下高度可控，许多人可拥有接近正常的寿命。",
+        "prevalence": "在特定人群中具有一定比例"
+      },
+      {
+        "id": "syphilis",
+        "name": "梅毒（Syphilis）",
+        "type": "Bacterial",
+        "severity": "High",
+        "treatability": "Curable",
+        "description": "分期发展的细菌感染。及早治疗可完全治愈。",
+        "prevalence": "在马来西亚呈上升趋势"
+      }
+    ]
+  },
   "Learning": {
     "finished": "读完了吗？",
     "prompt": "用测验检验你的理解，或向 AI 提问。",
@@ -245,6 +361,28 @@
       "title": "需要帮助或有问题？",
       "text": "寻求信息和治疗体现了责任与自我关爱。马来西亚的医护人员接受过保密、无评判的专业训练。",
       "cta": "咨询我们的 AI 助手"
+    }
+  },
+  "STIsSEO": {
+    "detail": {
+      "title": "{name} —— 症状、传播、预防与治疗",
+      "description": "了解 {name}：症状、传播方式、预防方法、治疗选项与马来西亚背景。基于证据、无评判的健康信息。"
+    },
+    "list": {
+      "title": "了解性传播感染——症状、预防与马来西亚数据",
+      "description": "探索 STI 基础、预防指导与马来西亚流行数据。为年轻人提供无评判、具文化敏感度的学习。"
+    }
+  },
+  "PreventionSEO": {
+    "page": {
+      "title": "STI 预防与安全性行为——循证指导",
+      "description": "学习已被验证的预防方法、安全实践与尊重的沟通方式，适配马来西亚文化语境。"
+    }
+  },
+  "PrevalenceSEO": {
+    "page": {
+      "title": "马来西亚的 STI 流行情况——交互式地图与趋势",
+      "description": "按州与年份查看发病率，通过交互式可视化理解马来西亚 STI 趋势。"
     }
   },
   "Charts": {
@@ -316,6 +454,13 @@
     },
     "resources": {
       "heading": "更多资源与支持",
+      "my": {
+        "title": "马来西亚相关资源",
+        "clinics": {
+          "title": "政府医疗诊所",
+          "desc": "全国各地政府医疗诊所均提供免费或低费用的 STI 检测与治疗，服务专业且注重保密。"
+        }
+      },
       "evidence": {
         "heading": "证据来源与指南",
         "who": {
