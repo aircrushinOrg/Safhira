@@ -303,6 +303,28 @@
       "cta": "Ask Our AI Assistant"
     }
   },
+  "STIsSEO": {
+    "detail": {
+      "title": "{name} – Symptoms, Transmission, Prevention & Treatment",
+      "description": "Learn about {name}: symptoms, how it spreads, prevention methods, treatment options, and Malaysian context. Evidence-based, stigma-free information."
+    },
+    "list": {
+      "title": "Learn About STIs – Symptoms, Prevention, and Data in Malaysia",
+      "description": "Explore STI basics, prevention guidance, and Malaysia-specific prevalence data. Judgment-free, culturally sensitive education for young adults."
+    }
+  },
+  "PreventionSEO": {
+    "page": {
+      "title": "STI Prevention & Safe Sex Practices – Evidence-Based Guidance",
+      "description": "Learn proven prevention methods, safe practices, and respectful communication, adapted for Malaysia's cultural context."
+    }
+  },
+  "PrevalenceSEO": {
+    "page": {
+      "title": "STI Prevalence in Malaysia – Interactive Maps and Trends",
+      "description": "View incidence rates by state and year with interactive visualizations to understand STI trends across Malaysia."
+    }
+  },
   "Charts": {
     "choropleth": {
       "title": "STI Prevalence in Malaysia",

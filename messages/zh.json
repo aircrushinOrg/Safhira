@@ -303,6 +303,28 @@
       "cta": "咨询我们的 AI 助手"
     }
   },
+  "STIsSEO": {
+    "detail": {
+      "title": "{name} —— 症状、传播、预防与治疗",
+      "description": "了解 {name}：症状、传播方式、预防方法、治疗选项与马来西亚背景。基于证据、无评判的健康信息。"
+    },
+    "list": {
+      "title": "了解性传播感染——症状、预防与马来西亚数据",
+      "description": "探索 STI 基础、预防指导与马来西亚流行数据。为年轻人提供无评判、具文化敏感度的学习。"
+    }
+  },
+  "PreventionSEO": {
+    "page": {
+      "title": "STI 预防与安全性行为——循证指导",
+      "description": "学习已被验证的预防方法、安全实践与尊重的沟通方式，适配马来西亚文化语境。"
+    }
+  },
+  "PrevalenceSEO": {
+    "page": {
+      "title": "马来西亚的 STI 流行情况——交互式地图与趋势",
+      "description": "按州与年份查看发病率，通过交互式可视化理解马来西亚 STI 趋势。"
+    }
+  },
   "Charts": {
     "choropleth": {
       "title": "马来西亚的 STI 流行情况",

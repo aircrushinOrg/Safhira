@@ -303,6 +303,28 @@
       "cta": "Tanya Pembantu AI Kami"
     }
   },
+  "STIsSEO": {
+    "detail": {
+      "title": "{name} – Gejala, Penularan, Pencegahan & Rawatan",
+      "description": "Ketahui tentang {name}: gejala, cara penularan, kaedah pencegahan, pilihan rawatan dan konteks Malaysia. Maklumat berasaskan bukti dan bebas penghakiman."
+    },
+    "list": {
+      "title": "Ketahui tentang STI – Gejala, Pencegahan dan Data di Malaysia",
+      "description": "Terokai asas STI, panduan pencegahan dan data prevalens Malaysia. Pendidikan mesra budaya tanpa penghakiman untuk belia."
+    }
+  },
+  "PreventionSEO": {
+    "page": {
+      "title": "Pencegahan STI & Amalan Seks Selamat – Panduan Berasaskan Bukti",
+      "description": "Pelajari kaedah pencegahan terbukti, amalan selamat dan komunikasi berhemah, disesuaikan dengan konteks budaya Malaysia."
+    }
+  },
+  "PrevalenceSEO": {
+    "page": {
+      "title": "Prevalens STI di Malaysia – Peta dan Tren Interaktif",
+      "description": "Lihat kadar insiden mengikut negeri dan tahun dengan visualisasi interaktif untuk memahami tren STI di Malaysia."
+    }
+  },
   "Charts": {
     "choropleth": {
       "title": "Prevalens STI di Malaysia",
