@@ -20,88 +20,23 @@ interface PreventionMethod {
   evidence: string;
 }
 
-const preventionMethods: PreventionMethod[] = [
-  {
-    title: "Barrier Methods (Condoms)",
-    effectiveness: "85-98% effective against most STIs",
-    description: "Physical barriers that prevent direct contact between partners during sexual activity",
-    culturalConsiderations: "Respects personal autonomy and can be used discreetly. Compatible with various cultural and religious perspectives on family planning.",
-    howToUse: [
-      "Use a new condom for each sexual encounter",
-      "Check expiration date and packaging integrity",
-      "Leave space at the tip and roll down completely",
-      "Remove carefully to prevent spillage",
-      "Dispose of responsibly"
-    ],
-    evidence: "World Health Organization and Centers for Disease Control data consistently show high effectiveness when used correctly and consistently."
-  },
-  {
-    title: "Communication and Consent",
-    effectiveness: "Essential foundation for all prevention",
-    description: "Open, honest dialogue about sexual health, boundaries, and testing status",
-    culturalConsiderations: "Respects cultural values around communication while promoting health. Can be adapted to different cultural communication styles.",
-    howToUse: [
-      "Discuss STI testing history before intimate contact",
-      "Share personal boundaries and comfort levels",
-      "Talk about prevention methods you're both comfortable with",
-      "Check in regularly about comfort and consent",
-      "Approach conversations with respect and care"
-    ],
-    evidence: "Research shows that couples who communicate about sexual health have lower STI transmission rates and higher relationship satisfaction."
-  },
-  {
-    title: "Regular Testing",
-    effectiveness: "Crucial for early detection and treatment",
-    description: "Routine screening for STIs based on age, risk factors, and sexual activity",
-    culturalConsiderations: "Healthcare is a personal responsibility that benefits both individual and community health. Testing shows care for oneself and partners.",
-    howToUse: [
-      "Get tested at least annually if sexually active",
-      "Test before new relationships when possible",
-      "Follow healthcare provider recommendations for frequency",
-      "Include testing for multiple STIs, not just HIV",
-      "Share results with partners when appropriate"
-    ],
-    evidence: "Malaysian Ministry of Health and international guidelines recommend regular screening as a cornerstone of STI prevention."
-  }
-];
-
-const safeSexPractices = [
-  {
-    category: "Before Sexual Activity",
-    practices: [
-      "Have open conversations about sexual health and boundaries",
-      "Get tested together and share results",
-      "Discuss and agree on prevention methods",
-      "Ensure both partners feel comfortable and respected",
-      "Have protection available and easily accessible"
-    ]
-  },
-  {
-    category: "During Sexual Activity",
-    practices: [
-      "Use barrier methods consistently and correctly",
-      "Respect established boundaries and check in with your partner",
-      "Avoid practices that increase risk of tissue damage",
-      "Use appropriate lubrication to prevent tears",
-      "Switch to fresh barriers when changing activities"
-    ]
-  },
-  {
-    category: "After Sexual Activity",
-    practices: [
-      "Proper disposal of used protection",
-      "Gentle cleaning without harsh products",
-      "Monitor for any unusual symptoms",
-      "Maintain open communication about comfort and health",
-      "Seek medical attention if concerns arise"
-    ]
-  }
-];
+interface PracticeSection {
+  category: string;
+  practices: string[];
+}
 
 export default function STIPreventionPage() {
   const router = useRouter();
   const t = useTranslations('Prevention');
   const tDetail = useTranslations('STIDetail');
+  const tLists = useTranslations('Prevention.lists');
+
+  const preventionMethods = tLists.raw('methods') as PreventionMethod[];
+  const safeSexPractices = tLists.raw('practices') as PracticeSection[];
+  const commTips = tLists.raw('comm.tips') as string[];
+  const commSamples = tLists.raw('comm.samples') as { situation: string; example: string }[];
+  const commStyles = tLists.raw('comm.styles') as string[];
+  const commNavigate = tLists.raw('comm.navigate') as string[];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
@@ -320,13 +255,7 @@ export default function STIPreventionPage() {
                           {t('comm.start')}
                         </h3>
                         <ul className="space-y-3">
-                          {[
-                            "Choose a comfortable, private setting",
-                            "Approach the topic when you're both relaxed",
-                            "Use 'I' statements to express your feelings",
-                            "Be honest about your own health and testing history",
-                            "Listen actively and respect your partner's responses"
-                          ].map((tip, index) => (
+                          {commTips.map((tip, index) => (
                             <li key={index} className="flex items-start space-x-3">
                               <CheckCircle size={16} className="text-blue-500 mt-1 flex-shrink-0" />
                               <span className="text-gray-700 dark:text-gray-300">{tip}</span>
@@ -340,20 +269,7 @@ export default function STIPreventionPage() {
                           {t('comm.samples')}
                         </h3>
                         <div className="space-y-4">
-                          {[
-                            {
-                              situation: "Discussing testing",
-                              example: "I care about both our health. When was your last STI test? I had mine [timeframe] and everything was clear."
-                            },
-                            {
-                              situation: "Talking about protection",
-                              example: "I'd feel more comfortable using protection. How do you feel about that?"
-                            },
-                            {
-                              situation: "Setting boundaries",
-                              example: "I'm comfortable with [specific activities] but would prefer to wait on [other activities]. What are your thoughts?"
-                            }
-                          ].map((example, index) => (
+                          {commSamples.map((example, index) => (
                             <div key={index} className="p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
                               <p className="font-medium text-gray-800 dark:text-gray-100 text-sm mb-1">
                                 {example.situation}:
@@ -377,10 +293,9 @@ export default function STIPreventionPage() {
                             {t('comm.styles')}
                           </h4>
                           <ul className="space-y-2 text-green-700 dark:text-green-300 text-sm">
-                            <li>• Some cultures prefer indirect communication</li>
-                            <li>• Others value very direct, explicit discussions</li>
-                            <li>• Non-verbal cues may be equally important</li>
-                            <li>• Time and patience may be needed for comfort</li>
+                            {commStyles.map((item, i) => (
+                              <li key={i}>• {item}</li>
+                            ))}
                           </ul>
                         </div>
                         <div>
@@ -388,10 +303,9 @@ export default function STIPreventionPage() {
                             {t('comm.navigate')}
                           </h4>
                           <ul className="space-y-2 text-green-700 dark:text-green-300 text-sm">
-                            <li>• Acknowledge different backgrounds respectfully</li>
-                            <li>• Find common ground in health and care</li>
-                            <li>• Respect religious or cultural considerations</li>
-                            <li>• Seek understanding rather than judgment</li>
+                            {commNavigate.map((item, i) => (
+                              <li key={i}>• {item}</li>
+                            ))}
                           </ul>
                         </div>
                       </div>
@@ -409,16 +323,15 @@ export default function STIPreventionPage() {
                     <div className="grid md:grid-cols-2 gap-8">
                       <Card className="p-6">
                         <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">
-                          Malaysia-Specific Resources
+                          {t('resources.my.title')}
                         </h3>
                         <div className="space-y-4">
                           <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
                             <h4 className="font-medium text-gray-800 dark:text-gray-100 mb-2">
-                              Government Health Clinics
+                              {t('resources.my.clinics.title')}
                             </h4>
                             <p className="text-gray-700 dark:text-gray-300 text-sm">
-                              Free or low-cost STI testing and treatment available at all government 
-                              health clinics nationwide. Services are confidential and professional.
+                              {t('resources.my.clinics.desc')}
                             </p>
                             <div className="mt-3">
                               <a

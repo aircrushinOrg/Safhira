@@ -132,6 +132,122 @@
     "viewData": "Lihat Data",
     "learnMore": "Ketahui Lagi"
   },
+  "STIsPage": {
+    "hero": {
+      "title": "Ketahui tentang STI",
+      "subtitle": "Maklumat menyeluruh dan bebas penghakiman tentang jangkitan penyakit kelamin (STI). Pengetahuan membantu anda membuat keputusan kesihatan yang bermaklumat.",
+      "imageAlt": "Ilustrasi perubatan yang mewakili penjagaan kesihatan"
+    },
+    "support": {
+      "title": "Anda Sedang Melangkah dengan Positif",
+      "text": "Mempelajari STI menunjukkan kematangan dan tanggungjawab. Maklumat ini disampaikan tanpa penghakiman kerana kesihatan seksual adalah sebahagian penting daripada kesejahteraan. Ingat: mempunyai STI tidak mencerminkan peribadi anda—ia adalah keadaan kesihatan yang boleh dirawat atau diurus."
+    },
+    "modules": {
+      "prevention": {
+        "badge": "Modul Pembelajaran Pencegahan"
+      },
+      "prevalence": {
+        "badge": "Data Kesihatan Komuniti",
+        "title": "Prevalens STI di Malaysia",
+        "desc": "Visualisasi interaktif yang menunjukkan prevalens STI merentasi negeri-negeri di Malaysia. Fahami bahawa kebimbangan kesihatan seksual adalah biasa dan boleh dirawat."
+      }
+    },
+    "badges": {
+      "severity": {
+        "Low": "Rendah",
+        "Medium": "Sederhana",
+        "High": "Tinggi"
+      },
+      "treatability": {
+        "Curable": "Boleh Diubati",
+        "Manageable": "Boleh Diurus",
+        "Preventable": "Boleh Dicegah"
+      },
+      "type": {
+        "Bacterial": "Bakteria",
+        "Viral": "Virus",
+        "Parasitic": "Parasit"
+      }
+    },
+    "prevalenceLabel": "Prevalens",
+    "resources": {
+      "title": "Ingat: Mendapatkan Bantuan Tanda Kekuatan",
+      "where": {
+        "title": "Di Malaysia, anda boleh mendapatkan ujian dan rawatan di:",
+        "items": [
+          "Klinik kesihatan kerajaan (percuma atau berkos rendah)",
+          "Hospital kerajaan",
+          "Klinik swasta",
+          "Pusat kesihatan NGO"
+        ]
+      },
+      "reminders": {
+        "title": "Peringatan penting:",
+        "items": [
+          "Semua rawatan adalah sulit",
+          "Petugas kesihatan terlatih untuk tidak menghakimi",
+          "Rawatan awal membawa hasil yang lebih baik",
+          "Anda berhak menerima penjagaan yang hormat dan berkualiti"
+        ]
+      }
+    },
+    "list": [
+      {
+        "id": "chlamydia",
+        "name": "Klamidia (Chlamydia)",
+        "type": "Bacterial",
+        "severity": "Medium",
+        "treatability": "Curable",
+        "description": "Antara STI paling lazim, sering tanpa gejala tetapi mudah dirawat dengan antibiotik.",
+        "prevalence": "Sangat lazim dalam kalangan belia"
+      },
+      {
+        "id": "gonorrhea",
+        "name": "Gonorea (Gonorrhea)",
+        "type": "Bacterial",
+        "severity": "Medium",
+        "treatability": "Curable",
+        "description": "Jangkitan bakteria yang boleh menjejaskan alat kelamin, rektum dan tekak. Boleh diubati tetapi sesetengah strain semakin kebal.",
+        "prevalence": "Biasa, terutamanya di kawasan bandar"
+      },
+      {
+        "id": "herpes",
+        "name": "Herpes (HSV-1 / HSV-2)",
+        "type": "Viral",
+        "severity": "Low",
+        "treatability": "Manageable",
+        "description": "Jangkitan virus biasa yang menyebabkan serangan berkala. Sangat boleh diurus dengan ubat moden.",
+        "prevalence": "Amat lazim di seluruh dunia"
+      },
+      {
+        "id": "hpv",
+        "name": "Virus Papiloma Manusia (HPV)",
+        "type": "Viral",
+        "severity": "Medium",
+        "treatability": "Preventable",
+        "description": "STI paling biasa. Kebanyakannya hilang sendiri, namun jenis berisiko tinggi boleh menyebabkan kanser. Vaksin tersedia.",
+        "prevalence": "Kebanyakan individu aktif seksual pernah dijangkiti HPV"
+      },
+      {
+        "id": "hiv",
+        "name": "Virus Kurang Daya Tahan Manusia (HIV)",
+        "type": "Viral",
+        "severity": "High",
+        "treatability": "Manageable",
+        "description": "Menyerang sistem imun tetapi sangat boleh diurus dengan rawatan moden. Individu boleh hidup sepanjang hayat yang hampir normal.",
+        "prevalence": "Ketara dalam populasi tertentu"
+      },
+      {
+        "id": "syphilis",
+        "name": "Sifilis (Syphilis)",
+        "type": "Bacterial",
+        "severity": "High",
+        "treatability": "Curable",
+        "description": "Jangkitan bakteria berperingkat. Boleh sembuh sepenuhnya dengan rawatan awal.",
+        "prevalence": "Meningkat di Malaysia"
+      }
+    ]
+  },
   "Learning": {
     "finished": "Sudah selesai membaca?",
     "prompt": "Uji kefahaman anda dengan kuiz atau tanya AI jika ada soalan.",
@@ -256,6 +372,13 @@
     },
     "resources": {
       "heading": "Sumber & Sokongan Tambahan",
+      "my": {
+        "title": "Sumber Khusus Malaysia",
+        "clinics": {
+          "title": "Klinik Kesihatan Kerajaan",
+          "desc": "Ujian dan rawatan STI percuma atau berkos rendah tersedia di semua klinik kesihatan kerajaan di seluruh negara. Perkhidmatan adalah sulit dan profesional."
+        }
+      },
       "evidence": {
         "heading": "Sumber Bukti & Garis Panduan",
         "who": {

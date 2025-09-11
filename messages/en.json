@@ -132,6 +132,122 @@
     "viewData": "View Data",
     "learnMore": "Learn More"
   },
+  "STIsPage": {
+    "hero": {
+      "title": "Learn About STIs",
+      "subtitle": "Comprehensive, judgment-free information about sexually transmitted infections. Knowledge empowers you to make informed decisions about your health.",
+      "imageAlt": "Medical illustration representing healthcare and medicine"
+    },
+    "support": {
+      "title": "You're Taking a Positive Step",
+      "text": "Learning about STIs shows maturity and responsibility. This information is presented without judgment, recognizing that sexual health is an important part of overall wellbeing. Remember: having an STI doesn't reflect your character—it's a health condition that can be treated or managed."
+    },
+    "modules": {
+      "prevention": {
+        "badge": "Prevention Learning Module"
+      },
+      "prevalence": {
+        "badge": "Community Health Data",
+        "title": "STI Prevalence in Malaysia",
+        "desc": "Interactive visualizations showing STI prevalence across Malaysian states. Understand that sexual health concerns are common and treatable."
+      }
+    },
+    "badges": {
+      "severity": {
+        "Low": "Low",
+        "Medium": "Medium",
+        "High": "High"
+      },
+      "treatability": {
+        "Curable": "Curable",
+        "Manageable": "Manageable",
+        "Preventable": "Preventable"
+      },
+      "type": {
+        "Bacterial": "Bacterial",
+        "Viral": "Viral",
+        "Parasitic": "Parasitic"
+      }
+    },
+    "prevalenceLabel": "Prevalence",
+    "resources": {
+      "title": "Remember: Getting Help is a Sign of Strength",
+      "where": {
+        "title": "In Malaysia, you can get tested and treated at:",
+        "items": [
+          "Government health clinics (free or low-cost)",
+          "Government hospitals",
+          "Private clinics",
+          "NGO health centers"
+        ]
+      },
+      "reminders": {
+        "title": "Important reminders:",
+        "items": [
+          "All treatment is confidential",
+          "Healthcare workers are trained to be non-judgmental",
+          "Early treatment leads to better outcomes",
+          "You deserve respectful, quality care"
+        ]
+      }
+    },
+    "list": [
+      {
+        "id": "chlamydia",
+        "name": "Chlamydia",
+        "type": "Bacterial",
+        "severity": "Medium",
+        "treatability": "Curable",
+        "description": "One of the most common STIs, often without symptoms but easily treatable with antibiotics.",
+        "prevalence": "Very common among young adults"
+      },
+      {
+        "id": "gonorrhea",
+        "name": "Gonorrhea",
+        "type": "Bacterial",
+        "severity": "Medium",
+        "treatability": "Curable",
+        "description": "Bacterial infection that can affect genitals, rectum, and throat. Curable but some strains are becoming resistant.",
+        "prevalence": "Common, especially in urban areas"
+      },
+      {
+        "id": "herpes",
+        "name": "Herpes (HSV-1 & HSV-2)",
+        "type": "Viral",
+        "severity": "Low",
+        "treatability": "Manageable",
+        "description": "Common viral infection causing periodic outbreaks. Very manageable with modern medications.",
+        "prevalence": "Extremely common worldwide"
+      },
+      {
+        "id": "hpv",
+        "name": "Human Papillomavirus (HPV)",
+        "type": "Viral",
+        "severity": "Medium",
+        "treatability": "Preventable",
+        "description": "Most common STI. Usually clears naturally, but high-risk types can cause cancer. Vaccine available.",
+        "prevalence": "Most sexually active people get HPV"
+      },
+      {
+        "id": "hiv",
+        "name": "Human Immunodeficiency Virus (HIV)",
+        "type": "Viral",
+        "severity": "High",
+        "treatability": "Manageable",
+        "description": "Attacks immune system but highly manageable with modern treatment. People live normal lifespans.",
+        "prevalence": "Significant in certain populations"
+      },
+      {
+        "id": "syphilis",
+        "name": "Syphilis",
+        "type": "Bacterial",
+        "severity": "High",
+        "treatability": "Curable",
+        "description": "Bacterial infection that progresses through stages. Completely curable with early treatment.",
+        "prevalence": "Increasing in Malaysia"
+      }
+    ]
+  },
   "Learning": {
     "finished": "Finished reading?",
     "prompt": "Test your understanding with a quiz or ask AI if you have questions.",
@@ -326,8 +442,7 @@
           "Seek understanding rather than judgment"
         ]
       }
-    }
-  },
+    },
     "cultural": {
       "title": "Respectful & Inclusive Approach",
       "text": "This information is presented with respect for diverse cultural backgrounds, religious beliefs, and personal values. Sexual health decisions are deeply personal, and everyone deserves access to accurate information without judgment. You can adapt these practices to align with your values and circumstances."
@@ -361,6 +476,13 @@
     },
     "resources": {
       "heading": "Additional Resources & Support",
+      "my": {
+        "title": "Malaysia-Specific Resources",
+        "clinics": {
+          "title": "Government Health Clinics",
+          "desc": "Free or low-cost STI testing and treatment available at all government health clinics nationwide. Services are confidential and professional."
+        }
+      },
       "evidence": {
         "heading": "Evidence Sources & Guidelines",
         "who": {
@@ -402,3 +524,4 @@
       "button": "Chat with Our AI Assistant"
     }
   }
+}
