@@ -1,57 +1,31 @@
-import fs from "node:fs/promises"
-import path from "node:path"
+import { NextRequest, NextResponse } from "next/server";
+import { db } from "@/app/db";
+import { quizQuestions } from "@/db/schema";
 
-type MythFact = { myth: string; fact: string }
-
-function parseCSV(content: string): MythFact[] {
-  const lines = content.split(/\r?\n/).filter((l) => l.trim().length > 0)
-  if (lines.length === 0) return []
-  const dataLines = lines.slice(1)
-  const rows: MythFact[] = []
-  for (const line of dataLines) {
-    const fields: string[] = []
-    let current = ""
-    let inQuotes = false
-    for (let i = 0; i < line.length; i++) {
-      const ch = line[i]
-      if (ch === '"') {
-        if (inQuotes && line[i + 1] === '"') {
-          current += '"'
-          i++
-        } else {
-          inQuotes = !inQuotes
-        }
-      } else if (ch === "," && !inQuotes) {
-        fields.push(current.trim())
-        current = ""
-      } else {
-        current += ch
-      }
-    }
-    fields.push(current.trim())
-    if (fields.length >= 2) {
-      const myth = fields[0].replace(/^"|"$/g, "").trim()
-      const fact = fields[1].replace(/^"|"$/g, "").trim()
-      rows.push({ myth, fact })
-    }
-  }
-  return rows
-}
-
-export async function GET() {
+// GET /api/myths
+// Fetch myths/facts questions from the database instead of CSV
+export async function GET(request: NextRequest) {
   try {
-    const filePath = path.join(process.cwd(), "docs", "myth", "sti_myths_facts.csv")
-    const csv = await fs.readFile(filePath, "utf8")
-    const parsed = parseCSV(csv)
-    const data = parsed.map((row, idx) => ({ id: String(idx + 1), myth: row.myth, fact: row.fact }))
-    return new Response(JSON.stringify(data), {
-      headers: { "content-type": "application/json" },
-    })
+    const { searchParams } = new URL(request.url);
+    const category = searchParams.get("category") ?? "myths";
+    const activeOnly = (searchParams.get("activeOnly") ?? "true").toLowerCase() !== "false";
+    const limit = parseInt(searchParams.get("limit") || "0", 10);
+    const offset = parseInt(searchParams.get("offset") || "0", 10);
+
+    const rows = await db
+      .select({
+        id: quizQuestions.id,
+        myth: quizQuestions.statement,
+        fact: quizQuestions.explanation,
+      })
+      .from(quizQuestions)
+      .limit(limit > 0 ? limit : undefined as any)
+      .offset(offset > 0 ? offset : undefined as any);
+
+    const data = rows.map((r) => ({ id: String(r.id), myth: r.myth, fact: r.fact }));
+    return NextResponse.json(data);
   } catch (e) {
-    return new Response(JSON.stringify([]), {
-      headers: { "content-type": "application/json" },
-      status: 200,
-    })
+    console.error("Failed to fetch myths from DB:", e);
+    return NextResponse.json([], { status: 200 });
   }
 }
-

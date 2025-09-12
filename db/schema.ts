@@ -69,6 +69,19 @@ export const quizResults = pgTable('quiz_results', {
   index('idx_quiz_results_created_at').on(table.createdAt),
 ]);
 
+// Quiz Questions Table - Stores myth/fact questions for quiz functionality
+export const quizQuestions = pgTable('quiz_questions', {
+  id: serial('id').primaryKey(),
+  statement: text('statement').notNull(), // The myth/fact statement
+  isTrue: boolean('is_true').notNull(), // Whether the statement is true (fact) or false (myth)
+  explanation: text('explanation').notNull(), // The detailed explanation from the fact column
+  category: varchar('category', { length: 50 }).notNull().default('myths'), // Category: 'myths', 'general', etc.
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+}, (table) => [
+  index('idx_quiz_questions_category').on(table.category),
+]);
+
 // Quiz Leaderboard Stats Table - Aggregated stats per nickname
 export const quizLeaderboardStats = pgTable('quiz_leaderboard_stats', {
   nickname: varchar('nickname', { length: 100 }).primaryKey(),
