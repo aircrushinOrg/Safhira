@@ -167,8 +167,16 @@ export async function getLeaderboard(
       sortOrder = 'desc',
     } = filters;
 
-    // Build the query for leaderboard stats
-    let query = db
+    // Build the sorting column
+    const sortColumn = {
+      bestScore: quizLeaderboardStats.bestScore,
+      averageScore: quizLeaderboardStats.averageScore,
+      totalAttempts: quizLeaderboardStats.totalAttempts,
+      lastPlayedAt: quizLeaderboardStats.lastPlayedAt,
+    }[sortBy];
+
+    // Build the complete query with sorting and pagination
+    const entries = await db
       .select({
         nickname: quizLeaderboardStats.nickname,
         bestScore: quizLeaderboardStats.bestScore,
@@ -177,26 +185,10 @@ export async function getLeaderboard(
         lastPlayedAt: quizLeaderboardStats.lastPlayedAt,
       })
       .from(quizLeaderboardStats)
-      .where(eq(quizLeaderboardStats.quizType, quizType));
-
-    // Apply sorting
-    const sortColumn = {
-      bestScore: quizLeaderboardStats.bestScore,
-      averageScore: quizLeaderboardStats.averageScore,
-      totalAttempts: quizLeaderboardStats.totalAttempts,
-      lastPlayedAt: quizLeaderboardStats.lastPlayedAt,
-    }[sortBy];
-
-    if (sortOrder === 'desc') {
-      query = query.orderBy(desc(sortColumn));
-    } else {
-      query = query.orderBy(sortColumn);
-    }
-
-    // Apply pagination
-    query = query.limit(limit).offset(offset);
-
-    const entries = await query;
+      .where(eq(quizLeaderboardStats.quizType, quizType))
+      .orderBy(sortOrder === 'desc' ? desc(sortColumn) : sortColumn)
+      .limit(limit)
+      .offset(offset);
 
     // Convert to LeaderboardEntry format with ranks
     const leaderboardEntries: LeaderboardEntry[] = entries.map((entry, index) => ({

@@ -123,7 +123,7 @@ export default function ScoreSubmittedDialog({
                   Amazing!
                 </Badge>
                 <p className="text-sm text-muted-foreground">
-                  You're in the top 3! 🎊
+                  You&apos;re in the top 3! 🎊
                 </p>
               </motion.div>
             )}
@@ -137,7 +137,7 @@ export default function ScoreSubmittedDialog({
                   Excellent!
                 </Badge>
                 <p className="text-sm text-muted-foreground">
-                  You're in the top 10! Keep it up! 💪
+                  You&apos;re in the top 10! Keep it up! 💪
                 </p>
               </motion.div>
             )}

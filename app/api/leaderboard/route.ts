@@ -19,8 +19,16 @@ export async function GET(request: NextRequest) {
 
     const nickname = searchParams.get('nickname');
 
-    // Build the query for leaderboard stats
-    let query = db
+    // Build the sorting column
+    const sortColumn = {
+      bestScore: quizLeaderboardStats.bestScore,
+      averageScore: quizLeaderboardStats.averageScore,
+      totalAttempts: quizLeaderboardStats.totalAttempts,
+      lastPlayedAt: quizLeaderboardStats.lastPlayedAt,
+    }[filters.sortBy!];
+
+    // Build the complete query with sorting and pagination
+    const entries = await db
       .select({
         nickname: quizLeaderboardStats.nickname,
         bestScore: quizLeaderboardStats.bestScore,
@@ -29,26 +37,10 @@ export async function GET(request: NextRequest) {
         lastPlayedAt: quizLeaderboardStats.lastPlayedAt,
       })
       .from(quizLeaderboardStats)
-      .where(eq(quizLeaderboardStats.quizType, filters.quizType!));
-
-    // Apply sorting
-    const sortColumn = {
-      bestScore: quizLeaderboardStats.bestScore,
-      averageScore: quizLeaderboardStats.averageScore,
-      totalAttempts: quizLeaderboardStats.totalAttempts,
-      lastPlayedAt: quizLeaderboardStats.lastPlayedAt,
-    }[filters.sortBy!];
-
-    if (filters.sortOrder === 'desc') {
-      query = query.orderBy(desc(sortColumn));
-    } else {
-      query = query.orderBy(sortColumn);
-    }
-
-    // Apply pagination
-    query = query.limit(filters.limit!).offset(filters.offset!);
-
-    const entries = await query;
+      .where(eq(quizLeaderboardStats.quizType, filters.quizType!))
+      .orderBy(filters.sortOrder === 'desc' ? desc(sortColumn) : sortColumn)
+      .limit(filters.limit!)
+      .offset(filters.offset!);
 
     // Convert to LeaderboardEntry format with ranks
     const leaderboardEntries: LeaderboardEntry[] = entries.map((entry, index) => ({

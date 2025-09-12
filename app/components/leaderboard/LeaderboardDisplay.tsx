@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import {
   Dialog,
@@ -31,13 +31,7 @@ export default function LeaderboardDisplay({
   const [loading, setLoading] = useState(!initialData);
   const [sortBy, setSortBy] = useState<SortBy>("bestScore");
 
-  useEffect(() => {
-    if (open && !initialData) {
-      fetchLeaderboard();
-    }
-  }, [open, sortBy]);
-
-  const fetchLeaderboard = async () => {
+  const fetchLeaderboard = useCallback(async () => {
     try {
       setLoading(true);
       const data = await getLeaderboard({
@@ -52,7 +46,13 @@ export default function LeaderboardDisplay({
     } finally {
       setLoading(false);
     }
-  };
+  }, [sortBy]);
+
+  useEffect(() => {
+    if (open && !initialData) {
+      fetchLeaderboard();
+    }
+  }, [open, initialData, fetchLeaderboard]);
 
   const getRankIcon = (rank: number) => {
     if (rank === 1) return "🥇";
@@ -110,7 +110,7 @@ export default function LeaderboardDisplay({
               <Button
                 variant="outline"
                 size="sm"
-                onClick={fetchLeaderboard}
+                onClick={() => fetchLeaderboard()}
                 disabled={loading}
               >
                 {loading ? (
