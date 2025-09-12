@@ -1,14 +1,15 @@
-
 'use client'
 
-import { Card } from './components/ui/card';
-import { Button } from './components/ui/button';
+import { Card } from '../components/ui/card';
+import { Button } from '../components/ui/button';
 import { Home, Search, MessageCircle, BookOpen } from 'lucide-react';
-import Link from 'next/link';
+import {Link} from '../../i18n/routing';
 import { motion } from 'framer-motion';
+import {useTranslations} from 'next-intl';
 import Image from 'next/image';
 
 export default function NotFound() {
+  const t = useTranslations('NotFound');
   const containerVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
@@ -60,14 +61,13 @@ export default function NotFound() {
 
             <motion.div variants={itemVariants}>
               <h2 className="text-xl md:text-2xl font-semibold text-gray-700 dark:text-gray-200 mb-4">
-                Page Not Found
+                {t('title', { default: 'Page Not Found' })}
               </h2>
             </motion.div>
 
             <motion.div variants={itemVariants}>
               <p className="text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto text-base md:text-lg leading-relaxed">
-                The page you&apos;re looking for doesn&apos;t exist or may have been moved. 
-                Don&apos;t worry, we&apos;re here to help you find what you need for your sexual health journey.
+                {t('description', { default: "The page you're looking for doesn't exist or may have been moved. Don't worry, we're here to help you find what you need for your sexual health journey." })}
               </p>
             </motion.div>
 
@@ -76,28 +76,28 @@ export default function NotFound() {
                 <Link href="/" className="w-full">
                   <Button className="w-full bg-teal-600 hover:bg-teal-700 text-white">
                     <Home size={16} className="mr-2" />
-                    Home
+                    {t('home')}
                   </Button>
                 </Link>
                 
                 <Link href="/stis" className="w-full">
                   <Button variant="outline" className="w-full">
                     <BookOpen size={16} className="mr-2" />
-                    Learn STIs
+                    {t('learnStis')}
                   </Button>
                 </Link>
                 
                 <Link href="/chat" className="w-full">
                   <Button variant="outline" className="w-full">
                     <MessageCircle size={16} className="mr-2" />
-                    Chat AI
+                    {t('chatAi')}
                   </Button>
                 </Link>
 
                 <Link href="/quiz" className="w-full">
                   <Button variant="secondary" className="w-full">
                     <Search size={16} className="mr-2" />
-                    Take Quiz
+                    {t('takeQuiz')}
                   </Button>
                 </Link>
               </div>
@@ -106,44 +106,44 @@ export default function NotFound() {
             <motion.div variants={itemVariants}>
               <div className="pt-8 border-t border-gray-200 dark:border-gray-700">
                 <h3 className="font-semibold text-gray-800 dark:text-gray-100 mb-4">
-                  Popular
+                  {t('popular')}
                 </h3>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm">
                   <Link 
                     href="/stis" 
                     className="text-teal-600 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300 p-2 rounded hover:bg-teal-50 dark:hover:bg-teal-900/20 transition-colors"
                   >
-                    STI Basics
+                    {t('stiBasics')}
                   </Link>
                   <Link 
                     href="/stis/prevention" 
                     className="text-teal-600 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300 p-2 rounded hover:bg-teal-50 dark:hover:bg-teal-900/20 transition-colors"
                   >
-                    Prevention
+                    {t('prevention')}
                   </Link>
                   <Link 
                     href="/rights" 
                     className="text-teal-600 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300 p-2 rounded hover:bg-teal-50 dark:hover:bg-teal-900/20 transition-colors"
                   >
-                    Testing
+                    {t('testing')}
                   </Link>
                   <Link 
                     href="/quiz" 
                     className="text-teal-600 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300 p-2 rounded hover:bg-teal-50 dark:hover:bg-teal-900/20 transition-colors"
                   >
-                    Myths & Facts
+                    {t('mythsFacts')}
                   </Link>
                   <Link 
                     href="/stis/chlamydia" 
                     className="text-teal-600 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300 p-2 rounded hover:bg-teal-50 dark:hover:bg-teal-900/20 transition-colors"
                   >
-                    Chlamydia
+                    {t('chlamydia')}
                   </Link>
                   <Link 
                     href="/stis/hiv" 
                     className="text-teal-600 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300 p-2 rounded hover:bg-teal-50 dark:hover:bg-teal-900/20 transition-colors"
                   >
-                    HIV
+                    {t('hiv')}
                   </Link>
                 </div>
               </div>
@@ -161,4 +161,5 @@ export default function NotFound() {
       </motion.div>
     </div>
   );
-} 
+}
+

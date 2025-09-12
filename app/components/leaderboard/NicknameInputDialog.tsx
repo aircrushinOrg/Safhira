@@ -14,6 +14,7 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Badge } from "../ui/badge";
 import { motion } from "framer-motion";
+import generateRandomNickname from "@/lib/nickname";
 
 interface NicknameInputDialogProps {
   open: boolean;
@@ -34,7 +35,7 @@ export default function NicknameInputDialog({
   onSubmit,
   isSubmitting = false,
 }: NicknameInputDialogProps) {
-  const [nickname, setNickname] = useState("");
+  const [nickname, setNickname] = useState(() => generateRandomNickname());
   const [error, setError] = useState("");
 
   const handleSubmit = () => {
