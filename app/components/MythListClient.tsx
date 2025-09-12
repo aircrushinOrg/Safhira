@@ -12,6 +12,11 @@ import {
 } from "./ui/dialog";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
+import NicknameInputDialog from "./leaderboard/NicknameInputDialog";
+import ScoreSubmittedDialog from "./leaderboard/ScoreSubmittedDialog";
+import LeaderboardDisplay from "./leaderboard/LeaderboardDisplay";
+import { submitQuizScore } from "../actions/leaderboard-actions";
+import { LeaderboardResponse } from "@/types/leaderboard";
 
 type Item = { id: string; text: string; fact?: string };
 
@@ -34,6 +39,16 @@ export default function MythListClient({ items }: { items: Item[] }) {
   const [answered, setAnswered] = useState(false);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [showConfetti, setShowConfetti] = useState(false);
+
+  // Leaderboard states
+  const [nicknameDialogOpen, setNicknameDialogOpen] = useState(false);
+  const [scoreSubmittedDialogOpen, setScoreSubmittedDialogOpen] = useState(false);
+  const [leaderboardOpen, setLeaderboardOpen] = useState(false);
+  const [isSubmittingScore, setIsSubmittingScore] = useState(false);
+  const [submittedNickname, setSubmittedNickname] = useState("");
+  const [userRank, setUserRank] = useState<number>(0);
+  const [userStats, setUserStats] = useState<any>(null);
+  const [leaderboardData, setLeaderboardData] = useState<LeaderboardResponse | null>(null);
 
   const handleClick = (item: Item) => {
     setSelected(item);
@@ -103,6 +118,52 @@ export default function MythListClient({ items }: { items: Item[] }) {
     }
   }, [answered, current, questions.length, score]);
 
+  // Handle quiz completion and show nickname input
+  const handleQuizComplete = () => {
+    setQuizOpen(false);
+    setNicknameDialogOpen(true);
+  };
+
+  // Handle score submission
+  const handleSubmitScore = async (nickname: string) => {
+    setIsSubmittingScore(true);
+    try {
+      const scorePercentage = score * 20; // Convert to 0-100 scale
+      const result = await submitQuizScore({
+        nickname,
+        score: scorePercentage,
+        totalQuestions: questions.length,
+        correctAnswers: score,
+        quizType: "myths",
+      });
+
+      if (result.success) {
+        setSubmittedNickname(nickname);
+        setUserRank(result.rank || 0);
+        setUserStats(result.stats);
+        setNicknameDialogOpen(false);
+        setScoreSubmittedDialogOpen(true);
+      } else {
+        console.error("Score submission failed:", result.error);
+        // You could show an error dialog here
+      }
+    } catch (error) {
+      console.error("Error submitting score:", error);
+    } finally {
+      setIsSubmittingScore(false);
+    }
+  };
+
+  // Handle viewing leaderboard
+  const handleViewLeaderboard = () => {
+    setLeaderboardOpen(true);
+  };
+
+  // Handle try again
+  const handleTryAgain = () => {
+    startQuiz();
+  };
+
   const achievement = useMemo(() => {
     const total = questions.length || 5;
     const ratio = total ? score / total : 0;
@@ -159,7 +220,7 @@ export default function MythListClient({ items }: { items: Item[] }) {
     <div className="space-y-16">
       <TiltedScroll items={items} onItemClick={handleClick} className="mt-4" />
 
-      <div className="flex justify-center">
+      <div className="flex justify-center gap-4">
         <Button
           size="lg"
           className="flex h-12 md:h-14 px-6 md:px-8 py-3 text-base md:text-lg bg-gradient-to-r from-rose-400 to-teal-500 dark:from-rose-400 dark:to-teal-500 hover:from-rose-600 hover:to-teal-600 dark:hover:from-rose-500  dark:hover:to-teal-500 text-white dark:text-slate-800 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 active:scale-95"
@@ -168,15 +229,23 @@ export default function MythListClient({ items }: { items: Item[] }) {
         >
           Start Quiz
         </Button>
+        <Button
+          size="lg"
+          variant="outline"
+          className="flex h-12 md:h-14 px-6 md:px-8 py-3 text-base md:text-lg rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 active:scale-95"
+          onClick={handleViewLeaderboard}
+        >
+          🏆 Leaderboard
+        </Button>
       </div>
 
       {/* Info Dialog for single myth */}
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="sm:max-w-xl">
           <DialogHeader>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
               <Badge variant="secondary">Myth</Badge>
-              <DialogTitle className="text-balance">
+              <DialogTitle className="text-balance text-xl font-semibold">
                 {selected?.text || "Myth"}
               </DialogTitle>
             </div>
@@ -184,10 +253,10 @@ export default function MythListClient({ items }: { items: Item[] }) {
               Tap outside the dialog to close.
             </DialogDescription>
           </DialogHeader>
-          <div className="rounded-md border bg-card p-4">
+          <div className="rounded-xl border bg-muted/20 p-4 shadow-sm">
             <div className="mb-2 flex items-center gap-2">
               <Badge>Fact</Badge>
-              <span className="text-sm text-muted-foreground">
+              <span className="text-sm font-medium text-muted-foreground">
                 The truth behind the myth
               </span>
             </div>
@@ -381,6 +450,9 @@ export default function MythListClient({ items }: { items: Item[] }) {
                   </p>
                 </div>
                 <div className="flex gap-2 justify-end">
+                  <Button variant="outline" onClick={handleQuizComplete}>
+                    Submit Score
+                  </Button>
                   <Button variant="outline" onClick={() => setQuizOpen(false)}>
                     Close
                   </Button>
@@ -391,6 +463,35 @@ export default function MythListClient({ items }: { items: Item[] }) {
           )}
         </DialogContent>
       </Dialog>
+
+      {/* Nickname Input Dialog */}
+      <NicknameInputDialog
+        open={nicknameDialogOpen}
+        onOpenChange={setNicknameDialogOpen}
+        score={score * 20} // Convert to 0-100 scale
+        totalQuestions={questions.length}
+        correctAnswers={score}
+        onSubmit={handleSubmitScore}
+        isSubmitting={isSubmittingScore}
+      />
+
+      {/* Score Submitted Dialog */}
+      <ScoreSubmittedDialog
+        open={scoreSubmittedDialogOpen}
+        onOpenChange={setScoreSubmittedDialogOpen}
+        nickname={submittedNickname}
+        rank={userRank}
+        stats={userStats || { bestScore: 0, averageScore: "0", totalAttempts: 0 }}
+        onViewLeaderboard={handleViewLeaderboard}
+        onTryAgain={handleTryAgain}
+      />
+
+      {/* Leaderboard Display */}
+      <LeaderboardDisplay
+        open={leaderboardOpen}
+        onOpenChange={setLeaderboardOpen}
+        initialData={leaderboardData || undefined}
+      />
 
       {/* Local styles for small animations */}
       <style jsx>{`

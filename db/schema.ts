@@ -51,3 +51,36 @@ export const stiInfo = pgTable('sti_info', {
   index('idx_sti_info_type').on(table.type),
   index('idx_sti_info_severity').on(table.severity),
 ]);
+
+// Quiz Leaderboard Table - Records each quiz attempt with results
+export const quizResults = pgTable('quiz_results', {
+  id: serial('id').primaryKey(),
+  nickname: varchar('nickname', { length: 100 }).notNull(),
+  score: integer('score').notNull(), // 0-100 score
+  totalQuestions: integer('total_questions').notNull().default(5),
+  correctAnswers: integer('correct_answers').notNull(),
+  quizType: varchar('quiz_type', { length: 50 }).notNull().default('myths'), // 'myths', 'sti', etc.
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+}, (table) => [
+  index('idx_quiz_results_nickname').on(table.nickname),
+  index('idx_quiz_results_score').on(table.score),
+  index('idx_quiz_results_quiz_type').on(table.quizType),
+  index('idx_quiz_results_created_at').on(table.createdAt),
+]);
+
+// Quiz Leaderboard Stats Table - Aggregated stats per nickname
+export const quizLeaderboardStats = pgTable('quiz_leaderboard_stats', {
+  nickname: varchar('nickname', { length: 100 }).primaryKey(),
+  bestScore: integer('best_score').notNull().default(0),
+  averageScore: numeric('average_score', { precision: 5, scale: 2 }).notNull().default('0'),
+  totalAttempts: integer('total_attempts').notNull().default(0),
+  quizType: varchar('quiz_type', { length: 50 }).notNull().default('myths'),
+  lastPlayedAt: timestamp('last_played_at').defaultNow().notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+}, (table) => [
+  index('idx_quiz_stats_best_score').on(table.bestScore),
+  index('idx_quiz_stats_total_attempts').on(table.totalAttempts),
+  index('idx_quiz_stats_quiz_type').on(table.quizType),
+]);
