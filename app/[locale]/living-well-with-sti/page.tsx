@@ -1,2 +1,2 @@
-export {default} from '../../living-well-with-sti/page';
+export {default} from "@/app/living-well-with-sti/page";
 

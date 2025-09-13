@@ -775,6 +775,7 @@
       "title": "Hidup Sihat dengan STI",
       "subtitle": "Panduan praktikal untuk kekal patuh rawatan, mengurus kesan sampingan dan menjaga kesejahteraan anda."
     },
+    "back": "Back to Living Well",
     "disclaimer": {
       "title": "Panduan Pendidikan Sahaja",
       "text": "Kandungan ini menyokong penjagaan diri tetapi bukan pengganti nasihat perubatan profesional.",
@@ -782,6 +783,7 @@
     },
     "adherence": {
       "title": "Treatment Adherence",
+      "subtitle": "Stay on track with your treatment and manage side effects effectively",
       "regimen": {
         "label": "Your regimen",
         "options": {"single": "Single‑dose", "daily": "Daily course", "multi": "Multi‑drug"}
@@ -834,14 +836,15 @@
       "tzChanged": "Your timezone changed. Future reminders will adjust to your local time.",
       "tzDismiss": "Got it"
     },
-    "tracking": {
-      "title": "Dose Tracking (Local)",
-      "desc": "Mark each dose as taken or missed. Data stays on your device unless you export it.",
-      "next": "Next:",
-      "allDone": "All done for today",
-      "actions": {"taken": "Mark taken", "missed": "Mark missed"},
-      "toast": {"missed": "Dose marked missed"}
-    },
+      "tracking": {
+        "title": "Dose Tracking (Local)",
+        "desc": "Mark each dose as taken or missed. Data stays on your device unless you export it.",
+        "next": "Next:",
+        "allDone": "All done for today",
+        "actions": {"taken": "Mark taken", "missed": "Mark missed"},
+        "status": {"pending": "Pending", "taken": "Taken", "missed": "Missed"},
+        "toast": {"missed": "Dose marked missed"}
+      },
     "catchup": {
       "title": "Missed‑Dose Catch‑up Guidance",
       "neverDoubleDose": "Never take a double dose to make up for a missed one.",
@@ -864,9 +867,11 @@
       "emptyBookmarks": "Belum ada simpanan.",
       "report": {"title": "Lapor kandungan?","desc": "Kami akan sorokkan pada peranti anda dan hantar isyarat pemantauan tanpa data peribadi.","cancel": "Batal","confirm": "Lapor"},
       "stories": {
-        "mental": {"badge": "Kesihatan mental","title": "Menjaga emosi semasa rawatan","summary": "Rutin realistik untuk urus stres, emosi dan tidur sambil kekal patuh rawatan.","steps": ["Bina rutin lembut: tidur teratur, berjalan sekejap, cahaya matahari","Guna penjejak mood ringkas; kongsikan trend dengan klinisian jika perlu","Amal pernafasan atau grounding 3-5 minit ketika cemas","Kurangkan doom-scrolling; pilih ruang yang menyokong dan positif","Hubungi orang dipercayai atau talian bantuan jika terasa terbeban"]},
-        "relationships": {"badge": "Hubungan","title": "Kekal berhubung dan disokong","summary": "Tip berkomunikasi tentang keperluan, batasan dan penjagaan dengan pasangan, rakan dan keluarga.","steps": ["Pilih masa tenang dan privasi untuk berbual, cipta suasana baik","Beritahu apa yang membantu: peringatan, check-in, atau teman senyap","Guna kenyataan ‘saya’ dan jelaskan batasan serta sokongan yang diperlukan","Jemput soalan; kongsi sumber berwibawa yang anda percayai","Raikan kejayaan kecil bersama (temu janji dipenuhi, dos diambil)"]},
-        "stigma": {"badge": "Menangani stigma","title": "Hadapi stigma dengan belas dan sokongan","summary": "Cara melindungi diri, melawan mitos dan mencari bantuan bila diperlukan.","steps": ["Ingat: STI ialah keadaan kesihatan, bukan label moral","Saring kandungan media anda; ikuti akaun yang saintifik dan menyokong","Sediakan fakta lembut untuk tangkis mitos apabila anda rasa selamat","Jika kandungan mengganggu emosi, berhenti seketika, bertenang dan cari ruang menyokong","Jika tertekan, hubungi talian bantuan tempatan atau penyedia kesihatan"]}
+        "mental": {"badge": "Kesihatan mental","title": "Menjaga emosi semasa rawatan","summary": "Rutin realistik untuk urus stres, emosi dan tidur sambil kekal patuh rawatan.","steps": ["Bina rutin lembut: tidur teratur, berjalan sekejap, cahaya matahari","Guna penjejak mood ringkas; kongsikan trend dengan klinisian jika perlu","Amal pernafasan atau grounding 3-5 minit ketika cemas","Kurangkan doom-scrolling; pilih ruang yang menyokong dan positif","Hubungi orang dipercayai atau talian bantuan jika terasa terbeban"],"sources": [{"label": "WHO: Mental Health", "url": "https://www.who.int/health-topics/mental-health"},{"label": "MOH Malaysia", "url": "https://www.moh.gov.my/"}]},
+        "relationships": {"badge": "Hubungan","title": "Kekal berhubung dan disokong","summary": "Tip berkomunikasi tentang keperluan, batasan dan penjagaan dengan pasangan, rakan dan keluarga.","steps": ["Pilih masa tenang dan privasi untuk berbual, cipta suasana baik","Beritahu apa yang membantu: peringatan, check-in, atau teman senyap","Guna kenyataan ‘saya’ dan jelaskan batasan serta sokongan yang diperlukan","Jemput soalan; kongsi sumber berwibawa yang anda percayai","Raikan kejayaan kecil bersama (temu janji dipenuhi, dos diambil)"],"sources": [{"label": "CDC: Healthy Relationships", "url": "https://www.cdc.gov/violenceprevention/healthyrelationships/index.html"},{"label": "PT Foundation (Malaysia)", "url": "https://www.ptfmalaysia.org/"}]},
+        "stigma": {"badge": "Menangani stigma","title": "Hadapi stigma dengan belas dan sokongan","summary": "Cara melindungi diri, melawan mitos dan mencari bantuan bila diperlukan.","steps": ["Ingat: STI ialah keadaan kesihatan, bukan label moral","Saring kandungan media anda; ikuti akaun yang saintifik dan menyokong","Sediakan fakta lembut untuk tangkis mitos apabila anda rasa selamat","Jika kandungan mengganggu emosi, berhenti seketika, bertenang dan cari ruang menyokong","Jika tertekan, hubungi talian bantuan tempatan atau penyedia kesihatan"],"sources": [{"label": "UNAIDS: Stigma and discrimination", "url": "https://www.unaids.org/en/topic/stigma"},{"label": "Befrienders KL", "url": "https://www.befrienders.org.my/"}]},
+        "work": {"badge": "Kerja & pengajian","title": "Seimbangkan kerja atau pengajian semasa rawatan","summary": "Cara praktikal mengurus jadual, tenaga dan privasi sambil fokus pada kesihatan.","steps": ["Rancang waktu ubat sekitar rehat atau waktu makan","Tetapkan sasaran lembut; maklumkan batasan bila perlu","Guna peringatan dan sedia kit kecil untuk keperluan","Ambil rehat ringkas untuk bergerak atau berehat","Dapatkan sokongan daripada penyelia atau kaunselor yang dipercayai jika sesuai"],"sources": [{"label": "WHO: Workplace Health", "url": "https://www.who.int/news-room/fact-sheets/detail/mental-disorders"},{"label": "SOCSO Malaysia", "url": "https://www.perkeso.gov.my/"}]},
+        "exercise": {"badge": "Senaman & kesejahteraan","title": "Senaman ringan dan rutin penjagaan diri","summary": "Gerakan mudah, rehat dan pemakanan untuk sokong pemulihan dan emosi.","steps": ["Mulakan aktiviti ringan: berjalan, regangan atau pernafasan","Minum air mencukupi dan pilih hidangan seimbang yang sesuai","Dengar tubuh anda; berehat bila perlu","Naikkan intensiti secara beransur; utamakan konsistensi","Rujuk klinisian sebelum perubahan besar"],"sources": [{"label": "CDC: Physical Activity Basics", "url": "https://www.cdc.gov/physicalactivity/basics/index.htm"},{"label": "MOH: Nutrition Guidance", "url": "https://www.moh.gov.my/"}]}
       }
     },
     "partner": {
@@ -874,6 +879,8 @@
       "subtitle": "Cara berkomunikasi dengan hormat dan melindungi satu sama lain, serta panduan seks lebih selamat khusus mengikut jenis STI.",
       "tabs": {"templates": "Templat", "safer": "Seks Lebih Selamat"},
       "templates": {
+        "title": "Communication Templates",
+        "desc": "Choose and customize a message template to help you communicate with partners.",
         "label": "Templat mesej",
         "choose": "Pilih templat",
         "kinds": {"gentle": "Lunak & menyokong", "direct": "Terus terang & jelas", "text": "Mesej teks ringkas"},
@@ -890,6 +897,8 @@
         "text": "Hai, saya baru-baru ini didapati positif STI. Saya sedang dirawat. Penting untuk menjalani ujian. Saya boleh kongsi butiran dan sumber."
       },
       "safer": {
+        "title": "Safer Sex Practices",
+        "desc": "Get specific guidance based on your STI type and find testing resources.",
         "stiLabel": "Jenis STI",
         "chooseSti": "Pilih STI",
         "types": {"chlamydia": "Klamidia", "gonorrhea": "Gonorea", "syphilis": "Sifilis", "hiv": "HIV", "herpes": "Herpes (HSV)"},
@@ -909,12 +918,13 @@
         "regionLabel": "Pilih wilayah",
         "chooseRegion": "Pilih wilayah",
         "linksTitle": "Pautan berguna",
+        "privacyTitle": "Privacy Note",
         "privacy": "Lokasi adalah pilihan; pilihan disimpan pada peranti anda.",
         "regions": {"kl": "Kuala Lumpur / Selangor", "penang": "Penang", "johor": "Johor", "sabah": "Sabah", "sarawak": "Sarawak"},
         "generic": [{"label": "MOH Malaysia – Sexual Health info", "url": "https://www.moh.gov.my/"},{"label": "PT Foundation (Testing & Support)", "url": "https://www.ptfmalaysia.org/"},{"label": "WHO Sexual Health", "url": "https://www.who.int/health-topics/sexual-health"}],
         "byRegion": {"kl": [{"label": "Klinik Kesihatan (KL) – Sexual Health", "url": "https://www.moh.gov.my/"},{"label": "PT Foundation Testing (KL)", "url": "https://www.ptfmalaysia.org/"}],"penang": [{"label": "Penang State Health – Clinics", "url": "https://jknpenang.moh.gov.my/"}],"johor": [{"label": "Johor State Health – Clinics", "url": "https://jknjohor.moh.gov.my/"}],"sabah": [{"label": "Sabah State Health – Clinics", "url": "https://jkknsabah.moh.gov.my/"}],"sarawak": [{"label": "Sarawak State Health – Clinics", "url": "https://jknsarawak.moh.gov.my/"}]}
       },
-      "legal": {"note": "Undang-undang dan tanggungjawab berbeza mengikut bidang kuasa. Ini panduan umum, bukan nasihat perundangan.","linkLabel": "Ketahui lagi"}
+      "legal": {"title": "Legal Considerations", "note": "Undang-undang dan tanggungjawab berbeza mengikut bidang kuasa. Ini panduan umum, bukan nasihat perundangan.","linkLabel": "Ketahui lagi"}
     }
   }
 }

@@ -774,6 +774,7 @@
       "title": "与性传播感染一起健康生活",
       "subtitle": "提供实用指南，帮助坚持治疗、管理副作用，并守护你的身心健康。"
     },
+    "back": "Back to Living Well",
     "disclaimer": {
       "title": "仅为教育性指导",
       "text": "本内容用于自我照护支持，不能替代专业医疗建议。",
@@ -781,6 +782,7 @@
     },
     "adherence": {
       "title": "Treatment Adherence",
+      "subtitle": "Stay on track with your treatment and manage side effects effectively",
       "regimen": {
         "label": "Your regimen",
         "options": {"single": "Single‑dose", "daily": "Daily course", "multi": "Multi‑drug"}
@@ -833,14 +835,15 @@
       "tzChanged": "Your timezone changed. Future reminders will adjust to your local time.",
       "tzDismiss": "Got it"
     },
-    "tracking": {
-      "title": "Dose Tracking (Local)",
-      "desc": "Mark each dose as taken or missed. Data stays on your device unless you export it.",
-      "next": "Next:",
-      "allDone": "All done for today",
-      "actions": {"taken": "Mark taken", "missed": "Mark missed"},
-      "toast": {"missed": "Dose marked missed"}
-    },
+      "tracking": {
+        "title": "Dose Tracking (Local)",
+        "desc": "Mark each dose as taken or missed. Data stays on your device unless you export it.",
+        "next": "Next:",
+        "allDone": "All done for today",
+        "actions": {"taken": "Mark taken", "missed": "Mark missed"},
+        "status": {"pending": "待处理", "taken": "已服用", "missed": "已错过"},
+        "toast": {"missed": "Dose marked missed"}
+      },
     "catchup": {
       "title": "Missed‑Dose Catch‑up Guidance",
       "neverDoubleDose": "Never take a double dose to make up for a missed one.",
@@ -863,9 +866,11 @@
       "emptyBookmarks": "暂时没有收藏",
       "report": {"title": "要举报此内容吗？","desc": "我们会在你的设备上将其隐藏，并发送不含个人信息的审核信号。","cancel": "取消","confirm": "举报"},
       "stories": {
-        "mental": {"badge": "心理健康","title": "治疗期间照顾你的心","summary": "用现实可行的日常安排来管理压力、情绪与睡眠，并坚持治疗。","steps": ["建立温和规律：固定作息、短时散步、晒晒太阳","使用简单心情记录；必要时与医生分享趋势","焦虑时做3-5分钟呼吸或地气练习","减少负面刷屏，选择支持性、积极的空间","感到不堪时联系信任的人或求助热线"]},
-        "relationships": {"badge": "亲密关系","title": "保持连接与获得支持","summary": "与伴侣、朋友、家人沟通需求、界限与支持的实用技巧。","steps": ["选择安静私密的时机交流，营造平和氛围","告诉对方什么方式最能支持你：提醒、关心或安静陪伴","使用“我”的表达，具体说明界限与需要","邀请对方提问，并附上可信的参考资源","共同庆祝小进步（如按时复诊、完成用药）"]},
-        "stigma": {"badge": "应对污名","title": "以慈悲之心面对污名","summary": "保护自我、反驳谣言并在需要时寻求帮助的方法。","steps": ["请记住：感染 STI 是健康状况，不是道德标签","整理你的信息来源；关注科学、友善的账号","准备温和事实，在你觉得安全时澄清误解","若内容触发不适，先暂停、稳住自己、寻找支持性空间","若情绪困扰，请联系本地热线或医疗提供者"]}
+        "mental": {"badge": "心理健康","title": "治疗期间照顾你的心","summary": "用现实可行的日常安排来管理压力、情绪与睡眠，并坚持治疗。","steps": ["建立温和规律：固定作息、短时散步、晒晒太阳","使用简单心情记录；必要时与医生分享趋势","焦虑时做3–5分钟呼吸或地气练习","减少负面刷屏，选择支持性、积极的空间","感到不堪时联系信任的人或求助热线"],"sources": [{"label": "WHO：心理健康", "url": "https://www.who.int/health-topics/mental-health"},{"label": "马来西亚卫生部（MOH）", "url": "https://www.moh.gov.my/"}]},
+        "relationships": {"badge": "亲密关系","title": "保持连接与获得支持","summary": "与伴侣、朋友、家人沟通需求、界限与支持的实用技巧。","steps": ["选择安静私密的时机交流，营造平和氛围","告诉对方什么方式最能支持你：提醒、关心或安静陪伴","使用‘我’的表达，具体说明界限与需要","邀请对方提问，并附上可信的参考资源","共同庆祝小进步（如按时复诊、完成用药）"],"sources": [{"label": "CDC：健康的亲密关系", "url": "https://www.cdc.gov/violenceprevention/healthyrelationships/index.html"},{"label": "PT Foundation（马来西亚）", "url": "https://www.ptfmalaysia.org/"}]},
+        "stigma": {"badge": "应对污名","title": "以慈悲之心面对污名","summary": "保护自我、反驳谣言并在需要时寻求帮助的方法。","steps": ["请记住：感染 STI 是健康状况，不是道德标签","整理你的信息来源；关注科学、友善的账号","准备温和事实，在你觉得安全时澄清误解","若内容触发不适，先暂停、稳住自己、寻找支持性空间","若情绪困扰，请联系本地热线或医疗提供者"],"sources": [{"label": "UNAIDS：污名与歧视", "url": "https://www.unaids.org/en/topic/stigma"},{"label": "Befrienders KL", "url": "https://www.befrienders.org.my/"}]},
+        "work": {"badge": "工作与学习","title": "在治疗期间平衡工作或学习","summary": "在关注健康的同时，实际地安排时间、精力与隐私。","steps": ["把用药时间安排在休息或用餐前后","设定温和目标；需要时沟通边界","使用提醒，并随身携带小工具包","进行短暂的活动或休息来恢复精力","在安全的情况下向可信的主管或辅导员求助"],"sources": [{"label": "WHO：工作场所与健康", "url": "https://www.who.int/news-room/fact-sheets/detail/mental-disorders"},{"label": "马来西亚社会保险机构（SOCSO）", "url": "https://www.perkeso.gov.my/"}]},
+        "exercise": {"badge": "运动与身心","title": "温和运动与自我照护","summary": "通过简易运动、休息与饮食来支持康复与情绪。","steps": ["从轻度活动开始：步行、拉伸或呼吸练习","补充水分，选择让你感觉良好的均衡饮食","倾听身体信号；需要时休息","循序渐进，重视坚持而非强度","在进行重大改变前先咨询医生"],"sources": [{"label": "CDC：运动基础", "url": "https://www.cdc.gov/physicalactivity/basics/index.htm"},{"label": "MOH：营养指南", "url": "https://www.moh.gov.my/"}]}
       }
     },
     "partner": {
@@ -873,6 +878,8 @@
       "subtitle": "用尊重的方式沟通并彼此保护，附带按 STI 类型定制的更安全性行为指南。",
       "tabs": {"templates": "消息模板", "safer": "更安全性行为"},
       "templates": {
+        "title": "Communication Templates",
+        "desc": "Choose and customize a message template to help you communicate with partners.",
         "label": "消息模板",
         "choose": "选择模板",
         "kinds": {"gentle": "温和与支持", "direct": "直接与清晰", "text": "简短短信"},
@@ -889,6 +896,8 @@
         "text": "嗨，我最近检测出某种 STI，正在治疗中。尽快去检测很重要。我可以分享详情和可靠资源。"
       },
       "safer": {
+        "title": "Safer Sex Practices",
+        "desc": "Get specific guidance based on your STI type and find testing resources.",
         "stiLabel": "STI 类型",
         "chooseSti": "选择一种 STI",
         "types": {"chlamydia": "衣原体感染", "gonorrhea": "淋病", "syphilis": "梅毒", "hiv": "HIV", "herpes": "疱疹（HSV）"},
@@ -908,6 +917,7 @@
         "regionLabel": "选择地区",
         "chooseRegion": "选择地区",
         "linksTitle": "实用链接",
+        "privacyTitle": "隐私说明",
         "privacy": "位置为可选；选择仅保存在你的设备。",
         "regions": {"kl": "吉隆坡/雪兰莪", "penang": "槟城", "johor": "柔佛", "sabah": "沙巴", "sarawak": "砂拉越"},
         "generic": [{"label": "MOH Malaysia – Sexual Health info", "url": "https://www.moh.gov.my/"},{"label": "PT Foundation (Testing & Support)", "url": "https://www.ptfmalaysia.org/"},{"label": "WHO Sexual Health", "url": "https://www.who.int/health-topics/sexual-health"}],
@@ -919,7 +929,7 @@
           "sarawak": [{"label": "Sarawak State Health – Clinics", "url": "https://jknsarawak.moh.gov.my/"}]
         }
       },
-      "legal": {"note": "各地法律与义务可能不同。本内容为一般性指导，非法律建议。","linkLabel": "了解更多"}
+      "legal": {"title": "法律注意事项", "note": "各地法律与义务可能不同。本内容为一般性指导，非法律建议。","linkLabel": "了解更多"}
     }
   }
 }

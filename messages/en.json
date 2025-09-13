@@ -783,6 +783,7 @@
       "title": "Living Well with an STI",
       "subtitle": "Practical guidance to stay on track with treatment, manage side effects, and protect your well‑being."
     },
+    "back": "Back to Living Well",
     "disclaimer": {
       "title": "Educational Guidance Only",
       "text": "This content supports self‑care but is not a substitute for professional medical advice.",
@@ -790,6 +791,7 @@
     },
     "adherence": {
       "title": "Treatment Adherence",
+      "subtitle": "Stay on track with your treatment and manage side effects effectively",
       "regimen": {
         "label": "Your regimen",
         "options": {
@@ -899,14 +901,15 @@
       "tzChanged": "Your timezone changed. Future reminders will adjust to your local time.",
       "tzDismiss": "Got it"
     },
-    "tracking": {
-      "title": "Dose Tracking (Local)",
-      "desc": "Mark each dose as taken or missed. Data stays on your device unless you export it.",
-      "next": "Next:",
-      "allDone": "All done for today",
-      "actions": {"taken": "Mark taken", "missed": "Mark missed"},
-      "toast": {"missed": "Dose marked missed"}
-    },
+      "tracking": {
+        "title": "Dose Tracking (Local)",
+        "desc": "Mark each dose as taken or missed. Data stays on your device unless you export it.",
+        "next": "Next:",
+        "allDone": "All done for today",
+        "actions": {"taken": "Mark taken", "missed": "Mark missed"},
+        "status": {"pending": "Pending", "taken": "Taken", "missed": "Missed"},
+        "toast": {"missed": "Dose marked missed"}
+      },
     "catchup": {
       "title": "Missed‑Dose Catch‑up Guidance",
       "neverDoubleDose": "Never take a double dose to make up for a missed one.",
@@ -981,6 +984,42 @@
             "Practice breath or grounding for 3–5 minutes when anxious",
             "Limit doom-scrolling; choose uplifting, supportive spaces",
             "Reach out to trusted people or helplines when feeling overwhelmed"
+          ],
+          "sources": [
+            {"label": "WHO: Mental Health", "url": "https://www.who.int/health-topics/mental-health"},
+            {"label": "MOH Malaysia", "url": "https://www.moh.gov.my/"}
+          ]
+        },
+        "work": {
+          "badge": "Work & study",
+          "title": "Balancing work or study while on treatment",
+          "summary": "Practical ways to manage schedules, energy, and privacy while you focus on health.",
+          "steps": [
+            "Plan medicine times around breaks or meals",
+            "Set gentle goals; communicate boundaries when needed",
+            "Use reminders and keep essentials in a small kit",
+            "Take short movement or rest breaks to recharge",
+            "Seek support from trusted supervisors or counselors where safe"
+          ],
+          "sources": [
+            {"label": "WHO: Workplace Health", "url": "https://www.who.int/news-room/fact-sheets/detail/mental-disorders"},
+            {"label": "SOCSO Malaysia", "url": "https://www.perkeso.gov.my/"}
+          ]
+        },
+        "exercise": {
+          "badge": "Exercise & wellness",
+          "title": "Gentle exercise and self‑care routines",
+          "summary": "Simple movement, rest, and nutrition tips that support recovery and mood.",
+          "steps": [
+            "Start with light activity: walks, stretches, or breathing",
+            "Hydrate and choose balanced meals that feel good",
+            "Listen to your body; rest when you need to",
+            "Build up slowly and celebrate consistency over intensity",
+            "Check with a clinician before major changes"
+          ],
+          "sources": [
+            {"label": "CDC: Physical Activity Basics", "url": "https://www.cdc.gov/physicalactivity/basics/index.htm"},
+            {"label": "MOH: Nutrition Guidance", "url": "https://www.moh.gov.my/"}
           ]
         },
         "relationships": {
@@ -993,6 +1032,10 @@
             "Use ‘I’ statements and be specific about boundaries and support",
             "Invite questions; point to reputable resources you trust",
             "Celebrate small wins together (appointments kept, doses taken)"
+          ],
+          "sources": [
+            {"label": "CDC: Healthy Relationships", "url": "https://www.cdc.gov/violenceprevention/healthyrelationships/index.html"},
+            {"label": "PT Foundation (Malaysia)", "url": "https://www.ptfmalaysia.org/"}
           ]
         },
         "stigma": {
@@ -1005,15 +1048,35 @@
             "Prepare gentle facts to counter myths when you feel safe",
             "If content upsets you, pause, ground, and seek supportive spaces",
             "If in distress, contact local helplines or care providers"
+          ],
+          "sources": [
+            {"label": "UNAIDS: Stigma and discrimination", "url": "https://www.unaids.org/en/topic/stigma"},
+            {"label": "Befrienders KL", "url": "https://www.befrienders.org.my/"}
           ]
         }
       }
+    },
+    "lifestyleSources": {
+      "mental": [
+        {"label": "WHO: Mental Health", "url": "https://www.who.int/health-topics/mental-health"},
+        {"label": "MOH Malaysia", "url": "https://www.moh.gov.my/"}
+      ],
+      "work": [
+        {"label": "WHO: Workplace Health", "url": "https://www.who.int/news-room/fact-sheets/detail/mental-disorders"},
+        {"label": "SOCSO Malaysia", "url": "https://www.perkeso.gov.my/"}
+      ],
+      "exercise": [
+        {"label": "CDC: Physical Activity Basics", "url": "https://www.cdc.gov/physicalactivity/basics/index.htm"},
+        {"label": "MOH: Nutrition Guidance", "url": "https://www.moh.gov.my/"}
+      ]
     },
     "partner": {
       "title": "Partner Notification & Safer Sex",
       "subtitle": "Respectful ways to communicate and protect each other, plus STI‑specific safer sex guidance.",
       "tabs": {"templates": "Templates", "safer": "Safer Sex"},
       "templates": {
+        "title": "Communication Templates",
+        "desc": "Choose and customize a message template to help you communicate with partners.",
         "label": "Message template",
         "choose": "Choose a template",
         "kinds": {"gentle": "Gentle & supportive", "direct": "Direct & clear", "text": "Short text message"},
@@ -1030,6 +1093,8 @@
         "text": "Hi, I recently tested positive for an STI. I’m getting treated. It’s important to get tested. I’m here to share details and resources."
       },
       "safer": {
+        "title": "Safer Sex Practices",
+        "desc": "Get specific guidance based on your STI type and find testing resources.",
         "stiLabel": "STI type",
         "chooseSti": "Select an STI",
         "types": {"chlamydia": "Chlamydia", "gonorrhea": "Gonorrhea", "syphilis": "Syphilis", "hiv": "HIV", "herpes": "Herpes (HSV)"},
@@ -1074,6 +1139,7 @@
         "regionLabel": "Select region",
         "chooseRegion": "Choose a region",
         "linksTitle": "Helpful links",
+        "privacyTitle": "Privacy Note",
         "privacy": "Location is optional; selections stay on your device.",
         "regions": {"kl": "Kuala Lumpur / Selangor", "penang": "Penang", "johor": "Johor", "sabah": "Sabah", "sarawak": "Sarawak"},
         "generic": [
@@ -1101,6 +1167,7 @@
         }
       },
       "legal": {
+        "title": "Legal Considerations",
         "note": "Laws and obligations vary by jurisdiction. This is general guidance, not legal advice.",
         "linkLabel": "Learn more"
       }

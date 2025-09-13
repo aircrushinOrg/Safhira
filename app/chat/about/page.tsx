@@ -62,19 +62,6 @@ export default function ChatAboutPage() {
             className="text-center mb-16 relative"
             variants={itemVariants}
           >
-            <div className="inline-flex items-center gap-3 mb-6 p-3 rounded-full bg-primary/5 border border-primary/10">
-              <motion.div
-                variants={floatingVariants}
-                initial="initial"
-                animate="animate"
-                className="w-8 h-8 text-primary"
-              >
-                <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
-                  <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM21 9V7L15 1L9 7V9C9 10.1 9.9 11 11 11V13C10.4 13 9.9 13.2 9.5 13.5L7.1 15.9C6.8 16.2 6.8 16.7 7.1 17C7.4 17.3 7.9 17.3 8.2 17L10.6 14.6C10.8 14.4 11.1 14.3 11.4 14.3H12.6C12.9 14.3 13.2 14.4 13.4 14.6L15.8 17C16.1 17.3 16.6 17.3 16.9 17C17.2 16.7 17.2 16.2 16.9 15.9L14.5 13.5C14.1 13.2 13.6 13 13 13V11C14.1 11 15 10.1 15 9Z"/>
-                </svg>
-              </motion.div>
-              <span className="text-sm font-medium text-primary">{t('about.hero.badge')}</span>
-            </div>
             <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-teal-600 to-teal-400 bg-clip-text text-transparent">
               {t('about.hero.title')}
             </h1>
