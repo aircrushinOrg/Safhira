@@ -5,8 +5,11 @@ export default createMiddleware({
   locales: ['en', 'zh', 'ms'],
   // Default locale
   defaultLocale: 'en',
-  // Always prefix locale in paths
-  localePrefix: 'always'
+  // Only prefix non-default locales
+  localePrefix: 'as-needed',
+  // !remove this to enable browser location language
+  // Disable automatic locale detection from browser language
+  localeDetection: false
 });
 
 // Skip paths that should not be internationalized
