@@ -8,10 +8,9 @@ import {Button} from "../../components/ui/button";
 import {Label} from "../../components/ui/label";
 import {Input} from "../../components/ui/input";
 import {Checkbox} from "../../components/ui/checkbox";
-import {Badge} from "../../components/ui/badge";
 import {Switch} from "../../components/ui/switch";
 import {Separator} from "../../components/ui/separator";
-import {AlertTriangle, Bell, Calendar, CheckCircle2, Clock, Pill, ShieldAlert, ArrowLeft} from "lucide-react";
+import {AlertTriangle, Bell, CheckCircle2, ShieldAlert, ArrowLeft, Pill, Clock} from "lucide-react";
 import {Toaster} from "../../components/ui/sonner";
 import {toast} from "sonner";
 import {motion, useReducedMotion} from "framer-motion";
@@ -67,7 +66,7 @@ export default function TreatmentAdherencePage() {
   const [regimen, setRegimen] = useState<RegimenType>("daily");
   const [settings, setSettings] = useState<ReminderSettings>({
     enabled: false,
-    times: ["09:00"],
+    times: [],
     days: [1, 2, 3, 4, 5, 6, 0],
     snoozeMinutes: null,
     tz: Intl.DateTimeFormat().resolvedOptions().timeZone
@@ -156,18 +155,7 @@ export default function TreatmentAdherencePage() {
     }
   };
 
-  const nextDose = useMemo(() => {
-    const key = getTodayKey();
-    const today = tracking[key] || [];
-    const pending = today.filter((d) => d.status === "pending");
-    if (pending.length === 0) return null;
-    const now = new Date();
-    const upcoming = pending
-      .map((d) => ({...d, dt: localTimeToDateToday(d.time)}))
-      .filter((x) => x.dt >= now)
-      .sort((a, b) => a.dt.getTime() - b.dt.getTime());
-    return upcoming[0] || null;
-  }, [tracking]);
+  // Dose tracking UI removed — next dose computation no longer needed
 
   const onTzBannerDismiss = () => {
     setTzChanged(false);
@@ -176,7 +164,7 @@ export default function TreatmentAdherencePage() {
 
   const clearAll = () => {
     setTracking({});
-    setSettings({enabled: false, times: ["09:00"], days: [1, 2, 3, 4, 5, 6, 0], snoozeMinutes: null, tz: Intl.DateTimeFormat().resolvedOptions().timeZone});
+    setSettings({enabled: false, times: [], days: [1, 2, 3, 4, 5, 6, 0], snoozeMinutes: null, tz: Intl.DateTimeFormat().resolvedOptions().timeZone});
     setRegimen("daily");
     try {
       localStorage.removeItem(STORAGE_KEYS.settings);
@@ -373,15 +361,13 @@ export default function TreatmentAdherencePage() {
                 </div>
 
                 <Label htmlFor="regimen" className="text-sm">{t("adherence.regimen.label")}</Label>
-                <div id="regimen" className="mt-2 grid grid-cols-3 gap-2" role="radiogroup">
+                <div id="regimen" className="mt-2 grid grid-cols-3 gap-2">
                   {(["single","daily","multi"] as RegimenType[]).map((key) => (
                     <button
                       key={key}
                       type="button"
                       onClick={() => setRegimen(key)}
-                      aria-checked={regimen===key ? "true" : "false"}
-                      role="radio"
-                      className={`px-3 py-2 rounded-md border text-sm ${regimen===key?"border-teal-500 bg-teal-50 dark:bg-teal-900/20":"border-gray-200 dark:border-gray-700"}`}
+                      className={`px-3 py-2 rounded-md border text-sm transition-colors ${regimen===key?"border-teal-500 bg-teal-50 dark:bg-teal-900/20 text-teal-700 dark:text-teal-300":"border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600"}`}
                     >
                       {t(`adherence.regimen.options.${key}`)}
                     </button>
@@ -493,7 +479,7 @@ export default function TreatmentAdherencePage() {
                   </div>
                 </div>
 
-                <fieldset aria-disabled={!settings.enabled ? "true" : "false"} className={!settings.enabled?"opacity-50 pointer-events-none":""}>
+                <fieldset disabled={!settings.enabled} className={!settings.enabled?"opacity-50 pointer-events-none":""}>
                   <div className="grid gap-4">
                     <div>
                       <Label className="text-sm">{t("reminders.times")}</Label>
@@ -551,54 +537,7 @@ export default function TreatmentAdherencePage() {
               </Card>
             </motion.div>
 
-            {/* Dose Tracking */}
-            <motion.div
-              initial={{opacity: 0, y: reduceMotion ? 0 : 10}}
-              whileInView={{opacity: 1, y: 0}}
-              viewport={{once: true, amount: 0.2}}
-              transition={{duration: reduceMotion ? 0 : 0.35, delay: reduceMotion ? 0 : 0.15}}
-            >
-              <Card className="p-4 md:p-6">
-                <div className="flex items-center gap-2 mb-4">
-                  <Calendar className="text-emerald-600" />
-                  <h2 className="font-semibold text-lg">{t("tracking.title")}</h2>
-                </div>
-                <p className="text-sm text-gray-700 dark:text-gray-300 mb-3">{t("tracking.desc")}</p>
-
-                <div className="flex items-center gap-2 mb-3">
-                  <Badge variant="outline"><Pill size={14} className="mr-1 inline" /> {t(`adherence.regimen.options.${regimen}`)}</Badge>
-                  {nextDose ? (
-                    <Badge className="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100">
-                      <Clock size={14} className="mr-1 inline" /> {t("tracking.next")} {nextDose.time}
-                    </Badge>
-                  ) : (
-                    <Badge variant="secondary">{t("tracking.allDone")}</Badge>
-                  )}
-                </div>
-
-                <ul className="space-y-2 mb-4">
-                  {(tracking[getTodayKey()] || []).map((dose) => (
-                    <li key={dose.time} className="flex items-center justify-between rounded-md border p-2">
-                      <div className="flex items-center gap-2">
-                        <Clock size={16} />
-                        <span className="font-medium">{dose.time}</span>
-                        <span className="text-xs text-gray-500">{t(`tracking.status.${dose.status}`)}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Button size="sm" variant="outline" onClick={() => markDose(dose.time, "taken")}>{t("tracking.actions.taken")}</Button>
-                        <Button size="sm" variant="outline" onClick={() => markDose(dose.time, "missed")}>{t("tracking.actions.missed")}</Button>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="rounded-md bg-slate-50 dark:bg-slate-900/40 border p-3">
-                  <h3 className="text-sm font-medium mb-1">{t("catchup.title")}</h3>
-                  <p className="text-xs text-gray-700 dark:text-gray-300 leading-relaxed">{t(`catchup.${regimen}.details`)}</p>
-                  <p className="text-xs text-gray-700 dark:text-gray-300 mt-2"><strong>{t("catchup.neverDoubleDose")}</strong></p>
-                </div>
-              </Card>
-            </motion.div>
+            {/* Dose Tracking UI removed per request */}
 
             {/* Governance */}
             <motion.div

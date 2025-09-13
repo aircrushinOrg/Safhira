@@ -943,7 +943,7 @@
       }
     },
     "reminders": {
-      "title": "Optional Reminders",
+      "title": "Dose Reminders",
       "desc": "Keep reminders local to your device. You can enable/disable anytime.",
       "enable": "Enable",
       "legend": "Reminder settings",

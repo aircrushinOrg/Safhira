@@ -66,7 +66,7 @@ export default function LivingWellWithSTIPage() {
               >
                 <div className="flex items-center justify-center lg:justify-start gap-3 mb-4">
                   <Heart className="text-rose-600" size={32} />
-                  <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100">
+                  <h1 className="text-3xl md:text-4xl font-semibold text-gray-900 dark:text-gray-100">
                     {t("hero.title")}
                   </h1>
                 </div>
@@ -105,7 +105,7 @@ export default function LivingWellWithSTIPage() {
             </div>
           </motion.header>
 
-          <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
+          <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
             {sections.map((section, index) => {
               const Icon = section.icon;
               return (
@@ -118,33 +118,44 @@ export default function LivingWellWithSTIPage() {
                     duration: reduceMotion ? 0 : 0.4,
                     delay: reduceMotion ? 0 : index * 0.1
                   }}
+                  className="h-full"
                 >
-                  <Card className={`p-6 hover:shadow-lg transition-shadow duration-200 ${section.bgColor} ${section.borderColor} border-2 h-full flex flex-col`}>
-                    <div className="flex flex-col items-center text-center">
-                      <div className={`${section.color} bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm mb-4`}>
-                        <Icon size={32} />
+                  <Card className={`group p-8 hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 ${section.bgColor} ${section.borderColor} border-2 h-full flex flex-col relative overflow-hidden`}>
+                    {/* Subtle gradient overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent dark:from-white/5 pointer-events-none" />
+                    
+                    <div className="relative flex flex-col items-center text-center h-full">
+                      {/* Enhanced icon container */}
+                      <div className={`${section.color} bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-lg mb-6 group-hover:shadow-xl transition-shadow duration-300 ring-1 ring-white/20`}>
+                        <Icon size={36} className="group-hover:scale-110 transition-transform duration-300" />
                       </div>
 
-                      <div className="flex-1">
-                        <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-3">
-                          {section.title}
-                        </h3>
-                        <p className="text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
-                          {section.description}
-                        </p>
+                      {/* Content container with flex-grow to push button to bottom */}
+                      <div className="flex-1 flex flex-col justify-between">
+                        <div>
+                          <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4 leading-tight">
+                            {section.title}
+                          </h3>
+                          <p className="text-gray-700 dark:text-gray-300 mb-8 leading-relaxed text-sm">
+                            {section.description}
+                          </p>
+                        </div>
                         
-                        <Link href={section.href}>
-                          <Button 
-                            className="group inline-flex items-center gap-2"
-                            size="sm"
-                          >
-                            {tRoot("STIs.learnMore")}
-                            <ArrowRight 
-                              size={16} 
-                              className="group-hover:translate-x-1 transition-transform duration-200" 
-                            />
-                          </Button>
-                        </Link>
+                        {/* Button container - this will be at the bottom of each card */}
+                        <div className="mt-auto">
+                          <Link href={section.href}>
+                            <Button 
+                              className="group/btn inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 dark:bg-teal-500 dark:hover:bg-teal-600 text-white font-medium px-6 py-4 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5"
+                              size="sm"
+                            >
+                              {tRoot("STIs.learnMore")}
+                              <ArrowRight 
+                                size={16} 
+                                className="group-hover/btn:translate-x-1 transition-transform duration-300" 
+                              />
+                            </Button>
+                          </Link>
+                        </div>
                       </div>
                     </div>
                   </Card>

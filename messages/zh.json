@@ -23,6 +23,7 @@
         "title": "你并不孤单",
         "text": "对性健康感到不确定或害怕是正常的——很多人都是如此。但你不必独自面对。"
       },
+    
       "card2": {
         "title": "我们一直在这里",
         "text": "Safhira 是一个安全、友善、无评判的空间，你可以放心提问并获得支持。"
@@ -946,6 +947,20 @@
         "work": {"badge": "工作与学习","title": "在治疗期间平衡工作或学习","summary": "在关注健康的同时，实际地安排时间、精力与隐私。","steps": ["把用药时间安排在休息或用餐前后","设定温和目标；需要时沟通边界","使用提醒，并随身携带小工具包","进行短暂的活动或休息来恢复精力","在安全的情况下向可信的主管或辅导员求助"],"sources": [{"label": "WHO：工作场所与健康", "url": "https://www.who.int/news-room/fact-sheets/detail/mental-disorders"},{"label": "马来西亚社会保险机构（SOCSO）", "url": "https://www.perkeso.gov.my/"}]},
         "exercise": {"badge": "运动与身心","title": "温和运动与自我照护","summary": "通过简易运动、休息与饮食来支持康复与情绪。","steps": ["从轻度活动开始：步行、拉伸或呼吸练习","补充水分，选择让你感觉良好的均衡饮食","倾听身体信号；需要时休息","循序渐进，重视坚持而非强度","在进行重大改变前先咨询医生"],"sources": [{"label": "CDC：运动基础", "url": "https://www.cdc.gov/physicalactivity/basics/index.htm"},{"label": "MOH：营养指南", "url": "https://www.moh.gov.my/"}]}
       }
+    },
+    "lifestyleSources": {
+      "mental": [
+        {"label": "世卫组织：心理健康", "url": "https://www.who.int/health-topics/mental-health"},
+        {"label": "马来西亚卫生部", "url": "https://www.moh.gov.my/"}
+      ],
+      "work": [
+        {"label": "世卫组织：工作场所健康", "url": "https://www.who.int/news-room/fact-sheets/detail/mental-disorders"},
+        {"label": "马来西亚社会保障机构（SOCSO）", "url": "https://www.perkeso.gov.my/"}
+      ],
+      "exercise": [
+        {"label": "美国疾控中心：身体活动基础", "url": "https://www.cdc.gov/physicalactivity/basics/index.htm"},
+        {"label": "马来西亚卫生部：营养指南", "url": "https://www.moh.gov.my/"}
+      ]
     },
     "partner": {
       "title": "伴侣告知与更安全性行为",
