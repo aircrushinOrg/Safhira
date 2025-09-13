@@ -59,6 +59,10 @@
         "description": "Uji pengetahuan anda dan betulkan salah faham umum tentang kesihatan seksual.",
         "button": "Mulakan Kuiz"
       },
+      "livingWell": {
+        "title": "Hidup Sihat dengan STI",
+        "description": "Panduan praktikal untuk patuh rawatan, tip kesan sampingan, dan sokongan kesejahteraan."
+      },
       "mapper": {
         "title": "Pemetaan Klinik",
         "description": "Cari klinik dan pusat ujian kesihatan seksual berdekatan beserta penilaian privasi."

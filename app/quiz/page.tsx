@@ -7,6 +7,17 @@ export default async function QuizPage() {
 
   return (
     <div className="md:py-10 relative isolate overflow-hidden bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
+      {/* Subtle grid background */}
+      <div 
+        className="absolute inset-0 opacity-[0.10] dark:opacity-[0.2]"
+        style={{
+          backgroundImage: `
+            linear-gradient(rgba(0,0,0,0.15) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0,0,0,0.15) 1px, transparent 1px)
+          `,
+          backgroundSize: '24px 24px'
+        }}
+      />
 
       <section className="relative pt-10 pb-8 md:pt-12 md:pb-10 px-4">
         <div className="container mx-auto max-w-6xl">

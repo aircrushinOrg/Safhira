@@ -30,13 +30,16 @@ export default function LeaderboardDisplay({
   const [leaderboardData, setLeaderboardData] = useState<LeaderboardResponse | null>(initialData || null);
   const [loading, setLoading] = useState(!initialData);
   const [sortBy, setSortBy] = useState<SortBy>("bestScore");
+  const [page, setPage] = useState(1);
+  const pageSize = 10;
 
   const fetchLeaderboard = useCallback(async () => {
     try {
       setLoading(true);
       const data = await getLeaderboard({
         quizType: "myths",
-        limit: 50,
+        limit: pageSize,
+        offset: (page - 1) * pageSize,
         sortBy,
         sortOrder: "desc",
       });
@@ -46,13 +49,18 @@ export default function LeaderboardDisplay({
     } finally {
       setLoading(false);
     }
-  }, [sortBy]);
+  }, [sortBy, page]);
 
   useEffect(() => {
-    if (open && !initialData) {
+    if (open) {
       fetchLeaderboard();
     }
-  }, [open, initialData, fetchLeaderboard]);
+  }, [open, page, sortBy, fetchLeaderboard]);
+
+  // Reset to page 1 when sort changes
+  useEffect(() => {
+    setPage(1);
+  }, [sortBy]);
 
   const getRankIcon = (rank: number) => {
     if (rank === 1) return "🥇";
@@ -182,6 +190,36 @@ export default function LeaderboardDisplay({
                   <div className="text-center py-8">
                     <p className="text-muted-foreground">No scores submitted yet</p>
                     <p className="text-sm text-muted-foreground mt-1">Be the first to make it to the leaderboard!</p>
+                  </div>
+                )}
+                {/* Pagination */}
+                {leaderboardData && leaderboardData.totalEntries > 0 && (
+                  <div className="flex items-center justify-between pt-2">
+                    <p className="text-sm text-muted-foreground">
+                      Showing {(page - 1) * pageSize + 1}
+                      -{Math.min(page * pageSize, leaderboardData.totalEntries)} of {leaderboardData.totalEntries}
+                    </p>
+                    <div className="flex items-center gap-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setPage((p) => Math.max(1, p - 1))}
+                        disabled={page === 1 || loading}
+                      >
+                        Prev
+                      </Button>
+                      <span className="text-sm text-muted-foreground">
+                        Page {page} of {Math.max(1, Math.ceil(leaderboardData.totalEntries / pageSize))}
+                      </span>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setPage((p) => p + 1)}
+                        disabled={page >= Math.ceil(leaderboardData.totalEntries / pageSize) || loading}
+                      >
+                        Next
+                      </Button>
+                    </div>
                   </div>
                 )}
               </div>

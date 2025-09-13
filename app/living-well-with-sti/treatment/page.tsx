@@ -193,6 +193,121 @@ export default function TreatmentAdherencePage() {
     });
   };
 
+  // Simple mobile detection
+  const isMobile = () => {
+    if (typeof navigator === 'undefined') return false;
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  };
+
+  // Compute next occurrence for a given HH:mm within selected days
+  const nextOccurrence = (time: string, days: number[]) => {
+    const [hh, mm] = time.split(":").map(Number);
+    const now = new Date();
+    for (let i = 0; i < 14; i++) { // search up to 2 weeks ahead
+      const d = new Date(now);
+      d.setDate(now.getDate() + i);
+      d.setHours(hh, mm, 0, 0);
+      const dow = d.getDay();
+      if (days.includes(dow) && d > now) return d;
+    }
+    const d = new Date();
+    d.setHours(hh, mm, 0, 0);
+    return d;
+  };
+
+  // Format to ICS local (floating) time: YYYYMMDDTHHMMSS
+  const icsLocal = (d: Date) => {
+    const pad = (n: number) => String(n).padStart(2, '0');
+    return (
+      d.getFullYear().toString() +
+      pad(d.getMonth() + 1) +
+      pad(d.getDate()) +
+      'T' +
+      pad(d.getHours()) +
+      pad(d.getMinutes()) +
+      pad(d.getSeconds())
+    );
+  };
+
+  const icsUtc = (d: Date) => {
+    const pad = (n: number) => String(n).padStart(2, '0');
+    return (
+      d.getUTCFullYear().toString() +
+      pad(d.getUTCMonth() + 1) +
+      pad(d.getUTCDate()) +
+      'T' +
+      pad(d.getUTCHours()) +
+      pad(d.getUTCMinutes()) +
+      pad(d.getUTCSeconds()) +
+      'Z'
+    );
+  };
+
+  const byDayParam = (days: number[]) => {
+    const map: Record<number, string> = {0: 'SU', 1: 'MO', 2: 'TU', 3: 'WE', 4: 'TH', 5: 'FR', 6: 'SA'};
+    const ordered = [1,2,3,4,5,6,0];
+    const selected = ordered.filter((d) => days.includes(d)).map((d) => map[d]);
+    if (selected.length === 7) return '';
+    if (selected.length === 0) return '';
+    return `;BYDAY=${selected.join(',')}`;
+  };
+
+  const buildICS = (times: string[], days: number[]) => {
+    const now = new Date();
+    const dtstamp = icsUtc(now);
+    const byday = byDayParam(days);
+    const freq = days.length === 7 ? 'DAILY' : 'WEEKLY';
+    const lines: string[] = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//Safhira//Medication Reminders//EN',
+      'CALSCALE:GREGORIAN',
+      'METHOD:PUBLISH',
+    ];
+    times.forEach((time) => {
+      const start = nextOccurrence(time, days);
+      const uid = `${start.getTime()}-${time.replace(':','')}-${Math.random().toString(36).slice(2)}@safhira`;
+      const dtstart = icsLocal(start);
+      lines.push(
+        'BEGIN:VEVENT',
+        `UID:${uid}`,
+        `DTSTAMP:${dtstamp}`,
+        `DTSTART:${dtstart}`,
+        'DURATION:PT15M',
+        `RRULE:FREQ=${freq}${byday}`,
+        'SUMMARY:Medication Reminder',
+        'DESCRIPTION:Time to take your medication.',
+        'END:VEVENT'
+      );
+    });
+    lines.push('END:VCALENDAR');
+    return lines.join('\r\n');
+  };
+
+  const downloadICS = (filename: string, content: string) => {
+    try {
+      const blob = new Blob([content], { type: 'text/calendar' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 2000);
+      toast.success('Calendar file created. Tap to add it.');
+    } catch (e) {
+      // no-op
+    }
+  };
+
+  const addTimesToCalendar = (times: string[]) => {
+    if (!isMobile()) return;
+    const ics = buildICS(times, settings.days);
+    const name = times.length > 1 ? 'sti-reminders.ics' : `sti-reminder-${times[0].replace(':','')}.ics`;
+    downloadICS(name, ics);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <Toaster richColors position="top-center" />
@@ -364,7 +479,17 @@ export default function TreatmentAdherencePage() {
                   <p className="text-sm text-gray-700 dark:text-gray-300">{t("reminders.desc")}</p>
                   <div className="flex items-center gap-2">
                     <Label htmlFor="reminders-switch" className="text-sm">{t("reminders.enable")}</Label>
-                    <Switch id="reminders-switch" checked={settings.enabled} onCheckedChange={(v) => setSettings((s) => ({...s, enabled: v}))} />
+                    <Switch
+                      id="reminders-switch"
+                      checked={settings.enabled}
+                      onCheckedChange={(v) => {
+                        setSettings((s) => ({...s, enabled: v}));
+                        if (v && isMobile()) {
+                          // Offer to add current times to calendar on mobile
+                          addTimesToCalendar(settings.times);
+                        }
+                      }}
+                    />
                   </div>
                 </div>
 
@@ -382,6 +507,12 @@ export default function TreatmentAdherencePage() {
                                 const v = e.target.value;
                                 setSettings((s) => ({...s, times: s.times.map((t, i) => (i === idx ? v : t))}));
                               }}
+                              onBlur={(e) => {
+                                const v = e.target.value;
+                                if (settings.enabled && isMobile()) {
+                                  addTimesToCalendar([v]);
+                                }
+                              }}
                               className="w-28"
                             />
                             <Button variant="outline" size="icon"
@@ -389,7 +520,18 @@ export default function TreatmentAdherencePage() {
                             </Button>
                           </div>
                         ))}
-                        <Button variant="outline" size="sm" onClick={() => setSettings((s) => ({...s, times: [...s.times, "18:00"]}))}>{t("reminders.addTime")}</Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => {
+                            setSettings((s) => ({...s, times: [...s.times, "18:00"]}));
+                            if (settings.enabled && isMobile()) {
+                              addTimesToCalendar(["18:00"]);
+                            }
+                          }}
+                        >
+                          {t("reminders.addTime")}
+                        </Button>
                       </div>
                     </div>
 

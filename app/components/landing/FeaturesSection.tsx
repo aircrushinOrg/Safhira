@@ -14,7 +14,8 @@ import {
   MapPin, 
   Monitor, 
   ArrowRight,
-  Lock
+  Lock,
+  Calendar
 } from 'lucide-react';
 
 export function FeaturesSection() {
@@ -68,6 +69,19 @@ export function FeaturesSection() {
       buttonText: t('features.chatbot.button')
     },
     {
+      id: 'living-well',
+      title: t('features.livingWell.title'),
+      description: t('features.livingWell.description'),
+      icon: Calendar,
+      color: 'from-emerald-500 to-emerald-600 dark:from-emerald-400 dark:to-emerald-500',
+      bgColor: 'bg-emerald-50 dark:bg-emerald-900/20',
+      borderColor: 'border-emerald-200 dark:border-emerald-800',
+      textColor: 'text-emerald-700 dark:text-emerald-300',
+      iconColor: 'text-emerald-500',
+      action: () => router.push('/living-well-with-sti'),
+      buttonText: t('features.learnMore')
+    },
+    {
       id: 'education',
       title: t('features.education.title'),
       description: t('features.education.description'),
@@ -91,7 +105,7 @@ export function FeaturesSection() {
       textColor: 'text-pink-700 dark:text-pink-300',
       iconColor: 'text-pink-500',
       action: () => router.push('/quiz'),
-      buttonText: t('features.learnMore')
+      buttonText: t('features.quiz.button')
     }
   ];
 

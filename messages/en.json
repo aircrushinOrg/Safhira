@@ -57,7 +57,11 @@
       "quiz": {
         "title": "Myth vs Truth Quiz",
         "description": "Test your knowledge and debunk common misconceptions about sexual health.",
-        "button": "Take Quiz"
+        "button": "Take Challenge"
+      },
+      "livingWell": {
+        "title": "Living Well with STIs",
+        "description": "Practical guidance for treatment adherence, side‑effect tips, and well‑being support."
       },
       "mapper": {
         "title": "Clinic Mapper",
@@ -849,7 +853,7 @@
   },
   "LivingWell": {
     "hero": {
-      "title": "Living Well with an STI",
+      "title": "Living Well with STIs",
       "subtitle": "Practical guidance to stay on track with treatment, manage side effects, and protect your well‑being."
     },
     "back": "Back to Living Well",

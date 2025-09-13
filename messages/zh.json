@@ -5,7 +5,7 @@
   "Landing": {
     "hero": {
       "titlePrefix": "你的",
-      "titleHighlight": "性健康安心空间",
+      "titleHighlight": "性健康安全港湾",
       "subtitle": "我们让关于关系与生殖健康的对话变得自然、友善、无污名。",
       "learn": "了解性传播感染",
       "chat": "与 AI 聊天",
@@ -24,7 +24,7 @@
         "text": "对性健康感到不确定或害怕是正常的——很多人都是如此。但你不必独自面对。"
       },
       "card2": {
-        "title": "我们在这里支持你",
+        "title": "我们一直在这里",
         "text": "Safhira 是一个安全、友善、无评判的空间，你可以放心提问并获得支持。"
       },
       "card3": {
@@ -56,7 +56,12 @@
       },
       "quiz": {
         "title": "谣言与真相测验",
-        "description": "检验你的知识，澄清关于性健康的常见误解。"
+        "description": "检验你的知识，澄清关于性健康的常见误解。",
+        "button": "开始挑战"
+      },
+      "livingWell": {
+        "title": "与 STI 健康相处",
+        "description": "关于治疗依从性、处理副作用与身心支持的实用指南。"
       },
       "mapper": {
         "title": "诊所地图",

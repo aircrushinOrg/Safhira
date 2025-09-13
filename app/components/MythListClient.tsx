@@ -243,28 +243,35 @@ export default function MythListClient({ items }: { items: Item[] }) {
 
       {/* Info Dialog for single myth */}
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="sm:max-w-xl">
-          <DialogHeader>
-            <div className="flex items-center gap-3">
-              <Badge variant="secondary">{t('myth')}</Badge>
-              <DialogTitle className="text-balance text-xl font-semibold">
-                {selected?.text || t('myth')}
-              </DialogTitle>
+        <DialogContent className="sm:max-w-lg">
+          <DialogHeader className="space-y-3">
+            <div className="flex items-center gap-2">
+              <Badge variant="outline" className="text-red-600 border-red-200 dark:text-red-400 dark:border-red-800">
+                {t('myth')}
+              </Badge>
             </div>
-            <DialogDescription>
+            <DialogTitle className="text-lg font-medium text-left">
+              {selected?.text || t('myth')}
+            </DialogTitle>
+            <DialogDescription className="text-sm text-left">
               {t('dialog.closeHint')}
             </DialogDescription>
           </DialogHeader>
-          <div className="rounded-xl border bg-muted/20 p-4 shadow-sm">
-            <div className="mb-2 flex items-center gap-2">
-              <Badge>{t('fact')}</Badge>
-              <span className="text-sm font-medium text-muted-foreground">
+          
+          <div className="mt-4 space-y-3">
+            <div className="flex items-center gap-2">
+              <Badge className="bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400">
+                {t('fact')}
+              </Badge>
+              <span className="text-sm text-muted-foreground">
                 {t('truthLabel')}
               </span>
             </div>
-            <p className="leading-relaxed text-foreground">
-              {selected?.fact || t('factUnavailable')}
-            </p>
+            <div className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-4 border-l-4 border-green-500">
+              <p className="text-sm leading-relaxed">
+                {selected?.fact || t('factUnavailable')}
+              </p>
+            </div>
           </div>
         </DialogContent>
       </Dialog>
