@@ -937,6 +937,173 @@
     },
     "privacy": {
       "clearLocal": "Clear local data"
+    },
+    "lifestyle": {
+      "title": "Positive-Living Lifestyle",
+      "subtitle": "Medically reviewed stories and tips on living well with STIs (mental health, relationships, exercise, diet, coping with stigma).",
+      "tabs": {"all": "All", "bookmarks": "Bookmarks"},
+      "lastReviewed": "Last reviewed",
+      "actions": {
+        "view": "View",
+        "bookmark": "Bookmark",
+        "bookmarked": "Bookmarked",
+        "report": "Report",
+        "close": "Close",
+        "steps": "Actionable steps"
+      },
+      "toast": {
+        "bookmarked": "Saved for offline reading",
+        "unbookmarked": "Removed from bookmarks",
+        "reported": "Reported. Hidden locally."
+      },
+      "contentWarning": {
+        "short": "Sensitive",
+        "title": "Content warning",
+        "desc": "This story discusses sensitive topics that may be distressing for some readers. Support resources are included.",
+        "continue": "Continue"
+      },
+      "resources": {"title": "Support & resources"},
+      "emptyBookmarks": "No bookmarks yet.",
+      "report": {
+        "title": "Report content?",
+        "desc": "We’ll hide it on your device and send a moderation signal without personal data.",
+        "cancel": "Cancel",
+        "confirm": "Report"
+      },
+      "stories": {
+        "mental": {
+          "badge": "Mental health",
+          "title": "Caring for your mind while on treatment",
+          "summary": "Realistic routines to manage stress, mood, and sleep while staying on treatment.",
+          "steps": [
+            "Set gentle routines: regular sleep, short walks, sunlight",
+            "Use a simple mood tracker; share trends with a clinician if needed",
+            "Practice breath or grounding for 3–5 minutes when anxious",
+            "Limit doom-scrolling; choose uplifting, supportive spaces",
+            "Reach out to trusted people or helplines when feeling overwhelmed"
+          ]
+        },
+        "relationships": {
+          "badge": "Relationships",
+          "title": "Staying connected and supported in relationships",
+          "summary": "Tips for communicating needs, boundaries, and care with partners, friends, and family.",
+          "steps": [
+            "Choose calm, private moments for important talks; set the tone",
+            "Share what helps: reminders, check-ins, or quiet company",
+            "Use ‘I’ statements and be specific about boundaries and support",
+            "Invite questions; point to reputable resources you trust",
+            "Celebrate small wins together (appointments kept, doses taken)"
+          ]
+        },
+        "stigma": {
+          "badge": "Coping with stigma",
+          "title": "Handling stigma with compassion and support",
+          "summary": "Ways to protect your well-being, challenge myths, and seek help when needed.",
+          "steps": [
+            "Remember: having an STI is a health condition, not a moral label",
+            "Curate your feeds; follow science-based, affirming accounts",
+            "Prepare gentle facts to counter myths when you feel safe",
+            "If content upsets you, pause, ground, and seek supportive spaces",
+            "If in distress, contact local helplines or care providers"
+          ]
+        }
+      }
+    },
+    "partner": {
+      "title": "Partner Notification & Safer Sex",
+      "subtitle": "Respectful ways to communicate and protect each other, plus STI‑specific safer sex guidance.",
+      "tabs": {"templates": "Templates", "safer": "Safer Sex"},
+      "templates": {
+        "label": "Message template",
+        "choose": "Choose a template",
+        "kinds": {"gentle": "Gentle & supportive", "direct": "Direct & clear", "text": "Short text message"},
+        "note": "Your message stays local and is not saved.",
+        "messageLabel": "Customize your message",
+        "help": "Feel free to edit the template. Nothing is stored after you leave this page.",
+        "copy": "Copy",
+        "copyAria": "Copy message to clipboard",
+        "copied": "Message copied (not saved)",
+        "copyError": "Could not copy to clipboard",
+        "reset": "Reset to template",
+        "gentle": "I care about you and want to be honest. I was diagnosed with an STI and I’m getting the right treatment. We can talk about how to keep each other safe. I have resources we can read together if you’d like.",
+        "direct": "I need to let you know I tested positive for an STI. I’m following medical guidance. Let’s plan for testing and use protection as recommended.",
+        "text": "Hi, I recently tested positive for an STI. I’m getting treated. It’s important to get tested. I’m here to share details and resources."
+      },
+      "safer": {
+        "stiLabel": "STI type",
+        "chooseSti": "Select an STI",
+        "types": {"chlamydia": "Chlamydia", "gonorrhea": "Gonorrhea", "syphilis": "Syphilis", "hiv": "HIV", "herpes": "Herpes (HSV)"},
+        "checklistTitle": "Safer sex checklist",
+        "uuNote": "HIV: When viral load is undetectable (U=U), sexual transmission does not occur. Keep adherent to treatment and follow clinician advice.",
+        "checklists": {
+          "chlamydia": [
+            "Use condoms or dental dams correctly for all sex",
+            "Avoid sex until 7 days after single‑dose or completing a course",
+            "Retest in 3 months or as advised",
+            "Notify recent partners respectfully; share testing info"
+          ],
+          "gonorrhea": [
+            "Use condoms/dental dams for oral, vaginal, and anal sex",
+            "Avoid sex until treatment is completed and symptoms resolve",
+            "Retest in 3 months or sooner if advised",
+            "Seek guidance if symptoms persist"
+          ],
+          "syphilis": [
+            "Use condoms/dental dams; avoid any contact with sores",
+            "Follow treatment windows before resuming sex per clinician",
+            "Retesting per stage; follow clinician schedule",
+            "Disclose respectfully and support partner testing"
+          ],
+          "hiv": [
+            "Use condoms; consider PrEP for HIV‑negative partners",
+            "Adhere to ART; monitor viral load (U=U)",
+            "Avoid sharing needles or equipment",
+            "Discuss PEP if recent exposure occurred"
+          ],
+          "herpes": [
+            "Avoid sex during outbreaks; consider daily suppression",
+            "Use condoms/dental dams; note skin‑to‑skin risks",
+            "Discuss trigger management and partner protection",
+            "Learn signs of prodrome and pause sexual activity"
+          ]
+        }
+      },
+      "resources": {
+        "title": "Clinics & Testing Resources",
+        "shareLocation": "Share approximate location",
+        "regionLabel": "Select region",
+        "chooseRegion": "Choose a region",
+        "linksTitle": "Helpful links",
+        "privacy": "Location is optional; selections stay on your device.",
+        "regions": {"kl": "Kuala Lumpur / Selangor", "penang": "Penang", "johor": "Johor", "sabah": "Sabah", "sarawak": "Sarawak"},
+        "generic": [
+          {"label": "MOH Malaysia – Sexual Health info", "url": "https://www.moh.gov.my/"},
+          {"label": "PT Foundation (Testing & Support)", "url": "https://www.ptfmalaysia.org/"},
+          {"label": "WHO Sexual Health", "url": "https://www.who.int/health-topics/sexual-health"}
+        ],
+        "byRegion": {
+          "kl": [
+            {"label": "Klinik Kesihatan (KL) – Sexual Health", "url": "https://www.moh.gov.my/"},
+            {"label": "PT Foundation Testing (KL)", "url": "https://www.ptfmalaysia.org/"}
+          ],
+          "penang": [
+            {"label": "Penang State Health – Clinics", "url": "https://jknpenang.moh.gov.my/"}
+          ],
+          "johor": [
+            {"label": "Johor State Health – Clinics", "url": "https://jknjohor.moh.gov.my/"}
+          ],
+          "sabah": [
+            {"label": "Sabah State Health – Clinics", "url": "https://jkknsabah.moh.gov.my/"}
+          ],
+          "sarawak": [
+            {"label": "Sarawak State Health – Clinics", "url": "https://jknsarawak.moh.gov.my/"}
+          ]
+        }
+      },
+      "legal": {
+        "note": "Laws and obligations vary by jurisdiction. This is general guidance, not legal advice.",
+        "linkLabel": "Learn more"
+      }
     }
   }
 }

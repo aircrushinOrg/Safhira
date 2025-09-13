@@ -771,13 +771,13 @@
   },
   "LivingWell": {
     "hero": {
-      "title": "Living Well with an STI",
-      "subtitle": "Practical guidance to stay on track with treatment, manage side effects, and protect your well‑being."
+      "title": "与性传播感染一起健康生活",
+      "subtitle": "提供实用指南，帮助坚持治疗、管理副作用，并守护你的身心健康。"
     },
     "disclaimer": {
-      "title": "Educational Guidance Only",
-      "text": "This content supports self‑care but is not a substitute for professional medical advice.",
-      "emergency": "In an emergency or if you have severe symptoms, seek urgent care immediately."
+      "title": "仅为教育性指导",
+      "text": "本内容用于自我照护支持，不能替代专业医疗建议。",
+      "emergency": "如遇紧急情况或出现严重症状，请立即就医。"
     },
     "adherence": {
       "title": "Treatment Adherence",
@@ -850,6 +850,76 @@
     },
     "governance": {"title": "Content governance:","reviewed": "Medically reviewed; educational only.","lastReviewed": "Last reviewed: 2025‑01‑01"},
     "sources": {"title": "Sources:","items": ["WHO STI Guidelines (summary)","CDC 2021 STI Treatment Guidelines"]},
-    "privacy": {"clearLocal": "Clear local data"}
+    "privacy": {"clearLocal": "Clear local data"},
+    "lifestyle": {
+      "title": "积极生活方式",
+      "subtitle": "经医学审核的故事与贴士，涵盖心理健康、关系、运动、饮食、应对污名等，帮助你与 STI 共处并活得更好。",
+      "tabs": {"all": "全部", "bookmarks": "已收藏"},
+      "lastReviewed": "最后审核",
+      "actions": {"view": "查看","bookmark": "收藏","bookmarked": "已收藏","report": "举报","close": "关闭","steps": "可执行步骤"},
+      "toast": {"bookmarked": "已保存用于离线阅读","unbookmarked": "已从收藏移除","reported": "已举报，已在本设备隐藏"},
+      "contentWarning": {"short": "敏感","title": "内容提示","desc": "本故事包含可能令人不适的敏感话题。我们同时提供相关支持资源。","continue": "继续"},
+      "resources": {"title": "支持与资源"},
+      "emptyBookmarks": "暂时没有收藏",
+      "report": {"title": "要举报此内容吗？","desc": "我们会在你的设备上将其隐藏，并发送不含个人信息的审核信号。","cancel": "取消","confirm": "举报"},
+      "stories": {
+        "mental": {"badge": "心理健康","title": "治疗期间照顾你的心","summary": "用现实可行的日常安排来管理压力、情绪与睡眠，并坚持治疗。","steps": ["建立温和规律：固定作息、短时散步、晒晒太阳","使用简单心情记录；必要时与医生分享趋势","焦虑时做3-5分钟呼吸或地气练习","减少负面刷屏，选择支持性、积极的空间","感到不堪时联系信任的人或求助热线"]},
+        "relationships": {"badge": "亲密关系","title": "保持连接与获得支持","summary": "与伴侣、朋友、家人沟通需求、界限与支持的实用技巧。","steps": ["选择安静私密的时机交流，营造平和氛围","告诉对方什么方式最能支持你：提醒、关心或安静陪伴","使用“我”的表达，具体说明界限与需要","邀请对方提问，并附上可信的参考资源","共同庆祝小进步（如按时复诊、完成用药）"]},
+        "stigma": {"badge": "应对污名","title": "以慈悲之心面对污名","summary": "保护自我、反驳谣言并在需要时寻求帮助的方法。","steps": ["请记住：感染 STI 是健康状况，不是道德标签","整理你的信息来源；关注科学、友善的账号","准备温和事实，在你觉得安全时澄清误解","若内容触发不适，先暂停、稳住自己、寻找支持性空间","若情绪困扰，请联系本地热线或医疗提供者"]}
+      }
+    },
+    "partner": {
+      "title": "伴侣告知与更安全性行为",
+      "subtitle": "用尊重的方式沟通并彼此保护，附带按 STI 类型定制的更安全性行为指南。",
+      "tabs": {"templates": "消息模板", "safer": "更安全性行为"},
+      "templates": {
+        "label": "消息模板",
+        "choose": "选择模板",
+        "kinds": {"gentle": "温和与支持", "direct": "直接与清晰", "text": "简短短信"},
+        "note": "你的消息仅保存在本设备上，不会被保存到服务器。",
+        "messageLabel": "自定义你的消息",
+        "help": "可以随意修改模板。离开本页后不会保存任何内容。",
+        "copy": "复制",
+        "copyAria": "复制消息到剪贴板",
+        "copied": "已复制（不会保存）",
+        "copyError": "无法复制到剪贴板",
+        "reset": "重置为模板",
+        "gentle": "我关心你，也想坦诚相告。我被诊断出患有一种 STI，正在按医嘱接受治疗。我们可以一起讨论如何更安全地保护彼此。如果你愿意，我们可以一起阅读一些可靠资源。",
+        "direct": "我需要告诉你：我最近的检测显示感染了某种 STI。我正在遵循医生的指导。我们可以安排检测，并按建议做好防护。",
+        "text": "嗨，我最近检测出某种 STI，正在治疗中。尽快去检测很重要。我可以分享详情和可靠资源。"
+      },
+      "safer": {
+        "stiLabel": "STI 类型",
+        "chooseSti": "选择一种 STI",
+        "types": {"chlamydia": "衣原体感染", "gonorrhea": "淋病", "syphilis": "梅毒", "hiv": "HIV", "herpes": "疱疹（HSV）"},
+        "checklistTitle": "更安全性行为清单",
+        "uuNote": "HIV：当病毒载量不可检测（U=U）时，不会通过性行为传播。请坚持治疗并遵循临床医嘱。",
+        "checklists": {
+          "chlamydia": ["所有性行为均正确使用安全套或口腔薄膜","单次给药后满7天或完成疗程前避免性行为","3个月后或按医嘱复检","尊重地告知近期伴侣，并提供检测信息"],
+          "gonorrhea": ["口交、阴道交与肛交均使用安全套/口腔薄膜","治疗完成且症状消失前避免性行为","3个月后或更早按医嘱复检","如症状持续，请就医咨询"],
+          "syphilis": ["使用安全套/口腔薄膜；避免与溃疡任何接触","按医生建议的时间窗再恢复性行为","按分期安排复检；遵循医生计划","以尊重方式告知并支持伴侣检测"],
+          "hiv": ["使用安全套；HIV 阴性伴侣可考虑 PrEP","坚持抗逆转录病毒治疗并监测病毒载量（U=U）","不要共用针具或器械","若近期可能暴露，咨询 PEP"],
+          "herpes": ["爆发期避免性行为；可考虑每日抑制治疗","使用安全套/口腔薄膜；留意皮肤接触传播风险","讨论诱因管理与伴侣保护","了解前驱症状迹象并暂缓性行为"]
+        }
+      },
+      "resources": {
+        "title": "诊所与检测资源",
+        "shareLocation": "分享大致位置",
+        "regionLabel": "选择地区",
+        "chooseRegion": "选择地区",
+        "linksTitle": "实用链接",
+        "privacy": "位置为可选；选择仅保存在你的设备。",
+        "regions": {"kl": "吉隆坡/雪兰莪", "penang": "槟城", "johor": "柔佛", "sabah": "沙巴", "sarawak": "砂拉越"},
+        "generic": [{"label": "MOH Malaysia – Sexual Health info", "url": "https://www.moh.gov.my/"},{"label": "PT Foundation (Testing & Support)", "url": "https://www.ptfmalaysia.org/"},{"label": "WHO Sexual Health", "url": "https://www.who.int/health-topics/sexual-health"}],
+        "byRegion": {
+          "kl": [{"label": "Klinik Kesihatan (KL) – Sexual Health", "url": "https://www.moh.gov.my/"},{"label": "PT Foundation Testing (KL)", "url": "https://www.ptfmalaysia.org/"}],
+          "penang": [{"label": "Penang State Health – Clinics", "url": "https://jknpenang.moh.gov.my/"}],
+          "johor": [{"label": "Johor State Health – Clinics", "url": "https://jknjohor.moh.gov.my/"}],
+          "sabah": [{"label": "Sabah State Health – Clinics", "url": "https://jkknsabah.moh.gov.my/"}],
+          "sarawak": [{"label": "Sarawak State Health – Clinics", "url": "https://jknsarawak.moh.gov.my/"}]
+        }
+      },
+      "legal": {"note": "各地法律与义务可能不同。本内容为一般性指导，非法律建议。","linkLabel": "了解更多"}
+    }
   }
 }

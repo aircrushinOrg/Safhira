@@ -11,10 +11,15 @@ import {Checkbox} from "../components/ui/checkbox";
 import {Badge} from "../components/ui/badge";
 import {Switch} from "../components/ui/switch";
 import {Separator} from "../components/ui/separator";
-import {AlertTriangle, Bell, Calendar, CheckCircle2, Clock, Heart, Pill, ShieldAlert} from "lucide-react";
+import {AlertTriangle, Bell, Calendar, CheckCircle2, Clock, Heart, Pill, ShieldAlert, Bookmark, BookmarkCheck, Flag, ExternalLink, Copy} from "lucide-react";
 import {Toaster} from "../components/ui/sonner";
 import {toast} from "sonner";
 import {motion, useReducedMotion} from "framer-motion";
+import {Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle} from "../components/ui/dialog";
+import {AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger} from "../components/ui/alert-dialog";
+import {Tabs, TabsContent, TabsList, TabsTrigger} from "../components/ui/tabs";
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "../components/ui/select";
+import {Textarea} from "../components/ui/textarea";
 
 type RegimenType = "single" | "daily" | "multi";
 
@@ -38,7 +43,9 @@ type DayDose = {
 const STORAGE_KEYS = {
   settings: "lwsti_settings",
   regimen: "lwsti_regimen",
-  tracking: "lwsti_tracking" // per-day map
+  tracking: "lwsti_tracking", // per-day map
+  bookmarks: "lwsti_bookmarks",
+  reports: "lwsti_reports"
 };
 
 function getTodayKey() {
@@ -76,6 +83,73 @@ export default function LivingWellWithSTIPage() {
   const [tracking, setTracking] = useState<Record<string, DayDose[]>>({});
   const lastNotifiedMinuteRef = useRef<string>("");
 
+  // Lifestyle (US 5.2)
+  type Story = {
+    id: string;
+    sensitive?: boolean;
+    topic: string; // i18n key suffix
+    lastReviewed: string; // i18n string
+    sources: {label: string; url: string}[];
+  };
+
+  const storyList: Story[] = useMemo(() => [
+    {
+      id: "mental-health",
+      sensitive: false,
+      topic: "mental",
+      lastReviewed: "2025-01-01",
+      sources: [
+        {label: "WHO Mental Health", url: "https://www.who.int/health-topics/mental-health"},
+        {label: "MOH Malaysia", url: "https://www.moh.gov.my/"}
+      ]
+    },
+    {
+      id: "relationships",
+      sensitive: false,
+      topic: "relationships",
+      lastReviewed: "2025-01-01",
+      sources: [
+        {label: "CDC Healthy Relationships", url: "https://www.cdc.gov/healthyweight/healthy_communications/index.html"},
+        {label: "PT Foundation (MY)", url: "https://www.ptfmalaysia.org/"}
+      ]
+    },
+    {
+      id: "stigma-coping",
+      sensitive: true,
+      topic: "stigma",
+      lastReviewed: "2025-01-01",
+      sources: [
+        {label: "UNAIDS Stigma", url: "https://www.unaids.org/en/topic/stigma"},
+        {label: "Befrienders KL", url: "https://www.befrienders.org.my/"}
+      ]
+    }
+  ], [t]);
+
+  const [bookmarks, setBookmarks] = useState<string[]>([]);
+  const [reported, setReported] = useState<string[]>([]);
+  const [activeTab, setActiveTab] = useState<string>("all");
+  const [selected, setSelected] = useState<Story | null>(null);
+  const [ackWarning, setAckWarning] = useState<boolean>(false);
+
+  // Partner Notification & Safer Sex (US 5.3)
+  type StiType = "chlamydia" | "gonorrhea" | "syphilis" | "hiv" | "herpes";
+  const [stiType, setStiType] = useState<StiType>("chlamydia");
+  const [tplKey, setTplKey] = useState<string>("gentle");
+  const [tplText, setTplText] = useState<string>("");
+  const [locationShared, setLocationShared] = useState<boolean>(false);
+  const [region, setRegion] = useState<string>("");
+
+  const partnerTemplates = useMemo(() => ({
+    gentle: t("partner.templates.gentle"),
+    direct: t("partner.templates.direct"),
+    text: t("partner.templates.text")
+  }), [t]);
+
+  useEffect(() => {
+    // Initialize template text when key changes; do not persist
+    setTplText(partnerTemplates[tplKey as keyof typeof partnerTemplates] || "");
+  }, [tplKey, partnerTemplates]);
+
   // Load persisted state
   useEffect(() => {
     try {
@@ -92,6 +166,10 @@ export default function LivingWellWithSTIPage() {
       if (r) setRegimen(r as RegimenType);
       const tr = localStorage.getItem(STORAGE_KEYS.tracking);
       if (tr) setTracking(JSON.parse(tr));
+      const bm = localStorage.getItem(STORAGE_KEYS.bookmarks);
+      if (bm) setBookmarks(JSON.parse(bm));
+      const rp = localStorage.getItem(STORAGE_KEYS.reports);
+      if (rp) setReported(JSON.parse(rp));
     } catch {}
   }, []);
 
@@ -101,8 +179,10 @@ export default function LivingWellWithSTIPage() {
       localStorage.setItem(STORAGE_KEYS.settings, JSON.stringify(settings));
       localStorage.setItem(STORAGE_KEYS.regimen, regimen);
       localStorage.setItem(STORAGE_KEYS.tracking, JSON.stringify(tracking));
+      localStorage.setItem(STORAGE_KEYS.bookmarks, JSON.stringify(bookmarks));
+      localStorage.setItem(STORAGE_KEYS.reports, JSON.stringify(reported));
     } catch {}
-  }, [settings, regimen, tracking]);
+  }, [settings, regimen, tracking, bookmarks, reported]);
 
   // Ensure today entry exists when times change
   useEffect(() => {
@@ -183,6 +263,8 @@ export default function LivingWellWithSTIPage() {
       localStorage.removeItem(STORAGE_KEYS.settings);
       localStorage.removeItem(STORAGE_KEYS.regimen);
       localStorage.removeItem(STORAGE_KEYS.tracking);
+      localStorage.removeItem(STORAGE_KEYS.bookmarks);
+      localStorage.removeItem(STORAGE_KEYS.reports);
     } catch {}
   };
 
@@ -512,6 +594,304 @@ export default function LivingWellWithSTIPage() {
             </Card>
             </motion.div>
           </div>
+
+          {/* Lifestyle: Positive-Living Content (US 5.2) */}
+          <motion.section
+            className="mt-8 md:mt-12"
+            initial={{opacity: 0, y: reduceMotion ? 0 : 10}}
+            whileInView={{opacity: 1, y: 0}}
+            viewport={{once: true, amount: 0.2}}
+            transition={{duration: reduceMotion ? 0 : 0.35}}
+          >
+            <div className="flex items-start gap-2 mb-3">
+              <Heart className="text-rose-600 mt-1" />
+              <div>
+                <h2 className="text-xl md:text-2xl font-semibold text-gray-900 dark:text-gray-100">{t("lifestyle.title")}</h2>
+                <p className="text-gray-700 dark:text-gray-300 mt-1">{t("lifestyle.subtitle")}</p>
+              </div>
+            </div>
+
+            <Card className="p-4 md:p-6 bg-white/90 dark:bg-gray-900/60">
+              <Tabs value={activeTab} onValueChange={setActiveTab}>
+                <TabsList>
+                  <TabsTrigger value="all">{t("lifestyle.tabs.all")}</TabsTrigger>
+                  <TabsTrigger value="bookmarks">{t("lifestyle.tabs.bookmarks")}</TabsTrigger>
+                </TabsList>
+                <Separator className="my-4" />
+
+                {(["all", "bookmarks"] as const).map((tab) => (
+                  <TabsContent key={tab} value={tab}>
+                    <div className="grid gap-4 md:grid-cols-3">
+                      {storyList
+                        .filter((s) => !reported.includes(s.id))
+                        .filter((s) => (tab === "bookmarks" ? bookmarks.includes(s.id) : true))
+                        .map((s) => (
+                          <Card key={s.id} className="p-4 flex flex-col justify-between">
+                            <div>
+                              <div className="flex items-center gap-2 mb-1">
+                                <Badge variant="secondary" className="capitalize">{t(`lifestyle.stories.${s.topic}.badge`)}</Badge>
+                                {s.sensitive && (
+                                  <span className="text-xs text-amber-700 dark:text-amber-300 flex items-center gap-1"><AlertTriangle size={14} /> {t("lifestyle.contentWarning.short")}</span>
+                                )}
+                              </div>
+                              <h3 className="font-semibold text-gray-900 dark:text-gray-100">{t(`lifestyle.stories.${s.topic}.title`)}</h3>
+                              <p className="text-sm text-gray-700 dark:text-gray-300 mt-1">{t(`lifestyle.stories.${s.topic}.summary`)}</p>
+                              <p className="text-xs text-gray-500 mt-2">{t("lifestyle.lastReviewed")}: {s.lastReviewed}</p>
+                            </div>
+                            <div className="mt-3 flex items-center justify-between gap-2">
+                              <div className="flex items-center gap-2">
+                                <Button size="sm" onClick={() => { setSelected(s); setAckWarning(!s.sensitive); }}>
+                                  {t("lifestyle.actions.view")}
+                                </Button>
+                                <Button size="sm" variant={bookmarks.includes(s.id) ? "secondary" : "outline"}
+                                  onClick={() => {
+                                    setBookmarks((prev) => {
+                                      const set = new Set(prev);
+                                      if (set.has(s.id)) set.delete(s.id); else set.add(s.id);
+                                      const arr = Array.from(set);
+                                      toast(
+                                        set.has(s.id) ? t("lifestyle.toast.bookmarked") : t("lifestyle.toast.unbookmarked")
+                                      );
+                                      return arr;
+                                    });
+                                  }}
+                                  aria-pressed={bookmarks.includes(s.id)}
+                                  aria-label={bookmarks.includes(s.id) ? t("lifestyle.actions.bookmarked") : t("lifestyle.actions.bookmark")}
+                                >
+                                  {bookmarks.includes(s.id) ? <BookmarkCheck className="mr-2" size={16} /> : <Bookmark className="mr-2" size={16} />}
+                                  {bookmarks.includes(s.id) ? t("lifestyle.actions.bookmarked") : t("lifestyle.actions.bookmark")}
+                                </Button>
+                              </div>
+                              <AlertDialog>
+                                <AlertDialogTrigger asChild>
+                                  <Button size="sm" variant="ghost" className="text-red-600 hover:text-red-700" aria-label={t("lifestyle.actions.report")}>
+                                    <Flag size={16} className="mr-1" /> {t("lifestyle.actions.report")}
+                                  </Button>
+                                </AlertDialogTrigger>
+                                <AlertDialogContent>
+                                  <AlertDialogHeader>
+                                    <AlertDialogTitle>{t("lifestyle.report.title")}</AlertDialogTitle>
+                                    <AlertDialogDescription>
+                                      {t("lifestyle.report.desc")}
+                                    </AlertDialogDescription>
+                                  </AlertDialogHeader>
+                                  <AlertDialogFooter>
+                                    <AlertDialogCancel>{t("lifestyle.report.cancel")}</AlertDialogCancel>
+                                    <AlertDialogAction onClick={() => {
+                                      setReported((prev) => {
+                                        if (prev.includes(s.id)) return prev;
+                                        const next = [...prev, s.id];
+                                        toast.success(t("lifestyle.toast.reported"));
+                                        return next;
+                                      });
+                                    }}>{t("lifestyle.report.confirm")}</AlertDialogAction>
+                                  </AlertDialogFooter>
+                                </AlertDialogContent>
+                              </AlertDialog>
+                            </div>
+                          </Card>
+                        ))}
+                    </div>
+
+                    {tab === "bookmarks" && storyList.filter((s) => bookmarks.includes(s.id) && !reported.includes(s.id)).length === 0 && (
+                      <p className="text-sm text-gray-600 dark:text-gray-300 mt-4">{t("lifestyle.emptyBookmarks")}</p>
+                    )}
+                  </TabsContent>
+                ))}
+              </Tabs>
+            </Card>
+
+            {/* Story Dialog */}
+            <Dialog open={!!selected} onOpenChange={(open) => { if (!open) { setSelected(null); setAckWarning(false); } }}>
+              <DialogContent className="max-w-2xl">
+                {selected && !ackWarning && selected.sensitive ? (
+                  <div className="space-y-3">
+                    <DialogHeader>
+                      <DialogTitle className="flex items-center gap-2 text-amber-700 dark:text-amber-300"><AlertTriangle size={18} /> {t("lifestyle.contentWarning.title")}</DialogTitle>
+                      <DialogDescription>{t("lifestyle.contentWarning.desc")}</DialogDescription>
+                    </DialogHeader>
+                    <DialogFooter>
+                      <Button onClick={() => setAckWarning(true)}>{t("lifestyle.contentWarning.continue")}</Button>
+                    </DialogFooter>
+                  </div>
+                ) : selected ? (
+                  <div className="space-y-4">
+                    <DialogHeader>
+                      <DialogTitle>{t(`lifestyle.stories.${selected.topic}.title`)}</DialogTitle>
+                      <DialogDescription>{t(`lifestyle.stories.${selected.topic}.summary`)}</DialogDescription>
+                    </DialogHeader>
+                    <div className="space-y-3 text-sm text-gray-800 dark:text-gray-200">
+                      <h4 className="font-medium">{t("lifestyle.actions.steps")}</h4>
+                      <ul className="list-disc pl-5 space-y-1">
+                        {t.raw(`lifestyle.stories.${selected.topic}.steps`).map((s: string, i: number) => (
+                          <li key={i}>{s}</li>
+                        ))}
+                      </ul>
+                      <Separator />
+                      <div>
+                        <h4 className="font-medium">{t("lifestyle.resources.title")}</h4>
+                        <ul className="list-disc pl-5 space-y-1">
+                          {selected.sources.map((src) => (
+                            <li key={src.url}>
+                              <a href={src.url} target="_blank" rel="noopener noreferrer" className="text-teal-700 dark:text-teal-300 inline-flex items-center gap-1">
+                                {src.label} <ExternalLink size={14} />
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <p className="text-xs text-gray-500">{t("lifestyle.lastReviewed")}: {selected.lastReviewed}</p>
+                    </div>
+                    <DialogFooter>
+                      <Button variant="secondary" onClick={() => setSelected(null)}>{t("lifestyle.actions.close")}</Button>
+                    </DialogFooter>
+                  </div>
+                ) : null}
+              </DialogContent>
+            </Dialog>
+          </motion.section>
+
+          {/* Partner Notification & Safer Sex (US 5.3) */}
+          <motion.section
+            className="mt-8 md:mt-12"
+            initial={{opacity: 0, y: reduceMotion ? 0 : 10}}
+            whileInView={{opacity: 1, y: 0}}
+            viewport={{once: true, amount: 0.2}}
+            transition={{duration: reduceMotion ? 0 : 0.35}}
+          >
+            <div className="flex items-start gap-2 mb-3">
+              <Heart className="text-teal-600 mt-1" />
+              <div>
+                <h2 className="text-xl md:text-2xl font-semibold text-gray-900 dark:text-gray-100">{t("partner.title")}</h2>
+                <p className="text-gray-700 dark:text-gray-300 mt-1">{t("partner.subtitle")}</p>
+              </div>
+            </div>
+            <Card className="p-4 md:p-6 bg-white/90 dark:bg-gray-900/60">
+              <Tabs defaultValue="templates">
+                <TabsList>
+                  <TabsTrigger value="templates">{t("partner.tabs.templates")}</TabsTrigger>
+                  <TabsTrigger value="safer" className="ml-2">{t("partner.tabs.safer")}</TabsTrigger>
+                </TabsList>
+                <Separator className="my-4" />
+
+                {/* Templates Tab */}
+                <TabsContent value="templates">
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <div className="space-y-3">
+                      <Label htmlFor="tplKind">{t("partner.templates.label")}</Label>
+                      <Select value={tplKey} onValueChange={setTplKey}>
+                        <SelectTrigger id="tplKind" aria-label={t("partner.templates.label")}>
+                          <SelectValue placeholder={t("partner.templates.choose")} />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="gentle">{t("partner.templates.kinds.gentle")}</SelectItem>
+                          <SelectItem value="direct">{t("partner.templates.kinds.direct")}</SelectItem>
+                          <SelectItem value="text">{t("partner.templates.kinds.text")}</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <p className="text-xs text-gray-600 dark:text-gray-300">{t("partner.templates.note")}</p>
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="tplText">{t("partner.templates.messageLabel")}</Label>
+                      <Textarea id="tplText" value={tplText} onChange={(e) => setTplText(e.target.value)} rows={8}
+                        aria-describedby="tplHelp"
+                      />
+                      <p id="tplHelp" className="text-xs text-gray-500">{t("partner.templates.help")}</p>
+                      <div className="flex gap-2">
+                        <Button onClick={async () => {
+                          try {
+                            await navigator.clipboard.writeText(tplText);
+                            toast.success(t("partner.templates.copied"));
+                          } catch {
+                            toast.error(t("partner.templates.copyError"));
+                          }
+                        }} aria-label={t("partner.templates.copyAria")}>
+                          <Copy size={16} className="mr-2" /> {t("partner.templates.copy")}
+                        </Button>
+                        <Button variant="outline" onClick={() => setTplText(partnerTemplates[tplKey as keyof typeof partnerTemplates] || "")}>{t("partner.templates.reset")}</Button>
+                      </div>
+                    </div>
+                  </div>
+                  <Separator className="my-4" />
+                  <div className="text-xs text-gray-600 dark:text-gray-300">
+                    <p>{t("partner.legal.note")} <a className="text-teal-700 dark:text-teal-300 underline" href="https://www.unaids.org/en/topic/hiv-law" target="_blank" rel="noopener noreferrer">{t("partner.legal.linkLabel")}</a></p>
+                  </div>
+                </TabsContent>
+
+                {/* Safer Sex Tab */}
+                <TabsContent value="safer">
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <div className="space-y-3">
+                      <Label htmlFor="stiType">{t("partner.safer.stiLabel")}</Label>
+                      <Select value={stiType} onValueChange={(v) => setStiType(v as StiType)}>
+                        <SelectTrigger id="stiType" aria-label={t("partner.safer.stiLabel")}>
+                          <SelectValue placeholder={t("partner.safer.chooseSti")} />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="chlamydia">{t("partner.safer.types.chlamydia")}</SelectItem>
+                          <SelectItem value="gonorrhea">{t("partner.safer.types.gonorrhea")}</SelectItem>
+                          <SelectItem value="syphilis">{t("partner.safer.types.syphilis")}</SelectItem>
+                          <SelectItem value="hiv">{t("partner.safer.types.hiv")}</SelectItem>
+                          <SelectItem value="herpes">{t("partner.safer.types.herpes")}</SelectItem>
+                        </SelectContent>
+                      </Select>
+
+                      <div className="mt-3">
+                        <h4 className="font-medium">{t("partner.safer.checklistTitle")}</h4>
+                        <ul className="list-disc pl-5 text-sm space-y-1">
+                          {t.raw(`partner.safer.checklists.${stiType}`).map((item: string, idx: number) => (
+                            <li key={idx}>{item}</li>
+                          ))}
+                        </ul>
+                        {stiType === "hiv" && (
+                          <p className="text-xs mt-2 text-teal-700 dark:text-teal-300">{t("partner.safer.uuNote")}</p>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="space-y-3">
+                      <Label>{t("partner.resources.title")}</Label>
+                      <div className="flex items-center gap-2">
+                        <Switch id="loc" checked={locationShared} onCheckedChange={(v) => setLocationShared(!!v)} />
+                        <Label htmlFor="loc">{t("partner.resources.shareLocation")}</Label>
+                      </div>
+                      <div className="max-w-sm">
+                        <Label htmlFor="region">{t("partner.resources.regionLabel")}</Label>
+                        <Select value={region} onValueChange={setRegion}>
+                          <SelectTrigger id="region" aria-label={t("partner.resources.regionLabel")}>
+                            <SelectValue placeholder={t("partner.resources.chooseRegion")} />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="kl">{t("partner.resources.regions.kl")}</SelectItem>
+                            <SelectItem value="penang">{t("partner.resources.regions.penang")}</SelectItem>
+                            <SelectItem value="johor">{t("partner.resources.regions.johor")}</SelectItem>
+                            <SelectItem value="sabah">{t("partner.resources.regions.sabah")}</SelectItem>
+                            <SelectItem value="sarawak">{t("partner.resources.regions.sarawak")}</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      <div>
+                        <h4 className="font-medium">{t("partner.resources.linksTitle")}</h4>
+                        <ul className="list-disc pl-5 text-sm space-y-1">
+                          {(!locationShared || !region) && t.raw("partner.resources.generic").map((x: {label: string; url: string}) => (
+                            <li key={x.url}><a href={x.url} target="_blank" rel="noopener noreferrer" className="text-teal-700 dark:text-teal-300 inline-flex items-center gap-1">{x.label} <ExternalLink size={14} /></a></li>
+                          ))}
+                          {(locationShared && region) && t.raw(`partner.resources.byRegion.${region}`).map((x: {label: string; url: string}) => (
+                            <li key={x.url}><a href={x.url} target="_blank" rel="noopener noreferrer" className="text-teal-700 dark:text-teal-300 inline-flex items-center gap-1">{x.label} <ExternalLink size={14} /></a></li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      <div className="text-xs text-gray-600 dark:text-gray-300">
+                        <p>{t("partner.resources.privacy")}</p>
+                      </div>
+                    </div>
+                  </div>
+                </TabsContent>
+              </Tabs>
+            </Card>
+          </motion.section>
         </div>
       </section>
     </div>

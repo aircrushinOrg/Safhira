@@ -772,13 +772,13 @@
   },
   "LivingWell": {
     "hero": {
-      "title": "Living Well with an STI",
-      "subtitle": "Practical guidance to stay on track with treatment, manage side effects, and protect your well‑being."
+      "title": "Hidup Sihat dengan STI",
+      "subtitle": "Panduan praktikal untuk kekal patuh rawatan, mengurus kesan sampingan dan menjaga kesejahteraan anda."
     },
     "disclaimer": {
-      "title": "Educational Guidance Only",
-      "text": "This content supports self‑care but is not a substitute for professional medical advice.",
-      "emergency": "In an emergency or if you have severe symptoms, seek urgent care immediately."
+      "title": "Panduan Pendidikan Sahaja",
+      "text": "Kandungan ini menyokong penjagaan diri tetapi bukan pengganti nasihat perubatan profesional.",
+      "emergency": "Dalam kecemasan atau jika gejala teruk, dapatkan rawatan segera."
     },
     "adherence": {
       "title": "Treatment Adherence",
@@ -851,6 +851,70 @@
     },
     "governance": {"title": "Content governance:","reviewed": "Medically reviewed; educational only.","lastReviewed": "Last reviewed: 2025‑01‑01"},
     "sources": {"title": "Sources:","items": ["WHO STI Guidelines (summary)","CDC 2021 STI Treatment Guidelines"]},
-    "privacy": {"clearLocal": "Clear local data"}
+    "privacy": {"clearLocal": "Clear local data"},
+    "lifestyle": {
+      "title": "Gaya Hidup Positif",
+      "subtitle": "Kisah dan tip yang disemak secara perubatan tentang hidup sihat bersama STI (kesihatan mental, hubungan, senaman, diet, menangani stigma).",
+      "tabs": {"all": "Semua", "bookmarks": "Disimpan"},
+      "lastReviewed": "Tarikh semakan terakhir",
+      "actions": {"view": "Lihat","bookmark": "Simpan","bookmarked": "Disimpan","report": "Lapor","close": "Tutup","steps": "Langkah boleh diambil"},
+      "toast": {"bookmarked": "Disimpan untuk bacaan luar talian","unbookmarked": "Dibuang daripada simpanan","reported": "Dilapor. Disorok pada peranti anda."},
+      "contentWarning": {"short": "Sensitif","title": "Amaran kandungan","desc": "Kisah ini menyentuh topik sensitif yang mungkin menimbulkan ketidakselesaan kepada sesetengah pembaca. Sumber sokongan turut disediakan.","continue": "Teruskan"},
+      "resources": {"title": "Sokongan & sumber"},
+      "emptyBookmarks": "Belum ada simpanan.",
+      "report": {"title": "Lapor kandungan?","desc": "Kami akan sorokkan pada peranti anda dan hantar isyarat pemantauan tanpa data peribadi.","cancel": "Batal","confirm": "Lapor"},
+      "stories": {
+        "mental": {"badge": "Kesihatan mental","title": "Menjaga emosi semasa rawatan","summary": "Rutin realistik untuk urus stres, emosi dan tidur sambil kekal patuh rawatan.","steps": ["Bina rutin lembut: tidur teratur, berjalan sekejap, cahaya matahari","Guna penjejak mood ringkas; kongsikan trend dengan klinisian jika perlu","Amal pernafasan atau grounding 3-5 minit ketika cemas","Kurangkan doom-scrolling; pilih ruang yang menyokong dan positif","Hubungi orang dipercayai atau talian bantuan jika terasa terbeban"]},
+        "relationships": {"badge": "Hubungan","title": "Kekal berhubung dan disokong","summary": "Tip berkomunikasi tentang keperluan, batasan dan penjagaan dengan pasangan, rakan dan keluarga.","steps": ["Pilih masa tenang dan privasi untuk berbual, cipta suasana baik","Beritahu apa yang membantu: peringatan, check-in, atau teman senyap","Guna kenyataan ‘saya’ dan jelaskan batasan serta sokongan yang diperlukan","Jemput soalan; kongsi sumber berwibawa yang anda percayai","Raikan kejayaan kecil bersama (temu janji dipenuhi, dos diambil)"]},
+        "stigma": {"badge": "Menangani stigma","title": "Hadapi stigma dengan belas dan sokongan","summary": "Cara melindungi diri, melawan mitos dan mencari bantuan bila diperlukan.","steps": ["Ingat: STI ialah keadaan kesihatan, bukan label moral","Saring kandungan media anda; ikuti akaun yang saintifik dan menyokong","Sediakan fakta lembut untuk tangkis mitos apabila anda rasa selamat","Jika kandungan mengganggu emosi, berhenti seketika, bertenang dan cari ruang menyokong","Jika tertekan, hubungi talian bantuan tempatan atau penyedia kesihatan"]}
+      }
+    },
+    "partner": {
+      "title": "Pemakluman Pasangan & Seks Lebih Selamat",
+      "subtitle": "Cara berkomunikasi dengan hormat dan melindungi satu sama lain, serta panduan seks lebih selamat khusus mengikut jenis STI.",
+      "tabs": {"templates": "Templat", "safer": "Seks Lebih Selamat"},
+      "templates": {
+        "label": "Templat mesej",
+        "choose": "Pilih templat",
+        "kinds": {"gentle": "Lunak & menyokong", "direct": "Terus terang & jelas", "text": "Mesej teks ringkas"},
+        "note": "Mesej anda kekal pada peranti dan tidak disimpan.",
+        "messageLabel": "Sesuaikan mesej anda",
+        "help": "Anda boleh sunting templat; tiada kandungan disimpan selepas meninggalkan halaman ini.",
+        "copy": "Salin",
+        "copyAria": "Salin mesej ke papan klip",
+        "copied": "Mesej disalin (tidak disimpan)",
+        "copyError": "Tidak dapat menyalin ke papan klip",
+        "reset": "Tetap semula ke templat",
+        "gentle": "Saya ambil berat tentang anda dan ingin jujur. Saya didiagnosis dengan STI dan sedang mendapatkan rawatan yang betul. Kita boleh berbincang cara melindungi satu sama lain dengan lebih selamat. Saya ada sumber untuk dibaca bersama jika anda mahu.",
+        "direct": "Saya perlu memaklumkan bahawa keputusan saya positif untuk STI. Saya mengikuti panduan perubatan. Mari rancang ujian dan guna perlindungan seperti disyorkan.",
+        "text": "Hai, saya baru-baru ini didapati positif STI. Saya sedang dirawat. Penting untuk menjalani ujian. Saya boleh kongsi butiran dan sumber."
+      },
+      "safer": {
+        "stiLabel": "Jenis STI",
+        "chooseSti": "Pilih STI",
+        "types": {"chlamydia": "Klamidia", "gonorrhea": "Gonorea", "syphilis": "Sifilis", "hiv": "HIV", "herpes": "Herpes (HSV)"},
+        "checklistTitle": "Senarai semak seks lebih selamat",
+        "uuNote": "HIV: Apabila beban virus tidak dapat dikesan (U=U), tiada penularan melalui seks. Kekal patuh rawatan dan ikut nasihat klinisian.",
+        "checklists": {
+          "chlamydia": ["Guna kondom atau dental dam dengan betul untuk semua aktiviti seksual","Elak seks sehingga 7 hari selepas dos tunggal atau selepas tamat rawatan","Uji semula dalam 3 bulan atau ikut nasihat","Maklumkan pasangan yang baru-baru ini dengan hormat; kongsi info ujian"],
+          "gonorrhea": ["Guna kondom/dental dam untuk seks oral, vaginal dan anal","Elak seks sehingga rawatan selesai dan gejala hilang","Uji semula dalam 3 bulan atau lebih awal jika disyorkan","Dapatkan nasihat jika gejala berterusan"],
+          "syphilis": ["Guna kondom/dental dam; elak sebarang sentuhan dengan luka","Ikut tempoh rawatan sebelum sambung aktiviti seksual","Jadual uji semula mengikut peringkat; ikut jadual klinisian","Maklum dengan hormat dan sokong pasangan untuk jalani ujian"],
+          "hiv": ["Guna kondom; pertimbangkan PrEP untuk pasangan HIV-negatif","Patuh ART; pantau beban virus (U=U)","Jangan berkongsi jarum atau peralatan","Bincang PEP jika pendedahan baru berlaku"],
+          "herpes": ["Elak seks semasa wabak/flare; pertimbang rawatan penekanan harian","Guna kondom/dental dam; maklum risiko sentuhan kulit-ke-kulit","Bincang pengurusan pencetus dan perlindungan pasangan","Kenali tanda prodrom dan hentikan aktiviti seksual"]
+        }
+      },
+      "resources": {
+        "title": "Klinik & Sumber Ujian",
+        "shareLocation": "Kongsi lokasi anggaran",
+        "regionLabel": "Pilih wilayah",
+        "chooseRegion": "Pilih wilayah",
+        "linksTitle": "Pautan berguna",
+        "privacy": "Lokasi adalah pilihan; pilihan disimpan pada peranti anda.",
+        "regions": {"kl": "Kuala Lumpur / Selangor", "penang": "Penang", "johor": "Johor", "sabah": "Sabah", "sarawak": "Sarawak"},
+        "generic": [{"label": "MOH Malaysia – Sexual Health info", "url": "https://www.moh.gov.my/"},{"label": "PT Foundation (Testing & Support)", "url": "https://www.ptfmalaysia.org/"},{"label": "WHO Sexual Health", "url": "https://www.who.int/health-topics/sexual-health"}],
+        "byRegion": {"kl": [{"label": "Klinik Kesihatan (KL) – Sexual Health", "url": "https://www.moh.gov.my/"},{"label": "PT Foundation Testing (KL)", "url": "https://www.ptfmalaysia.org/"}],"penang": [{"label": "Penang State Health – Clinics", "url": "https://jknpenang.moh.gov.my/"}],"johor": [{"label": "Johor State Health – Clinics", "url": "https://jknjohor.moh.gov.my/"}],"sabah": [{"label": "Sabah State Health – Clinics", "url": "https://jkknsabah.moh.gov.my/"}],"sarawak": [{"label": "Sarawak State Health – Clinics", "url": "https://jknsarawak.moh.gov.my/"}]}
+      },
+      "legal": {"note": "Undang-undang dan tanggungjawab berbeza mengikut bidang kuasa. Ini panduan umum, bukan nasihat perundangan.","linkLabel": "Ketahui lagi"}
+    }
   }
 }
