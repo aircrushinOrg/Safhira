@@ -79,22 +79,23 @@ export function FeaturesSection() {
       iconColor: 'text-purple-500',
       action: () => router.push('/stis'),
       buttonText: t('features.education.button')
-    }
-  ];
-
-  const upcomingFeatures: UpcomingFeature[] = [
+    },
     {
       id: 'quiz',
       title: t('features.quiz.title'),
       description: t('features.quiz.description'),
       icon: HelpCircle,
       color: 'from-pink-500 to-pink-600 dark:from-pink-400 dark:to-pink-500',
-      bgColor: 'bg-gray-100 dark:bg-gray-700/50',
-      borderColor: 'border-gray-300 dark:border-gray-600',
-      textColor: 'text-gray-600 dark:text-gray-300',
-      iconColor: 'text-gray-500',
-      comingSoon: true
-    },
+      bgColor: 'bg-pink-50 dark:bg-pink-900/20',
+      borderColor: 'border-pink-200 dark:border-pink-800',
+      textColor: 'text-pink-700 dark:text-pink-300',
+      iconColor: 'text-pink-500',
+      action: () => router.push('/quiz'),
+      buttonText: t('features.learnMore')
+    }
+  ];
+
+  const upcomingFeatures: UpcomingFeature[] = [
     {
       id: 'mapper',
       title: t('features.mapper.title'),

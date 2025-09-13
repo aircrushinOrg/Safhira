@@ -56,7 +56,8 @@
       },
       "quiz": {
         "title": "Myth vs Truth Quiz",
-        "description": "Test your knowledge and debunk common misconceptions about sexual health."
+        "description": "Test your knowledge and debunk common misconceptions about sexual health.",
+        "button": "Take Quiz"
       },
       "mapper": {
         "title": "Clinic Mapper",
@@ -163,6 +164,7 @@
     "links": {
       "stiBasics": "STI Basics",
       "prevention": "Prevention",
+      "livingWell": "Living Well with STI",
       "quiz": "Interactive Quiz",
       "privateChat": "Private AI Chat",
       "aboutAi": "About Safhira AI",
@@ -774,6 +776,167 @@
       "title": "Need Personalized Guidance?",
       "text": "Our AI assistant can provide personalized, confidential guidance about STI prevention that respects your specific circumstances and cultural background.",
       "button": "Chat with Our AI Assistant"
+    }
+  },
+  "LivingWell": {
+    "hero": {
+      "title": "Living Well with an STI",
+      "subtitle": "Practical guidance to stay on track with treatment, manage side effects, and protect your well‑being."
+    },
+    "disclaimer": {
+      "title": "Educational Guidance Only",
+      "text": "This content supports self‑care but is not a substitute for professional medical advice.",
+      "emergency": "In an emergency or if you have severe symptoms, seek urgent care immediately."
+    },
+    "adherence": {
+      "title": "Treatment Adherence",
+      "regimen": {
+        "label": "Your regimen",
+        "options": {
+          "single": "Single‑dose",
+          "daily": "Daily course",
+          "multi": "Multi‑drug"
+        }
+      },
+      "dos": {"title": "Do"},
+      "donts": {"title": "Don't"},
+      "single": {
+        "overview": "Single‑dose treatments work best when taken exactly as prescribed at the scheduled time.",
+        "dos": [
+          "Confirm timing with food/water if instructed",
+          "Set a reminder so you don’t forget",
+          "Note any side effects and how you feel"
+        ],
+        "donts": [
+          "Don’t split or share your dose",
+          "Don’t take extra if you vomit without clinician advice",
+          "Don’t mix with alcohol if cautioned"
+        ]
+      },
+      "daily": {
+        "overview": "Take your medicine at the same time each day. Consistency helps effectiveness and reduces missed doses.",
+        "dos": [
+          "Pair doses with a daily routine (e.g., breakfast)",
+          "Use reminders and a visible pill organizer",
+          "Contact a clinician if side effects affect daily life"
+        ],
+        "donts": [
+          "Don’t double up without guidance",
+          "Don’t stop early even if you feel better",
+          "Don’t share medicines with others"
+        ]
+      },
+      "multi": {
+        "overview": "Multi‑drug regimens may have different times/directions. Keep a simple schedule and double‑check each medicine’s instructions.",
+        "dos": [
+          "List each medicine and its time",
+          "Use color labels or a weekly organizer",
+          "Ask a clinician/pharmacist if instructions conflict"
+        ],
+        "donts": [
+          "Don’t change dose order without guidance",
+          "Don’t mix with alcohol/OTC drugs without checking",
+          "Don’t skip monitoring or follow‑up tests"
+        ]
+      }
+    },
+    "interactions": {
+      "caution": "Interactions: Some medicines, alcohol, and supplements can affect safety or effectiveness.",
+      "confirm": "Confirm with your clinician or pharmacist."
+    },
+    "sideEffects": {
+      "title": "Side‑Effect Management",
+      "commonTitle": "Common / expected",
+      "redFlagTitle": "Red‑flag / urgent",
+      "common": [
+        "Mild nausea — try with food and sip water",
+        "Headache — rest, hydrate; simple pain relief if safe",
+        "Dizziness — stand up slowly, avoid driving if affected",
+        "Fatigue — pace activities and rest"
+      ],
+      "redFlags": [
+        "Severe rash or hives",
+        "Shortness of breath or wheezing",
+        "Swelling of face, lips, or throat",
+        "Chest pain, confusion, or fainting",
+        "High fever that doesn’t improve"
+      ],
+      "urgent": {
+        "title": "Urgent care",
+        "text": "If you develop red‑flag symptoms, seek urgent medical attention.",
+        "resources": "Find help and know your rights"
+      }
+    },
+    "reminders": {
+      "title": "Optional Reminders",
+      "desc": "Keep reminders local to your device. You can enable/disable anytime.",
+      "enable": "Enable",
+      "legend": "Reminder settings",
+      "times": "Times per day",
+      "timeAria": "Reminder time {index}",
+      "removeTime": "Remove time",
+      "addTime": "Add time",
+      "days": "Days of week",
+      "week": {
+        "0": "Sun",
+        "1": "Mon",
+        "2": "Tue",
+        "3": "Wed",
+        "4": "Thu",
+        "5": "Fri",
+        "6": "Sat"
+      },
+      "snooze": "Snooze minutes",
+      "snoozeHelp": "Set how long to pause reminders when you snooze.",
+      "snoozed": "Snoozed until",
+      "snoozeNow": "Snooze now",
+      "pauseFrom": "Pause from",
+      "pauseTo": "Pause to",
+      "toast": {
+        "title": "Time for your dose",
+        "desc": "Stay on track — mark taken when done."
+      },
+      "tzChanged": "Your timezone changed. Future reminders will adjust to your local time.",
+      "tzDismiss": "Got it"
+    },
+    "tracking": {
+      "title": "Dose Tracking (Local)",
+      "desc": "Mark each dose as taken or missed. Data stays on your device unless you export it.",
+      "next": "Next:",
+      "allDone": "All done for today",
+      "actions": {"taken": "Mark taken", "missed": "Mark missed"},
+      "toast": {"missed": "Dose marked missed"}
+    },
+    "catchup": {
+      "title": "Missed‑Dose Catch‑up Guidance",
+      "neverDoubleDose": "Never take a double dose to make up for a missed one.",
+      "single": {
+        "summary": "Single‑dose: Take as soon as possible unless advised otherwise.",
+        "details": "If you missed a single‑dose treatment, take it as soon as you remember on the same day. If you vomit within a short time, contact a clinician for advice — do not re‑dose without guidance."
+      },
+      "daily": {
+        "summary": "Daily course: If <12h late, take now; otherwise skip and continue.",
+        "details": "If you’re less than 12 hours late, take the dose now and return to your usual time. If more than 12 hours late, skip the missed dose and take the next dose at your regular time."
+      },
+      "multi": {
+        "summary": "Multi‑drug: Follow drug‑specific instructions and confirm with a clinician.",
+        "details": "For multi‑drug regimens, follow each medicine’s catch‑up instructions. If unsure, skip the missed dose and seek clinician advice before adjusting."
+      }
+    },
+    "governance": {
+      "title": "Content governance:",
+      "reviewed": "Medically reviewed; educational only.",
+      "lastReviewed": "Last reviewed: 2025‑01‑01"
+    },
+    "sources": {
+      "title": "Sources:",
+      "items": [
+        "WHO STI Guidelines (summary)",
+        "CDC 2021 STI Treatment Guidelines"
+      ]
+    },
+    "privacy": {
+      "clearLocal": "Clear local data"
     }
   }
 }
