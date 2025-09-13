@@ -176,6 +176,75 @@
     }
   }
   ,
+  "QuizPage": {
+    "hero": {
+      "badge": "Interaktif & pendidikan",
+      "title": "Mitos & Fakta STI",
+      "subtitle": "Tekan mitos untuk melihat fakta, atau ambil kuiz ringkas."
+    },
+    "pills": {
+      "evidence": "Berasaskan bukti",
+      "noJudgment": "Tanpa penghakiman",
+      "quickFun": "Cepat & menyeronokkan"
+    },
+    "learn": {
+      "title": "Apa yang anda akan pelajari",
+      "items": [
+        "Fahami bagaimana STI merebak",
+        "Bongkar mitos biasa dengan fakta",
+        "Asas pencegahan dan ujian",
+        "Berlatih dengan kuiz Benar/Palsu ringkas"
+      ]
+    },
+    "info": "Pembelajaran tanpa nama dan bebas stigma. Skor anda adalah peribadi kecuali anda menyerahkannya."
+  },
+  "Quiz": {
+    "start": "Mulakan Kuiz",
+    "leaderboard": "Papan Kedudukan",
+    "myth": "Mitos",
+    "fact": "Fakta",
+    "dialog": {
+      "closeHint": "Ketuk di luar dialog untuk tutup."
+    },
+    "truthLabel": "Kebenaran di sebalik mitos",
+    "factUnavailable": "Fakta tidak tersedia.",
+    "quick": {
+      "title": "Kawalan Pantas",
+      "true": "Benar",
+      "false": "Palsu",
+      "continue": "Teruskan"
+    },
+    "quiz": {
+      "question": "Soalan {current} daripada {total}",
+      "instruction": "Tentukan sama ada pernyataan ini benar atau palsu"
+    },
+    "actions": {
+      "true": "Benar",
+      "false": "Palsu",
+      "next": "Seterusnya",
+      "finish": "Tamat",
+      "submitScore": "Hantar Skor",
+      "close": "Tutup",
+      "tryAgain": "Cuba Lagi"
+    },
+    "feedback": {
+      "correct": "Betul!",
+      "wrong": "Belum tepat"
+    },
+    "complete": {
+      "title": "Kuiz Selesai",
+      "subtitle": "Keputusan anda",
+      "scoreLabel": "Skor:",
+      "of100": "/ 100",
+      "tryHint": "Ketuk 'Cuba Lagi' untuk ulang kuiz."
+    },
+    "achievements": {
+      "gold": {"label": "Emas", "desc": "Skor sempurna!"},
+      "silver": {"label": "Perak", "desc": "Hebat!"},
+      "bronze": {"label": "Gangsa", "desc": "Cubaan yang baik!"},
+      "keepLearning": {"label": "Terus Belajar", "desc": "Cuba lagi untuk bertambah baik"}
+    }
+  },
   "NotFound": {
     "home": "Ke Laman Utama",
     "learnStis": "Ketahui tentang STI",

@@ -176,6 +176,75 @@
     }
   }
   ,
+  "QuizPage": {
+    "hero": {
+      "badge": "Interactive & educational",
+      "title": "STI Myths & Facts",
+      "subtitle": "Tap a myth to reveal the fact, or take a quick quiz."
+    },
+    "pills": {
+      "evidence": "Evidence-based",
+      "noJudgment": "No judgment",
+      "quickFun": "Quick & fun"
+    },
+    "learn": {
+      "title": "What you'll learn",
+      "items": [
+        "Understand how STIs spread",
+        "Debunk common myths with facts",
+        "Prevention and testing basics",
+        "Practice with a quick True/False quiz"
+      ]
+    },
+    "info": "Anonymous, stigma‑free learning. Your score is private unless you submit it."
+  },
+  "Quiz": {
+    "start": "Start Quiz",
+    "leaderboard": "Leaderboard",
+    "myth": "Myth",
+    "fact": "Fact",
+    "dialog": {
+      "closeHint": "Tap outside the dialog to close."
+    },
+    "truthLabel": "The truth behind the myth",
+    "factUnavailable": "Fact not available.",
+    "quick": {
+      "title": "Quick Controls",
+      "true": "True",
+      "false": "False",
+      "continue": "Continue"
+    },
+    "quiz": {
+      "question": "Question {current} of {total}",
+      "instruction": "Decide if the statement is true or false"
+    },
+    "actions": {
+      "true": "True",
+      "false": "False",
+      "next": "Next",
+      "finish": "Finish",
+      "submitScore": "Submit Score",
+      "close": "Close",
+      "tryAgain": "Try Again"
+    },
+    "feedback": {
+      "correct": "Correct!",
+      "wrong": "Not quite"
+    },
+    "complete": {
+      "title": "Quiz Complete",
+      "subtitle": "Your results",
+      "scoreLabel": "Score:",
+      "of100": "/ 100",
+      "tryHint": "Tap Try Again to retake the quiz."
+    },
+    "achievements": {
+      "gold": {"label": "Gold", "desc": "Perfect score!"},
+      "silver": {"label": "Silver", "desc": "Great job!"},
+      "bronze": {"label": "Bronze", "desc": "Nice try!"},
+      "keepLearning": {"label": "Keep Learning", "desc": "Try again to improve"}
+    }
+  },
   "NotFound": {
     "home": "Go Home",
     "learnStis": "Learn about STIs",

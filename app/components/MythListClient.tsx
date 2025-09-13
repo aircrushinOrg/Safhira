@@ -17,6 +17,7 @@ import ScoreSubmittedDialog from "./leaderboard/ScoreSubmittedDialog";
 import LeaderboardDisplay from "./leaderboard/LeaderboardDisplay";
 import { submitQuizScore } from "../actions/leaderboard-actions";
 import { LeaderboardResponse } from "@/types/leaderboard";
+import {useTranslations} from 'next-intl';
 
 type Item = { id: string; text: string; fact?: string };
 
@@ -28,6 +29,7 @@ type QuizQuestion = {
 };
 
 export default function MythListClient({ items }: { items: Item[] }) {
+  const t = useTranslations('Quiz');
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<Item | null>(null);
 
@@ -169,28 +171,28 @@ export default function MythListClient({ items }: { items: Item[] }) {
     const ratio = total ? score / total : 0;
     if (ratio === 1)
       return {
-        label: "Gold",
-        desc: "Perfect score!",
+        label: t('achievements.gold.label'),
+        desc: t('achievements.gold.desc'),
         variant: "default" as const,
       };
     if (ratio >= 0.6)
       return {
-        label: "Silver",
-        desc: "Great job!",
+        label: t('achievements.silver.label'),
+        desc: t('achievements.silver.desc'),
         variant: "secondary" as const,
       };
     if (ratio >= 0.2)
       return {
-        label: "Bronze",
-        desc: "Nice try!",
+        label: t('achievements.bronze.label'),
+        desc: t('achievements.bronze.desc'),
         variant: "outline" as const,
       };
     return {
-      label: "Keep Learning",
-      desc: "Try again to improve",
+      label: t('achievements.keepLearning.label'),
+      desc: t('achievements.keepLearning.desc'),
       variant: "outline" as const,
     };
-  }, [score, questions.length]);
+  }, [score, questions.length, t]);
 
   // Keyboard shortcuts: T/ArrowRight for True, F/ArrowLeft for False, Enter for Next
   useEffect(() => {
@@ -227,7 +229,7 @@ export default function MythListClient({ items }: { items: Item[] }) {
           onClick={startQuiz}
           disabled={items.length === 0}
         >
-          Start Quiz
+          {t('start')}
         </Button>
         <Button
           size="lg"
@@ -235,7 +237,7 @@ export default function MythListClient({ items }: { items: Item[] }) {
           className="flex h-12 md:h-14 px-6 md:px-8 py-3 text-base md:text-lg rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 active:scale-95"
           onClick={handleViewLeaderboard}
         >
-          🏆 Leaderboard
+          🏆 {t('leaderboard')}
         </Button>
       </div>
 
@@ -244,24 +246,24 @@ export default function MythListClient({ items }: { items: Item[] }) {
         <DialogContent className="sm:max-w-xl">
           <DialogHeader>
             <div className="flex items-center gap-3">
-              <Badge variant="secondary">Myth</Badge>
+              <Badge variant="secondary">{t('myth')}</Badge>
               <DialogTitle className="text-balance text-xl font-semibold">
-                {selected?.text || "Myth"}
+                {selected?.text || t('myth')}
               </DialogTitle>
             </div>
             <DialogDescription>
-              Tap outside the dialog to close.
+              {t('dialog.closeHint')}
             </DialogDescription>
           </DialogHeader>
           <div className="rounded-xl border bg-muted/20 p-4 shadow-sm">
             <div className="mb-2 flex items-center gap-2">
-              <Badge>Fact</Badge>
+              <Badge>{t('fact')}</Badge>
               <span className="text-sm font-medium text-muted-foreground">
-                The truth behind the myth
+                {t('truthLabel')}
               </span>
             </div>
             <p className="leading-relaxed text-foreground">
-              {selected?.fact || "Fact not available."}
+              {selected?.fact || t('factUnavailable')}
             </p>
           </div>
         </DialogContent>
@@ -287,7 +289,7 @@ export default function MythListClient({ items }: { items: Item[] }) {
                   />
                 </svg>
                 <span className="text-xs font-medium text-muted-foreground">
-                  Quick Controls
+                  {t('quick.title')}
                 </span>
               </div>
               <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
@@ -295,19 +297,19 @@ export default function MythListClient({ items }: { items: Item[] }) {
                   <kbd className="px-1.5 py-0.5 bg-background rounded text-[10px] border font-mono">
                     T
                   </kbd>
-                  <span>True</span>
+                  <span>{t('quick.true')}</span>
                 </div>
                 <div className="flex items-center gap-1">
                   <kbd className="px-1.5 py-0.5 bg-background rounded text-[10px] border font-mono">
                     F
                   </kbd>
-                  <span>False</span>
+                  <span>{t('quick.false')}</span>
                 </div>
                 <div className="flex items-center gap-1">
                   <kbd className="px-1.5 py-0.5 bg-background rounded text-[10px] border font-mono">
                     ↵
                   </kbd>
-                  <span>Continue</span>
+                  <span>{t('quick.continue')}</span>
                 </div>
               </div>
             </div>
@@ -316,10 +318,10 @@ export default function MythListClient({ items }: { items: Item[] }) {
             <>
               <DialogHeader>
                 <DialogTitle>
-                  Question {current + 1} of {questions.length || 5}
+                  {t('quiz.question', {current: current + 1, total: questions.length || 5})}
                 </DialogTitle>
                 <DialogDescription>
-                  Decide if the statement is true or false
+                  {t('quiz.instruction')}
                 </DialogDescription>
               </DialogHeader>
 
@@ -350,13 +352,13 @@ export default function MythListClient({ items }: { items: Item[] }) {
                     onClick={() => answer(false)}
                     className="transition-transform active:scale-95"
                   >
-                    False
+                    {t('actions.false')}
                   </Button>
                   <Button
                     onClick={() => answer(true)}
                     className="transition-transform active:scale-95"
                   >
-                    True
+                    {t('actions.true')}
                   </Button>
                 </div>
               ) : (
@@ -401,7 +403,7 @@ export default function MythListClient({ items }: { items: Item[] }) {
                             : "text-red-700 dark:text-red-300"
                         }`}
                       >
-                        {isCorrect ? "Correct!" : "Not quite"}
+                        {isCorrect ? t('feedback.correct') : t('feedback.wrong')}
                       </p>
                       {questions[current]?.fact && (
                         <p className="text-sm text-muted-foreground mt-1">
@@ -415,7 +417,7 @@ export default function MythListClient({ items }: { items: Item[] }) {
                       onClick={goNext}
                       className="transition-transform active:scale-95"
                     >
-                      {current === questions.length - 1 ? "Finish" : "Next"}
+                      {current === questions.length - 1 ? t('actions.finish') : t('actions.next')}
                     </Button>
                   </div>
                 </div>
@@ -424,8 +426,8 @@ export default function MythListClient({ items }: { items: Item[] }) {
           ) : (
             <>
               <DialogHeader>
-                <DialogTitle>Quiz Complete</DialogTitle>
-                <DialogDescription>Your results</DialogDescription>
+                <DialogTitle>{t('complete.title')}</DialogTitle>
+                <DialogDescription>{t('complete.subtitle')}</DialogDescription>
               </DialogHeader>
               <div className="space-y-3">
                 <div className="flex items-center gap-2">
@@ -439,24 +441,24 @@ export default function MythListClient({ items }: { items: Item[] }) {
                 <div className="relative overflow-hidden rounded-md border bg-card p-5">
                   {showConfetti && <ConfettiBurst />}
                   <p className="text-lg">
-                    Score:{" "}
+                    {t('complete.scoreLabel')}{" "}
                     <span className="font-semibold text-teal-700 dark:text-teal-300">
                       {score * 20}
                     </span>{" "}
-                    / 100
+                    {t('complete.of100')}
                   </p>
                   <p className="text-sm text-muted-foreground mt-1">
-                    Tap Try Again to retake the quiz.
+                    {t('complete.tryHint')}
                   </p>
                 </div>
                 <div className="flex gap-2 justify-end">
                   <Button variant="outline" onClick={handleQuizComplete}>
-                    Submit Score
+                    {t('actions.submitScore')}
                   </Button>
                   <Button variant="outline" onClick={() => setQuizOpen(false)}>
-                    Close
+                    {t('actions.close')}
                   </Button>
-                  <Button onClick={startQuiz}>Try Again</Button>
+                  <Button onClick={startQuiz}>{t('actions.tryAgain')}</Button>
                 </div>
               </div>
             </>

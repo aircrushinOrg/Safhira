@@ -175,6 +175,75 @@
     }
   }
   ,
+  "QuizPage": {
+    "hero": {
+      "badge": "互动且具教育性",
+      "title": "性传播感染的谣言与事实",
+      "subtitle": "点击一个谣言查看对应事实，或进行一个快速测验。"
+    },
+    "pills": {
+      "evidence": "基于证据",
+      "noJudgment": "零评判",
+      "quickFun": "快速有趣"
+    },
+    "learn": {
+      "title": "你将学到",
+      "items": [
+        "了解性传播感染如何传播",
+        "用事实揭穿常见谣言",
+        "基础的预防与检测知识",
+        "通过一个快速的真假测验进行练习"
+      ]
+    },
+    "info": "匿名、无污名的学习。除非你选择提交，否则你的分数将保持私密。"
+  },
+  "Quiz": {
+    "start": "开始测验",
+    "leaderboard": "排行榜",
+    "myth": "谣言",
+    "fact": "事实",
+    "dialog": {
+      "closeHint": "点击对话框外部关闭。"
+    },
+    "truthLabel": "谣言背后的真相",
+    "factUnavailable": "暂无事实说明。",
+    "quick": {
+      "title": "快捷键",
+      "true": "正确",
+      "false": "错误",
+      "continue": "继续"
+    },
+    "quiz": {
+      "question": "第 {current} 题，共 {total} 题",
+      "instruction": "判断以下陈述是正确还是错误"
+    },
+    "actions": {
+      "true": "正确",
+      "false": "错误",
+      "next": "下一题",
+      "finish": "完成",
+      "submitScore": "提交分数",
+      "close": "关闭",
+      "tryAgain": "再试一次"
+    },
+    "feedback": {
+      "correct": "答对了！",
+      "wrong": "还不太对"
+    },
+    "complete": {
+      "title": "测验完成",
+      "subtitle": "你的结果",
+      "scoreLabel": "得分：",
+      "of100": "/ 100",
+      "tryHint": "点击“再试一次”重新进行测验。"
+    },
+    "achievements": {
+      "gold": {"label": "金", "desc": "满分！"},
+      "silver": {"label": "银", "desc": "做得很好！"},
+      "bronze": {"label": "铜", "desc": "不错的尝试！"},
+      "keepLearning": {"label": "继续学习", "desc": "再试一次来提升"}
+    }
+  },
   "NotFound": {
     "home": "返回首页",
     "learnStis": "了解性传播感染",

@@ -1,6 +1,10 @@
 import { TiltedScrollDemo } from '@/app/components/QuizList'
+import {getTranslations} from 'next-intl/server'
 
-export default function QuizPage() {
+export default async function QuizPage() {
+  const t = await getTranslations('QuizPage')
+  const learnItems = t.raw('learn.items') as string[]
+
   return (
     <div className="md:py-10 relative isolate overflow-hidden bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
 
@@ -12,36 +16,38 @@ export default function QuizPage() {
               <header className="relative">
                 <div className="inline-flex items-center gap-2 rounded-full border border-black/5 bg-white/70 px-3 py-1 text-xs font-medium text-gray-700 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/10 dark:text-gray-200">
                   <SparkleIcon className="h-4 w-4 text-rose-500" />
-                  Interactive & educational
+                  {t('hero.badge')}
                 </div>
                 <h1 className="mt-4 text-3xl md:text-4xl font-bold tracking-tight text-gray-900 dark:text-gray-100 text-balance">
-                  STI Myths & Facts
+                  {t('hero.title')}
                 </h1>
                 <p className="mt-2 text-gray-700/90 dark:text-gray-300/90">
-                  Tap a myth to reveal the fact, or take a quick quiz.
+                  {t('hero.subtitle')}
                 </p>
                 <div className="mt-5 flex flex-wrap gap-2 text-sm text-gray-600 dark:text-gray-300/80">
-                  <BadgePill icon={<ShieldIcon className="h-3.5 w-3.5" />}>Evidence-based</BadgePill>
-                  <BadgePill icon={<HeartIcon className="h-3.5 w-3.5" />}>No judgment</BadgePill>
-                  <BadgePill icon={<BoltIcon className="h-3.5 w-3.5" />}>Quick & fun</BadgePill>
+                  <BadgePill icon={<ShieldIcon className="h-3.5 w-3.5" />}>{t('pills.evidence')}</BadgePill>
+                  <BadgePill icon={<HeartIcon className="h-3.5 w-3.5" />}>{t('pills.noJudgment')}</BadgePill>
+                  <BadgePill icon={<BoltIcon className="h-3.5 w-3.5" />}>{t('pills.quickFun')}</BadgePill>
                 </div>
 
                 <div className="mt-6 space-y-4">
                   <div className="rounded-xl border border-black/5 bg-white/70 p-4 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
                     <div className="mb-2 flex items-center gap-2 text-sm font-medium text-gray-800 dark:text-gray-200">
                       <BookIcon className="h-4 w-4 text-rose-500" />
-                      What you'll learn
+                      {t('learn.title')}
                     </div>
                     <ul className="mt-1 space-y-2 text-sm text-gray-700 dark:text-gray-300">
-                      <li className="flex items-start gap-2"><CheckIcon className="mt-0.5 h-4 w-4 text-teal-600" />Understand how STIs spread</li>
-                      <li className="flex items-start gap-2"><CheckIcon className="mt-0.5 h-4 w-4 text-teal-600" />Debunk common myths with facts</li>
-                      <li className="flex items-start gap-2"><CheckIcon className="mt-0.5 h-4 w-4 text-teal-600" />Prevention and testing basics</li>
-                      <li className="flex items-start gap-2"><CheckIcon className="mt-0.5 h-4 w-4 text-teal-600" />Practice with a quick True/False quiz</li>
+                      {learnItems.map((item, idx) => (
+                        <li key={idx} className="flex items-start gap-2">
+                          <CheckIcon className="mt-0.5 h-4 w-4 text-teal-600" />
+                          {item}
+                        </li>
+                      ))}
                     </ul>
                   </div>
                   <div className="flex items-center gap-2 text-xs text-muted-foreground">
                     <InfoIcon className="h-4 w-4" />
-                    Anonymous, stigma‑free learning. Your score is private unless you submit it.
+                    {t('info')}
                   </div>
                 </div>
               </header>
