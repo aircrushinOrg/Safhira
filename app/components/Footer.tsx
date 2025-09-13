@@ -60,6 +60,7 @@ export function Footer() {
             <ul className="space-y-2 text-sm">
               <li><Link href="/stis" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-white transition-colors">{t('links.stiBasics')}</Link></li>
               <li><Link href="/stis/prevention" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-white transition-colors">{t('links.prevention')}</Link></li>
+              {/* <li><Link href="/living-well-with-sti" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-white transition-colors">{t('links.livingWell')}</Link></li> */}
               <li><Link href="/quiz" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-white transition-colors">{t('links.quiz')}</Link></li>
               {/* <li><a href="/?section=basics" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-white transition-colors">Testing & Treatment</a></li> */}
               {/* <li><a href="/?section=myths" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-white transition-colors">Myths vs Facts</a></li> */}
@@ -75,7 +76,7 @@ export function Footer() {
             <ul className="space-y-2 text-sm">
               <li><Link href="/chat" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-white transition-colors">{t('links.privateChat')}</Link></li>
               <li><Link href="/chat/about" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-white transition-colors">{t('links.aboutAi')}</Link></li>
-              <li><Link href="/stis/prevalence" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-white transition-colors">{t('links.prevalence')}</Link></li>
+              <li><Link href="/living-well-with-sti" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-white transition-colors">{t('links.livingWell')}</Link></li>
             </ul>
           </div>
 

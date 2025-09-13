@@ -56,7 +56,8 @@
       },
       "quiz": {
         "title": "Myth vs Truth Quiz",
-        "description": "Test your knowledge and debunk common misconceptions about sexual health."
+        "description": "Test your knowledge and debunk common misconceptions about sexual health.",
+        "button": "Take Quiz"
       },
       "mapper": {
         "title": "Clinic Mapper",
@@ -163,6 +164,7 @@
     "links": {
       "stiBasics": "STI Basics",
       "prevention": "Prevention",
+      "livingWell": "Living Well with STI",
       "quiz": "Interactive Quiz",
       "privateChat": "Private AI Chat",
       "aboutAi": "About Safhira AI",
@@ -774,6 +776,334 @@
       "title": "Need Personalized Guidance?",
       "text": "Our AI assistant can provide personalized, confidential guidance about STI prevention that respects your specific circumstances and cultural background.",
       "button": "Chat with Our AI Assistant"
+    }
+  },
+  "LivingWell": {
+    "hero": {
+      "title": "Living Well with an STI",
+      "subtitle": "Practical guidance to stay on track with treatment, manage side effects, and protect your well‑being."
+    },
+    "disclaimer": {
+      "title": "Educational Guidance Only",
+      "text": "This content supports self‑care but is not a substitute for professional medical advice.",
+      "emergency": "In an emergency or if you have severe symptoms, seek urgent care immediately."
+    },
+    "adherence": {
+      "title": "Treatment Adherence",
+      "regimen": {
+        "label": "Your regimen",
+        "options": {
+          "single": "Single‑dose",
+          "daily": "Daily course",
+          "multi": "Multi‑drug"
+        }
+      },
+      "dos": {"title": "Do"},
+      "donts": {"title": "Don't"},
+      "single": {
+        "overview": "Single‑dose treatments work best when taken exactly as prescribed at the scheduled time.",
+        "dos": [
+          "Confirm timing with food/water if instructed",
+          "Set a reminder so you don’t forget",
+          "Note any side effects and how you feel"
+        ],
+        "donts": [
+          "Don’t split or share your dose",
+          "Don’t take extra if you vomit without clinician advice",
+          "Don’t mix with alcohol if cautioned"
+        ]
+      },
+      "daily": {
+        "overview": "Take your medicine at the same time each day. Consistency helps effectiveness and reduces missed doses.",
+        "dos": [
+          "Pair doses with a daily routine (e.g., breakfast)",
+          "Use reminders and a visible pill organizer",
+          "Contact a clinician if side effects affect daily life"
+        ],
+        "donts": [
+          "Don’t double up without guidance",
+          "Don’t stop early even if you feel better",
+          "Don’t share medicines with others"
+        ]
+      },
+      "multi": {
+        "overview": "Multi‑drug regimens may have different times/directions. Keep a simple schedule and double‑check each medicine’s instructions.",
+        "dos": [
+          "List each medicine and its time",
+          "Use color labels or a weekly organizer",
+          "Ask a clinician/pharmacist if instructions conflict"
+        ],
+        "donts": [
+          "Don’t change dose order without guidance",
+          "Don’t mix with alcohol/OTC drugs without checking",
+          "Don’t skip monitoring or follow‑up tests"
+        ]
+      }
+    },
+    "interactions": {
+      "caution": "Interactions: Some medicines, alcohol, and supplements can affect safety or effectiveness.",
+      "confirm": "Confirm with your clinician or pharmacist."
+    },
+    "sideEffects": {
+      "title": "Side‑Effect Management",
+      "commonTitle": "Common / expected",
+      "redFlagTitle": "Red‑flag / urgent",
+      "common": [
+        "Mild nausea — try with food and sip water",
+        "Headache — rest, hydrate; simple pain relief if safe",
+        "Dizziness — stand up slowly, avoid driving if affected",
+        "Fatigue — pace activities and rest"
+      ],
+      "redFlags": [
+        "Severe rash or hives",
+        "Shortness of breath or wheezing",
+        "Swelling of face, lips, or throat",
+        "Chest pain, confusion, or fainting",
+        "High fever that doesn’t improve"
+      ],
+      "urgent": {
+        "title": "Urgent care",
+        "text": "If you develop red‑flag symptoms, seek urgent medical attention.",
+        "resources": "Find help and know your rights"
+      }
+    },
+    "reminders": {
+      "title": "Optional Reminders",
+      "desc": "Keep reminders local to your device. You can enable/disable anytime.",
+      "enable": "Enable",
+      "legend": "Reminder settings",
+      "times": "Times per day",
+      "timeAria": "Reminder time {index}",
+      "removeTime": "Remove time",
+      "addTime": "Add time",
+      "days": "Days of week",
+      "week": {
+        "0": "Sun",
+        "1": "Mon",
+        "2": "Tue",
+        "3": "Wed",
+        "4": "Thu",
+        "5": "Fri",
+        "6": "Sat"
+      },
+      "snooze": "Snooze minutes",
+      "snoozeHelp": "Set how long to pause reminders when you snooze.",
+      "snoozed": "Snoozed until",
+      "snoozeNow": "Snooze now",
+      "pauseFrom": "Pause from",
+      "pauseTo": "Pause to",
+      "toast": {
+        "title": "Time for your dose",
+        "desc": "Stay on track — mark taken when done."
+      },
+      "tzChanged": "Your timezone changed. Future reminders will adjust to your local time.",
+      "tzDismiss": "Got it"
+    },
+    "tracking": {
+      "title": "Dose Tracking (Local)",
+      "desc": "Mark each dose as taken or missed. Data stays on your device unless you export it.",
+      "next": "Next:",
+      "allDone": "All done for today",
+      "actions": {"taken": "Mark taken", "missed": "Mark missed"},
+      "toast": {"missed": "Dose marked missed"}
+    },
+    "catchup": {
+      "title": "Missed‑Dose Catch‑up Guidance",
+      "neverDoubleDose": "Never take a double dose to make up for a missed one.",
+      "single": {
+        "summary": "Single‑dose: Take as soon as possible unless advised otherwise.",
+        "details": "If you missed a single‑dose treatment, take it as soon as you remember on the same day. If you vomit within a short time, contact a clinician for advice — do not re‑dose without guidance."
+      },
+      "daily": {
+        "summary": "Daily course: If <12h late, take now; otherwise skip and continue.",
+        "details": "If you’re less than 12 hours late, take the dose now and return to your usual time. If more than 12 hours late, skip the missed dose and take the next dose at your regular time."
+      },
+      "multi": {
+        "summary": "Multi‑drug: Follow drug‑specific instructions and confirm with a clinician.",
+        "details": "For multi‑drug regimens, follow each medicine’s catch‑up instructions. If unsure, skip the missed dose and seek clinician advice before adjusting."
+      }
+    },
+    "governance": {
+      "title": "Content governance:",
+      "reviewed": "Medically reviewed; educational only.",
+      "lastReviewed": "Last reviewed: 2025‑01‑01"
+    },
+    "sources": {
+      "title": "Sources:",
+      "items": [
+        "WHO STI Guidelines (summary)",
+        "CDC 2021 STI Treatment Guidelines"
+      ]
+    },
+    "privacy": {
+      "clearLocal": "Clear local data"
+    },
+    "lifestyle": {
+      "title": "Positive-Living Lifestyle",
+      "subtitle": "Medically reviewed stories and tips on living well with STIs (mental health, relationships, exercise, diet, coping with stigma).",
+      "tabs": {"all": "All", "bookmarks": "Bookmarks"},
+      "lastReviewed": "Last reviewed",
+      "actions": {
+        "view": "View",
+        "bookmark": "Bookmark",
+        "bookmarked": "Bookmarked",
+        "report": "Report",
+        "close": "Close",
+        "steps": "Actionable steps"
+      },
+      "toast": {
+        "bookmarked": "Saved for offline reading",
+        "unbookmarked": "Removed from bookmarks",
+        "reported": "Reported. Hidden locally."
+      },
+      "contentWarning": {
+        "short": "Sensitive",
+        "title": "Content warning",
+        "desc": "This story discusses sensitive topics that may be distressing for some readers. Support resources are included.",
+        "continue": "Continue"
+      },
+      "resources": {"title": "Support & resources"},
+      "emptyBookmarks": "No bookmarks yet.",
+      "report": {
+        "title": "Report content?",
+        "desc": "We’ll hide it on your device and send a moderation signal without personal data.",
+        "cancel": "Cancel",
+        "confirm": "Report"
+      },
+      "stories": {
+        "mental": {
+          "badge": "Mental health",
+          "title": "Caring for your mind while on treatment",
+          "summary": "Realistic routines to manage stress, mood, and sleep while staying on treatment.",
+          "steps": [
+            "Set gentle routines: regular sleep, short walks, sunlight",
+            "Use a simple mood tracker; share trends with a clinician if needed",
+            "Practice breath or grounding for 3–5 minutes when anxious",
+            "Limit doom-scrolling; choose uplifting, supportive spaces",
+            "Reach out to trusted people or helplines when feeling overwhelmed"
+          ]
+        },
+        "relationships": {
+          "badge": "Relationships",
+          "title": "Staying connected and supported in relationships",
+          "summary": "Tips for communicating needs, boundaries, and care with partners, friends, and family.",
+          "steps": [
+            "Choose calm, private moments for important talks; set the tone",
+            "Share what helps: reminders, check-ins, or quiet company",
+            "Use ‘I’ statements and be specific about boundaries and support",
+            "Invite questions; point to reputable resources you trust",
+            "Celebrate small wins together (appointments kept, doses taken)"
+          ]
+        },
+        "stigma": {
+          "badge": "Coping with stigma",
+          "title": "Handling stigma with compassion and support",
+          "summary": "Ways to protect your well-being, challenge myths, and seek help when needed.",
+          "steps": [
+            "Remember: having an STI is a health condition, not a moral label",
+            "Curate your feeds; follow science-based, affirming accounts",
+            "Prepare gentle facts to counter myths when you feel safe",
+            "If content upsets you, pause, ground, and seek supportive spaces",
+            "If in distress, contact local helplines or care providers"
+          ]
+        }
+      }
+    },
+    "partner": {
+      "title": "Partner Notification & Safer Sex",
+      "subtitle": "Respectful ways to communicate and protect each other, plus STI‑specific safer sex guidance.",
+      "tabs": {"templates": "Templates", "safer": "Safer Sex"},
+      "templates": {
+        "label": "Message template",
+        "choose": "Choose a template",
+        "kinds": {"gentle": "Gentle & supportive", "direct": "Direct & clear", "text": "Short text message"},
+        "note": "Your message stays local and is not saved.",
+        "messageLabel": "Customize your message",
+        "help": "Feel free to edit the template. Nothing is stored after you leave this page.",
+        "copy": "Copy",
+        "copyAria": "Copy message to clipboard",
+        "copied": "Message copied (not saved)",
+        "copyError": "Could not copy to clipboard",
+        "reset": "Reset to template",
+        "gentle": "I care about you and want to be honest. I was diagnosed with an STI and I’m getting the right treatment. We can talk about how to keep each other safe. I have resources we can read together if you’d like.",
+        "direct": "I need to let you know I tested positive for an STI. I’m following medical guidance. Let’s plan for testing and use protection as recommended.",
+        "text": "Hi, I recently tested positive for an STI. I’m getting treated. It’s important to get tested. I’m here to share details and resources."
+      },
+      "safer": {
+        "stiLabel": "STI type",
+        "chooseSti": "Select an STI",
+        "types": {"chlamydia": "Chlamydia", "gonorrhea": "Gonorrhea", "syphilis": "Syphilis", "hiv": "HIV", "herpes": "Herpes (HSV)"},
+        "checklistTitle": "Safer sex checklist",
+        "uuNote": "HIV: When viral load is undetectable (U=U), sexual transmission does not occur. Keep adherent to treatment and follow clinician advice.",
+        "checklists": {
+          "chlamydia": [
+            "Use condoms or dental dams correctly for all sex",
+            "Avoid sex until 7 days after single‑dose or completing a course",
+            "Retest in 3 months or as advised",
+            "Notify recent partners respectfully; share testing info"
+          ],
+          "gonorrhea": [
+            "Use condoms/dental dams for oral, vaginal, and anal sex",
+            "Avoid sex until treatment is completed and symptoms resolve",
+            "Retest in 3 months or sooner if advised",
+            "Seek guidance if symptoms persist"
+          ],
+          "syphilis": [
+            "Use condoms/dental dams; avoid any contact with sores",
+            "Follow treatment windows before resuming sex per clinician",
+            "Retesting per stage; follow clinician schedule",
+            "Disclose respectfully and support partner testing"
+          ],
+          "hiv": [
+            "Use condoms; consider PrEP for HIV‑negative partners",
+            "Adhere to ART; monitor viral load (U=U)",
+            "Avoid sharing needles or equipment",
+            "Discuss PEP if recent exposure occurred"
+          ],
+          "herpes": [
+            "Avoid sex during outbreaks; consider daily suppression",
+            "Use condoms/dental dams; note skin‑to‑skin risks",
+            "Discuss trigger management and partner protection",
+            "Learn signs of prodrome and pause sexual activity"
+          ]
+        }
+      },
+      "resources": {
+        "title": "Clinics & Testing Resources",
+        "shareLocation": "Share approximate location",
+        "regionLabel": "Select region",
+        "chooseRegion": "Choose a region",
+        "linksTitle": "Helpful links",
+        "privacy": "Location is optional; selections stay on your device.",
+        "regions": {"kl": "Kuala Lumpur / Selangor", "penang": "Penang", "johor": "Johor", "sabah": "Sabah", "sarawak": "Sarawak"},
+        "generic": [
+          {"label": "MOH Malaysia – Sexual Health info", "url": "https://www.moh.gov.my/"},
+          {"label": "PT Foundation (Testing & Support)", "url": "https://www.ptfmalaysia.org/"},
+          {"label": "WHO Sexual Health", "url": "https://www.who.int/health-topics/sexual-health"}
+        ],
+        "byRegion": {
+          "kl": [
+            {"label": "Klinik Kesihatan (KL) – Sexual Health", "url": "https://www.moh.gov.my/"},
+            {"label": "PT Foundation Testing (KL)", "url": "https://www.ptfmalaysia.org/"}
+          ],
+          "penang": [
+            {"label": "Penang State Health – Clinics", "url": "https://jknpenang.moh.gov.my/"}
+          ],
+          "johor": [
+            {"label": "Johor State Health – Clinics", "url": "https://jknjohor.moh.gov.my/"}
+          ],
+          "sabah": [
+            {"label": "Sabah State Health – Clinics", "url": "https://jkknsabah.moh.gov.my/"}
+          ],
+          "sarawak": [
+            {"label": "Sarawak State Health – Clinics", "url": "https://jknsarawak.moh.gov.my/"}
+          ]
+        }
+      },
+      "legal": {
+        "note": "Laws and obligations vary by jurisdiction. This is general guidance, not legal advice.",
+        "linkLabel": "Learn more"
+      }
     }
   }
 }
