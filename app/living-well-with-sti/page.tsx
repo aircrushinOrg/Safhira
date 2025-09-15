@@ -4,7 +4,7 @@ import {useTranslations} from "next-intl";
 import {Link} from "../../i18n/routing";
 import {Card} from "../components/ui/card";
 import {Button} from "../components/ui/button";
-import {Pill, Heart, Users, ShieldAlert, ArrowRight} from "lucide-react";
+import {Stethoscope, Heart, HeartPulse, HeartHandshake, ShieldAlert, ArrowRight} from "lucide-react";
 import {motion, useReducedMotion} from "framer-motion";
 import Image from "next/image";
 
@@ -16,33 +16,42 @@ export default function LivingWellWithSTIPage() {
   const sections = [
     {
       id: "treatment",
-      icon: Pill,
+      icon: Stethoscope,
       title: t("adherence.title"),
       description: t("adherence.subtitle"),
       href: "/living-well-with-sti/treatment",
       color: "text-teal-600",
       bgColor: "bg-teal-50 dark:bg-teal-900/20",
-      borderColor: "border-teal-200 dark:border-teal-800"
+      borderColor: "border-teal-200 dark:border-teal-800",
+      buttonClass: "bg-teal-600 hover:bg-teal-700 dark:bg-teal-500 dark:hover:bg-teal-600",
+      glowLight: "bg-teal-300/60",
+      glowDark: "dark:bg-teal-800/60"
     },
     {
       id: "lifestyle", 
-      icon: Heart,
+      icon: HeartPulse,
       title: t("lifestyle.title"),
       description: t("lifestyle.subtitle"),
       href: "/living-well-with-sti/lifestyle",
       color: "text-rose-600",
       bgColor: "bg-rose-50 dark:bg-rose-900/20", 
-      borderColor: "border-rose-200 dark:border-rose-800"
+      borderColor: "border-rose-200 dark:border-rose-800",
+      buttonClass: "bg-rose-600 hover:bg-rose-700 dark:bg-rose-500 dark:hover:bg-rose-600",
+      glowLight: "bg-rose-300/60",
+      glowDark: "dark:bg-rose-800/60"
     },
     {
       id: "relationships",
-      icon: Users,
+      icon: HeartHandshake,
       title: t("partner.title"), 
       description: t("partner.subtitle"),
       href: "/living-well-with-sti/relationships",
       color: "text-indigo-600",
       bgColor: "bg-indigo-50 dark:bg-indigo-900/20",
-      borderColor: "border-indigo-200 dark:border-indigo-800"
+      borderColor: "border-indigo-200 dark:border-indigo-800",
+      buttonClass: "bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600",
+      glowLight: "bg-indigo-300/60",
+      glowDark: "dark:bg-indigo-800/60"
     }
   ];
 
@@ -96,8 +105,8 @@ export default function LivingWellWithSTIPage() {
                 <Image
                   src="/undraw_living_well.svg"
                   alt="Living well illustration"
-                  width={450}
-                  height={350}
+                  width={400}
+                  height={300}
                   className="max-w-full h-auto"
                   priority
                 />
@@ -105,7 +114,7 @@ export default function LivingWellWithSTIPage() {
             </div>
           </motion.header>
 
-          <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
+          <div className="grid gap-6 md:gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
             {sections.map((section, index) => {
               const Icon = section.icon;
               return (
@@ -120,38 +129,41 @@ export default function LivingWellWithSTIPage() {
                   }}
                   className="h-full"
                 >
-                  <Card className={`group p-8 hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 ${section.bgColor} ${section.borderColor} border-2 h-full flex flex-col relative overflow-hidden`}>
-                    {/* Subtle gradient overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent dark:from-white/5 pointer-events-none" />
-                    
+                  <Card className={`group p-6 md:p-7 h-full flex flex-col relative overflow-hidden ${section.bgColor} ${section.borderColor} transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5`}>
+                    {/* Decorative glow */}
+                    <div className={`pointer-events-none absolute -top-10 -right-10 size-28 rounded-full blur-3xl opacity-60 transition-opacity duration-300 group-hover:opacity-90 ${section.glowLight} ${section.glowDark}`} />
+
                     <div className="relative flex flex-col items-center text-center h-full">
-                      {/* Enhanced icon container */}
-                      <div className={`${section.color} bg-white dark:bg-gray-800 p-5 rounded-2xl shadow-lg mb-6 group-hover:shadow-xl transition-shadow duration-300 ring-1 ring-white/20`}>
-                        <Icon size={36} className="group-hover:scale-110 transition-transform duration-300" />
+                      {/* Icon */}
+                      <div className={`relative ${section.color} mb-5`}>
+                        <span className="absolute -inset-2 rounded-2xl bg-current/10 blur-xl opacity-70 group-hover:opacity-90 transition-opacity" />
+                        <div className="relative size-14 grid place-items-center rounded-2xl bg-white/80 dark:bg-gray-900/40 shadow-sm ring-1 ring-current/20 backdrop-blur">
+                          <Icon size={28} className="transition-transform duration-300 group-hover:scale-110" />
+                        </div>
                       </div>
 
-                      {/* Content container with flex-grow to push button to bottom */}
-                      <div className="flex-1 flex flex-col justify-between">
+                      {/* Content */}
+                      <div className="flex-1 flex flex-col justify-between w-full">
                         <div>
-                          <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4 leading-tight">
+                          <h3 className="text-lg md:text-xl font-semibold text-gray-900 dark:text-gray-100 mb-3 leading-tight">
                             {section.title}
                           </h3>
-                          <p className="text-gray-700 dark:text-gray-300 mb-8 leading-relaxed text-sm">
+                          <p className="text-gray-700 dark:text-gray-300 mb-6 leading-relaxed text-sm">
                             {section.description}
                           </p>
                         </div>
-                        
-                        {/* Button container - this will be at the bottom of each card */}
+
+                        {/* Button */}
                         <div className="mt-auto">
                           <Link href={section.href}>
-                            <Button 
-                              className="group/btn inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 dark:bg-teal-500 dark:hover:bg-teal-600 text-white font-medium px-6 py-4 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5"
+                            <Button
+                              className={`group/btn inline-flex items-center gap-2 ${section.buttonClass} text-white font-medium px-5 py-3 rounded-lg shadow-sm hover:shadow-md transition-all duration-300`}
                               size="sm"
                             >
                               {tRoot("STIs.learnMore")}
-                              <ArrowRight 
-                                size={16} 
-                                className="group-hover/btn:translate-x-1 transition-transform duration-300" 
+                              <ArrowRight
+                                size={16}
+                                className="transition-transform duration-300 group-hover/btn:translate-x-1"
                               />
                             </Button>
                           </Link>
@@ -163,29 +175,6 @@ export default function LivingWellWithSTIPage() {
               );
             })}
           </div>
-
-          <motion.div
-            className="mt-12 text-center"
-            initial={{opacity: 0, y: reduceMotion ? 0 : 12}}
-              whileInView={{opacity: 1, y: 0}}
-            viewport={{once: true, amount: 0.5}}
-            transition={{duration: reduceMotion ? 0 : 0.4}}
-            >
-            <Card className="p-6 bg-white/90 dark:bg-gray-900/60 max-w-2xl mx-auto">
-              <div className="flex items-start gap-3">
-                <ShieldAlert className="text-gray-600 mt-1 flex-shrink-0" size={18} />
-                <div className="text-xs text-gray-700 dark:text-gray-300">
-                  <p className="mb-2">
-                    <strong>{t("governance.title")}</strong> {t("governance.reviewed")} 
-                    <span className="ml-1">{t("governance.lastReviewed")}</span>
-                  </p>
-                  <p>
-                    <strong>{t("sources.title")}</strong> {t("sources.items.0")}; {t("sources.items.1")}
-                  </p>
-                </div>
-              </div>
-            </Card>
-            </motion.div>
         </div>
       </section>
     </div>

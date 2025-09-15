@@ -972,7 +972,13 @@
         "desc": "Stay on track — mark taken when done."
       },
       "tzChanged": "Your timezone changed. Future reminders will adjust to your local time.",
-      "tzDismiss": "Got it"
+      "tzDismiss": "Got it",
+      "calendar": {
+        "add": "Add to calendar",
+        "toastCreated": "Calendar file created. Tap to add.",
+        "eventTitle": "Medication Reminder",
+        "eventDesc": "Time to take your medication."
+      }
     },
       "tracking": {
         "title": "Dose Tracking (Local)",

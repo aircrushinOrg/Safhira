@@ -10,7 +10,7 @@ import {Input} from "../../components/ui/input";
 import {Checkbox} from "../../components/ui/checkbox";
 import {Switch} from "../../components/ui/switch";
 import {Separator} from "../../components/ui/separator";
-import {AlertTriangle, Bell, CheckCircle2, ShieldAlert, ArrowLeft, Pill, Clock} from "lucide-react";
+import {AlertTriangle, Bell, CheckCircle2, ShieldAlert, ArrowLeft, Pill, Clock, CalendarPlus} from "lucide-react";
 import {Toaster} from "../../components/ui/sonner";
 import {toast} from "sonner";
 import {motion, useReducedMotion} from "framer-motion";
@@ -65,7 +65,7 @@ export default function TreatmentAdherencePage() {
 
   const [regimen, setRegimen] = useState<RegimenType>("daily");
   const [settings, setSettings] = useState<ReminderSettings>({
-    enabled: false,
+    enabled: true,
     times: [],
     days: [1, 2, 3, 4, 5, 6, 0],
     snoozeMinutes: null,
@@ -81,7 +81,8 @@ export default function TreatmentAdherencePage() {
       const s = localStorage.getItem(STORAGE_KEYS.settings);
       if (s) {
         const parsed = JSON.parse(s) as ReminderSettings;
-        setSettings((prev) => ({...prev, ...parsed}));
+        // Always force reminders enabled per requirement
+        setSettings((prev) => ({...prev, ...parsed, enabled: true}));
         const currentTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
         if (parsed.tz && parsed.tz !== currentTz) {
           setTzChanged(true);
@@ -164,7 +165,7 @@ export default function TreatmentAdherencePage() {
 
   const clearAll = () => {
     setTracking({});
-    setSettings({enabled: false, times: [], days: [1, 2, 3, 4, 5, 6, 0], snoozeMinutes: null, tz: Intl.DateTimeFormat().resolvedOptions().timeZone});
+    setSettings({enabled: true, times: [], days: [1, 2, 3, 4, 5, 6, 0], snoozeMinutes: null, tz: Intl.DateTimeFormat().resolvedOptions().timeZone});
     setRegimen("daily");
     try {
       localStorage.removeItem(STORAGE_KEYS.settings);
@@ -179,12 +180,6 @@ export default function TreatmentAdherencePage() {
       if (set.has(idx)) set.delete(idx); else set.add(idx);
       return {...s, days: Array.from(set).sort()};
     });
-  };
-
-  // Simple mobile detection
-  const isMobile = () => {
-    if (typeof navigator === 'undefined') return false;
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   };
 
   // Compute next occurrence for a given HH:mm within selected days
@@ -245,6 +240,8 @@ export default function TreatmentAdherencePage() {
     const dtstamp = icsUtc(now);
     const byday = byDayParam(days);
     const freq = days.length === 7 ? 'DAILY' : 'WEEKLY';
+    const summary = t("reminders.calendar.eventTitle");
+    const description = t("reminders.calendar.eventDesc");
     const lines: string[] = [
       'BEGIN:VCALENDAR',
       'VERSION:2.0',
@@ -263,8 +260,8 @@ export default function TreatmentAdherencePage() {
         `DTSTART:${dtstart}`,
         'DURATION:PT15M',
         `RRULE:FREQ=${freq}${byday}`,
-        'SUMMARY:Medication Reminder',
-        'DESCRIPTION:Time to take your medication.',
+        `SUMMARY:${summary.replace(/\r?\n/g, ' ')}`,
+        `DESCRIPTION:${description.replace(/\r?\n/g, ' ')}`,
         'END:VEVENT'
       );
     });
@@ -283,14 +280,13 @@ export default function TreatmentAdherencePage() {
       a.click();
       document.body.removeChild(a);
       setTimeout(() => URL.revokeObjectURL(url), 2000);
-      toast.success('Calendar file created. Tap to add it.');
+      toast.success(t('reminders.calendar.toastCreated'));
     } catch (e) {
       // no-op
     }
   };
 
   const addTimesToCalendar = (times: string[]) => {
-    if (!isMobile()) return;
     const ics = buildICS(times, settings.days);
     const name = times.length > 1 ? 'sti-reminders.ics' : `sti-reminder-${times[0].replace(':','')}.ics`;
     downloadICS(name, ics);
@@ -461,25 +457,20 @@ export default function TreatmentAdherencePage() {
                   <Bell className="text-indigo-600" />
                   <h2 className="font-semibold text-lg">{t("reminders.title")}</h2>
                 </div>
-                <div className="flex items-center justify-between gap-4 mb-4">
-                  <p className="text-sm text-gray-700 dark:text-gray-300">{t("reminders.desc")}</p>
-                  <div className="flex items-center gap-2">
-                    <Label htmlFor="reminders-switch" className="text-sm">{t("reminders.enable")}</Label>
-                    <Switch
-                      id="reminders-switch"
-                      checked={settings.enabled}
-                      onCheckedChange={(v) => {
-                        setSettings((s) => ({...s, enabled: v}));
-                        if (v && isMobile()) {
-                          // Offer to add current times to calendar on mobile
-                          addTimesToCalendar(settings.times);
-                        }
-                      }}
-                    />
+                  <div className="flex items-center justify-between gap-4 mb-4">
+                    <p className="text-sm text-gray-700 dark:text-gray-300">{t("reminders.desc")}</p>
+                    <div className="flex items-center gap-2">
+                      <Label htmlFor="reminders-switch" className="text-sm">{t("reminders.enable")}</Label>
+                      <Switch
+                        id="reminders-switch"
+                        checked
+                        disabled
+                        onCheckedChange={() => {}}
+                      />
+                    </div>
                   </div>
-                </div>
 
-                <fieldset disabled={!settings.enabled} className={!settings.enabled?"opacity-50 pointer-events-none":""}>
+                <fieldset>
                   <div className="grid gap-4">
                     <div>
                       <Label className="text-sm">{t("reminders.times")}</Label>
@@ -493,12 +484,6 @@ export default function TreatmentAdherencePage() {
                                 const v = e.target.value;
                                 setSettings((s) => ({...s, times: s.times.map((t, i) => (i === idx ? v : t))}));
                               }}
-                              onBlur={(e) => {
-                                const v = e.target.value;
-                                if (settings.enabled && isMobile()) {
-                                  addTimesToCalendar([v]);
-                                }
-                              }}
                               className="w-28"
                             />
                             <Button variant="outline" size="icon"
@@ -511,9 +496,6 @@ export default function TreatmentAdherencePage() {
                           size="sm"
                           onClick={() => {
                             setSettings((s) => ({...s, times: [...s.times, "18:00"]}));
-                            if (settings.enabled && isMobile()) {
-                              addTimesToCalendar(["18:00"]);
-                            }
                           }}
                         >
                           {t("reminders.addTime")}
@@ -531,6 +513,22 @@ export default function TreatmentAdherencePage() {
                           </label>
                         ))}
                       </div>
+                    </div>
+
+                    <div className="flex justify-end">
+                      <Button
+                        className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white"
+                        size="sm"
+                        onClick={() => {
+                          if (!settings.times || settings.times.length === 0) {
+                          toast(t("reminders.addTime"), { description: t("reminders.desc") });
+                            return;
+                          }
+                          addTimesToCalendar(settings.times);
+                        }}
+                      >
+                        <CalendarPlus size={16} /> {t('reminders.calendar.add')}
+                      </Button>
                     </div>
                   </div>
                 </fieldset>
@@ -550,7 +548,7 @@ export default function TreatmentAdherencePage() {
                 <div className="flex items-start gap-3">
                   <ShieldAlert className="text-gray-600 mt-1" size={18} />
                   <div className="text-xs text-gray-700 dark:text-gray-300">
-                    <p><strong>{t("governance.title")}</strong> {t("governance.reviewed")} <span className="ml-1">{t("governance.lastReviewed")}</span></p>
+                    <p><strong>{t("governance.title")}</strong> {t("governance.reviewed")}</p>
                     <p className="mt-1"><strong>{t("sources.title")}</strong> {t("sources.items.0")}; {t("sources.items.1")}</p>
                     <div className="mt-2">
                       <Button variant="ghost" size="sm" onClick={clearAll}>{t("privacy.clearLocal")}</Button>
