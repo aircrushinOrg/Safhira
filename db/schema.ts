@@ -17,7 +17,7 @@ export const prevalence = pgTable('prevalence', {
   prevalenceCases: integer('prevalence_cases').notNull(),
   prevalenceIncidence: numeric('prevalence_incidence', { precision: 10, scale: 2 }).notNull(),
 }, (table) => [
-  primaryKey({ columns: [table.stiId, table.stateId] }),
+  primaryKey({ columns: [table.stiId, table.stateId, table.prevalenceYear] }),
   index('idx_prevalence_year').on(table.prevalenceYear),
   index('idx_prevalence_state').on(table.stateId),
   index('idx_prevalence_sti').on(table.stiId),
