@@ -849,86 +849,92 @@
       "title": "与性传播感染一起健康生活",
       "subtitle": "提供实用指南，帮助坚持治疗、管理副作用，并守护你的身心健康。"
     },
-    "back": "Back to Living Well",
+    "back": "返回“健康生活”",
     "disclaimer": {
       "title": "仅为教育性指导",
       "text": "本内容用于自我照护支持，不能替代专业医疗建议。",
       "emergency": "如遇紧急情况或出现严重症状，请立即就医。"
     },
     "adherence": {
-      "title": "Treatment Adherence",
-      "subtitle": "Stay on track with your treatment and manage side effects effectively",
+      "title": "治疗依从性",
+      "subtitle": "坚持按时用药，并有效管理副作用",
       "regimen": {
-        "label": "Your regimen",
-        "options": {"single": "Single‑dose", "daily": "Daily course", "multi": "Multi‑drug"}
+        "label": "你的用药方案",
+        "options": {"single": "单次用药", "daily": "每日疗程", "multi": "多药方案"}
       },
-      "dos": {"title": "Do"},
-      "donts": {"title": "Don't"},
+      "dos": {"title": "建议"},
+      "donts": {"title": "避免"},
       "single": {
-        "overview": "Single‑dose treatments work best when taken exactly as prescribed at the scheduled time.",
-        "dos": ["Confirm timing with food/water if instructed","Set a reminder so you don’t forget","Note any side effects and how you feel"],
-        "donts": ["Don’t split or share your dose","Don’t take extra if you vomit without clinician advice","Don’t mix with alcohol if cautioned"]
+        "overview": "单次用药在按处方规定时间准确服用时效果最佳。",
+        "dos": ["如有指示，确认是否与食物/水同服","设置提醒以防忘记","记录任何副作用及感受"],
+        "donts": ["不要分服或与他人分享药物","如呕吐不要自行加量，先咨询医生","如被提示需避免，切勿与酒精同用"]
       },
       "daily": {
-        "overview": "Take your medicine at the same time each day. Consistency helps effectiveness and reduces missed doses.",
-        "dos": ["Pair doses with a daily routine (e.g., breakfast)","Use reminders and a visible pill organizer","Contact a clinician if side effects affect daily life"],
-        "donts": ["Don’t double up without guidance","Don’t stop early even if you feel better","Don’t share medicines with others"]
+        "overview": "每天同一时间服药。保持一致可提高效果并减少漏服。",
+        "dos": ["把服药与固定习惯绑定（如早餐）","使用提醒和可见的药盒","若副作用影响日常生活，联系医生"],
+        "donts": ["不要擅自加倍服用","感觉好转也不要提前停药","不要将药物分享给他人"]
       },
       "multi": {
-        "overview": "Multi‑drug regimens may have different times/directions. Keep a simple schedule and double‑check each medicine’s instructions.",
-        "dos": ["List each medicine and its time","Use color labels or a weekly organizer","Ask a clinician/pharmacist if instructions conflict"],
-        "donts": ["Don’t change dose order without guidance","Don’t mix with alcohol/OTC drugs without checking","Don’t skip monitoring or follow‑up tests"]
+        "overview": "多药方案可能有不同时间/用法。保持简明日程并仔细核对每种药说明。",
+        "dos": ["列清每种药物与对应时间","使用颜色标签或周药盒","如指示冲突，咨询医生/药师"],
+        "donts": ["未经指导不要改变服药顺序","未确认不要与酒精/非处方药同用","不要跳过监测或随访"]
       }
     },
-    "interactions": {"caution": "Interactions: Some medicines, alcohol, and supplements can affect safety or effectiveness.","confirm": "Confirm with your clinician or pharmacist."},
+    "interactions": {"caution": "药物相互作用：某些药物、酒精和补充剂可能影响安全或疗效。","confirm": "请与医生或药师确认。"},
     "sideEffects": {
-      "title": "Side‑Effect Management",
-      "commonTitle": "Common / expected",
-      "redFlagTitle": "Red‑flag / urgent",
-      "common": ["Mild nausea — try with food and sip water","Headache — rest, hydrate; simple pain relief if safe","Dizziness — stand up slowly, avoid driving if affected","Fatigue — pace activities and rest"],
-      "redFlags": ["Severe rash or hives","Shortness of breath or wheezing","Swelling of face, lips, or throat","Chest pain, confusion, or fainting","High fever that doesn’t improve"],
-      "urgent": {"title": "Urgent care","text": "If you develop red‑flag symptoms, seek urgent medical attention.","resources": "Find help and know your rights"}
+      "title": "副作用管理",
+      "commonTitle": "常见/可预期",
+      "redFlagTitle": "危险信号/需紧急处理",
+      "common": ["轻度恶心——尝试随餐并少量饮水","头痛——休息、补水；若安全可用简易止痛药","头晕——起身放慢；受影响时避免驾驶","乏力——放缓节奏并注意休息"],
+      "redFlags": ["严重皮疹或荨麻疹","呼吸困难或喘鸣","面部、嘴唇或咽喉肿胀","胸痛、意识混乱或昏厥","高热且不见好转"],
+      "urgent": {"title": "紧急就医","text": "若出现上述危险信号，请及时就医。","resources": "寻求帮助与了解权益"}
     },
     "reminders": {
-      "title": "Optional Reminders",
-      "desc": "Keep reminders local to your device. You can enable/disable anytime.",
-      "enable": "Enable",
-      "legend": "Reminder settings",
-      "times": "Times per day",
-      "timeAria": "Reminder time {index}",
-      "removeTime": "Remove time",
-      "addTime": "Add time",
-      "days": "Days of week",
-      "week": {"0": "Sun","1": "Mon","2": "Tue","3": "Wed","4": "Thu","5": "Fri","6": "Sat"},
-      "snooze": "Snooze minutes",
-      "snoozeHelp": "Set how long to pause reminders when you snooze.",
-      "snoozed": "Snoozed until",
-      "snoozeNow": "Snooze now",
-      "pauseFrom": "Pause from",
-      "pauseTo": "Pause to",
-      "toast": {"title": "Time for your dose","desc": "Stay on track — mark taken when done."},
-      "tzChanged": "Your timezone changed. Future reminders will adjust to your local time.",
-      "tzDismiss": "Got it"
+      "title": "用药提醒",
+      "desc": "提醒保存在本设备，你可随时开启/停用。",
+      "enable": "启用",
+      "legend": "提醒设置",
+      "times": "提醒时间",
+      "timeAria": "提醒时间 {index}",
+      "removeTime": "移除时间",
+      "addTime": "添加时间",
+      "days": "提醒星期",
+      "week": {"0": "周日","1": "周一","2": "周二","3": "周三","4": "周四","5": "周五","6": "周六"},
+      "snooze": "延后分钟数",
+      "snoozeHelp": "设定打盹时暂停提醒的时长。",
+      "snoozed": "已暂停至",
+      "snoozeNow": "立即延后",
+      "pauseFrom": "暂停开始",
+      "pauseTo": "暂停结束",
+      "toast": {"title": "到服药时间了","desc": "坚持节奏—完成后标记为已服用。"},
+      "tzChanged": "你的时区已变化，未来提醒将随本地时间调整。",
+      "tzDismiss": "知道了",
+      "calendar": {
+        "add": "添加到日历",
+        "toastCreated": "已生成日历文件，点按以添加。",
+        "eventTitle": "用药提醒",
+        "eventDesc": "到时间服药了。"
+      }
     },
       "tracking": {
-        "title": "Dose Tracking (Local)",
-        "desc": "Mark each dose as taken or missed. Data stays on your device unless you export it.",
-        "next": "Next:",
-        "allDone": "All done for today",
-        "actions": {"taken": "Mark taken", "missed": "Mark missed"},
+        "title": "用药记录（本地）",
+        "desc": "将每次服药标记为已服用或已错过。数据仅保存在你的设备，除非你导出。",
+        "next": "下一个：",
+        "allDone": "今天都完成啦",
+        "actions": {"taken": "标记已服用", "missed": "标记已错过"},
         "status": {"pending": "待处理", "taken": "已服用", "missed": "已错过"},
-        "toast": {"missed": "Dose marked missed"}
+        "toast": {"missed": "已标记为错过"}
       },
     "catchup": {
-      "title": "Missed‑Dose Catch‑up Guidance",
-      "neverDoubleDose": "Never take a double dose to make up for a missed one.",
-      "single": {"summary": "Single‑dose: Take as soon as possible unless advised otherwise.","details": "If you missed a single‑dose treatment, take it as soon as you remember on the same day. If you vomit within a short time, contact a clinician for advice — do not re‑dose without guidance."},
-      "daily": {"summary": "Daily course: If <12h late, take now; otherwise skip and continue.","details": "If you’re less than 12 hours late, take the dose now and return to your usual time. If more than 12 hours late, skip the missed dose and take the next dose at your regular time."},
-      "multi": {"summary": "Multi‑drug: Follow drug‑specific instructions and confirm with a clinician.","details": "For multi‑drug regimens, follow each medicine’s catch‑up instructions. If unsure, skip the missed dose and seek clinician advice before adjusting."}
+      "title": "漏服补救建议",
+      "neverDoubleDose": "切勿为弥补漏服而加倍服药。",
+      "single": {"summary": "单次用药：尽快服用，除非另有医嘱。","details": "若错过单次用药，请在当天想起时尽快服用。如短时间内呕吐，请联系医生获得建议——不要自行重复用药。"},
+      "daily": {"summary": "每日疗程：晚于常规时间不足12小时，立即补服；超过则跳过并按时继续。","details": "若晚于12小时以内，立刻服用并回到常规时间；若超过12小时，跳过该次，按平常时间继续下一次。"},
+      "multi": {"summary": "多药方案：遵循各药物的补服说明，并与医生确认。","details": "多药方案请按每种药物的补救指引执行。如不确定，跳过漏服剂量，调整前先咨询医生。"}
     },
-    "governance": {"title": "Content governance:","reviewed": "Medically reviewed; educational only.","lastReviewed": "Last reviewed: 2025‑01‑01"},
-    "sources": {"title": "Sources:","items": ["WHO STI Guidelines (summary)","CDC 2021 STI Treatment Guidelines"]},
-    "privacy": {"clearLocal": "Clear local data"},
+    "governance": {"title": "内容治理：","reviewed": "已由医学审核；仅供教育用途。","lastReviewed": "最后审核：2025‑01‑01"},
+    "sources": {"title": "来源：","items": ["WHO STI 指南（摘要）","CDC 2021 年 STI 治疗指南"]},
+    "privacy": {"clearLocal": "清除本地数据"},
     "lifestyle": {
       "title": "积极生活方式",
       "subtitle": "经医学审核的故事与贴士，涵盖心理健康、关系、运动、饮食、应对污名等，帮助你与 STI 共处并活得更好。",
@@ -967,8 +973,8 @@
       "subtitle": "用尊重的方式沟通并彼此保护，附带按 STI 类型定制的更安全性行为指南。",
       "tabs": {"templates": "消息模板", "safer": "更安全性行为"},
       "templates": {
-        "title": "Communication Templates",
-        "desc": "Choose and customize a message template to help you communicate with partners.",
+        "title": "沟通模板",
+        "desc": "选择并自定义合适的消息模板，帮助你与伴侣沟通。",
         "label": "消息模板",
         "choose": "选择模板",
         "kinds": {"gentle": "温和与支持", "direct": "直接与清晰", "text": "简短短信"},
@@ -985,8 +991,8 @@
         "text": "嗨，我最近检测出某种 STI，正在治疗中。尽快去检测很重要。我可以分享详情和可靠资源。"
       },
       "safer": {
-        "title": "Safer Sex Practices",
-        "desc": "Get specific guidance based on your STI type and find testing resources.",
+        "title": "更安全性行为建议",
+        "desc": "根据你的 STI 类型获取更具体的建议，并找到检测资源。",
         "stiLabel": "STI 类型",
         "chooseSti": "选择一种 STI",
         "types": {"chlamydia": "衣原体感染", "gonorrhea": "淋病", "syphilis": "梅毒", "hiv": "HIV", "herpes": "疱疹（HSV）"},
