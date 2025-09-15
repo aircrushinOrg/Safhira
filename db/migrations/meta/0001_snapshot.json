@@ -1,0 +1,1082 @@
+{
+  "id": "cec17305-b4dc-4278-a076-a7d9f2b48a28",
+  "prevId": "b4c901de-dcc1-4319-8444-cde2ca8867cc",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.health_effect": {
+      "name": "health_effect",
+      "schema": "",
+      "columns": {
+        "health_effect_id": {
+          "name": "health_effect_id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "health_effect_text": {
+          "name": "health_effect_text",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "idx_health_effect_text": {
+          "name": "idx_health_effect_text",
+          "columns": [
+            {
+              "expression": "health_effect_text",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.prevention": {
+      "name": "prevention",
+      "schema": "",
+      "columns": {
+        "prevention_id": {
+          "name": "prevention_id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "prevention_text": {
+          "name": "prevention_text",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "idx_prevention_text": {
+          "name": "idx_prevention_text",
+          "columns": [
+            {
+              "expression": "prevention_text",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.quiz_leaderboard_stats": {
+      "name": "quiz_leaderboard_stats",
+      "schema": "",
+      "columns": {
+        "nickname": {
+          "name": "nickname",
+          "type": "varchar(100)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "best_score": {
+          "name": "best_score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "average_score": {
+          "name": "average_score",
+          "type": "numeric(5, 2)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'0'"
+        },
+        "total_attempts": {
+          "name": "total_attempts",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "quiz_type": {
+          "name": "quiz_type",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'myths'"
+        },
+        "last_played_at": {
+          "name": "last_played_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "idx_quiz_stats_best_score": {
+          "name": "idx_quiz_stats_best_score",
+          "columns": [
+            {
+              "expression": "best_score",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_quiz_stats_total_attempts": {
+          "name": "idx_quiz_stats_total_attempts",
+          "columns": [
+            {
+              "expression": "total_attempts",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_quiz_stats_quiz_type": {
+          "name": "idx_quiz_stats_quiz_type",
+          "columns": [
+            {
+              "expression": "quiz_type",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.quiz_questions": {
+      "name": "quiz_questions",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "statement": {
+          "name": "statement",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "is_true": {
+          "name": "is_true",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "explanation": {
+          "name": "explanation",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "category": {
+          "name": "category",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'myths'"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "idx_quiz_questions_category": {
+          "name": "idx_quiz_questions_category",
+          "columns": [
+            {
+              "expression": "category",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.quiz_results": {
+      "name": "quiz_results",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "nickname": {
+          "name": "nickname",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "score": {
+          "name": "score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "total_questions": {
+          "name": "total_questions",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 5
+        },
+        "correct_answers": {
+          "name": "correct_answers",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "quiz_type": {
+          "name": "quiz_type",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'myths'"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "idx_quiz_results_nickname": {
+          "name": "idx_quiz_results_nickname",
+          "columns": [
+            {
+              "expression": "nickname",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_quiz_results_score": {
+          "name": "idx_quiz_results_score",
+          "columns": [
+            {
+              "expression": "score",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_quiz_results_quiz_type": {
+          "name": "idx_quiz_results_quiz_type",
+          "columns": [
+            {
+              "expression": "quiz_type",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_quiz_results_created_at": {
+          "name": "idx_quiz_results_created_at",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.sti": {
+      "name": "sti",
+      "schema": "",
+      "columns": {
+        "sti_id": {
+          "name": "sti_id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "type": {
+          "name": "type",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "severity": {
+          "name": "severity",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "treatability": {
+          "name": "treatability",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "treatment": {
+          "name": "treatment",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "malaysian_context": {
+          "name": "malaysian_context",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "idx_sti_type": {
+          "name": "idx_sti_type",
+          "columns": [
+            {
+              "expression": "type",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_sti_severity": {
+          "name": "idx_sti_severity",
+          "columns": [
+            {
+              "expression": "severity",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_sti_name": {
+          "name": "idx_sti_name",
+          "columns": [
+            {
+              "expression": "name",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.sti_health_effect": {
+      "name": "sti_health_effect",
+      "schema": "",
+      "columns": {
+        "sti_id": {
+          "name": "sti_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "health_effect_id": {
+          "name": "health_effect_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "idx_sti_health_effect_sti": {
+          "name": "idx_sti_health_effect_sti",
+          "columns": [
+            {
+              "expression": "sti_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_sti_health_effect_he": {
+          "name": "idx_sti_health_effect_he",
+          "columns": [
+            {
+              "expression": "health_effect_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "sti_health_effect_sti_id_sti_sti_id_fk": {
+          "name": "sti_health_effect_sti_id_sti_sti_id_fk",
+          "tableFrom": "sti_health_effect",
+          "tableTo": "sti",
+          "columnsFrom": [
+            "sti_id"
+          ],
+          "columnsTo": [
+            "sti_id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "sti_health_effect_health_effect_id_health_effect_health_effect_id_fk": {
+          "name": "sti_health_effect_health_effect_id_health_effect_health_effect_id_fk",
+          "tableFrom": "sti_health_effect",
+          "tableTo": "health_effect",
+          "columnsFrom": [
+            "health_effect_id"
+          ],
+          "columnsTo": [
+            "health_effect_id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "sti_health_effect_sti_id_health_effect_id_pk": {
+          "name": "sti_health_effect_sti_id_health_effect_id_pk",
+          "columns": [
+            "sti_id",
+            "health_effect_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.sti_prevention": {
+      "name": "sti_prevention",
+      "schema": "",
+      "columns": {
+        "sti_id": {
+          "name": "sti_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "prevention_id": {
+          "name": "prevention_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "idx_sti_prevention_sti": {
+          "name": "idx_sti_prevention_sti",
+          "columns": [
+            {
+              "expression": "sti_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_sti_prevention_prev": {
+          "name": "idx_sti_prevention_prev",
+          "columns": [
+            {
+              "expression": "prevention_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "sti_prevention_sti_id_sti_sti_id_fk": {
+          "name": "sti_prevention_sti_id_sti_sti_id_fk",
+          "tableFrom": "sti_prevention",
+          "tableTo": "sti",
+          "columnsFrom": [
+            "sti_id"
+          ],
+          "columnsTo": [
+            "sti_id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "sti_prevention_prevention_id_prevention_prevention_id_fk": {
+          "name": "sti_prevention_prevention_id_prevention_prevention_id_fk",
+          "tableFrom": "sti_prevention",
+          "tableTo": "prevention",
+          "columnsFrom": [
+            "prevention_id"
+          ],
+          "columnsTo": [
+            "prevention_id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "sti_prevention_sti_id_prevention_id_pk": {
+          "name": "sti_prevention_sti_id_prevention_id_pk",
+          "columns": [
+            "sti_id",
+            "prevention_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.sti_state": {
+      "name": "sti_state",
+      "schema": "",
+      "columns": {
+        "date": {
+          "name": "date",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "state": {
+          "name": "state",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "disease": {
+          "name": "disease",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "cases": {
+          "name": "cases",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "incidence": {
+          "name": "incidence",
+          "type": "numeric(10, 2)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "idx_sti_state_date": {
+          "name": "idx_sti_state_date",
+          "columns": [
+            {
+              "expression": "date",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_sti_state_state": {
+          "name": "idx_sti_state_state",
+          "columns": [
+            {
+              "expression": "state",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_sti_state_disease": {
+          "name": "idx_sti_state_disease",
+          "columns": [
+            {
+              "expression": "disease",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "sti_state_date_state_disease_pk": {
+          "name": "sti_state_date_state_disease_pk",
+          "columns": [
+            "date",
+            "state",
+            "disease"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.sti_symptom": {
+      "name": "sti_symptom",
+      "schema": "",
+      "columns": {
+        "sti_id": {
+          "name": "sti_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "symptom_id": {
+          "name": "symptom_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "sti_symptom_category": {
+          "name": "sti_symptom_category",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'general'"
+        }
+      },
+      "indexes": {
+        "idx_sti_symptom_sti": {
+          "name": "idx_sti_symptom_sti",
+          "columns": [
+            {
+              "expression": "sti_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_sti_symptom_symptom": {
+          "name": "idx_sti_symptom_symptom",
+          "columns": [
+            {
+              "expression": "symptom_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_sti_symptom_category": {
+          "name": "idx_sti_symptom_category",
+          "columns": [
+            {
+              "expression": "sti_symptom_category",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "sti_symptom_sti_id_sti_sti_id_fk": {
+          "name": "sti_symptom_sti_id_sti_sti_id_fk",
+          "tableFrom": "sti_symptom",
+          "tableTo": "sti",
+          "columnsFrom": [
+            "sti_id"
+          ],
+          "columnsTo": [
+            "sti_id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "sti_symptom_symptom_id_symptom_symptom_id_fk": {
+          "name": "sti_symptom_symptom_id_symptom_symptom_id_fk",
+          "tableFrom": "sti_symptom",
+          "tableTo": "symptom",
+          "columnsFrom": [
+            "symptom_id"
+          ],
+          "columnsTo": [
+            "symptom_id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "sti_symptom_sti_id_symptom_id_pk": {
+          "name": "sti_symptom_sti_id_symptom_id_pk",
+          "columns": [
+            "sti_id",
+            "symptom_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.sti_transmission": {
+      "name": "sti_transmission",
+      "schema": "",
+      "columns": {
+        "sti_id": {
+          "name": "sti_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "transmission_id": {
+          "name": "transmission_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "idx_sti_transmission_sti": {
+          "name": "idx_sti_transmission_sti",
+          "columns": [
+            {
+              "expression": "sti_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_sti_transmission_trans": {
+          "name": "idx_sti_transmission_trans",
+          "columns": [
+            {
+              "expression": "transmission_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "sti_transmission_sti_id_sti_sti_id_fk": {
+          "name": "sti_transmission_sti_id_sti_sti_id_fk",
+          "tableFrom": "sti_transmission",
+          "tableTo": "sti",
+          "columnsFrom": [
+            "sti_id"
+          ],
+          "columnsTo": [
+            "sti_id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "sti_transmission_transmission_id_transmission_transmission_id_fk": {
+          "name": "sti_transmission_transmission_id_transmission_transmission_id_fk",
+          "tableFrom": "sti_transmission",
+          "tableTo": "transmission",
+          "columnsFrom": [
+            "transmission_id"
+          ],
+          "columnsTo": [
+            "transmission_id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "sti_transmission_sti_id_transmission_id_pk": {
+          "name": "sti_transmission_sti_id_transmission_id_pk",
+          "columns": [
+            "sti_id",
+            "transmission_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.symptom": {
+      "name": "symptom",
+      "schema": "",
+      "columns": {
+        "symptom_id": {
+          "name": "symptom_id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "symptom_text": {
+          "name": "symptom_text",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "idx_symptom_text": {
+          "name": "idx_symptom_text",
+          "columns": [
+            {
+              "expression": "symptom_text",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.transmission": {
+      "name": "transmission",
+      "schema": "",
+      "columns": {
+        "transmission_id": {
+          "name": "transmission_id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "transmission_text": {
+          "name": "transmission_text",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "idx_transmission_text": {
+          "name": "idx_transmission_text",
+          "columns": [
+            {
+              "expression": "transmission_text",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

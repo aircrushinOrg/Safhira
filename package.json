@@ -6,6 +6,8 @@
     "start": "next start",
     "lint": "next lint",
     "scrape:myprep": "node scripts/scrape-mypreplocator.js",
+    "clean:myprep": "node scripts/clean-mypreplocator-csv.js",
+    "migrate:sti-info": "node scripts/migrate-sti-info-to-sti.js",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",

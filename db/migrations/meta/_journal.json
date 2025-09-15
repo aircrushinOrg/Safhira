@@ -2,5 +2,26 @@
   "version": "7",
   "dialect": "postgresql",
   "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1757947724238,
+      "tag": "0000_violet_luminals",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1757948147716,
+      "tag": "0001_fancy_rawhide_kid",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1757949033478,
+      "tag": "0002_elite_killmonger",
+      "breakpoints": true
+    }
   ]
 }
