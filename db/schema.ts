@@ -23,6 +23,24 @@ export const prevalence = pgTable('prevalence', {
   index('idx_prevalence_sti').on(table.stiId),
 ]);
 
+// Healthcare Provider directory
+export const provider = pgTable('provider', {
+  providerId: serial('provider_id').primaryKey(),
+  stateId: integer('state_id').notNull().references(() => state.stateId),
+  providerName: varchar('provider_name', { length: 255 }).notNull(),
+  providerAddress: text('provider_address').notNull(),
+  providerPhoneNum: varchar('provider_phone_num', { length: 50 }),
+  providerEmail: varchar('provider_email', { length: 255 }),
+  providerLongitude: numeric('provider_longitude', { precision: 9, scale: 6 }),
+  providerLatitude: numeric('provider_latitude', { precision: 9, scale: 6 }),
+  providerProvidePrep: boolean('provider_provide_prep').notNull().default(false),
+  providerProvidePep: boolean('provider_provide_pep').notNull().default(false),
+  providerFreeStiScreening: boolean('provider_free_sti_screening').notNull().default(false),
+}, (table) => [
+  index('idx_provider_state').on(table.stateId),
+  index('idx_provider_name').on(table.providerName),
+]);
+
 // STI table (renamed from sti_info)
 // Dropped JSON array text columns into separate relation tables (see below)
 export const sti = pgTable('sti', {
