@@ -155,7 +155,7 @@ export function ProviderSearch({ initialProviders = [] }: ProviderSearchProps) {
               placeholder={t('search.placeholder')}
               value={filters.searchQuery || ''}
               onChange={(e) => handleFilterChange('searchQuery', e.target.value)}
-              className="pl-10"
+              className="pl-10 bg-slate-100 dark:bg-slate-700 border border-slate-300 dark:border-slate-600"
             />
           </div>
           <Button type="submit" disabled={loading}>
@@ -177,10 +177,10 @@ export function ProviderSearch({ initialProviders = [] }: ProviderSearchProps) {
 
         {/* Filters Panel */}
         {showFilters && (
-          <Card>
-            <CardHeader className="pb-3">
+          <Card className='bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm'>
+            <CardHeader>
               <div className="flex justify-between items-center">
-                <CardTitle className="text-lg">{t('filters.title')}</CardTitle>
+                <CardTitle className="text-lg font-semibold">{t('filters.title')}</CardTitle>
                 <Button variant="ghost" size="sm" onClick={clearFilters}>
                   {t('filters.clearAll')}
                 </Button>
@@ -190,17 +190,18 @@ export function ProviderSearch({ initialProviders = [] }: ProviderSearchProps) {
               {/* States Multi-select */}
               <div>
                 <h3 className="text-sm font-medium mb-3">{t('filters.statesRegions')}</h3>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-2 max-h-48 overflow-y-auto">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3 max-h-48 overflow-y-auto">
                   {states.map((state) => (
                     <div key={state.stateId} className="flex items-center space-x-2">
                       <Checkbox
                         id={`state-${state.stateId}`}
                         checked={filters.stateIds?.includes(state.stateId) || false}
                         onCheckedChange={() => handleStateToggle(state.stateId)}
+                        className="dark:border-white"
                       />
                       <label
                         htmlFor={`state-${state.stateId}`}
-                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                        className="text-sm font-normal leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
                       >
                         {state.stateName}
                       </label>
@@ -233,8 +234,9 @@ export function ProviderSearch({ initialProviders = [] }: ProviderSearchProps) {
                       id="prep"
                       checked={filters.providePrep || false}
                       onCheckedChange={(checked) => handleFilterChange('providePrep', checked)}
+                      className="dark:border-white"
                     />
-                    <label htmlFor="prep" className="text-sm font-medium cursor-pointer">
+                    <label htmlFor="prep" className="text-sm font-normal cursor-pointer">
                       {t('services.prep')}
                     </label>
                   </div>
@@ -243,8 +245,9 @@ export function ProviderSearch({ initialProviders = [] }: ProviderSearchProps) {
                       id="pep"
                       checked={filters.providePep || false}
                       onCheckedChange={(checked) => handleFilterChange('providePep', checked)}
+                      className="dark:border-white"
                     />
-                    <label htmlFor="pep" className="text-sm font-medium cursor-pointer">
+                    <label htmlFor="pep" className="text-sm font-normal cursor-pointer">
                       {t('services.pep')}
                     </label>
                   </div>
@@ -253,8 +256,9 @@ export function ProviderSearch({ initialProviders = [] }: ProviderSearchProps) {
                       id="screening"
                       checked={filters.freeStiScreening || false}
                       onCheckedChange={(checked) => handleFilterChange('freeStiScreening', checked)}
+                      className="dark:border-white"
                     />
-                    <label htmlFor="screening" className="text-sm font-medium cursor-pointer">
+                    <label htmlFor="screening" className="text-sm font-normal cursor-pointer">
                       {t('services.freeScreening')}
                     </label>
                   </div>
@@ -282,7 +286,7 @@ export function ProviderSearch({ initialProviders = [] }: ProviderSearchProps) {
         {loading && (
           <div className="flex justify-center items-center py-12">
             <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
-            <span className="ml-2 text-gray-600">{t('status.loading')}</span>
+            <span className="ml-2 text-gray-600 dark:text-gray-400">{t('status.loading')}</span>
           </div>
         )}
 
@@ -331,7 +335,7 @@ export function ProviderSearch({ initialProviders = [] }: ProviderSearchProps) {
 
             {/* Pagination */}
             {totalPages > 1 && (
-              <div className="flex justify-center items-center space-x-2 mt-8">
+              <div className="flex justify-center items-center space-x-2 !mt-8">
                 <Button
                   variant="ghost"
                   size="sm"
