@@ -150,7 +150,8 @@
     "nav": {
       "home": "首页",
       "learnStis": "了解性传播感染",
-      "quiz": "测验"
+      "quiz": "测验",
+      "services": "查找服务"
     }
   },
   "Footer": {
@@ -1043,6 +1044,57 @@
         }
       },
       "legal": {"title": "法律注意事项", "note": "各地法律与义务可能不同。本内容为一般性指导，非法律建议。","linkLabel": "了解更多"}
+    }
+  },
+  "ProviderSearch": {
+    "hero": {
+      "title": "STI服务目录",
+      "subtitle": "查找在马来西亚提供性传播感染检测、PrEP和PEP服务的医疗服务提供者"
+    },
+    "search": {
+      "placeholder": "按提供者名称搜索...",
+      "button": "搜索",
+      "filters": "筛选器"
+    },
+    "filters": {
+      "title": "筛选选项",
+      "clearAll": "全部清除",
+      "statesRegions": "州/地区",
+      "availableServices": "可用服务",
+      "applyFilters": "应用筛选器"
+    },
+    "services": {
+      "prep": "PrEP（暴露前预防）",
+      "pep": "PEP（暴露后预防）",
+      "freeScreening": "免费性传播感染筛查"
+    },
+    "status": {
+      "searching": "搜索中...",
+      "loading": "加载提供者...",
+      "providersFound": "找到 {total} 个提供者",
+      "providersFoundPlural": "找到 {total} 个提供者"
+    },
+    "error": {
+      "title": "出了点问题",
+      "tryAgain": "重试"
+    },
+    "noResults": {
+      "title": "未找到提供者",
+      "message": "尝试调整您的搜索条件或筛选器以获得更多结果。",
+      "clearFilters": "清除筛选器"
+    },
+    "pagination": {
+      "previous": "上一页",
+      "next": "下一页",
+      "showing": "显示 {start}-{end}，共 {total} 个结果"
+    }
+  },
+  "ProviderCard": {
+    "services": {
+      "prep": "PrEP",
+      "pep": "PEP",
+      "freeScreening": "免费性传播感染筛查",
+      "availableServices": "可用服务："
     }
   }
 }

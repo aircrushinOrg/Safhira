@@ -148,7 +148,8 @@
     "nav": {
       "home": "Laman Utama",
       "learnStis": "Ketahui tentang STI",
-      "quiz": "Kuiz"
+      "quiz": "Kuiz",
+      "services": "Cari Perkhidmatan"
     }
   },
   "Footer": {
@@ -1301,5 +1302,56 @@
   },
   "disclaimer": {
     "title": ""
+  },
+  "ProviderSearch": {
+    "hero": {
+      "title": "Direktori Perkhidmatan STI",
+      "subtitle": "Cari pembekal penjagaan kesihatan yang menyediakan ujian STI, PrEP, dan perkhidmatan PEP di Malaysia"
+    },
+    "search": {
+      "placeholder": "Cari mengikut nama pembekal...",
+      "button": "Cari",
+      "filters": "Penapis"
+    },
+    "filters": {
+      "title": "Pilihan Penapis",
+      "clearAll": "Kosongkan Semua",
+      "statesRegions": "Negeri/Wilayah",
+      "availableServices": "Perkhidmatan Tersedia",
+      "applyFilters": "Gunakan Penapis"
+    },
+    "services": {
+      "prep": "PrEP (Profilaksis Pra-Pendedahan)",
+      "pep": "PEP (Profilaksis Pasca-Pendedahan)",
+      "freeScreening": "Saringan STI Percuma"
+    },
+    "status": {
+      "searching": "Mencari...",
+      "loading": "Memuat pembekal...",
+      "providersFound": "{total} pembekal dijumpai",
+      "providersFoundPlural": "{total} pembekal dijumpai"
+    },
+    "error": {
+      "title": "Sesuatu tidak kena",
+      "tryAgain": "Cuba Lagi"
+    },
+    "noResults": {
+      "title": "Tiada pembekal dijumpai",
+      "message": "Cuba laraskan kriteria carian atau penapis anda untuk mendapatkan lebih banyak hasil.",
+      "clearFilters": "Kosongkan Penapis"
+    },
+    "pagination": {
+      "previous": "Sebelumnya",
+      "next": "Seterusnya",
+      "showing": "Menunjukkan {start}-{end} daripada {total} hasil"
+    }
+  },
+  "ProviderCard": {
+    "services": {
+      "prep": "PrEP",
+      "pep": "PEP",
+      "freeScreening": "Saringan STI Percuma",
+      "availableServices": "Perkhidmatan Tersedia:"
+    }
   }
 }
