@@ -149,7 +149,8 @@
     "chat": "私密聊天",
     "nav": {
       "home": "首页",
-      "learnStis": "了解性传播感染"
+      "learnStis": "了解性传播感染",
+      "quiz": "测验"
     }
   },
   "Footer": {

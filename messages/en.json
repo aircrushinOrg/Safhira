@@ -148,7 +148,8 @@
     "chat": "Private Chat",
     "nav": {
       "home": "Home",
-      "learnStis": "Learn About STIs"
+      "learnStis": "Learn About STIs",
+      "quiz": "Quiz"
     }
   },
   "Footer": {

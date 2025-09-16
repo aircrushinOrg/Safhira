@@ -4,7 +4,7 @@ import { Button } from './ui/button';
 import { ThemeToggle } from './ThemeToggle';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from './ui/sheet';
 import { useIsMobile } from './ui/use-mobile';
-import { MessageCircle, Shield, Home, BookOpen, HelpCircle, Award, Menu } from 'lucide-react';
+import { MessageCircle, Shield, BookOpen, HelpCircle, Award, Menu } from 'lucide-react';
 import {Link} from '../../i18n/routing';
 import {LocaleSwitcher} from './LocaleSwitcher';
 import { useState } from 'react';
@@ -33,15 +33,16 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
 
   const NavigationItems = () => (
     <>
-      <Button
-        variant={currentSection === 'home' ? 'secondary' : 'ghost'}
-        size="sm"
-        onClick={() => handleSectionChange('home')}
-        className="flex items-center space-x-2 w-full justify-start md:w-auto md:justify-center"
-      >
-        <Home size={16} />
-        <span>{t('nav.home')}</span>
-      </Button>
+      <Link href="/quiz" className="w-full md:w-auto">
+        <Button
+          variant={currentSection === 'quiz' ? 'secondary' : 'ghost'}
+          size="sm"
+          className="flex items-center space-x-2 w-full justify-start md:w-auto md:justify-center"
+        >
+          <HelpCircle size={16} />
+          <span>{t('nav.quiz')}</span>
+        </Button>
+      </Link>
       <Link href="/stis" className="w-full md:w-auto">
         <Button
           variant={currentSection === 'stis' ? 'secondary' : 'ghost'}
