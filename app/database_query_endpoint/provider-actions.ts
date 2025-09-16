@@ -2,7 +2,7 @@
 
 import { db } from "../db";
 import { provider, state } from "../../db/schema";
-import { eq, sql } from "drizzle-orm";
+import { eq, sql, and, ilike, inArray, desc } from "drizzle-orm";
 
 export interface ProviderRecord {
   id: number;
@@ -17,6 +17,26 @@ export interface ProviderRecord {
   providesPrep: boolean;
   providesPep: boolean;
   freeStiScreening: boolean;
+}
+
+export interface ProviderSearchFilters {
+  stateIds?: number[];
+  searchQuery?: string;
+  providePrep?: boolean;
+  providePep?: boolean;
+  freeStiScreening?: boolean;
+  limit?: number;
+  offset?: number;
+}
+
+export interface ProviderSearchResponse {
+  providers: ProviderRecord[];
+  total: number;
+}
+
+export interface StateOption {
+  stateId: number;
+  stateName: string;
 }
 
 function mapProviderRow(row: {
@@ -173,5 +193,84 @@ export async function getProviderCountsByState(): Promise<{ stateName: string; c
   } catch (error) {
     console.error("Error fetching provider counts by state:", error);
     throw new Error("Failed to fetch provider counts by state");
+  }
+}
+
+export async function getAllStates(): Promise<StateOption[]> {
+  try {
+    const rows = await db
+      .select({
+        stateId: state.stateId,
+        stateName: state.stateName,
+      })
+      .from(state)
+      .orderBy(state.stateName);
+
+    return rows.map((row) => ({
+      stateId: row.stateId,
+      stateName: row.stateName,
+    }));
+  } catch (error) {
+    console.error("Error fetching states:", error);
+    throw new Error("Failed to fetch states");
+  }
+}
+
+export async function searchProvidersWithFilters(filters: ProviderSearchFilters): Promise<ProviderSearchResponse> {
+  try {
+    // Build WHERE conditions
+    const conditions = [];
+
+    // State filter
+    if (filters.stateIds && filters.stateIds.length > 0) {
+      conditions.push(inArray(provider.stateId, filters.stateIds));
+    }
+
+    // Search query filter (searches provider name)
+    if (filters.searchQuery) {
+      conditions.push(ilike(provider.providerName, `%${filters.searchQuery}%`));
+    }
+
+    // Service filters
+    if (filters.providePrep === true) {
+      conditions.push(eq(provider.providerProvidePrep, true));
+    }
+
+    if (filters.providePep === true) {
+      conditions.push(eq(provider.providerProvidePep, true));
+    }
+
+    if (filters.freeStiScreening === true) {
+      conditions.push(eq(provider.providerFreeStiScreening, true));
+    }
+
+    // Build the main query with join to get state name
+    const whereClause = conditions.length > 0 ? and(...conditions) : undefined;
+
+    const rows = await db
+      .select(providerSelection)
+      .from(provider)
+      .leftJoin(state, eq(provider.stateId, state.stateId))
+      .where(whereClause)
+      .orderBy(desc(provider.providerName))
+      .limit(filters.limit || 20)
+      .offset(filters.offset || 0);
+
+    // Get total count for pagination
+    const totalCountResult = await db
+      .select({ count: sql<number>`count(*)` })
+      .from(provider)
+      .leftJoin(state, eq(provider.stateId, state.stateId))
+      .where(whereClause);
+    
+    const total = totalCountResult[0]?.count || 0;
+
+    return {
+      providers: rows.map(mapProviderRow),
+      total,
+    };
+  } catch (error) {
+    console.error("Error searching providers with filters:", error);
+    throw new Error("Failed to search providers with filters");
   }
 }
