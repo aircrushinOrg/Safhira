@@ -4,7 +4,7 @@ import { Button } from './ui/button';
 import { ThemeToggle } from './ThemeToggle';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from './ui/sheet';
 import { useIsMobile } from './ui/use-mobile';
-import { MessageCircle, Shield, BookOpen, HelpCircle, Award, Menu } from 'lucide-react';
+import { MessageCircle, Shield, BookOpen, HelpCircle, Award, Menu, MapPin } from 'lucide-react';
 import {Link} from '../../i18n/routing';
 import {LocaleSwitcher} from './LocaleSwitcher';
 import { useState } from 'react';
@@ -51,6 +51,16 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
         >
           <BookOpen size={16} />
           <span>{t('nav.learnStis')}</span>
+        </Button>
+      </Link>
+      <Link href="/providers" className="w-full md:w-auto">
+        <Button
+          variant={currentSection === 'providers' ? 'secondary' : 'ghost'}
+          size="sm"
+          className="flex items-center space-x-2 w-full justify-start md:w-auto md:justify-center"
+        >
+          <MapPin size={16} />
+          <span>{t('nav.providers')}</span>
         </Button>
       </Link>
     </>
