@@ -56,9 +56,9 @@ export default function LivingWellWithSTIPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-      <section className="py-8 md:py-12 px-4">
-        <div className="container mx-auto max-w-6xl">
+    <div className="bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      <section className="py-8 md:py-12 lg:py-16 xl:py-20 px-4">
+        <div className="mx-auto max-w-6xl">
           <motion.header className="mb-8 md:mb-12"
             initial={{opacity: 0, y: reduceMotion ? 0 : 12}}
             animate={{opacity: 1, y: 0}}

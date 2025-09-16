@@ -253,7 +253,7 @@ export default function RelationshipsPage() {
                   
                   <div className="text-xs text-gray-600 dark:text-gray-300 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-4 rounded-lg border border-blue-200/50 dark:border-blue-600/30 shadow-sm">
                     <p className="font-semibold mb-2 text-blue-800 dark:text-blue-300">{t("partner.legal.title")}</p>
-                    <p>{t("partner.legal.note")} <a className="text-teal-600 dark:text-teal-400 underline hover:text-teal-700 dark:hover:text-teal-300 transition-colors" href="https://www.unaids.org/en/topic/hiv-law" target="_blank" rel="noopener noreferrer">{t("partner.legal.linkLabel")}</a></p>
+                    <p>{t("partner.legal.note")} <a className="text-teal-600 dark:text-teal-400 underline hover:text-teal-700 dark:hover:text-teal-300 transition-colors" href="https://www.unaids.org/en" target="_blank" rel="noopener noreferrer">{t("partner.legal.linkLabel")}</a></p>
                   </div>
                 </TabsContent>
 
