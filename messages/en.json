@@ -1170,7 +1170,24 @@
         "reset": "Reset to template",
         "gentle": "I care about you and want to be honest. I was diagnosed with an STI and I’m getting the right treatment. We can talk about how to keep each other safe. I have resources we can read together if you’d like.",
         "direct": "I need to let you know I tested positive for an STI. I’m following medical guidance. Let’s plan for testing and use protection as recommended.",
-        "text": "Hi, I recently tested positive for an STI. I’m getting treated. It’s important to get tested. I’m here to share details and resources."
+      "text": "Hi, I recently tested positive for an STI. I’m getting treated. It’s important to get tested. I’m here to share details and resources."
+      },
+      "ai": {
+        "toneLabel": "Tone",
+        "chooseTone": "Choose a tone",
+        "tune": "Tune with AI",
+        "tuning": "Tuning...",
+        "tuned": "Tone updated",
+        "empty": "Please enter a message first",
+        "error": "AI tuning failed",
+        "tones": {
+          "supportive": "Supportive & caring",
+          "empathetic": "Empathetic",
+          "reassuring": "Reassuring",
+          "calmDirect": "Calm & direct",
+          "appreciative": "Appreciative",
+          "collaborative": "Collaborative"
+        }
       },
       "safer": {
         "title": "Safer Sex Practices",

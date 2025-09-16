@@ -991,6 +991,23 @@
         "direct": "我需要告诉你：我最近的检测显示感染了某种 STI。我正在遵循医生的指导。我们可以安排检测，并按建议做好防护。",
         "text": "嗨，我最近检测出某种 STI，正在治疗中。尽快去检测很重要。我可以分享详情和可靠资源。"
       },
+      "ai": {
+        "toneLabel": "语气",
+        "chooseTone": "选择语气",
+        "tune": "用 AI 优化语气",
+        "tuning": "正在优化...",
+        "tuned": "语气已更新",
+        "empty": "请先输入一段文字",
+        "error": "AI 优化失败",
+        "tones": {
+          "supportive": "支持与关怀",
+          "empathetic": "共情与倾听",
+          "reassuring": "安抚与安心",
+          "calmDirect": "冷静而直接",
+          "appreciative": "感谢与肯定",
+          "collaborative": "协作与共商"
+        }
+      },
       "safer": {
         "title": "更安全性行为建议",
         "desc": "根据你的 STI 类型获取更具体的建议，并找到检测资源。",

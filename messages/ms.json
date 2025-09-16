@@ -1166,6 +1166,23 @@
         "direct": "Saya perlu memaklumkan bahawa keputusan saya positif untuk STI. Saya mengikuti panduan perubatan. Mari rancang ujian dan guna perlindungan seperti disyorkan.",
         "text": "Hai, saya baru-baru ini didapati positif STI. Saya sedang dirawat. Penting untuk menjalani ujian. Saya boleh kongsi butiran dan sumber."
       },
+      "ai": {
+        "toneLabel": "Nada",
+        "chooseTone": "Pilih nada",
+        "tune": "Sesuaikan dengan AI",
+        "tuning": "Sedang menyesuaikan...",
+        "tuned": "Nada dikemas kini",
+        "empty": "Sila masukkan mesej terlebih dahulu",
+        "error": "Gagal menyesuaikan dengan AI",
+        "tones": {
+          "supportive": "Menyokong & prihatin",
+          "empathetic": "Empati",
+          "reassuring": "Menenangkan",
+          "calmDirect": "Tenang & terus",
+          "appreciative": "Menghargai",
+          "collaborative": "Kolaboratif"
+        }
+      },
       "safer": {
         "title": "Amalan Seks Lebih Selamat",
         "desc": "Dapatkan panduan khusus mengikut jenis STI anda dan cari sumber ujian.",

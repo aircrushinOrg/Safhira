@@ -107,7 +107,7 @@ export default function LivingWellWithSTIPage() {
                   alt="Living well illustration"
                   width={400}
                   height={300}
-                  className="max-w-full h-auto"
+                  className="max-w-full h-auto hidden md:block"
                   priority
                 />
               </motion.div>
