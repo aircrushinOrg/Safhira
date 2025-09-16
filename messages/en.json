@@ -149,7 +149,8 @@
     "nav": {
       "home": "Home",
       "learnStis": "Learn About STIs",
-      "quiz": "Quiz"
+      "quiz": "Quiz",
+      "providers": "Find Providers"
     }
   },
   "Footer": {
@@ -1268,6 +1269,52 @@
         "note": "Laws and obligations vary by jurisdiction. This is general guidance, not legal advice.",
         "linkLabel": "Learn more"
       }
+    }
+  },
+  "ProviderSearch": {
+    "hero": {
+      "title": "Healthcare Provider Directory",
+      "subtitle": "Find healthcare providers that offer STI testing, PrEP, and PEP services in Malaysia"
+    },
+    "search": {
+      "placeholder": "Search by provider name...",
+      "button": "Search",
+      "filters": "Filters"
+    },
+    "filters": {
+      "title": "Filter Options",
+      "clearAll": "Clear All",
+      "statesRegions": "States/Regions",
+      "availableServices": "Available Services",
+      "applyFilters": "Apply Filters"
+    },
+    "services": {
+      "prep": "PrEP (Pre-Exposure Prophylaxis)",
+      "pep": "PEP (Post-Exposure Prophylaxis)",
+      "freeScreening": "Free STI Screening"
+    },
+    "status": {
+      "searching": "Searching...",
+      "loading": "Loading providers...",
+      "providersFound": "{total} provider found",
+      "providersFoundPlural": "{total} providers found"
+    },
+    "error": {
+      "title": "Something went wrong",
+      "tryAgain": "Try Again"
+    },
+    "noResults": {
+      "title": "No providers found",
+      "message": "Try adjusting your search criteria or filters to find more results.",
+      "clearFilters": "Clear Filters"
+    }
+  },
+  "ProviderCard": {
+    "services": {
+      "prep": "PrEP",
+      "pep": "PEP",
+      "freeScreening": "Free STI Screening",
+      "availableServices": "Available Services:"
     }
   }
 }
