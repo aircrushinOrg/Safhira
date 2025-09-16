@@ -2,7 +2,7 @@
 
 import { db } from "../db";
 import { provider, state } from "../../db/schema";
-import { eq, sql, and, ilike, inArray, desc } from "drizzle-orm";
+import { eq, sql, and, ilike, inArray, desc, ne } from "drizzle-orm";
 
 export interface ProviderRecord {
   id: number;
@@ -204,6 +204,7 @@ export async function getAllStates(): Promise<StateOption[]> {
         stateName: state.stateName,
       })
       .from(state)
+      .where(ne(state.stateName, "Malaysia"))
       .orderBy(state.stateName);
 
     return rows.map((row) => ({
