@@ -53,14 +53,14 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
           <span>{t('nav.learnStis')}</span>
         </Button>
       </Link>
-      <Link href="/providers" className="w-full md:w-auto">
+      <Link href="/sti-services" className="w-full md:w-auto">
         <Button
           variant={currentSection === 'providers' ? 'secondary' : 'ghost'}
           size="sm"
           className="flex items-center space-x-2 w-full justify-start md:w-auto md:justify-center"
         >
           <MapPin size={16} />
-          <span>{t('nav.providers')}</span>
+          <span>{t('nav.services')}</span>
         </Button>
       </Link>
     </>
