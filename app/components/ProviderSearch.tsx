@@ -9,7 +9,7 @@ import { Input } from '@/app/components/ui/input';
 import { Checkbox } from '@/app/components/ui/checkbox';
 import { Card, CardContent, CardHeader, CardTitle } from '@/app/components/ui/card';
 import { Badge } from '@/app/components/ui/badge';
-import { Search, Filter, X, Loader2, AlertCircle } from 'lucide-react';
+import { Search, Filter, X, Loader2, AlertCircle, ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface ProviderSearchProps {
   initialProviders?: ProviderRecord[];
@@ -30,7 +30,7 @@ export function ProviderSearch({ initialProviders = [] }: ProviderSearchProps) {
     providePrep: false,
     providePep: false,
     freeStiScreening: false,
-    limit: 20,
+    limit: 18,
     offset: 0,
   });
 
@@ -101,7 +101,7 @@ export function ProviderSearch({ initialProviders = [] }: ProviderSearchProps) {
       providePrep: false,
       providePep: false,
       freeStiScreening: false,
-      limit: 20,
+      limit: 18,
       offset: 0,
     };
     setFilters(clearedFilters);
@@ -121,6 +121,18 @@ export function ProviderSearch({ initialProviders = [] }: ProviderSearchProps) {
     if (filters.freeStiScreening) count++;
     return count;
   }, [filters]);
+
+  const totalPages = Math.ceil(total / (filters.limit || 18));
+  const currentPage = Math.floor((filters.offset || 0) / (filters.limit || 18)) + 1;
+
+  const handlePageChange = (page: number) => {
+    const newOffset = (page - 1) * (filters.limit || 18);
+    const newFilters = { ...filters, offset: newOffset };
+    setFilters(newFilters);
+    fetchProviders(newFilters);
+    // Scroll to top of results
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
     <div className="w-full max-w-7xl mx-auto p-6">
@@ -310,11 +322,93 @@ export function ProviderSearch({ initialProviders = [] }: ProviderSearchProps) {
 
         {/* Results grid */}
         {!loading && !error && providers.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {providers.map((provider) => (
-              <ProviderCard key={provider.id} provider={provider} />
-            ))}
-          </div>
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {providers.map((provider) => (
+                <ProviderCard key={provider.id} provider={provider} />
+              ))}
+            </div>
+
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <div className="flex justify-center items-center space-x-2 mt-8">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 1 || loading}
+                  className="flex items-center space-x-1"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                  <span>{t('pagination.previous')}</span>
+                </Button>
+                
+                <div className="flex items-center space-x-1">
+                  {/* Show page numbers with ellipsis for large page counts */}
+                  {Array.from({ length: Math.min(totalPages, 5) }, (_, i) => {
+                    let pageNum;
+                    if (totalPages <= 5) {
+                      pageNum = i + 1;
+                    } else if (currentPage <= 3) {
+                      pageNum = i + 1;
+                    } else if (currentPage > totalPages - 3) {
+                      pageNum = totalPages - 4 + i;
+                    } else {
+                      pageNum = currentPage - 2 + i;
+                    }
+                    
+                    return (
+                      <Button
+                        key={pageNum}
+                        variant={currentPage === pageNum ? "default" : "ghost"}
+                        size="sm"
+                        onClick={() => handlePageChange(pageNum)}
+                        disabled={loading}
+                        className="w-8 h-8 p-0"
+                      >
+                        {pageNum}
+                      </Button>
+                    );
+                  })}
+                  
+                  {totalPages > 5 && currentPage < totalPages - 2 && (
+                    <>
+                      <span className="text-gray-400">...</span>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handlePageChange(totalPages)}
+                        disabled={loading}
+                        className="w-8 h-8 p-0"
+                      >
+                        {totalPages}
+                      </Button>
+                    </>
+                  )}
+                </div>
+
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={currentPage === totalPages || loading}
+                  className="flex items-center space-x-1"
+                >
+                  <span>{t('pagination.next')}</span>
+                  <ChevronRight className="w-4 h-4" />
+                </Button>
+              </div>
+            )}
+
+            {/* Results summary */}
+            <div className="text-center text-sm text-gray-500 dark:text-gray-400 mt-4">
+              {t('pagination.showing', { 
+                start: (currentPage - 1) * (filters.limit || 18) + 1,
+                end: Math.min(currentPage * (filters.limit || 18), total),
+                total: total
+              })}
+            </div>
+          </>
         )}
       </div>
     </div>

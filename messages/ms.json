@@ -1339,6 +1339,11 @@
       "title": "Tiada pembekal dijumpai",
       "message": "Cuba laraskan kriteria carian atau penapis anda untuk mendapatkan lebih banyak hasil.",
       "clearFilters": "Kosongkan Penapis"
+    },
+    "pagination": {
+      "previous": "Sebelumnya",
+      "next": "Seterusnya",
+      "showing": "Menunjukkan {start}-{end} daripada {total} hasil"
     }
   },
   "ProviderCard": {

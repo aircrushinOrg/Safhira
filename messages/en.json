@@ -1307,6 +1307,11 @@
       "title": "No providers found",
       "message": "Try adjusting your search criteria or filters to find more results.",
       "clearFilters": "Clear Filters"
+    },
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next",
+      "showing": "Showing {start}-{end} of {total} results"
     }
   },
   "ProviderCard": {
