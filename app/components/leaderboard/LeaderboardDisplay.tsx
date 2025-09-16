@@ -14,7 +14,7 @@ import { Badge } from "../ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { LeaderboardEntry, LeaderboardResponse, SortBy } from "@/types/leaderboard";
-import { getLeaderboard } from "@/app/actions/leaderboard-actions";
+import { getLeaderboard } from "@/app/database_query_endpoint/leaderboard-actions";
 
 interface LeaderboardDisplayProps {
   open: boolean;

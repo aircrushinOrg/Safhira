@@ -3,7 +3,7 @@ export {default} from '../../../stis/[sti]/page';
 import type {Metadata} from 'next';
 import {locales} from '../../../../i18n/routing';
 import {getTranslations} from 'next-intl/server';
-import {searchSTIs} from '../../../actions/sti-actions';
+import {searchSTIs} from '../../../database_query_endpoint/sti-actions';
 
 function slugify(value: string): string {
   return value

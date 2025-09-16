@@ -15,7 +15,7 @@ import { Button } from "./ui/button";
 import NicknameInputDialog from "./leaderboard/NicknameInputDialog";
 import ScoreSubmittedDialog from "./leaderboard/ScoreSubmittedDialog";
 import LeaderboardDisplay from "./leaderboard/LeaderboardDisplay";
-import { submitQuizScore } from "../actions/leaderboard-actions";
+import { submitQuizScore } from "../database_query_endpoint/leaderboard-actions";
 import { LeaderboardResponse } from "@/types/leaderboard";
 import {useTranslations} from 'next-intl';
 
