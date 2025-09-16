@@ -9,8 +9,8 @@ interface ProviderRow {
   provider_address: string;
   provider_phone_num: string | null;
   provider_email: string | null;
-  provider_longitude: string | null;
-  provider_latitude: string | null;
+  provider_longitude: number | null;
+  provider_latitude: number | null;
   provider_provide_prep: boolean;
   provider_provide_pep: boolean;
   provider_free_sti_screening: boolean;
@@ -120,12 +120,12 @@ function boolFromCsv(value: string | undefined): boolean {
   return normalized === 'true' || normalized === '1' || normalized === 'yes' || normalized === 'y';
 }
 
-function numericFromCsv(value: string | undefined): string | null {
+function numericFromCsv(value: string | undefined): number | null {
   const trimmed = (value || '').trim();
   if (!trimmed) return null;
   const num = Number(trimmed.replace(/\s+/g, ''));
   if (!Number.isFinite(num)) return null;
-  return String(num);
+  return num;
 }
 
 function textOrNull(value: string | undefined): string | null {
@@ -239,19 +239,9 @@ async function seedProviders() {
       for (let i = 0; i < providerRows.length; i += batchSize) {
         const batch = providerRows.slice(i, i + batchSize);
         if (!batch.length) continue;
-        const values = batch.map((row) => [
-          row.provider_id,
-          row.state_id,
-          row.provider_name,
-          row.provider_address,
-          row.provider_phone_num,
-          row.provider_email,
-          row.provider_longitude,
-          row.provider_latitude,
-          row.provider_provide_prep,
-          row.provider_provide_pep,
-          row.provider_free_sti_screening,
-        ]);
+        const valueTuples = batch.map((row) =>
+          sql`(${row.provider_id}, ${row.state_id}, ${row.provider_name}, ${row.provider_address}, ${row.provider_phone_num}, ${row.provider_email}, ${row.provider_longitude}, ${row.provider_latitude}, ${row.provider_provide_prep}, ${row.provider_provide_pep}, ${row.provider_free_sti_screening})`
+        );
 
         await sql`
           insert into provider (
@@ -266,7 +256,7 @@ async function seedProviders() {
             provider_provide_prep,
             provider_provide_pep,
             provider_free_sti_screening
-          ) values ${sql(values)}
+          ) values ${sql(valueTuples as any)}
           on conflict (provider_id) do update set
             state_id = excluded.state_id,
             provider_name = excluded.provider_name,
@@ -318,3 +308,4 @@ if (require.main === module) {
 }
 
 export { seedProviders };
+
