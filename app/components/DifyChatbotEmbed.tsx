@@ -2,7 +2,6 @@
 
 import {useEffect} from 'react';
 import {usePathname} from 'next/navigation';
-import Script from 'next/script';
 
 export default function DifyChatbotEmbed() {
   const pathname = usePathname() || '/';
@@ -24,30 +23,7 @@ export default function DifyChatbotEmbed() {
     }
   }, [isChatRoute]);
 
-  return (
-    <>
-      {!isChatRoute && (
-        <>
-          <Script id="dify-config" strategy="afterInteractive">
-            {`
-              window.difyChatbotConfig = {
-                token: 'jR3TCPVG1DjZidxk',
-                inputs: {},
-                systemVariables: {},
-                userVariables: {},
-              };
-            `}
-          </Script>
-          <Script
-            src="https://udify.app/embed.min.js"
-            id="jR3TCPVG1DjZidxk"
-            strategy="afterInteractive"
-            defer
-          />
-        </>
-      )}
-    </>
-  );
+  return null;
 }
 
 
