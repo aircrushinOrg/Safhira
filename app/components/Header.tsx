@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from './ui/button';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from './ui/dropdown-menu';
 import { ThemeToggle } from './ThemeToggle';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from './ui/sheet';
 import { useIsMobile } from './ui/use-mobile';
@@ -31,7 +32,58 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
     setIsSheetOpen(false); // Close drawer
   };
 
-  const NavigationItems = () => (
+  const isResourcesActive = currentSection === 'stis' || currentSection === 'living-well-with-sti';
+
+  const NavigationItemsDesktop = () => (
+    <>
+      <Link href="/quiz" className="w-full md:w-auto">
+        <Button
+          variant={currentSection === 'quiz' ? 'secondary' : 'ghost'}
+          size="sm"
+          className="flex items-center space-x-2 w-full justify-start md:w-auto md:justify-center"
+        >
+          <HelpCircle size={16} />
+          <span>{t('nav.quiz')}</span>
+        </Button>
+      </Link>
+
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            variant={isResourcesActive ? 'secondary' : 'ghost'}
+            size="sm"
+            className="flex items-center space-x-2 w-full justify-start md:w-auto md:justify-center"
+          >
+            <BookOpen size={16} />
+            <span>{t('nav.resources')}</span>
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="start" className="w-56">
+          <DropdownMenuItem onSelect={() => handleSectionChange('stis')} className="flex items-center gap-2">
+            <BookOpen size={14} />
+            <span>{t('nav.learnAboutStis')}</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem onSelect={() => handleSectionChange('living-well-with-sti')} className="flex items-center gap-2">
+            <Shield size={14} />
+            <span>{t('nav.livingWell')}</span>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      <Link href="/sti-services" className="w-full md:w-auto">
+        <Button
+          variant={currentSection === 'providers' ? 'secondary' : 'ghost'}
+          size="sm"
+          className="flex items-center space-x-2 w-full justify-start md:w-auto md:justify-center"
+        >
+          <MapPin size={16} />
+          <span>{t('nav.services')}</span>
+        </Button>
+      </Link>
+    </>
+  );
+
+  const NavigationItemsMobile = () => (
     <>
       <Link href="/quiz" className="w-full md:w-auto">
         <Button
@@ -50,7 +102,17 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
           className="flex items-center space-x-2 w-full justify-start md:w-auto md:justify-center"
         >
           <BookOpen size={16} />
-          <span>{t('nav.learnStis')}</span>
+          <span>{t('nav.learnAboutStis')}</span>
+        </Button>
+      </Link>
+      <Link href="/living-well-with-sti" className="w-full md:w-auto">
+        <Button
+          variant={currentSection === 'living-well-with-sti' ? 'secondary' : 'ghost'}
+          size="sm"
+          className="flex items-center space-x-2 w-full justify-start md:w-auto md:justify-center"
+        >
+          <Shield size={16} />
+          <span>{t('nav.livingWell')}</span>
         </Button>
       </Link>
       <Link href="/sti-services" className="w-full md:w-auto">
@@ -110,7 +172,7 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
 
           {/* Desktop navigation - centered */}
           <nav className="hidden md:flex items-center justify-center space-x-6 flex-1">
-            <NavigationItems />
+            <NavigationItemsDesktop />
           </nav>
 
           {/* Right-side controls */}
@@ -148,7 +210,7 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
                   </SheetTitle>
                 </SheetHeader>
                 <nav className="flex flex-col space-y-3 mt-6">
-                  <NavigationItems />
+                  <NavigationItemsMobile />
                   {/* Chat Button in Mobile Menu */}
                   <ChatButton isMobileMenu={true} />
                 </nav>

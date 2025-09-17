@@ -148,6 +148,9 @@
     "nav": {
       "home": "Laman Utama",
       "learnStis": "Ketahui",
+      "resources": "Sumber",
+      "learnAboutStis": "Ketahui tentang STI",
+      "livingWell": "Hidup Sihat dengan STI",
       "quiz": "Kuiz",
       "services": "Cari Perkhidmatan"
     }

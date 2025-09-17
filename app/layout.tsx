@@ -4,6 +4,7 @@ import {Poppins} from 'next/font/google';
 import {Suspense} from 'react';
 import {ThemeProvider} from './providers/theme-provider';
 import {getLocale} from 'next-intl/server';
+import DifyChatbotEmbed from '@/app/components/DifyChatbotEmbed';
 
 
 const poppins = Poppins({
@@ -54,6 +55,7 @@ export default async function RootLayout({
         >
             {children}
         </ThemeProvider>
+        <DifyChatbotEmbed />
       </body>
     </html>
   );

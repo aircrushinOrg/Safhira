@@ -148,6 +148,9 @@
     "nav": {
       "home": "Home",
       "learnStis": "Learn",
+      "resources": "Resources",
+      "learnAboutStis": "Learn about STIs",
+      "livingWell": "Living Well with STIs",
       "quiz": "Quiz",
       "services": "Find Services"
     }
