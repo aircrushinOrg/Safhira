@@ -33,7 +33,7 @@ function AppContent() {
           variants={pageVariants}
           transition={pageTransition}
         >
-          <HeroSection />
+          <HeroAnimation />
           <BreakingStigmaSection />
           <PrevalenceSection />
           <FeaturesSection />
