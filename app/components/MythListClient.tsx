@@ -29,6 +29,68 @@ type QuizQuestion = {
   fact?: string;
 };
 
+// Utils
+function deriveTruth(fact?: string) {
+  if (!fact) return false;
+  const normalized = fact.trim().toLowerCase();
+  if (normalized.startsWith("fact.")) return true;
+  if (normalized.startsWith("myth.")) return false;
+  const fi = normalized.indexOf("fact.");
+  const mi = normalized.indexOf("myth.");
+  if (fi !== -1 && (mi === -1 || fi < mi)) return true;
+  if (mi !== -1 && (fi === -1 || mi < fi)) return false;
+  return false;
+}
+
+// Small presentational components
+function MythFactBadge({ isFactual, t }: { isFactual: boolean; t: any }) {
+  return isFactual ? (
+    <Badge className="bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400 border-green-300">
+      ✓ {t('modal.factConfirmed')}
+    </Badge>
+  ) : (
+    <Badge variant="outline" className="text-red-600 border-red-200 dark:text-red-400 dark:border-red-800 bg-red-50 dark:bg-red-950/20">
+      ✗ {t('modal.mythDebunked')}
+    </Badge>
+  );
+}
+
+function ViewAllListItem({ item, onSelect, t }: { item: Item; onSelect: (item: Item) => void; t: any }) {
+  const isFactual = deriveTruth(item.fact);
+  const factText = item.fact || '';
+  const explanation = factText.replace(/^(myth|fact)\.\s*/i, '');
+  
+  return (
+    <div
+      className="p-4 rounded-lg border border-border/40 bg-card hover:bg-accent/50 transition-all duration-200 cursor-pointer hover:shadow-md hover:scale-[1.02] group"
+      onClick={() => onSelect(item)}
+    >
+      <div className="flex flex-col gap-3">
+        <div className="flex items-center justify-between">
+          <div className="flex-shrink-0">
+            <MythFactBadge isFactual={isFactual} t={t} />
+          </div>
+          <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+            <div className="w-5 h-5 text-blue-600 dark:text-blue-400">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div className="flex-1 min-w-0">
+          <h4 className="font-medium text-foreground/90 mb-2 leading-relaxed line-clamp-2">
+            {item.text}
+          </h4>
+          <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
+            {explanation || t('factUnavailable')}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function MythListClient({ items }: { items: Item[] }) {
   const t = useTranslations('Quiz');
   const [open, setOpen] = useState(false);
@@ -61,21 +123,6 @@ export default function MythListClient({ items }: { items: Item[] }) {
 
   const handleViewAll = () => {
     setViewAllOpen(true);
-  };
-
-  const deriveTruth = (fact?: string) => {
-    if (!fact) return false;
-    const t = fact.trim().toLowerCase();
-    // Determine if the statement is true based on the explanation prefix
-    // e.g., "Fact. ..." => true, "Myth. ..." => false
-    if (t.startsWith("fact.")) return true;
-    if (t.startsWith("myth.")) return false;
-    // Fallback: if contains "fact." earlier than "myth.", assume true
-    const fi = t.indexOf("fact.");
-    const mi = t.indexOf("myth.");
-    if (fi !== -1 && (mi === -1 || fi < mi)) return true;
-    if (mi !== -1 && (fi === -1 || mi < fi)) return false;
-    return false;
   };
 
   const startQuiz = () => {
@@ -273,53 +320,46 @@ export default function MythListClient({ items }: { items: Item[] }) {
       {/* Info Dialog for myths and facts */}
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="sm:max-w-lg">
-          {(() => {
-            const isFactual = deriveTruth(selected?.fact);
-            const factText = selected?.fact || '';
-            // Extract explanation after "Myth." or "Fact."
-            const explanation = factText.replace(/^(myth|fact)\.\s*/i, '');
-            
-            return (
-              <>
-                <DialogHeader className="space-y-3">
-                  <div className="flex items-center gap-2">
-                    {isFactual ? (
-                      <Badge className="bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400 border-green-300">
-                        ✓ {t('modal.factConfirmed')}
-                      </Badge>
-                    ) : (
-                      <Badge variant="outline" className="text-red-600 border-red-200 dark:text-red-400 dark:border-red-800 bg-red-50 dark:bg-red-950/20">
-                        ✗ {t('modal.mythDebunked')}
-                      </Badge>
-                    )}
+          {selected && (
+            (() => {
+              const isFactual = deriveTruth(selected?.fact);
+              const factText = selected?.fact || '';
+              const explanation = factText.replace(/^(myth|fact)\.\s*/i, '');
+              
+              return (
+                <>
+                  <DialogHeader className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <MythFactBadge isFactual={isFactual} t={t} />
+                    </div>
+                    <DialogTitle className="text-lg font-medium text-left">
+                      {selected?.text}
+                    </DialogTitle>
+                    <DialogDescription className="text-sm text-left">
+                      {isFactual ? t('modal.factTitle') : t('modal.mythTitle')} • {t('dialog.closeHint')}
+                    </DialogDescription>
+                  </DialogHeader>
+                  
+                  <div className="mt-4 space-y-3">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-medium text-muted-foreground">
+                        {isFactual ? t('modal.factExplanation') : t('modal.truthExplanation')}
+                      </span>
+                    </div>
+                    <div className={`rounded-lg p-4 border-l-4 ${
+                      isFactual 
+                        ? 'bg-green-50 dark:bg-green-950/40 border-green-500'
+                        : 'bg-blue-50 dark:bg-blue-950/40 border-blue-500'
+                    }`}>
+                      <p className="text-sm leading-relaxed">
+                        {explanation || t('factUnavailable')}
+                      </p>
+                    </div>
                   </div>
-                  <DialogTitle className="text-lg font-medium text-left">
-                    {selected?.text}
-                  </DialogTitle>
-                  <DialogDescription className="text-sm text-left">
-                    {isFactual ? t('modal.factTitle') : t('modal.mythTitle')} • {t('dialog.closeHint')}
-                  </DialogDescription>
-                </DialogHeader>
-                
-                <div className="mt-4 space-y-3">
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm font-medium text-muted-foreground">
-                      {isFactual ? t('modal.factExplanation') : t('modal.truthExplanation')}
-                    </span>
-                  </div>
-                  <div className={`rounded-lg p-4 border-l-4 ${
-                    isFactual 
-                      ? 'bg-green-50 dark:bg-green-950/40 border-green-500'
-                      : 'bg-blue-50 dark:bg-blue-950/40 border-blue-500'
-                  }`}>
-                    <p className="text-sm leading-relaxed">
-                      {explanation || t('factUnavailable')}
-                    </p>
-                  </div>
-                </div>
-              </>
-            );
-          })()}
+                </>
+              );
+            })()
+          )}
         </DialogContent>
       </Dialog>
 
@@ -562,7 +602,7 @@ export default function MythListClient({ items }: { items: Item[] }) {
           </DialogHeader>
           
           <div className="flex-1 overflow-y-auto pr-2">
-            <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {items.map((item, index) => {
                 const isFactual = deriveTruth(item.fact);
                 const factText = item.fact || '';
@@ -571,29 +611,38 @@ export default function MythListClient({ items }: { items: Item[] }) {
                 return (
                   <div
                     key={item.id}
-                    className="p-4 rounded-lg border border-border/40 bg-card hover:bg-accent/50 transition-colors cursor-pointer"
+                    className="p-4 rounded-lg border border-border/40 bg-card hover:bg-accent/50 transition-all duration-200 cursor-pointer hover:shadow-md hover:scale-[1.02] group"
                     onClick={() => {
                       handleClick(item);
                       setViewAllOpen(false);
                     }}
                   >
-                    <div className="flex items-start gap-3">
-                      <div className="flex-shrink-0 mt-1">
-                        {isFactual ? (
-                          <Badge className="bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400 border-green-300">
-                            ✓ {t('modal.factConfirmed')}
-                          </Badge>
-                        ) : (
-                          <Badge variant="outline" className="text-red-600 border-red-200 dark:text-red-400 dark:border-red-800 bg-red-50 dark:bg-red-950/20">
-                            ✗ {t('modal.mythDebunked')}
-                          </Badge>
-                        )}
+                    <div className="flex flex-col gap-3">
+                      <div className="flex items-center justify-between">
+                        <div className="flex-shrink-0">
+                          {isFactual ? (
+                            <Badge className="bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400 border-green-300">
+                              ✓ {t('modal.factConfirmed')}
+                            </Badge>
+                          ) : (
+                            <Badge variant="outline" className="text-red-600 border-red-200 dark:text-red-400 dark:border-red-800 bg-red-50 dark:bg-red-950/20">
+                              ✗ {t('modal.mythDebunked')}
+                            </Badge>
+                          )}
+                        </div>
+                        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                          <div className="w-5 h-5 text-blue-600 dark:text-blue-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                            </svg>
+                          </div>
+                        </div>
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h4 className="font-medium text-foreground/90 mb-2 leading-relaxed">
+                        <h4 className="font-medium text-foreground/90 mb-2 leading-relaxed line-clamp-2">
                           {item.text}
                         </h4>
-                        <p className="text-sm text-muted-foreground leading-relaxed">
+                        <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
                           {explanation || t('factUnavailable')}
                         </p>
                       </div>
