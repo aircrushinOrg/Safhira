@@ -1,0 +1,46 @@
+﻿id (serial),statement (text),is_true (boolean),explanation,category (Myth/Fact)
+,You can't get an STI the first time you have sex.,FALSE,You can get an STI any time you have sex with someone who has an STI.,Myth
+,You can't get an STI from oral sex.,FALSE,"Oral sex can transmit several STIs (e.g., herpes, chlamydia, gonorrhea, syphilis, HPV). Use condoms/dental dams.",Myth
+,Using a male condom and a female condom together gives you double protection.,FALSE,Don't use male and female condoms together—friction increases the chance of breakage.,Myth
+,Douching can help protect you from HIV.,FALSE,Douching can actually increase HIV risk by disrupting protective vaginal flora.,Myth
+,You'll know if you have an STI because you'll have symptoms.,FALSE,Many STIs have no symptoms. Testing is needed to know for sure.,Myth
+,Only teenagers get STIs.,FALSE,STIs can affect people of any age; diagnoses have risen among older adults too.,Myth
+,You can get an STI if you have multiple partners.,TRUE,Having multiple partners increases your risk of STIs (though even one encounter can transmit).,Fact
+,"If I'm pregnant with an STI, it won't affect my fetus.",FALSE,"Some STIs can be passed to the baby during pregnancy, delivery, or breastfeeding; early treatment helps prevent this.",Myth
+,Men and women have the same symptoms for STIs.,FALSE,Symptoms vary by infection and person; some infections are asymptomatic or present differently in different people.,Myth
+,All STIs can be cured.,FALSE,"Bacterial STIs are often curable; most viral STIs (e.g., herpes, HIV) are not.",Myth
+,STIs do not cause infertility.,FALSE,Untreated STIs like chlamydia can cause PID and infertility.,Myth
+,Cold sores are an STI.,FALSE,"Cold sores are usually HSV‑1 and often acquired non‑sexually in childhood, but they can be sexually transmitted via oral sex.",Myth
+,You can get an STI from a toilet seat.,FALSE,"STIs are not transmitted via toilet seats, food, utensils, or handshakes.",Myth
+,Oral sex is safe sex.,FALSE,Oral sex still carries STI risk; use condoms/dental dams.,Myth
+,You can always tell if someone has an STI.,FALSE,You can't tell by looking—many STIs have no visible signs.,Myth
+,Only gay men get HIV.,FALSE,"HIV can affect anyone regardless of sexual orientation; risk depends on behaviors, not identity.",Myth
+,Pulling out before ejaculation is safe against STIs.,FALSE,Withdrawal doesn't protect against STIs; pre‑ejaculate and skin‑to‑skin contact can transmit infections.,Myth
+,HIV can be transmitted through any bodily fluid.,FALSE,"HIV is transmitted by specific fluids (blood, semen, rectal/vaginal fluids, breast milk)—not by sweat, saliva, or urine in everyday contact.",Myth
+,Condoms are highly effective at preventing most STIs when used correctly.,TRUE,"Correct and consistent condom use is highly effective for many STIs, though not 100% and less so for skin‑to‑skin infections.",Fact
+,Regular STI testing is important for sexually active individuals.,TRUE,"Regular testing (e.g., every 6–12 months, or with new partners) helps detect asymptomatic infections.",Fact
+,Some STIs can be transmitted through skin-to-skin contact.,TRUE,STIs like herpes and HPV can spread via intimate skin‑to‑skin contact.,Fact
+,STIs are more common in certain age groups.,TRUE,Teens and young adults have higher rates in many places.,Fact
+,Having an STI increases your risk of contracting HIV.,TRUE,STIs can increase the risk of getting or transmitting HIV; testing and treatment reduce risk.,Fact
+,Pregnant women should be tested for STIs.,TRUE,Testing and treating STIs in pregnancy helps protect the baby from infection.,Fact
+,Some STIs can cause cancer.,TRUE,"HPV can lead to cervical, anal, and some head & neck cancers.",Fact
+,Vaccines are available for some STIs.,TRUE,Vaccines exist for hepatitis B and HPV.,Fact
+,You can get reinfected with the same STI after treatment.,TRUE,You can get the same STI again after treatment if re‑exposed.,Fact
+,STIs only affect your reproductive organs.,FALSE,"STIs can affect the mouth, throat, rectum, skin, and other body systems.",Myth
+,Birth control pills protect against STIs.,FALSE,Hormonal contraception does not protect against STIs; condoms are needed for STI prevention.,Myth
+,You can cure HIV with natural remedies.,FALSE,There is no cure for HIV; effective treatment suppresses the virus but does not eradicate it.,Myth
+,You don’t need to test as long as you have not had many sex partners,FALSE,Even one sexual encounter can transmit an STI; number of partners only affects risk level.,Myth
+,I don’t need to thinkabout sexually transmitted infections as they can be treated  and cured easily,FALSE,"Some STIs can be managed or cured, but others (e.g., HIV, herpes) are lifelong; drug‑resistant strains also exist.",Myth
+,You will only get the same sexually transmitted infection once,FALSE,You can be reinfected with the same STI multiple times if re‑exposed.,Myth
+31,"My partner and I are monogamous, so there is no need to get tested.",FALSE,"Even in new monogamous relationships, past infections can be present; partners should test at the start of the relationship.",Myth
+32,Syphilis is a historical disease that no one gets anymore.,FALSE,Syphilis remains present and diagnoses have increased in recent years.,Myth
+33,STI testing is quite painful.,FALSE,Most STI tests involve urine or blood tests; swabs may be used for symptoms and are typically only mildly uncomfortable.,Myth
+34,It’s embarrassing to get tested for STIs.,FALSE,There’s no shame in caring for your health; clinicians handle STI testing routinely and confidentially.,Myth
+35,Using two condoms at once (double-bagging) gives extra protection.,FALSE,Layering condoms increases friction and the chance of breakage—use one condom correctly with water-based lubricant.,Myth
+36,STI testing always involves a physical exam of your genitals.,FALSE,"If you have no symptoms, many tests are urine, blood, or self-collected swabs; exams are needed mainly when symptoms are present.",Myth
+37,Hot‑tub sex minimizes your risk of STIs.,FALSE,Chlorine or hot-tub water does not prevent STIs and may increase risk of other infections.,Myth
+38,You won’t get an STI if you don’t have sex.,FALSE,"Some STIs can spread without intercourse, including via needles, blood contact, or from parent to baby; certain infections can spread by intimate skin or oral contact.",Myth
+39,Your partner doesn’t need STI testing unless you have an infection.,FALSE,Both partners should test; one person can be infected without symptoms and transmit to the other.,Myth
+40,STIs don’t require medical intervention.,FALSE,Many STIs need diagnosis and treatment to prevent complications; some are chronic and require ongoing care.,Myth
+41,Active adults are more likely to get STIs than teens.,FALSE,Teens and young adults often have higher STI rates due to factors like unprotected sex and limited access to care.,Myth
+42,Condoms protect against all STIs.,FALSE,"Condoms are highly effective for many STIs but are not 100% and offer less protection for skin‑to‑skin infections (e.g., HPV, herpes).",Myth
