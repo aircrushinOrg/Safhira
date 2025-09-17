@@ -2,7 +2,7 @@ import { readFileSync } from 'fs';
 import { join } from 'path';
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
-import { stiInfo } from './schema';
+import { sti } from './schema';
 
 async function seedStiInfo() {
   const DATABASE_URL = process.env.DATABASE_URL;
@@ -50,13 +50,13 @@ async function seedStiInfo() {
     for (let i = 0; i < records.length; i += batchSize) {
       const batch = records.slice(i, i + batchSize);
       
-      await db.insert(stiInfo).values(batch);
+      await db.insert(sti).values(batch);
       insertedCount += batch.length;
       
       console.log(`Inserted batch ${Math.ceil((i + 1) / batchSize)}: ${insertedCount}/${records.length} records`);
     }
 
-    console.log(`✅ Successfully inserted ${insertedCount} records into stiInfo table`);
+    console.log(`✅ Successfully inserted ${insertedCount} records into sti table`);
     
   } catch (error) {
     console.error('❌ Error seeding STI info:', error);

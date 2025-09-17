@@ -20,6 +20,7 @@ import { Button } from "../ui/button";
 import { Check } from "lucide-react";
 import { useTheme } from "next-themes";
 import { stiTypes } from '@/constants/sti-prevalence';
+import {useTranslations} from 'next-intl';
 
 ChartJS.register(
   CategoryScale,
@@ -54,6 +55,7 @@ interface STITrendsChartProps {
 }
 
 export default function STITrendsChart({ sharedData }: STITrendsChartProps) {
+  const t = useTranslations('Charts');
   const { theme, systemTheme } = useTheme();
   const [selectedStates, setSelectedStates] = useState<string[]>([]);
   const [selectedDisease, setSelectedDisease] = useState<string>("AIDS");
@@ -212,7 +214,7 @@ export default function STITrendsChart({ sharedData }: STITrendsChartProps) {
         beginAtZero: true,
         title: {
           display: true,
-          text: 'Incidence Rate (per 100,000)',
+          text: t('trends.axis.y'),
           color: isDarkMode ? '#d1d5db' : '#4b5563',
           font: {
             size: 14,
@@ -234,7 +236,7 @@ export default function STITrendsChart({ sharedData }: STITrendsChartProps) {
       x: {
         title: {
           display: true,
-          text: 'Year',
+          text: t('trends.axis.x'),
           color: isDarkMode ? '#d1d5db' : '#4b5563',
           font: {
             size: 14,
@@ -261,10 +263,10 @@ export default function STITrendsChart({ sharedData }: STITrendsChartProps) {
     <Card className="p-6 bg-white dark:bg-gray-800 shadow-lg">
       <div className="flex flex-col mb-4 justify-center items-center">
         <h3 className="text-center text-2xl font-bold text-gray-800 dark:text-gray-100 mb-2">
-          STI Trends in Malaysia
+          {t('trends.title')}
         </h3>
         <p className="text-center text-gray-600 dark:text-gray-300 text-sm">
-          Trend of incidence rates per 100,000 population by state and disease across the years
+          {t('trends.subtitle')}
         </p>
       </div>
       <div className="space-y-6">
@@ -272,10 +274,10 @@ export default function STITrendsChart({ sharedData }: STITrendsChartProps) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full items-end">
           {/* Disease Selection */}
           <div className="flex flex-col flex-1 items-start h-full">
-            <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mt-2 mb-3">Select STI</label>
+            <label className="text-sm font-medium text-gray-700 dark:text-gray-300 mt-2 mb-3">{t('trends.selectSti')}</label>
             <Select value={selectedDisease} onValueChange={setSelectedDisease}>
               <SelectTrigger className="!h-full w-full bg-slate-100 dark:bg-slate-700 border border-slate-300 dark:border-slate-600">
-                <SelectValue placeholder="Choose a disease" />
+                <SelectValue placeholder={t('trends.chooseDisease')} />
               </SelectTrigger>
               <SelectContent className="bg-slate-100 dark:bg-slate-700">
                 {Object.entries(stiTypes)
@@ -292,7 +294,7 @@ export default function STITrendsChart({ sharedData }: STITrendsChartProps) {
           {/* State Selection */}
           <div className="flex-1">
             <div className="flex items-center justify-between mb-2">
-              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Select States</label>
+              <label className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('trends.selectStates')}</label>
               <Button
                 onClick={handleClearAllStates}
                 size="sm"
@@ -300,12 +302,12 @@ export default function STITrendsChart({ sharedData }: STITrendsChartProps) {
                 className="flex items-center gap-1 text-xs bg-transparent dark:border-slate-600 dark:hover:bg-slate-700 transition-all duration-200"
                 disabled={selectedStates.length === 0}
               >
-                Clear
+                {t('trends.clear')}
               </Button>
             </div>
             <Select>
               <SelectTrigger className="!h-auto w-full bg-slate-100 dark:bg-slate-700 border border-slate-300 dark:border-slate-600">
-                <SelectValue placeholder={selectedStates.length === 0 ? "Choose states" : 
+                <SelectValue placeholder={selectedStates.length === 0 ? t('trends.chooseStates') : 
                   <div className="flex flex-wrap gap-1">
                     {selectedStates.map((state) => (
                       <Badge
@@ -351,7 +353,7 @@ export default function STITrendsChart({ sharedData }: STITrendsChartProps) {
             </div>
           ) : (
             <div className="min-h-[480px]  flex items-center justify-center text-muted-foreground">
-              Please select a disease to view the chart
+              {t('trends.selectPrompt')}
             </div>
           )}
         </div>

@@ -13,34 +13,49 @@ Safhira is a comprehensive sexual health education platform specifically designe
 ### Key Features
 
 - **📚 Educational Content**: Comprehensive STI information with symptoms, prevention, and treatment
-- **🗺️ Interactive Prevalence Maps**: Visualize STI data across Malaysian states using choropleth maps
+- **🗺️ Interactive Prevalence Maps**: 
+  - Choropleth maps visualizing STI data across Malaysian states (2017-2022)
+  - Real-time year slider with animated transitions
+  - Color-coded intensity based on incidence rates
+  - Hover tooltips with detailed state statistics
+  - Zoom and pan functionality for detailed exploration
+- **📈 Data Visualization**: 
+  - Time series charts showing STI trends over time
+  - Statistical summaries (highest, lowest, average rates)
+  - Multi-disease comparison capabilities
 - **💬 AI Chat Support**: Get personalized guidance and answers to health questions
-- **📊 Interactive Quizzes**: Test knowledge with gamified learning experiences
-- **🏥 Resource Directory**: Find testing centers and healthcare resources
+- **📊 Interactive Quizzes (Under Development)**: Test knowledge with gamified learning experiences
+- **🏥 Resource Directory (Under Development)**: Find testing centers and healthcare resources
 - **🎨 Culturally Sensitive Design**: Interface designed with Malaysian youth in mind
 - **🌙 Dark/Light Theme**: Comfortable viewing in any environment
+- **📱 Responsive Design**: Optimized for mobile and desktop experiences
+- **♿ Accessibility**: Built with inclusive design principles
 
 ## 🛠️ Tech Stack
 
 ### Frontend
-- **Framework**: Next.js 14 with App Router
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS + Shadcn/ui + Radix UI
-- **Animations**: Framer Motion
-- **Charts**: Recharts, React Simple Maps
+- **Framework**: Next.js 14 with App Router and Server Components
+- **Language**: TypeScript with strict type checking
+- **Styling**: Tailwind CSS + Shadcn/ui + Radix UI components
+- **Animations**: Framer Motion for smooth transitions
+- **Charts**: Chart.js for time series, React Simple Maps for choropleth visualizations
 - **Theme**: Next Themes with system preference support
+- **Icons**: Lucide React for consistent iconography
+- **Fonts**: Geist font family for modern typography
 
 ### Backend & Database
-- **Database**: PostgreSQL
-- **ORM**: Drizzle ORM with type-safe operations
-- **Authentication**: Custom session management
-- **Migrations**: Drizzle Kit for schema management
+- **Database**: PostgreSQL (supports Vercel Postgres, Neon, local instances)
+- **ORM**: Drizzle ORM with full type safety and relation queries
+- **Authentication**: Custom session management with expiration tracking
+- **Migrations**: Drizzle Kit for automated schema versioning
+- **Data Processing**: Server Actions for form handling and data mutations
 
 ### Development Tools
-- **Package Manager**: pnpm
-- **Linting**: ESLint with Next.js configuration
-- **TypeScript**: Strict type checking
-- **Build Tool**: Next.js with Turbo mode
+- **Package Manager**: pnpm for fast, efficient dependency management
+- **Linting**: ESLint with Next.js and TypeScript configurations
+- **Build Tool**: Next.js with Turbo mode for faster development
+- **Code Quality**: Class Variance Authority for component variants
+- **Development**: Sharp for optimized image processing
 
 ## 🚀 Getting Started
 
@@ -99,40 +114,50 @@ Safhira is a comprehensive sexual health education platform specifically designe
 ```
 safhira/
 ├── app/                          # Next.js App Router
+│   ├── actions/                # Server actions
 │   ├── components/              # React components
 │   │   ├── ui/                 # Shadcn/ui components
-│   │   ├── landing/            # Landing page sections
-│   │   ├── Header.tsx          # Navigation header
+│   │   ├── landing/            # Landing page components
+│   │   │   ├── BreakingStigmaSection.tsx # Anti-stigma messaging
+│   │   │   ├── FeaturesSection.tsx      # Feature highlights
+│   │   │   ├── FinalNoteSection.tsx     # Closing message
+│   │   │   ├── HeroSection.tsx          # Main hero section
+│   │   │   ├── PrevalenceSection.tsx    # STI data visualization
+│   │   │   ├── STIChoroplethChart.tsx   # Interactive Malaysia map
+│   │   │   └── STITrendsChart.tsx       # Time series charts
+│   │   ├── Header.tsx          # Navigation header with mobile menu
 │   │   ├── Footer.tsx          # Site footer
-│   │   ├── LearningModules.tsx # Educational content
-│   │   ├── QuizSection.tsx     # Interactive quizzes
-│   │   └── AIChat.tsx          # AI chat interface
+│   │   ├── AIChat.tsx          # AI chat interface
+│   │   ├── LearningModules.tsx # Educational content (Under Development)
+│   │   ├── QuizSection.tsx     # Interactive quizzes (Under Development)
+│   │   ├── ResourcesSection.tsx # Healthcare resources (Under Development)
+│   │   └── ThemeToggle.tsx     # Dark/light mode toggle
 │   ├── chat/                   # AI chat pages
-│   │   ├── page.tsx           # Main chat interface
-│   │   └── about/page.tsx     # Chat information
 │   ├── stis/                   # STI information pages
-│   │   ├── [sti]/page.tsx     # Dynamic STI pages
-│   │   ├── prevalence/page.tsx # Prevalence maps
-│   │   └── prevention/page.tsx # Prevention guides
-│   ├── constants/              # App constants
-│   │   └── sti-prevalence.ts  # STI data constants
-│   ├── layout.tsx              # Root layout
-│   ├── page.tsx               # Home page
-│   └── globals.css            # Global styles
+│   │   ├── [sti]/page.tsx     # Dynamic STI detail pages
+│   │   └── prevalence/page.tsx # Interactive prevalence maps
+│   ├── providers/              # React context providers
+│   ├── privacy-policy/         # Privacy policy page (Under Development)
+│   ├── terms-of-use/          # Terms of use page (Under Development)
+│   ├── rights/                # User rights page (Under Development)
+│   ├── layout.tsx              # Root layout with theme provider
+│   ├── page.tsx               # Landing page
+│   ├── not-found.tsx          # 404 error page
+│   ├── sitemap.ts             # SEO sitemap
+│   ├── robots.ts              # SEO robots.txt
+│   ├── globals.css            # Global Tailwind styles
+│   └── db.ts                  # Database connection
+├── constants/                   # App constants
+│   └── sti-prevalence.ts      # STI types and state data
 ├── db/                          # Database layer
-│   ├── schema.ts              # Database schema
-│   ├── migrations/            # Migration files
-│   ├── data/                  # Seed data
-│   ├── seed-sti-data.ts      # STI state data seeder
-│   └── seed-sti-info.ts      # STI information seeder
+│   ├── schema.ts              # Drizzle schema definitions
+│   └── migrations/            # Auto-generated migration files
 ├── lib/                        # Utility functions
-│   └── utils.ts              # Helper functions
+│   └── utils.ts              # Tailwind utilities and helpers
 ├── public/                     # Static assets
-│   ├── logo.svg              # Application logo
-│   ├── landing-*.png         # Landing page images
-│   └── *.svg                 # Illustrations
-├── docs/                      # Documentation
-├── CLAUDE.md                  # AI assistant instructions
+│   ├── landing-hero-*.png    # Hero section images
+│   ├── landing-my-map.json   # Malaysia GeoJSON data
+│   └── *.svg                 # Various illustrations
 └── README.md                 # This file
 ```
 
@@ -156,24 +181,28 @@ pnpm db:studio        # Open Drizzle Studio for database inspection
 
 ### Core Tables
 
-- **`sti_state`**: STI prevalence data by Malaysian states
-- **`sti_info`**: Comprehensive STI information including symptoms, transmission, and treatment
+- **`sti_state`**: STI incidence data by Malaysian states, years, and disease types
+  - Primary key: (date, state, disease)
+  - Tracks cases and incidence rates per 100,000 population
+  - Indexed on date, state, and disease for optimized queries
+- **`sti_info`**: Comprehensive STI information database
+  - Detailed symptoms, transmission methods, prevention strategies
+  - Treatment options and Malaysian-specific context
+  - Categorized by type (Bacterial/Viral/Parasitic) and severity
 
 ### Key Features
 
 - **Type-safe queries** with Drizzle ORM
 - **Automated migrations** with Drizzle Kit
 - **Composite primary keys** for complex relationships
-- **Indexed columns** for optimized queries
+- **Strategic indexing** for optimized data retrieval
+- **JSON-stored arrays** for flexible symptom and prevention data
 
 ## 🎨 Design System
 
 ### Colors
 - **Primary**: Teal variants (#0d9488, #14b8a6)
 - **Secondary**: Pink variants (#ec4899, #f472b6)
-- **Gradients**: 
-  - Light: `from-pink-50 via-white to-teal-50`
-  - Dark: `from-gray-900 via-gray-800 to-gray-900`
 
 ### Typography
 - **Font Family**: Poppins (300, 400, 500, 600, 700)
@@ -183,27 +212,39 @@ pnpm db:studio        # Open Drizzle Studio for database inspection
 ## 🌐 Pages & Features
 
 ### 🏠 Landing Page (`/`)
-- Hero section with call-to-action
-- Stigma-breaking messaging
-- Interactive prevalence section
-- Feature highlights
-- Educational modules navigation
+- **Hero Section**: Animated imagery with feature highlights and call-to-action
+- **Breaking Stigma Section**: Anti-stigma messaging with supportive tone
+- **Prevalence Section**: Interactive STI data visualization for Malaysia
+  - Choropleth map with state-by-state data (2017-2022)
+  - Time series trends chart
+  - Real-time statistics and comparisons
+- **Features Section**: Platform capabilities overview
+- **Final Note Section**: Encouraging closing message
 
 ### 💬 AI Chat (`/chat`)
 - Interactive AI assistant for health questions
 - Contextual responses about sexual health
 - Anonymous and supportive environment
+- Privacy-focused design
 
 ### 📊 STI Information (`/stis`)
-- **Individual STI pages** (`/stis/[sti]`): Detailed information per STI
-- **Prevalence maps** (`/stis/prevalence`): Interactive Malaysian state data
-- **Prevention guides** (`/stis/prevention`): Comprehensive prevention strategies
+- **Individual STI pages** (`/stis/[sti]`): Detailed information per STI including symptoms, transmission, treatment
+- **Prevalence maps** (`/stis/prevalence`): Full-screen interactive visualization
+  - Malaysian state data with zoom functionality
+  - Multi-year comparison (2017-2022)
+  - Disease-specific filtering (HIV, AIDS, Gonorrhea, Syphilis, Chancroid)
+  - Statistical analysis tools
 
-### 📚 Educational Content
-- Interactive learning modules
+### 📚 Educational Content (Under Development)
+- Interactive learning modules with cultural sensitivity
 - Knowledge assessment quizzes
-- Progress tracking
 - Myth-busting sections
+- Resource directory for healthcare access
+
+### 📄 Legal & Privacy (Under Development)
+- **Privacy Policy** (`/privacy-policy`): Data handling transparency
+- **Terms of Use** (`/terms-of-use`): Platform usage guidelines
+- **User Rights** (`/rights`): User empowerment and rights information
 
 ## 🔧 Configuration Files
 
@@ -212,14 +253,6 @@ pnpm db:studio        # Open Drizzle Studio for database inspection
 - **`drizzle.config.ts`**: Database configuration
 - **`tsconfig.json`**: TypeScript configuration
 - **`components.json`**: Shadcn/ui configuration
-
-## 📈 Performance Optimizations
-
-- **Server Components**: Minimized client-side JavaScript
-- **Image Optimization**: Next.js Image component with WebP
-- **Code Splitting**: Dynamic imports for non-critical components
-- **Caching**: Optimized build outputs and static assets
-- **Bundle Analysis**: Tree shaking and dead code elimination
 
 ## 🤝 Contributing
 
@@ -238,26 +271,6 @@ We welcome contributions to improve Safhira! Please follow these guidelines:
 - Write descriptive commit messages
 - Test your changes thoroughly
 - Update documentation as needed
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- **Malaysian Ministry of Health** for STI prevalence data
-- **Radix UI** and **Shadcn/ui** for the component system
-- **Vercel** for hosting and deployment
-- **The open-source community** for the amazing tools and libraries
-
-## 📞 Support
-
-For questions, issues, or contributions:
-
-- **GitHub Issues**: [Report bugs or request features](https://github.com/aircrushinOrg/safhira/issues)
-- **Discussions**: [Join community discussions](https://github.com/aircrushinOrg/safhira/discussions)
-
----
 
 <div align="center">
   <p><strong>Built with ❤️ for Malaysian youth sexual health education</strong></p>

@@ -1,0 +1,2 @@
+ALTER TABLE "prevalence" DROP CONSTRAINT "prevalence_sti_id_state_id_pk";--> statement-breakpoint
+ALTER TABLE "prevalence" ADD CONSTRAINT "prevalence_sti_id_state_id_prevalence_year_pk" PRIMARY KEY("sti_id","state_id","prevalence_year");

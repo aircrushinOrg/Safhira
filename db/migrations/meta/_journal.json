@@ -5,22 +5,36 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1756194983810,
-      "tag": "0000_red_sersi",
+      "when": 1757947724238,
+      "tag": "0000_violet_luminals",
       "breakpoints": true
     },
     {
       "idx": 1,
       "version": "7",
-      "when": 1756712872521,
-      "tag": "0001_chemical_natasha_romanoff",
+      "when": 1757948147716,
+      "tag": "0001_fancy_rawhide_kid",
       "breakpoints": true
     },
     {
       "idx": 2,
       "version": "7",
-      "when": 1756738137455,
-      "tag": "0002_bitter_excalibur",
+      "when": 1757949033478,
+      "tag": "0002_elite_killmonger",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1757951309573,
+      "tag": "0003_closed_corsair",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1757952385037,
+      "tag": "0004_petite_weapon_omega",
       "breakpoints": true
     }
   ]

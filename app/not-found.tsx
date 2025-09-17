@@ -1,3 +1,4 @@
+
 'use client'
 
 import { Card } from './components/ui/card';
@@ -75,25 +76,25 @@ export default function NotFound() {
                 <Link href="/" className="w-full">
                   <Button className="w-full bg-teal-600 hover:bg-teal-700 text-white">
                     <Home size={16} className="mr-2" />
-                    Go Home
+                    Home
                   </Button>
                 </Link>
                 
                 <Link href="/stis" className="w-full">
                   <Button variant="outline" className="w-full">
                     <BookOpen size={16} className="mr-2" />
-                    Learn about STIs
+                    Learn STIs
                   </Button>
                 </Link>
                 
                 <Link href="/chat" className="w-full">
                   <Button variant="outline" className="w-full">
                     <MessageCircle size={16} className="mr-2" />
-                    Chat with AI
+                    Chat AI
                   </Button>
                 </Link>
 
-                <Link href="/?section=quiz" className="w-full">
+                <Link href="/quiz" className="w-full">
                   <Button variant="secondary" className="w-full">
                     <Search size={16} className="mr-2" />
                     Take Quiz
@@ -105,29 +106,29 @@ export default function NotFound() {
             <motion.div variants={itemVariants}>
               <div className="pt-8 border-t border-gray-200 dark:border-gray-700">
                 <h3 className="font-semibold text-gray-800 dark:text-gray-100 mb-4">
-                  Popular Resources:
+                  Popular
                 </h3>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm">
                   <Link 
-                    href="/?section=basics" 
+                    href="/stis" 
                     className="text-teal-600 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300 p-2 rounded hover:bg-teal-50 dark:hover:bg-teal-900/20 transition-colors"
                   >
                     STI Basics
                   </Link>
                   <Link 
-                    href="/?section=prevention" 
+                    href="/stis/prevention" 
                     className="text-teal-600 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300 p-2 rounded hover:bg-teal-50 dark:hover:bg-teal-900/20 transition-colors"
                   >
                     Prevention
                   </Link>
                   <Link 
-                    href="/?section=testing" 
+                    href="/rights" 
                     className="text-teal-600 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300 p-2 rounded hover:bg-teal-50 dark:hover:bg-teal-900/20 transition-colors"
                   >
                     Testing
                   </Link>
                   <Link 
-                    href="/?section=myths" 
+                    href="/quiz" 
                     className="text-teal-600 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300 p-2 rounded hover:bg-teal-50 dark:hover:bg-teal-900/20 transition-colors"
                   >
                     Myths & Facts
@@ -136,13 +137,13 @@ export default function NotFound() {
                     href="/stis/chlamydia" 
                     className="text-teal-600 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300 p-2 rounded hover:bg-teal-50 dark:hover:bg-teal-900/20 transition-colors"
                   >
-                    Chlamydia Info
+                    Chlamydia
                   </Link>
                   <Link 
                     href="/stis/hiv" 
                     className="text-teal-600 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300 p-2 rounded hover:bg-teal-50 dark:hover:bg-teal-900/20 transition-colors"
                   >
-                    HIV Info
+                    HIV
                   </Link>
                 </div>
               </div>

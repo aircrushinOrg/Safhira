@@ -1,0 +1,45 @@
+"use client"
+
+import { useEffect, useState } from "react"
+import MythListClient from "./MythListClient"
+
+type Item = { id: string; text: string; fact?: string }
+
+// STI myths and facts data aligned with docs/myth/sti_myths_facts.csv (question,type,explanation)
+const STI_QA = [
+  { question: "You can't get an STI the first time you have sex.", type: "Myth", explanation: "You can get an STI any time you have sex with someone who has an STI." },
+  { question: "You can't get an STI from oral sex.", type: "Myth", explanation: "You can get an STI from any kind of sex, including oral sex." },
+  { question: "Using a male condom and a female condom together gives you double protection.", type: "Myth", explanation: "Male and female condoms should never be used together as they can break or fall out of place." },
+  { question: "Douching can help protect you from HIV.", type: "Myth", explanation: "Douching can actually increase risk by removing protective bacteria." },
+  { question: "You'll know if you have an STI because you'll have symptoms.", type: "Myth", explanation: "Many STIs are asymptomatic, meaning you could still be contagious without symptoms." },
+  { question: "Only teenagers get STIs.", type: "Myth", explanation: "Anyone can get STIs regardless of age." },
+  { question: "You can only get an STI if you have multiple partners.", type: "Myth", explanation: "It only takes one exposure to acquire an STI." },
+  { question: "If I'm pregnant with an STI, it won't affect my fetus.", type: "Myth", explanation: "Some STIs can cause complications during pregnancy and for the baby." },
+  { question: "Men and women have the same symptoms for STIs.", type: "Myth", explanation: "Symptoms can differ between men and women, and men often have no symptoms." },
+  { question: "All STIs can be cured.", type: "Myth", explanation: "Some STIs are curable, some are only manageable." },
+  { question: "STIs do not cause infertility.", type: "Myth", explanation: "Untreated STIs like chlamydia can lead to infertility, especially in women." },
+  { question: "Cold sores are an STI.", type: "Fact", explanation: "They can be caused by Herpes Simplex Virus, which can be transmitted sexually, but not always require sex to be transmitted." },
+  { question: "You can get an STI from a toilet seat.", type: "Myth", explanation: "STIs are not transmitted via toilet seats." },
+  { question: "Oral sex is safe sex.", type: "Myth", explanation: "STIs can still be transmitted by oral sex." },
+  { question: "You can always tell if someone has an STI.", type: "Myth", explanation: "Many infections have no visible symptoms; only testing can confirm." },
+  { question: "Only gay men get HIV.", type: "Myth", explanation: "Anyone who is sexually active can get HIV or an STI, regardless of sexual orientation." },
+  { question: "Pulling out before ejaculation is safe against STIs.", type: "Myth", explanation: "Pre-ejaculate and vaginal fluids can transmit STIs." },
+  { question: "HIV can be transmitted through any bodily fluid.", type: "Myth", explanation: "HIV is primarily transmitted via semen, blood, breast milk, and vaginal secretions, not via urine, saliva, or tears." },
+];
+
+export function TiltedScrollDemo() {
+  const [items, setItems] = useState<Item[]>([])
+
+  useEffect(() => {
+    // Map new CSV columns to the existing item shape used by MythListClient
+    // Preserve the "Myth."/"Fact." prefix for compatibility with deriveTruth()
+    const mapped = STI_QA.map((item, index) => ({
+      id: (index + 1).toString(),
+      text: item.question,
+      fact: `${item.type}. ${item.explanation}`,
+    }));
+    setItems(mapped);
+  }, [])
+
+  return <MythListClient items={items} />
+}

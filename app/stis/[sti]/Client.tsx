@@ -6,7 +6,8 @@ import { Badge } from '../../components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/tabs';
 import { ArrowLeft, CheckCircle, AlertTriangle, Heart, Shield, Users, Info } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { useRouter } from 'next/navigation';
+import {useRouter} from '../../../i18n/routing';
+import {useTranslations} from 'next-intl';
 
 export interface STIInfo {
   name: string;
@@ -46,6 +47,8 @@ const getTreatabilityColor = (treatability: string) => {
 
 export default function STIClient({ stiInfo }: { stiInfo: STIInfo }) {
   const router = useRouter();
+  const t = useTranslations('STIDetail');
+  const tPage = useTranslations('STIsPage');
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
@@ -54,7 +57,7 @@ export default function STIClient({ stiInfo }: { stiInfo: STIInfo }) {
           <div className="mb-6 sm:mb-8">
             <Button variant="ghost" onClick={() => router.push('/stis')} className="mb-4 text-sm sm:text-base">
               <ArrowLeft size={16} className="mr-2" />
-              Back to STIs Overview
+              {t('back')}
             </Button>
 
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-6">
@@ -63,13 +66,13 @@ export default function STIClient({ stiInfo }: { stiInfo: STIInfo }) {
               </h1>
               <div className="flex flex-wrap gap-2 sm:gap-3">
                 <Badge className={`${getSeverityColor(stiInfo.severity)} text-xs sm:text-sm`}>
-                  {stiInfo.severity} Risk
+                  {tPage(`badges.severity.${stiInfo.severity}`)} {t('risk')}
                 </Badge>
                 <Badge className={`${getTreatabilityColor(stiInfo.treatability)} text-xs sm:text-sm`}>
-                  {stiInfo.treatability}
+                  {tPage(`badges.treatability.${stiInfo.treatability}`)}
                 </Badge>
                 <Badge variant="outline" className="text-xs sm:text-sm">
-                  {stiInfo.type}
+                  {tPage(`badges.type.${stiInfo.type}`)}
                 </Badge>
               </div>
             </div>
@@ -79,7 +82,7 @@ export default function STIClient({ stiInfo }: { stiInfo: STIInfo }) {
                 <Info className="text-blue-500 mt-1 flex-shrink-0" size={18} />
                 <div>
                   <h3 className="font-semibold text-blue-800 dark:text-blue-200 mb-2 text-sm sm:text-base">
-                    Malaysian Context
+                    {t('malaysianContext')}
                   </h3>
                   <p className="text-blue-700 dark:text-blue-300 text-sm sm:text-base leading-relaxed">
                     {stiInfo.malaysianContext}
@@ -93,20 +96,20 @@ export default function STIClient({ stiInfo }: { stiInfo: STIInfo }) {
             <Card className="p-4 sm:p-6 md:p-8">
               <Tabs defaultValue="symptoms" className="w-full">
                 <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-1 h-auto p-1">
-                  <TabsTrigger value="symptoms" className="text-xs sm:text-sm px-2 py-2 data-[state=active]:bg-white">
-                    Symptoms
+                  <TabsTrigger value="symptoms" className="text-xs sm:text-sm px-2 py-2 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 dark:data-[state=active]:text-gray-100">
+                    {t('tabs.symptoms')}
                   </TabsTrigger>
-                  <TabsTrigger value="transmission" className="text-xs sm:text-sm px-2 py-2 data-[state=active]:bg-white">
-                    Transmission
+                  <TabsTrigger value="transmission" className="text-xs sm:text-sm px-2 py-2 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 dark:data-[state=active]:text-gray-100">
+                    {t('tabs.transmission')}
                   </TabsTrigger>
-                  <TabsTrigger value="effects" className="text-xs sm:text-sm px-2 py-2 data-[state=active]:bg-white">
-                    Health Effects
+                  <TabsTrigger value="effects" className="text-xs sm:text-sm px-2 py-2 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 dark:data-[state=active]:text-gray-100">
+                    {t('tabs.effects')}
                   </TabsTrigger>
-                  <TabsTrigger value="prevention" className="text-xs sm:text-sm px-2 py-2 data-[state=active]:bg-white">
-                    Prevention
+                  <TabsTrigger value="prevention" className="text-xs sm:text-sm px-2 py-2 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 dark:data-[state=active]:text-gray-100">
+                    {t('tabs.prevention')}
                   </TabsTrigger>
-                  <TabsTrigger value="treatment" className="text-xs sm:text-sm px-2 py-2 data-[state=active]:bg-white">
-                    Treatment
+                  <TabsTrigger value="treatment" className="text-xs sm:text-sm px-2 py-2 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 dark:data-[state=active]:text-gray-100">
+                    {t('tabs.treatment')}
                   </TabsTrigger>
                 </TabsList>
 
@@ -130,7 +133,7 @@ export default function STIClient({ stiInfo }: { stiInfo: STIInfo }) {
                     <div className="grid gap-6 sm:gap-8 md:grid-cols-2">
                       <div>
                         <h3 className="text-base sm:text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">
-                          Symptoms in Women
+                          {t('symptoms.women')}
                         </h3>
                         <ul className="space-y-2 sm:space-y-3">
                           {stiInfo.symptoms.women.map((symptom, index) => (
@@ -144,7 +147,7 @@ export default function STIClient({ stiInfo }: { stiInfo: STIInfo }) {
 
                       <div>
                         <h3 className="text-base sm:text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">
-                          Symptoms in Men
+                          {t('symptoms.men')}
                         </h3>
                         <ul className="space-y-2 sm:space-y-3">
                           {stiInfo.symptoms.men.map((symptom, index) => (
@@ -160,7 +163,7 @@ export default function STIClient({ stiInfo }: { stiInfo: STIInfo }) {
                     {stiInfo.symptoms.general.length > 0 && (
                       <div>
                         <h3 className="text-base sm:text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">
-                          Other Symptoms
+                          {t('symptoms.other')}
                         </h3>
                         <ul className="space-y-2 sm:space-y-3">
                           {stiInfo.symptoms.general.map((symptom, index) => (
@@ -179,7 +182,7 @@ export default function STIClient({ stiInfo }: { stiInfo: STIInfo }) {
                   <div>
                     <h3 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4 sm:mb-6 flex items-center">
                       <Users size={18} className="mr-2 sm:mr-3 text-orange-500 flex-shrink-0" />
-                      How {stiInfo.name} Spreads
+                      {t('transmission.title', { name: stiInfo.name })}
                     </h3>
                     <ul className="space-y-3 sm:space-y-4">
                       {stiInfo.transmission.map((method, index) => (
@@ -196,7 +199,7 @@ export default function STIClient({ stiInfo }: { stiInfo: STIInfo }) {
                   <div>
                     <h3 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4 sm:mb-6 flex items-center">
                       <AlertTriangle size={18} className="mr-2 sm:mr-3 text-red-500 flex-shrink-0" />
-                      Potential Health Effects
+                      {t('effects.title')}
                     </h3>
                     <ul className="space-y-3 sm:space-y-4">
                       {stiInfo.healthEffects.map((effect, index) => (
@@ -213,7 +216,7 @@ export default function STIClient({ stiInfo }: { stiInfo: STIInfo }) {
                   <div>
                     <h3 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4 sm:mb-6 flex items-center">
                       <Shield size={18} className="mr-2 sm:mr-3 text-green-500 flex-shrink-0" />
-                      Prevention Methods
+                      {t('prevention.title')}
                     </h3>
                     <ul className="space-y-3 sm:space-y-4">
                       {stiInfo.prevention.map((method, index) => (
@@ -230,7 +233,7 @@ export default function STIClient({ stiInfo }: { stiInfo: STIInfo }) {
                   <div>
                     <h3 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4 sm:mb-6 flex items-center">
                       <Heart size={18} className="mr-2 sm:mr-3 text-blue-500 flex-shrink-0" />
-                      Treatment Information
+                      {t('treatment.title')}
                     </h3>
                     <div className="bg-blue-50 dark:bg-blue-900/20 p-4 sm:p-6 rounded-lg">
                       <p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base md:text-lg leading-relaxed">
@@ -247,17 +250,16 @@ export default function STIClient({ stiInfo }: { stiInfo: STIInfo }) {
               <Heart className="text-teal-500 mt-1 flex-shrink-0" size={18} />
               <div className="flex-1">
                 <h3 className="font-semibold text-gray-800 dark:text-gray-100 mb-2 text-sm sm:text-base">
-                  Need Support or Have Questions?
+                  {t('support.title')}
                 </h3>
                 <p className="text-gray-700 dark:text-gray-300 mb-4 text-sm sm:text-base leading-relaxed">
-                  Remember that seeking information and treatment shows responsibility and self-care. 
-                  Healthcare professionals in Malaysia are trained to provide confidential, non-judgmental care.
+                  {t('support.text')}
                 </p>
                 <Button 
                   onClick={() => router.push('/chat')} 
                   className="bg-teal-600 hover:bg-teal-700 text-white w-full sm:w-auto text-sm sm:text-base"
                 >
-                  Ask Our AI Assistant
+                  {t('support.cta')}
                 </Button>
               </div>
             </div>

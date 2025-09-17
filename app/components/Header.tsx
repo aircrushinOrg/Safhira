@@ -1,13 +1,15 @@
 "use client";
 
 import { Button } from './ui/button';
-import { Badge } from './ui/badge';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from './ui/dropdown-menu';
 import { ThemeToggle } from './ThemeToggle';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from './ui/sheet';
 import { useIsMobile } from './ui/use-mobile';
-import { MessageCircle, Shield, Home, BookOpen, HelpCircle, Award, Menu } from 'lucide-react';
-import Link from 'next/link';
+import { MessageCircle, Shield, BookOpen, HelpCircle, Award, Menu, MapPin } from 'lucide-react';
+import {Link} from '../../i18n/routing';
+import {LocaleSwitcher} from './LocaleSwitcher';
 import { useState } from 'react';
+import {useTranslations} from 'next-intl';
 
 interface HeaderProps {
   currentSection: string;
@@ -16,30 +18,83 @@ interface HeaderProps {
 }
 
 export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderProps) {
+  const t = useTranslations('Header');
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const isMobile = useIsMobile();
 
   const handleSectionChange = (section: string) => {
     onSectionChange(section);
-    setIsSheetOpen(false); // 关闭抽屉
+    setIsSheetOpen(false); // Close drawer
   };
 
   const handleChatOpen = () => {
     onChatOpen();
-    setIsSheetOpen(false); // 关闭抽屉
+    setIsSheetOpen(false); // Close drawer
   };
 
-  const NavigationItems = () => (
+  const isResourcesActive = currentSection === 'stis' || currentSection === 'living-well-with-sti';
+
+  const NavigationItemsDesktop = () => (
     <>
-      <Button
-        variant={currentSection === 'home' ? 'secondary' : 'ghost'}
-        size="sm"
-        onClick={() => handleSectionChange('home')}
-        className="flex items-center space-x-2 w-full justify-start md:w-auto md:justify-center"
-      >
-        <Home size={16} />
-        <span>Home</span>
-      </Button>
+      <Link href="/quiz" className="w-full md:w-auto">
+        <Button
+          variant={currentSection === 'quiz' ? 'secondary' : 'ghost'}
+          size="sm"
+          className="flex items-center space-x-2 w-full justify-start md:w-auto md:justify-center"
+        >
+          <HelpCircle size={16} />
+          <span>{t('nav.quiz')}</span>
+        </Button>
+      </Link>
+
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            variant={isResourcesActive ? 'secondary' : 'ghost'}
+            size="sm"
+            className="flex items-center space-x-2 w-full justify-start md:w-auto md:justify-center"
+          >
+            <BookOpen size={16} />
+            <span>{t('nav.resources')}</span>
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="start" className="w-56">
+          <DropdownMenuItem onSelect={() => handleSectionChange('stis')} className="flex items-center gap-2">
+            <BookOpen size={14} />
+            <span>{t('nav.learnAboutStis')}</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem onSelect={() => handleSectionChange('living-well-with-sti')} className="flex items-center gap-2">
+            <Shield size={14} />
+            <span>{t('nav.livingWell')}</span>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      <Link href="/sti-services" className="w-full md:w-auto">
+        <Button
+          variant={currentSection === 'providers' ? 'secondary' : 'ghost'}
+          size="sm"
+          className="flex items-center space-x-2 w-full justify-start md:w-auto md:justify-center"
+        >
+          <MapPin size={16} />
+          <span>{t('nav.services')}</span>
+        </Button>
+      </Link>
+    </>
+  );
+
+  const NavigationItemsMobile = () => (
+    <>
+      <Link href="/quiz" className="w-full md:w-auto">
+        <Button
+          variant={currentSection === 'quiz' ? 'secondary' : 'ghost'}
+          size="sm"
+          className="flex items-center space-x-2 w-full justify-start md:w-auto md:justify-center"
+        >
+          <HelpCircle size={16} />
+          <span>{t('nav.quiz')}</span>
+        </Button>
+      </Link>
       <Link href="/stis" className="w-full md:w-auto">
         <Button
           variant={currentSection === 'stis' ? 'secondary' : 'ghost'}
@@ -47,7 +102,27 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
           className="flex items-center space-x-2 w-full justify-start md:w-auto md:justify-center"
         >
           <BookOpen size={16} />
-          <span>Learn About STIs</span>
+          <span>{t('nav.learnAboutStis')}</span>
+        </Button>
+      </Link>
+      <Link href="/living-well-with-sti" className="w-full md:w-auto">
+        <Button
+          variant={currentSection === 'living-well-with-sti' ? 'secondary' : 'ghost'}
+          size="sm"
+          className="flex items-center space-x-2 w-full justify-start md:w-auto md:justify-center"
+        >
+          <Shield size={16} />
+          <span>{t('nav.livingWell')}</span>
+        </Button>
+      </Link>
+      <Link href="/sti-services" className="w-full md:w-auto">
+        <Button
+          variant={currentSection === 'providers' ? 'secondary' : 'ghost'}
+          size="sm"
+          className="flex items-center space-x-2 w-full justify-start md:w-auto md:justify-center"
+        >
+          <MapPin size={16} />
+          <span>{t('nav.services')}</span>
         </Button>
       </Link>
     </>
@@ -70,7 +145,7 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
       } ${isMobileMenu ? 'md:w-auto md:justify-center' : ''}`}
     >
       <MessageCircle size={16} className={`${currentSection !== 'chat' && 'text-blue-500 dark:text-blue-400'}`} />
-      <span className={isMobileMenu ? '' : 'md:hidden lg:inline'}>Private Chat</span>
+      <span className={isMobileMenu ? '' : 'md:hidden lg:inline'}>{t('chat')}</span>
     </Button>
   );
 
@@ -91,26 +166,27 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
             </div>
             <div>
               <h1 className="font-semibold text-slate-900 dark:text-slate-300 text-xl">Safhira</h1>
-              <p className="w-[120px] sm:w-auto text-xs text-teal-600 dark:text-teal-500">Sexual Health, Made Simple & Kind.</p>
+              <p className="w-[120px] sm:w-auto text-xs text-teal-600 dark:text-teal-500">{t('tagline')}</p>
             </div>
           </div>
 
-          {/* 桌面端导航 - 居中 */}
+          {/* Desktop navigation - centered */}
           <nav className="hidden md:flex items-center justify-center space-x-6 flex-1">
-            <NavigationItems />
+            <NavigationItemsDesktop />
           </nav>
 
-          {/* 右侧控件 */}
+          {/* Right-side controls */}
           <div className="flex items-center space-x-3 flex-1 justify-end">
             {/* Chat Button - Desktop */}
             <div className="hidden md:block relative">
               <ChatButton />
             </div>
             
-            {/* Theme Toggle Button */}
+            {/* Locale & Theme */}
+            <LocaleSwitcher />
             <ThemeToggle />
             
-            {/* 移动端菜单按钮 */}
+            {/* Mobile menu button */}
             <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
               <SheetTrigger asChild>
                 <Button
@@ -134,7 +210,7 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
                   </SheetTitle>
                 </SheetHeader>
                 <nav className="flex flex-col space-y-3 mt-6">
-                  <NavigationItems />
+                  <NavigationItemsMobile />
                   {/* Chat Button in Mobile Menu */}
                   <ChatButton isMobileMenu={true} />
                 </nav>

@@ -113,6 +113,23 @@
   }
 }
 
+/* Dify chatbot overrides */
+#dify-chatbot-bubble-button {
+  background-color: #009688 !important;
+  position: fixed !important;
+  right: 24px !important;
+  bottom: 24px !important;
+  z-index: 50 !important;
+}
+
+#dify-chatbot-bubble-window {
+  position: fixed !important;
+  right: 24px !important;
+  bottom: 24px !important; /* keep above the bubble */
+  max-height: calc(100vh - 60px) !important;
+  z-index: 50 !important;
+}
+
 html {
   font-size: var(--font-size);
 }

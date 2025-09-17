@@ -5,10 +5,12 @@ import { Heart, MessageCircle, Users } from 'lucide-react';
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import Image from 'next/image';
+import {useTranslations} from 'next-intl';
 
-export function StigmaBreakingSection() {
+export function BreakingStigmaSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.1 });
+  const t = useTranslations('Landing');
 
   return (
     <motion.div 
@@ -24,10 +26,10 @@ export function StigmaBreakingSection() {
           {/* Header */}
           <div className="text-center mb-8 sm:mb-12">
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-6">
-              Breaking the Silence, <span className="bg-gradient-to-r from-rose-500 via-purple-500 to-teal-500 dark:from-rose-400 dark:via-purple-400 dark:to-teal-400 bg-clip-text text-transparent">Ending the Stigma</span>
+              {t('stigma.titlePrefix')}, <span className="bg-gradient-to-r from-rose-500 via-purple-500 to-teal-500 dark:from-rose-400 dark:via-purple-400 dark:to-teal-400 bg-clip-text text-transparent">{t('stigma.titleHighlight')}</span>
             </h1>
             <p className="text-md text-center md:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-              Ever felt like it’s hard to talk about sexual health? Safhira is your space to ask, share, and be heard.              
+              {t('stigma.subtitle')}
             </p>
           </div>
 
@@ -46,12 +48,12 @@ export function StigmaBreakingSection() {
                     <MessageCircle className="text-pink-500 mt-1 flex-shrink-0" size={20} />
                     <div>
                       <h3 className="font-semibold text-pink-800 dark:text-pink-100 mb-3 text-lg sm:text-xl">
-                        You&apos;re Not Alone in This
+                        {t('stigma.card1.title')}
                       </h3>
                     </div>
                   </div>
                   <p className="text-pink-700 dark:text-pink-300 text-sm sm:text-base leading-relaxed flex-grow mb-4">
-                    It’s okay to feel unsure or afraid about your sexual health, many people do. But you don’t have to face it by yourself.
+                    {t('stigma.card1.text')}
                   </p>
                   <div className="flex justify-center mb-4">
                     <Image
@@ -78,12 +80,12 @@ export function StigmaBreakingSection() {
                     <Heart className="text-purple-500 mt-1 flex-shrink-0" size={20} />
                     <div>
                       <h3 className="font-semibold text-purple-800 dark:text-purple-200 mb-3 text-lg sm:text-xl">
-                        We&apos;re Here for You
+                        {t('stigma.card2.title')}
                       </h3>
                     </div>
                   </div>
                   <p className="text-purple-700 dark:text-purple-300 text-sm sm:text-base leading-relaxed flex-grow mb-4">
-                    Safhira is a safe, kind, and judgment-free space where you can ask anything sexual health related and feel supported.                
+                    {t('stigma.card2.text')}
                   </p>
                   <div className="flex justify-center mb-4">
                     <Image
@@ -110,12 +112,12 @@ export function StigmaBreakingSection() {
                     <Users className="text-teal-500 mt-1 flex-shrink-0" size={20} />
                     <div>
                       <h3 className="font-semibold text-teal-800 dark:text-teal-200 mb-3 text-lg sm:text-xl">
-                        Together, We Break the Silence
+                        {t('stigma.card3.title')}
                       </h3>
                     </div>
                   </div>
                   <p className="text-teal-700 dark:text-teal-300 text-sm sm:text-base leading-relaxed flex-grow mb-4">
-                    When we open up, we break shame. By learning and supporting each other, we make sexual health a normal part of life.
+                    {t('stigma.card3.text')}
                   </p>
                   <div className="flex justify-center">
                     <Image

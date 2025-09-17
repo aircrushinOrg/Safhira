@@ -1,3 +1,5 @@
+"use client";
+
 import { Card } from './ui/card';
 import { Badge } from './ui/badge';
 import { 
@@ -10,8 +12,11 @@ import {
   AlertTriangle
 } from 'lucide-react';
 import Image from 'next/image';
+import {Link} from '../../i18n/routing';
+import {useTranslations} from 'next-intl';
 
 export function Footer() {
+  const t = useTranslations('Footer');
   return (
     <footer className="bg-gradient-to-t from-pink-50/50 via-gray-50 to-teal-50/50 dark:from-pink-950/30 dark:via-gray-900 dark:to-teal-950/30 text-gray-800 dark:text-white py-12 px-8 md:px-16">
       <div className="container mx-auto">
@@ -28,21 +33,20 @@ export function Footer() {
               />
               <div>
                 <h3 className="font-bold text-lg">Safhira</h3>
-                <p className="text-xs text-gray-600 dark:text-gray-400">Modern Health Education</p>
+                <p className="text-xs text-gray-600 dark:text-gray-400">{t('brand.tagline')}</p>
               </div>
             </div>
             <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
-              A safe and stigma-free learning platform for understanding 
-              reproductive health for Malaysian teens.
+              {t('brand.description')}
             </p>
             <div className="flex space-x-2">
               <Badge variant="secondary" className="bg-teal-100 dark:bg-teal-900 text-teal-600 dark:text-teal-200">
                 <Shield size={12} className="mr-1" />
-                Private
+                {t('badges.private')}
               </Badge>
               <Badge variant="secondary" className="bg-pink-100 dark:bg-pink-900 text-pink-600 dark:text-pink-200">
                 <Heart size={12} className="mr-1" />
-                Safe
+                {t('badges.safe')}
               </Badge>
             </div>
           </div>
@@ -51,14 +55,15 @@ export function Footer() {
           <div>
             <h4 className="font-semibold mb-4 flex items-center space-x-2">
               <BookOpen size={16} />
-              <span>Learning</span>
+              <span>{t('sections.learning')}</span>
             </h4>
             <ul className="space-y-2 text-sm">
-              <li><a href="/stis" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-white transition-colors">STI Basics</a></li>
-              <li><a href="/stis/prevention" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-white transition-colors">Prevention</a></li>
+              <li><Link href="/stis" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-white transition-colors">{t('links.stiBasics')}</Link></li>
+              <li><Link href="/stis/prevention" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-white transition-colors">{t('links.prevention')}</Link></li>
+              {/* <li><Link href="/living-well-with-sti" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-white transition-colors">{t('links.livingWell')}</Link></li> */}
+              <li><Link href="/quiz" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-white transition-colors">{t('links.quiz')}</Link></li>
               {/* <li><a href="/?section=basics" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-white transition-colors">Testing & Treatment</a></li> */}
               {/* <li><a href="/?section=myths" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-white transition-colors">Myths vs Facts</a></li> */}
-              {/* <li><a href="/?section=quiz" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-white transition-colors">Interactive Quiz</a></li> */}
             </ul>
           </div>
 
@@ -66,12 +71,12 @@ export function Footer() {
           <div>
             <h4 className="font-semibold mb-4 flex items-center space-x-2">
               <Users size={16} />
-              <span>Support</span>
+              <span>{t('sections.support')}</span>
             </h4>
             <ul className="space-y-2 text-sm">
-              <li><a href="/chat" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-white transition-colors">Private AI Chat</a></li>
-              <li><a href="/chat/about" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-white transition-colors">About Safhira AI</a></li>
-              <li><a href="/stis/prevalence" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-white transition-colors">Prevalence Data</a></li>
+              <li><Link href="/chat" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-white transition-colors">{t('links.privateChat')}</Link></li>
+              <li><Link href="/chat/about" className="text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-white transition-colors">{t('links.aboutAi')}</Link></li>
+              <li><Link href="/living-well-with-sti" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-white transition-colors">{t('links.livingWell')}</Link></li>
             </ul>
           </div>
 
@@ -79,7 +84,7 @@ export function Footer() {
           <div>
             <h4 className="font-semibold mb-4 flex items-center space-x-2">
               <Mail size={16} />
-              <span>Contact Us</span>
+              <span>{t('sections.contact')}</span>
             </h4>
             <div className="space-y-3 text-sm">
               <div className="flex items-center space-x-2">
@@ -106,10 +111,9 @@ export function Footer() {
           <div className="flex items-start space-x-3">
             <AlertTriangle className="text-yellow-600 dark:text-yellow-300 flex-shrink-0 mt-1" size={20} />
             <div>
-              <h4 className="font-semibold text-yellow-800 dark:text-yellow-200 mb-2">Important Disclaimer</h4>
+              <h4 className="font-semibold text-yellow-800 dark:text-yellow-200 mb-2">{t('disclaimer.title')}</h4>
               <p className="text-yellow-700 dark:text-yellow-300 text-sm">
-                Information on this website is for educational purposes only and is not a substitute 
-                for professional medical advice. Please consult a doctor for proper diagnosis and treatment.
+                {t('disclaimer.text')}
               </p>
             </div>
           </div>
