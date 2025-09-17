@@ -4,12 +4,15 @@ import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 import { quizQuestions } from './schema';
 
-type CsvRecord = {
+type ParsedCsvRow = {
+  id?: number;
   statement: string;
   isTrue: boolean;
   explanation: string;
   category: string;
 };
+
+type QuizQuestionInsert = typeof quizQuestions.$inferInsert;
 
 function splitCsvIntoRows(content: string): string[][] {
   const rows: string[][] = [];
@@ -66,6 +69,10 @@ function columnIndex(headers: string[], key: string): number {
   return idx;
 }
 
+function optionalColumnIndex(headers: string[], key: string): number {
+  return headers.findIndex((header) => header.toLowerCase().includes(key));
+}
+
 function parseBoolean(value: string | undefined, fallbackCategory: string | undefined): boolean {
   const normalized = (value ?? '').trim().toLowerCase();
   if (['true', 't', 'yes', 'y', '1', 'fact', 'facts'].includes(normalized)) {
@@ -91,7 +98,7 @@ function normalizeCategory(value: string | undefined, isTrue: boolean): string {
   return isTrue ? 'facts' : 'myths';
 }
 
-function parseCsv(content: string): CsvRecord[] {
+function parseCsv(content: string): ParsedCsvRow[] {
   const rows = splitCsvIntoRows(content);
   if (!rows.length) {
     return [];
@@ -100,12 +107,13 @@ function parseCsv(content: string): CsvRecord[] {
   const headers = rows[0];
   const dataRows = rows.slice(1);
 
+  const idIdx = optionalColumnIndex(headers, 'id');
   const statementIdx = columnIndex(headers, 'statement');
   const isTrueIdx = columnIndex(headers, 'is_true');
   const explanationIdx = columnIndex(headers, 'explanation');
   const categoryIdx = columnIndex(headers, 'category');
 
-  const records: CsvRecord[] = [];
+  const records: ParsedCsvRow[] = [];
 
   for (const row of dataRows) {
     const statement = (row[statementIdx] ?? '').trim();
@@ -116,7 +124,21 @@ function parseCsv(content: string): CsvRecord[] {
     const explanation = (row[explanationIdx] ?? '').trim();
     const category = normalizeCategory(rawCategory, isTrue);
 
+    let id: number | undefined;
+    if (idIdx >= 0) {
+      const rawId = (row[idIdx] ?? '').trim();
+      if (rawId) {
+        const parsed = Number(rawId);
+        if (Number.isFinite(parsed)) {
+          id = parsed;
+        } else {
+          console.warn(`Skipping invalid id value "${rawId}" for statement "${statement}".`);
+        }
+      }
+    }
+
     records.push({
+      id,
       statement,
       isTrue,
       explanation,
@@ -133,7 +155,7 @@ export async function seedQuizQuestions() {
     throw new Error('DATABASE_URL environment variable is required');
   }
 
-  const csvPath = join(__dirname, 'myth_true_questionaire.csv');
+  const csvPath = join(__dirname, 'data', 'myth_true_questionaire.csv');
   const csvContent = readFileSync(csvPath, 'utf8');
   const records = parseCsv(csvContent);
 
@@ -142,8 +164,8 @@ export async function seedQuizQuestions() {
     return;
   }
 
-  const sql = postgres(DATABASE_URL);
-  const db = drizzle(sql);
+  const sqlClient = postgres(DATABASE_URL);
+  const db = drizzle(sqlClient);
 
   try {
     await db.delete(quizQuestions);
@@ -152,7 +174,49 @@ export async function seedQuizQuestions() {
     for (let i = 0; i < records.length; i += batchSize) {
       const batch = records.slice(i, i + batchSize);
       if (!batch.length) continue;
-      await db.insert(quizQuestions).values(batch);
+
+      const values: QuizQuestionInsert[] = batch.map((record) => {
+        const timestamp = new Date();
+        const insertRecord: QuizQuestionInsert = {
+          statement: record.statement,
+          isTrue: record.isTrue,
+          explanation: record.explanation,
+          category: record.category,
+          createdAt: timestamp,
+          updatedAt: timestamp,
+        };
+
+        if (record.id !== undefined) {
+          insertRecord.id = record.id;
+        }
+
+        return insertRecord;
+      });
+
+      await db.insert(quizQuestions).values(values);
+    }
+
+    const maxIdResult = await sqlClient<{ max: number | null }[]>`
+      select max(id) as max from quiz_questions
+    `;
+    const maxId = maxIdResult[0]?.max ?? null;
+
+    if (maxId !== null) {
+      await sqlClient`
+        select setval(
+          pg_get_serial_sequence('quiz_questions', 'id'),
+          ${maxId},
+          true
+        )
+      `;
+    } else {
+      await sqlClient`
+        select setval(
+          pg_get_serial_sequence('quiz_questions', 'id'),
+          1,
+          false
+        )
+      `;
     }
 
     const myths = records.filter((record) => !record.isTrue).length;
@@ -160,7 +224,7 @@ export async function seedQuizQuestions() {
 
     console.log(`Inserted ${records.length} quiz questions (${myths} myths, ${facts} facts).`);
   } finally {
-    await sql.end({ timeout: 5 });
+    await sqlClient.end({ timeout: 5 });
   }
 }
 
