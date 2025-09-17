@@ -12,6 +12,7 @@ import {
 } from "./ui/dialog";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "./ui/tooltip";
 import NicknameInputDialog from "./leaderboard/NicknameInputDialog";
 import ScoreSubmittedDialog from "./leaderboard/ScoreSubmittedDialog";
 import LeaderboardDisplay from "./leaderboard/LeaderboardDisplay";
@@ -51,10 +52,15 @@ export default function MythListClient({ items }: { items: Item[] }) {
   const [userRank, setUserRank] = useState<number>(0);
   const [userStats, setUserStats] = useState<any>(null);
   const [leaderboardData, setLeaderboardData] = useState<LeaderboardResponse | null>(null);
+  const [viewAllOpen, setViewAllOpen] = useState(false);
 
   const handleClick = (item: Item) => {
     setSelected(item);
     setOpen(true);
+  };
+
+  const handleViewAll = () => {
+    setViewAllOpen(true);
   };
 
   const deriveTruth = (fact?: string) => {
@@ -220,9 +226,24 @@ export default function MythListClient({ items }: { items: Item[] }) {
 
   return (
     <div className="space-y-16">
-      <TiltedScroll items={items} onItemClick={handleClick} className="mt-4" />
+      <TooltipProvider>
+        <div className="relative">
+          <Tooltip delayDuration={1500}>
+            <TooltipTrigger asChild>
+              <div className="cursor-help">
+                <TiltedScroll items={items} onItemClick={handleClick} className="mt-4" />
+              </div>
+            </TooltipTrigger>
+            <TooltipContent side="top" className="max-w-xs">
+              <p className="text-center">
+                {t('tooltips.clickCard')}
+              </p>
+            </TooltipContent>
+          </Tooltip>
+        </div>
+      </TooltipProvider>
 
-      <div className="flex justify-center gap-4">
+      <div className="flex justify-center gap-4 flex-wrap">
         <Button
           size="lg"
           className="flex h-12 md:h-14 px-6 md:px-8 py-3 text-base md:text-lg bg-gradient-to-r from-rose-400 to-teal-500 dark:from-rose-400 dark:to-teal-500 hover:from-rose-600 hover:to-teal-600 dark:hover:from-rose-500  dark:hover:to-teal-500 text-white dark:text-slate-800 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 active:scale-95"
@@ -239,40 +260,66 @@ export default function MythListClient({ items }: { items: Item[] }) {
         >
           🏆 {t('leaderboard')}
         </Button>
+        <Button
+          size="lg"
+          variant="outline"
+          className="flex h-12 md:h-14 px-6 md:px-8 py-3 text-base md:text-lg rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 active:scale-95 border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-950/30"
+          onClick={handleViewAll}
+        >
+          📋 {t('viewAll.button')}
+        </Button>
       </div>
 
-      {/* Info Dialog for single myth */}
+      {/* Info Dialog for myths and facts */}
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="sm:max-w-lg">
-          <DialogHeader className="space-y-3">
-            <div className="flex items-center gap-2">
-              <Badge variant="outline" className="text-red-600 border-red-200 dark:text-red-400 dark:border-red-800">
-                {t('myth')}
-              </Badge>
-            </div>
-            <DialogTitle className="text-lg font-medium text-left">
-              {selected?.text || t('myth')}
-            </DialogTitle>
-            <DialogDescription className="text-sm text-left">
-              {t('dialog.closeHint')}
-            </DialogDescription>
-          </DialogHeader>
-          
-          <div className="mt-4 space-y-3">
-            <div className="flex items-center gap-2">
-              <Badge className="bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400">
-                {t('fact')}
-              </Badge>
-              <span className="text-sm text-muted-foreground">
-                {t('truthLabel')}
-              </span>
-            </div>
-            <div className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-4 border-l-4 border-green-500">
-              <p className="text-sm leading-relaxed">
-                {selected?.fact || t('factUnavailable')}
-              </p>
-            </div>
-          </div>
+          {(() => {
+            const isFactual = deriveTruth(selected?.fact);
+            const factText = selected?.fact || '';
+            // Extract explanation after "Myth." or "Fact."
+            const explanation = factText.replace(/^(myth|fact)\.\s*/i, '');
+            
+            return (
+              <>
+                <DialogHeader className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    {isFactual ? (
+                      <Badge className="bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400 border-green-300">
+                        ✓ {t('modal.factConfirmed')}
+                      </Badge>
+                    ) : (
+                      <Badge variant="outline" className="text-red-600 border-red-200 dark:text-red-400 dark:border-red-800 bg-red-50 dark:bg-red-950/20">
+                        ✗ {t('modal.mythDebunked')}
+                      </Badge>
+                    )}
+                  </div>
+                  <DialogTitle className="text-lg font-medium text-left">
+                    {selected?.text}
+                  </DialogTitle>
+                  <DialogDescription className="text-sm text-left">
+                    {isFactual ? t('modal.factTitle') : t('modal.mythTitle')} • {t('dialog.closeHint')}
+                  </DialogDescription>
+                </DialogHeader>
+                
+                <div className="mt-4 space-y-3">
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-medium text-muted-foreground">
+                      {isFactual ? t('modal.factExplanation') : t('modal.truthExplanation')}
+                    </span>
+                  </div>
+                  <div className={`rounded-lg p-4 border-l-4 ${
+                    isFactual 
+                      ? 'bg-green-50 dark:bg-green-950/40 border-green-500'
+                      : 'bg-blue-50 dark:bg-blue-950/40 border-blue-500'
+                  }`}>
+                    <p className="text-sm leading-relaxed">
+                      {explanation || t('factUnavailable')}
+                    </p>
+                  </div>
+                </div>
+              </>
+            );
+          })()}
         </DialogContent>
       </Dialog>
 
@@ -501,6 +548,73 @@ export default function MythListClient({ items }: { items: Item[] }) {
         onOpenChange={setLeaderboardOpen}
         initialData={leaderboardData || undefined}
       />
+
+      {/* View All Myths & Facts Dialog */}
+      <Dialog open={viewAllOpen} onOpenChange={setViewAllOpen}>
+        <DialogContent className="sm:max-w-4xl max-h-[80vh] overflow-hidden flex flex-col">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-semibold">
+              {t('viewAll.title')}
+            </DialogTitle>
+            <DialogDescription>
+              {t('viewAll.subtitle')}
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="flex-1 overflow-y-auto pr-2">
+            <div className="space-y-4">
+              {items.map((item, index) => {
+                const isFactual = deriveTruth(item.fact);
+                const factText = item.fact || '';
+                const explanation = factText.replace(/^(myth|fact)\.\s*/i, '');
+                
+                return (
+                  <div
+                    key={item.id}
+                    className="p-4 rounded-lg border border-border/40 bg-card hover:bg-accent/50 transition-colors cursor-pointer"
+                    onClick={() => {
+                      handleClick(item);
+                      setViewAllOpen(false);
+                    }}
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="flex-shrink-0 mt-1">
+                        {isFactual ? (
+                          <Badge className="bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400 border-green-300">
+                            ✓ {t('modal.factConfirmed')}
+                          </Badge>
+                        ) : (
+                          <Badge variant="outline" className="text-red-600 border-red-200 dark:text-red-400 dark:border-red-800 bg-red-50 dark:bg-red-950/20">
+                            ✗ {t('modal.mythDebunked')}
+                          </Badge>
+                        )}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-medium text-foreground/90 mb-2 leading-relaxed">
+                          {item.text}
+                        </h4>
+                        <p className="text-sm text-muted-foreground leading-relaxed">
+                          {explanation || t('factUnavailable')}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          
+          <div className="flex justify-end pt-4 border-t">
+            <Button
+              variant="outline"
+              onClick={() => setViewAllOpen(false)}
+              className="transition-all duration-200 hover:scale-105"
+            >
+              {t('actions.close')}
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       {/* Local styles for small animations */}
       <style jsx>{`

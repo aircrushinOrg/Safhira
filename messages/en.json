@@ -81,8 +81,7 @@
         "supported": "Supported by Malaysian health professionals",
         "anonymous": "Completely anonymous - no data stored"
       }
-    }
-    ,
+    },
     "faq": {
       "title": "Frequently Asked Questions",
       "subtitle": "Common sexual health questions and answers about this website.",
@@ -148,7 +147,7 @@
     "chat": "Private Chat",
     "nav": {
       "home": "Home",
-      "learnStis": "Learn About STIs",
+      "learnStis": "Learn",
       "quiz": "Quiz",
       "services": "Find Services"
     }
@@ -180,8 +179,7 @@
       "title": "Important Disclaimer",
       "text": "Information on this website is for educational purposes only and is not a substitute for professional medical advice. Please consult a doctor for proper diagnosis and treatment."
     }
-  }
-  ,
+  },
   "QuizPage": {
     "hero": {
       "badge": "Interactive & educational",
@@ -245,10 +243,39 @@
       "tryHint": "Tap Try Again to retake the quiz."
     },
     "achievements": {
-      "gold": {"label": "Gold", "desc": "Perfect score!"},
-      "silver": {"label": "Silver", "desc": "Great job!"},
-      "bronze": {"label": "Bronze", "desc": "Nice try!"},
-      "keepLearning": {"label": "Keep Learning", "desc": "Try again to improve"}
+      "gold": {
+        "label": "Gold",
+        "desc": "Perfect score!"
+      },
+      "silver": {
+        "label": "Silver",
+        "desc": "Great job!"
+      },
+      "bronze": {
+        "label": "Bronze",
+        "desc": "Nice try!"
+      },
+      "keepLearning": {
+        "label": "Keep Learning",
+        "desc": "Try again to improve"
+      }
+    },
+    "tooltips": {
+      "clickCard": "💡 Click on any card to learn the truth behind the myth!",
+      "manualScroll": "Use these controls to manually scroll through myths"
+    },
+    "modal": {
+      "mythTitle": "This is a Myth",
+      "factTitle": "This is a Fact",
+      "truthExplanation": "Here's the truth:",
+      "factExplanation": "Here's the explanation:",
+      "mythDebunked": "Myth Debunked",
+      "factConfirmed": "Fact Confirmed"
+    },
+    "viewAll": {
+      "button": "View All",
+      "title": "All Myths & Facts",
+      "subtitle": "Complete list of all statements and their explanations. Click any item to view details."
     }
   },
   "NotFound": {
@@ -393,8 +420,7 @@
     "startLearning": "Start Learning",
     "review": "Review",
     "continue": "Continue"
-  }
-  ,
+  },
   "Chat": {
     "page": {
       "loading": "Loading chat...",
@@ -568,8 +594,7 @@
         }
       }
     }
-  }
-  ,
+  },
   "STIDetail": {
     "back": "Back to STIs Overview",
     "risk": "Risk",
@@ -661,8 +686,7 @@
         "y": "Incidence Rate (per 100,000)"
       }
     }
-  }
-  ,
+  },
   "Prevention": {
     "hero": {
       "title": "STI Prevention & Safe Sex Practices",
@@ -754,9 +778,18 @@
           "Listen actively and respect your partner's responses"
         ],
         "samples": [
-          {"situation": "Discussing testing", "example": "I care about both our health. When was your last STI test? I had mine [timeframe] and everything was clear."},
-          {"situation": "Talking about protection", "example": "I'd feel more comfortable using protection. How do you feel about that?"},
-          {"situation": "Setting boundaries", "example": "I'm comfortable with [specific activities] but would prefer to wait on [other activities]. What are your thoughts?"}
+          {
+            "situation": "Discussing testing",
+            "example": "I care about both our health. When was your last STI test? I had mine [timeframe] and everything was clear."
+          },
+          {
+            "situation": "Talking about protection",
+            "example": "I'd feel more comfortable using protection. How do you feel about that?"
+          },
+          {
+            "situation": "Setting boundaries",
+            "example": "I'm comfortable with [specific activities] but would prefer to wait on [other activities]. What are your thoughts?"
+          }
         ],
         "styles": [
           "Some cultures prefer indirect communication",
@@ -817,12 +850,16 @@
         "who": {
           "title": "World Health Organization (WHO)",
           "desc": "Global standards for STI prevention and treatment guidelines that inform this content.",
-          "links": ["WHO – Sexually Transmitted Infections (STIs)"]
+          "links": [
+            "WHO – Sexually Transmitted Infections (STIs)"
+          ]
         },
         "moh": {
           "title": "Malaysia Ministry of Health",
           "desc": "Official Malaysian clinical guidelines for STI prevention and treatment adapted for local context.",
-          "links": ["MOH – Official Portal"]
+          "links": [
+            "MOH – Official Portal"
+          ]
         },
         "cdc": {
           "title": "Centers for Disease Control (CDC)",
@@ -834,7 +871,9 @@
         }
       },
       "extra": {
-        "moh": {"link": "Ministry of Health Malaysia (MOH) – Official Portal"},
+        "moh": {
+          "link": "Ministry of Health Malaysia (MOH) – Official Portal"
+        },
         "maf": {
           "title": "Malaysian AIDS Foundation (MAF)",
           "desc": "Provides counseling, testing, and support services with culturally sensitive care and education programs.",
@@ -875,8 +914,12 @@
           "multi": "Multi‑drug"
         }
       },
-      "dos": {"title": "Do"},
-      "donts": {"title": "Don't"},
+      "dos": {
+        "title": "Do"
+      },
+      "donts": {
+        "title": "Don't"
+      },
       "single": {
         "overview": "Single‑dose treatments work best when taken exactly as prescribed at the scheduled time.",
         "dos": [
@@ -982,15 +1025,24 @@
         "eventDesc": "Time to take your medication."
       }
     },
-      "tracking": {
-        "title": "Dose Tracking (Local)",
-        "desc": "Mark each dose as taken or missed. Data stays on your device unless you export it.",
-        "next": "Next:",
-        "allDone": "All done for today",
-        "actions": {"taken": "Mark taken", "missed": "Mark missed"},
-        "status": {"pending": "Pending", "taken": "Taken", "missed": "Missed"},
-        "toast": {"missed": "Dose marked missed"}
+    "tracking": {
+      "title": "Dose Tracking (Local)",
+      "desc": "Mark each dose as taken or missed. Data stays on your device unless you export it.",
+      "next": "Next:",
+      "allDone": "All done for today",
+      "actions": {
+        "taken": "Mark taken",
+        "missed": "Mark missed"
       },
+      "status": {
+        "pending": "Pending",
+        "taken": "Taken",
+        "missed": "Missed"
+      },
+      "toast": {
+        "missed": "Dose marked missed"
+      }
+    },
     "catchup": {
       "title": "Missed‑Dose Catch‑up Guidance",
       "neverDoubleDose": "Never take a double dose to make up for a missed one.",
@@ -1025,7 +1077,10 @@
     "lifestyle": {
       "title": "Positive-Living Lifestyle",
       "subtitle": "Medically reviewed stories and tips on living well with STIs (mental health, relationships, exercise, diet, coping with stigma).",
-      "tabs": {"all": "All", "bookmarks": "Bookmarks"},
+      "tabs": {
+        "all": "All",
+        "bookmarks": "Bookmarks"
+      },
       "lastReviewed": "Last reviewed",
       "actions": {
         "view": "View",
@@ -1046,7 +1101,9 @@
         "desc": "This story discusses sensitive topics that may be distressing for some readers. Support resources are included.",
         "continue": "Continue"
       },
-      "resources": {"title": "Support & resources"},
+      "resources": {
+        "title": "Support & resources"
+      },
       "emptyBookmarks": "No bookmarks yet.",
       "report": {
         "title": "Report content?",
@@ -1067,8 +1124,14 @@
             "Reach out to trusted people or helplines when feeling overwhelmed"
           ],
           "sources": [
-            {"label": "WHO: Mental Health", "url": "https://www.who.int/health-topics/mental-health"},
-            {"label": "MOH Malaysia", "url": "https://www.moh.gov.my/"}
+            {
+              "label": "WHO: Mental Health",
+              "url": "https://www.who.int/health-topics/mental-health"
+            },
+            {
+              "label": "MOH Malaysia",
+              "url": "https://www.moh.gov.my/"
+            }
           ]
         },
         "work": {
@@ -1083,8 +1146,14 @@
             "Seek support from trusted supervisors or counselors where safe"
           ],
           "sources": [
-            {"label": "WHO: Workplace Health", "url": "https://www.who.int/news-room/fact-sheets/detail/mental-disorders"},
-            {"label": "SOCSO Malaysia", "url": "https://www.perkeso.gov.my/"}
+            {
+              "label": "WHO: Workplace Health",
+              "url": "https://www.who.int/news-room/fact-sheets/detail/mental-disorders"
+            },
+            {
+              "label": "SOCSO Malaysia",
+              "url": "https://www.perkeso.gov.my/"
+            }
           ]
         },
         "exercise": {
@@ -1099,8 +1168,14 @@
             "Check with a clinician before major changes"
           ],
           "sources": [
-            {"label": "CDC: Physical Activity Basics", "url": "https://www.cdc.gov/physicalactivity/basics/index.htm"},
-            {"label": "MOH: Nutrition Guidance", "url": "https://www.moh.gov.my/"}
+            {
+              "label": "CDC: Physical Activity Basics",
+              "url": "https://www.cdc.gov/physicalactivity/basics/index.htm"
+            },
+            {
+              "label": "MOH: Nutrition Guidance",
+              "url": "https://www.moh.gov.my/"
+            }
           ]
         },
         "relationships": {
@@ -1115,8 +1190,14 @@
             "Celebrate small wins together (appointments kept, doses taken)"
           ],
           "sources": [
-            {"label": "CDC: Healthy Relationships", "url": "https://www.cdc.gov/violenceprevention/healthyrelationships/index.html"},
-            {"label": "PT Foundation (Malaysia)", "url": "https://www.ptfmalaysia.org/"}
+            {
+              "label": "CDC: Healthy Relationships",
+              "url": "https://www.cdc.gov/violenceprevention/healthyrelationships/index.html"
+            },
+            {
+              "label": "PT Foundation (Malaysia)",
+              "url": "https://www.ptfmalaysia.org/"
+            }
           ]
         },
         "stigma": {
@@ -1131,36 +1212,67 @@
             "If in distress, contact local helplines or care providers"
           ],
           "sources": [
-            {"label": "UNAIDS: Stigma and discrimination", "url": "https://www.unaids.org/en/topic/stigma"},
-            {"label": "Befrienders KL", "url": "https://www.befrienders.org.my/"}
+            {
+              "label": "UNAIDS: Stigma and discrimination",
+              "url": "https://www.unaids.org/en/topic/stigma"
+            },
+            {
+              "label": "Befrienders KL",
+              "url": "https://www.befrienders.org.my/"
+            }
           ]
         }
       }
     },
     "lifestyleSources": {
       "mental": [
-        {"label": "WHO: Mental Health", "url": "https://www.who.int/health-topics/mental-health"},
-        {"label": "MOH Malaysia", "url": "https://www.moh.gov.my/"}
+        {
+          "label": "WHO: Mental Health",
+          "url": "https://www.who.int/health-topics/mental-health"
+        },
+        {
+          "label": "MOH Malaysia",
+          "url": "https://www.moh.gov.my/"
+        }
       ],
       "work": [
-        {"label": "WHO: Workplace Health", "url": "https://www.who.int/news-room/fact-sheets/detail/mental-disorders"},
-        {"label": "SOCSO Malaysia", "url": "https://www.perkeso.gov.my/"}
+        {
+          "label": "WHO: Workplace Health",
+          "url": "https://www.who.int/news-room/fact-sheets/detail/mental-disorders"
+        },
+        {
+          "label": "SOCSO Malaysia",
+          "url": "https://www.perkeso.gov.my/"
+        }
       ],
       "exercise": [
-        {"label": "CDC: Physical Activity Basics", "url": "https://www.cdc.gov/physicalactivity/basics/index.htm"},
-        {"label": "MOH: Nutrition Guidance", "url": "https://www.moh.gov.my/"}
+        {
+          "label": "CDC: Physical Activity Basics",
+          "url": "https://www.cdc.gov/physicalactivity/basics/index.htm"
+        },
+        {
+          "label": "MOH: Nutrition Guidance",
+          "url": "https://www.moh.gov.my/"
+        }
       ]
     },
     "partner": {
       "title": "Partner Notification & Safer Sex",
       "subtitle": "Respectful ways to communicate and protect each other, plus STI‑specific safer sex guidance.",
-      "tabs": {"templates": "Templates", "safer": "Safer Sex"},
+      "tabs": {
+        "templates": "Templates",
+        "safer": "Safer Sex"
+      },
       "templates": {
         "title": "Communication Templates",
         "desc": "Choose and customize a message template to help you communicate with partners.",
         "label": "Message template",
         "choose": "Choose a template",
-        "kinds": {"gentle": "Gentle & supportive", "direct": "Direct & clear", "text": "Short text message"},
+        "kinds": {
+          "gentle": "Gentle & supportive",
+          "direct": "Direct & clear",
+          "text": "Short text message"
+        },
         "note": "Your message stays local and is not saved.",
         "messageLabel": "Customize your message",
         "help": "Feel free to edit the template. Nothing is stored after you leave this page.",
@@ -1171,7 +1283,7 @@
         "reset": "Reset to template",
         "gentle": "I care about you and want to be honest. I was diagnosed with an STI and I’m getting the right treatment. We can talk about how to keep each other safe. I have resources we can read together if you’d like.",
         "direct": "I need to let you know I tested positive for an STI. I’m following medical guidance. Let’s plan for testing and use protection as recommended.",
-      "text": "Hi, I recently tested positive for an STI. I’m getting treated. It’s important to get tested. I’m here to share details and resources."
+        "text": "Hi, I recently tested positive for an STI. I’m getting treated. It’s important to get tested. I’m here to share details and resources."
       },
       "ai": {
         "toneLabel": "Tone",
@@ -1195,7 +1307,13 @@
         "desc": "Get specific guidance based on your STI type and find testing resources.",
         "stiLabel": "STI type",
         "chooseSti": "Select an STI",
-        "types": {"chlamydia": "Chlamydia", "gonorrhea": "Gonorrhea", "syphilis": "Syphilis", "hiv": "HIV", "herpes": "Herpes (HSV)"},
+        "types": {
+          "chlamydia": "Chlamydia",
+          "gonorrhea": "Gonorrhea",
+          "syphilis": "Syphilis",
+          "hiv": "HIV",
+          "herpes": "Herpes (HSV)"
+        },
         "checklistTitle": "Safer sex checklist",
         "uuNote": "HIV: When viral load is undetectable (U=U), sexual transmission does not occur. Keep adherent to treatment and follow clinician advice.",
         "checklists": {
@@ -1239,28 +1357,61 @@
         "linksTitle": "Helpful links",
         "privacyTitle": "Privacy Note",
         "privacy": "Location is optional; selections stay on your device.",
-        "regions": {"kl": "Kuala Lumpur / Selangor", "penang": "Penang", "johor": "Johor", "sabah": "Sabah", "sarawak": "Sarawak"},
+        "regions": {
+          "kl": "Kuala Lumpur / Selangor",
+          "penang": "Penang",
+          "johor": "Johor",
+          "sabah": "Sabah",
+          "sarawak": "Sarawak"
+        },
         "generic": [
-          {"label": "MOH Malaysia – Sexual Health info", "url": "https://www.moh.gov.my/"},
-          {"label": "PT Foundation (Testing & Support)", "url": "https://www.ptfmalaysia.org/"},
-          {"label": "WHO Sexual Health", "url": "https://www.who.int/health-topics/sexual-health"}
+          {
+            "label": "MOH Malaysia – Sexual Health info",
+            "url": "https://www.moh.gov.my/"
+          },
+          {
+            "label": "PT Foundation (Testing & Support)",
+            "url": "https://www.ptfmalaysia.org/"
+          },
+          {
+            "label": "WHO Sexual Health",
+            "url": "https://www.who.int/health-topics/sexual-health"
+          }
         ],
         "byRegion": {
           "kl": [
-            {"label": "Klinik Kesihatan (KL) – Sexual Health", "url": "https://www.moh.gov.my/"},
-            {"label": "PT Foundation Testing (KL)", "url": "https://www.ptfmalaysia.org/"}
+            {
+              "label": "Klinik Kesihatan (KL) – Sexual Health",
+              "url": "https://www.moh.gov.my/"
+            },
+            {
+              "label": "PT Foundation Testing (KL)",
+              "url": "https://www.ptfmalaysia.org/"
+            }
           ],
           "penang": [
-            {"label": "Penang State Health – Clinics", "url": "https://jknpenang.moh.gov.my/"}
+            {
+              "label": "Penang State Health – Clinics",
+              "url": "https://jknpenang.moh.gov.my/"
+            }
           ],
           "johor": [
-            {"label": "Johor State Health – Clinics", "url": "https://jknjohor.moh.gov.my/"}
+            {
+              "label": "Johor State Health – Clinics",
+              "url": "https://jknjohor.moh.gov.my/"
+            }
           ],
           "sabah": [
-            {"label": "Sabah State Health – Clinics", "url": "https://jkknsabah.moh.gov.my/"}
+            {
+              "label": "Sabah State Health – Clinics",
+              "url": "https://jkknsabah.moh.gov.my/"
+            }
           ],
           "sarawak": [
-            {"label": "Sarawak State Health – Clinics", "url": "https://jknsarawak.moh.gov.my/"}
+            {
+              "label": "Sarawak State Health – Clinics",
+              "url": "https://jknsarawak.moh.gov.my/"
+            }
           ]
         }
       },

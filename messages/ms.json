@@ -147,7 +147,7 @@
     "chat": "Sembang Peribadi",
     "nav": {
       "home": "Laman Utama",
-      "learnStis": "Ketahui tentang STI",
+      "learnStis": "Ketahui",
       "quiz": "Kuiz",
       "services": "Cari Perkhidmatan"
     }
@@ -259,6 +259,23 @@
         "label": "Terus Belajar",
         "desc": "Cuba lagi untuk bertambah baik"
       }
+    },
+    "tooltips": {
+      "clickCard": "💡 Klik mana-mana kad untuk ketahui kebenaran di sebalik mitos!",
+      "manualScroll": "Gunakan kawalan ini untuk skrol secara manual melalui mitos"
+    },
+    "modal": {
+      "mythTitle": "Ini adalah Mitos",
+      "factTitle": "Ini adalah Fakta",
+      "truthExplanation": "Berikut adalah kebenaran:",
+      "factExplanation": "Berikut adalah penjelasan:",
+      "mythDebunked": "Mitos Terbantah",
+      "factConfirmed": "Fakta Disahkan"
+    },
+    "viewAll": {
+      "button": "Lihat Semua",
+      "title": "Semua Mitos & Fakta",
+      "subtitle": "Senarai lengkap semua kenyataan dan penjelasannya. Klik mana-mana item untuk lihat butiran."
     }
   },
   "NotFound": {
@@ -897,32 +914,78 @@
           "multi": "Pelbagai ubat"
         }
       },
-      "dos": {"title": "Disarankan"},
-      "donts": {"title": "Elakkan"},
+      "dos": {
+        "title": "Disarankan"
+      },
+      "donts": {
+        "title": "Elakkan"
+      },
       "single": {
         "overview": "Rawatan dos tunggal paling berkesan jika diambil tepat pada masa seperti yang ditetapkan.",
-        "dos": ["Sahkan masa dengan makanan/air jika diarahkan","Tetapkan peringatan supaya tidak terlupa","Catat sebarang kesan sampingan dan perasaan anda"],
-        "donts": ["Jangan belah atau kongsi dos anda","Jangan ambil tambahan jika muntah tanpa nasihat klinikal","Jangan ambil bersama alkohol jika diberi amaran"]
+        "dos": [
+          "Sahkan masa dengan makanan/air jika diarahkan",
+          "Tetapkan peringatan supaya tidak terlupa",
+          "Catat sebarang kesan sampingan dan perasaan anda"
+        ],
+        "donts": [
+          "Jangan belah atau kongsi dos anda",
+          "Jangan ambil tambahan jika muntah tanpa nasihat klinikal",
+          "Jangan ambil bersama alkohol jika diberi amaran"
+        ]
       },
       "daily": {
         "overview": "Ambil ubat pada masa yang sama setiap hari. Konsistensi membantu keberkesanan dan mengurangkan tertinggal dos.",
-        "dos": ["Pasangkan dos dengan rutin harian (cth., sarapan)","Guna peringatan dan kotak pil yang jelas","Hubungi klinisi jika kesan sampingan menjejaskan rutin"],
-        "donts": ["Jangan gandakan dos tanpa panduan","Jangan berhenti awal walaupun rasa lebih baik","Jangan kongsi ubat dengan orang lain"]
+        "dos": [
+          "Pasangkan dos dengan rutin harian (cth., sarapan)",
+          "Guna peringatan dan kotak pil yang jelas",
+          "Hubungi klinisi jika kesan sampingan menjejaskan rutin"
+        ],
+        "donts": [
+          "Jangan gandakan dos tanpa panduan",
+          "Jangan berhenti awal walaupun rasa lebih baik",
+          "Jangan kongsi ubat dengan orang lain"
+        ]
       },
       "multi": {
         "overview": "Regimen pelbagai ubat mungkin berbeza masa/arahan. Kekalkan jadual ringkas dan semak semula arahan setiap ubat.",
-        "dos": ["Senaraikan setiap ubat dan masanya","Guna label warna atau pengelola mingguan","Tanya klinisi/ahli farmasi jika arahan bercanggah"],
-        "donts": ["Jangan ubah turutan dos tanpa panduan","Jangan campur dengan alkohol/ubat OTC tanpa semakan","Jangan abaikan pemantauan atau temujanji susulan"]
+        "dos": [
+          "Senaraikan setiap ubat dan masanya",
+          "Guna label warna atau pengelola mingguan",
+          "Tanya klinisi/ahli farmasi jika arahan bercanggah"
+        ],
+        "donts": [
+          "Jangan ubah turutan dos tanpa panduan",
+          "Jangan campur dengan alkohol/ubat OTC tanpa semakan",
+          "Jangan abaikan pemantauan atau temujanji susulan"
+        ]
       }
     },
-    "interactions": {"caution": "Interaksi: Sesetengah ubat, alkohol, dan suplemen boleh menjejaskan keselamatan atau keberkesanan.","confirm": "Sahkan dengan klinisi atau ahli farmasi anda."},
+    "interactions": {
+      "caution": "Interaksi: Sesetengah ubat, alkohol, dan suplemen boleh menjejaskan keselamatan atau keberkesanan.",
+      "confirm": "Sahkan dengan klinisi atau ahli farmasi anda."
+    },
     "sideEffects": {
       "title": "Pengurusan Kesan Sampingan",
       "commonTitle": "Umum / dijangka",
       "redFlagTitle": "Isyarat bahaya / segera",
-      "common": ["Loya ringan — cuba bersama makanan dan minum air","Sakit kepala — rehat, hidrasi; ubat tahan sakit ringan jika selamat","Pening — bangun perlahan; elak memandu jika terkesan","Lesu — susun tempo aktiviti dan rehat"],
-      "redFlags": ["Ruam teruk atau gatal-gatal","Sesak nafas atau berdehit","Bengkak pada muka, bibir, atau tekak","Sakit dada, keliru, atau pengsan","Demam tinggi yang tidak reda"],
-      "urgent": {"title": "Penjagaan segera","text": "Jika muncul isyarat bahaya, dapatkan rawatan segera.","resources": "Dapatkan bantuan dan ketahui hak anda"}
+      "common": [
+        "Loya ringan — cuba bersama makanan dan minum air",
+        "Sakit kepala — rehat, hidrasi; ubat tahan sakit ringan jika selamat",
+        "Pening — bangun perlahan; elak memandu jika terkesan",
+        "Lesu — susun tempo aktiviti dan rehat"
+      ],
+      "redFlags": [
+        "Ruam teruk atau gatal-gatal",
+        "Sesak nafas atau berdehit",
+        "Bengkak pada muka, bibir, atau tekak",
+        "Sakit dada, keliru, atau pengsan",
+        "Demam tinggi yang tidak reda"
+      ],
+      "urgent": {
+        "title": "Penjagaan segera",
+        "text": "Jika muncul isyarat bahaya, dapatkan rawatan segera.",
+        "resources": "Dapatkan bantuan dan ketahui hak anda"
+      }
     },
     "reminders": {
       "title": "Peringatan Dos",
@@ -934,14 +997,25 @@
       "removeTime": "Buang masa",
       "addTime": "Tambah masa",
       "days": "Hari mingguan",
-      "week": {"0": "Ahad","1": "Isnin","2": "Selasa","3": "Rabu","4": "Khamis","5": "Jumaat","6": "Sabtu"},
+      "week": {
+        "0": "Ahad",
+        "1": "Isnin",
+        "2": "Selasa",
+        "3": "Rabu",
+        "4": "Khamis",
+        "5": "Jumaat",
+        "6": "Sabtu"
+      },
       "snooze": "Minit tunda",
       "snoozeHelp": "Tetapkan tempoh jeda apabila anda tunda peringatan.",
       "snoozed": "Ditunda hingga",
       "snoozeNow": "Tunda sekarang",
       "pauseFrom": "Jeda dari",
       "pauseTo": "Jeda hingga",
-      "toast": {"title": "Masa untuk dos anda","desc": "Kekal ikut jadual — tandakan selesai selepas diambil."},
+      "toast": {
+        "title": "Masa untuk dos anda",
+        "desc": "Kekal ikut jadual — tandakan selesai selepas diambil."
+      },
       "tzChanged": "Zon waktu anda berubah. Peringatan akan laras mengikut masa tempatan.",
       "tzDismiss": "Faham",
       "calendar": {
@@ -951,11 +1025,55 @@
         "eventDesc": "Masa untuk mengambil ubat anda."
       }
     },
-    "tracking": {"title": "Penjejakan Dos (Tempatan)","desc": "Tandakan setiap dos sebagai diambil atau terlepas. Data kekal pada peranti anda kecuali jika dieksport.","next": "Seterusnya:","allDone": "Semua selesai untuk hari ini","actions": {"taken": "Tandakan diambil", "missed": "Tandakan terlepas"},"status": {"pending": "Menunggu", "taken": "Diambil", "missed": "Terlepas"},"toast": {"missed": "Dos ditandakan terlepas"}},
-    "catchup": {"title": "Panduan Susulan Dos Terlepas","neverDoubleDose": "Jangan sekali‑kali gandakan dos untuk mengganti yang terlepas.","single": {"summary": "Dos tunggal: Ambil secepat mungkin kecuali dinasihatkan sebaliknya.","details": "Jika terlepas dos tunggal, ambil sebaik sahaja anda ingat pada hari yang sama. Jika muntah dalam masa singkat, hubungi klinisian untuk nasihat — jangan ulang dos tanpa panduan."},"daily": {"summary": "Kursus harian: Jika lewat <12j, ambil sekarang; jika >12j, langkau dan teruskan.","details": "Kurang 12 jam lewat: ambil sekarang dan kembali ke waktu biasa. Lebih 12 jam: langkau dos tersebut dan teruskan dos seterusnya pada waktu biasa."},"multi": {"summary": "Pelbagai ubat: Ikut arahan khusus ubat dan sahkan dengan klinisian.","details": "Untuk regimen pelbagai ubat, ikut arahan susulan setiap ubat. Jika ragu, langkau dos yang terlepas dan dapatkan nasihat sebelum mengubah."}},
-    "governance": {"title": "Tadbir urus kandungan:","reviewed": "Disemak secara perubatan; untuk pendidikan sahaja.","lastReviewed": "Semakan terakhir: 2025‑01‑01"},
-    "sources": {"title": "Sumber:","items": ["Garis Panduan STI WHO (ringkasan)","Garis Panduan Rawatan STI CDC 2021"]},
-    "privacy": {"clearLocal": "Padam data tempatan"},
+    "tracking": {
+      "title": "Penjejakan Dos (Tempatan)",
+      "desc": "Tandakan setiap dos sebagai diambil atau terlepas. Data kekal pada peranti anda kecuali jika dieksport.",
+      "next": "Seterusnya:",
+      "allDone": "Semua selesai untuk hari ini",
+      "actions": {
+        "taken": "Tandakan diambil",
+        "missed": "Tandakan terlepas"
+      },
+      "status": {
+        "pending": "Menunggu",
+        "taken": "Diambil",
+        "missed": "Terlepas"
+      },
+      "toast": {
+        "missed": "Dos ditandakan terlepas"
+      }
+    },
+    "catchup": {
+      "title": "Panduan Susulan Dos Terlepas",
+      "neverDoubleDose": "Jangan sekali‑kali gandakan dos untuk mengganti yang terlepas.",
+      "single": {
+        "summary": "Dos tunggal: Ambil secepat mungkin kecuali dinasihatkan sebaliknya.",
+        "details": "Jika terlepas dos tunggal, ambil sebaik sahaja anda ingat pada hari yang sama. Jika muntah dalam masa singkat, hubungi klinisian untuk nasihat — jangan ulang dos tanpa panduan."
+      },
+      "daily": {
+        "summary": "Kursus harian: Jika lewat <12j, ambil sekarang; jika >12j, langkau dan teruskan.",
+        "details": "Kurang 12 jam lewat: ambil sekarang dan kembali ke waktu biasa. Lebih 12 jam: langkau dos tersebut dan teruskan dos seterusnya pada waktu biasa."
+      },
+      "multi": {
+        "summary": "Pelbagai ubat: Ikut arahan khusus ubat dan sahkan dengan klinisian.",
+        "details": "Untuk regimen pelbagai ubat, ikut arahan susulan setiap ubat. Jika ragu, langkau dos yang terlepas dan dapatkan nasihat sebelum mengubah."
+      }
+    },
+    "governance": {
+      "title": "Tadbir urus kandungan:",
+      "reviewed": "Disemak secara perubatan; untuk pendidikan sahaja.",
+      "lastReviewed": "Semakan terakhir: 2025‑01‑01"
+    },
+    "sources": {
+      "title": "Sumber:",
+      "items": [
+        "Garis Panduan STI WHO (ringkasan)",
+        "Garis Panduan Rawatan STI CDC 2021"
+      ]
+    },
+    "privacy": {
+      "clearLocal": "Padam data tempatan"
+    },
     "lifestyle": {
       "title": "Gaya Hidup Positif",
       "subtitle": "Kisah dan tip yang disemak secara perubatan tentang hidup sihat bersama STI (kesihatan mental, hubungan, senaman, diet, menangani stigma).",
@@ -1297,7 +1415,11 @@
           ]
         }
       },
-      "legal": {"title": "Pertimbangan Undang‑undang","note": "Undang‑undang dan tanggungjawab berbeza mengikut bidang kuasa. Ini panduan umum, bukan nasihat undang‑undang.","linkLabel": "Ketahui lagi"}
+      "legal": {
+        "title": "Pertimbangan Undang‑undang",
+        "note": "Undang‑undang dan tanggungjawab berbeza mengikut bidang kuasa. Ini panduan umum, bukan nasihat undang‑undang.",
+        "linkLabel": "Ketahui lagi"
+      }
     }
   },
   "disclaimer": {
