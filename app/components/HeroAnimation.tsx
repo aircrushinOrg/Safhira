@@ -80,6 +80,8 @@ export function HeroAnimation() {
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [autoplayKey, setAutoplayKey] = useState(0);
   const [progress, setProgress] = useState(0);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
   const changeSlide = useCallback((newIndex: number, slideDirection: 'next' | 'prev' = 'next', isManual: boolean = false) => {
     if ((isAnimating && !isInitialLoad) || newIndex === currentIndex) return;
@@ -146,8 +148,50 @@ export function HeroAnimation() {
     };
   }, [currentIndex, isAnimating, isInitialLoad, autoplayKey, changeSlide]);
 
+  // Swipe handling functions
+  const minSwipeDistance = 50;
+
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  }, []);
+
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  }, []);
+
+  const handleTouchEnd = useCallback(() => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe && !isAnimating) {
+      // Swipe left - go to next slide
+      const newIndex = (currentIndex + 1) % quotes.length;
+      changeSlide(newIndex, 'next', true);
+    }
+    
+    if (isRightSwipe && !isAnimating) {
+      // Swipe right - go to previous slide
+      const newIndex = (currentIndex - 1 + quotes.length) % quotes.length;
+      changeSlide(newIndex, 'prev', true);
+    }
+
+    // Reset touch states
+    setTouchStart(null);
+    setTouchEnd(null);
+  }, [touchStart, touchEnd, isAnimating, currentIndex, changeSlide]);
+
   return (
-    <div className="relative w-full h-screen bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-pink-950 dark:via-gray-800 dark:to-teal-950 overflow-hidden">
+    <div 
+      className="relative w-full h-screen bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-pink-950 dark:via-gray-800 dark:to-teal-950 overflow-hidden"
+      style={{ touchAction: 'pan-y' }}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
       {/* Static Background - Always black when transitioning */}
       <div className="absolute inset-0 bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-pink-950 dark:via-gray-800 dark:to-teal-950" />
 
@@ -163,7 +207,7 @@ export function HeroAnimation() {
             }}
           />
           <div 
-            className="absolute inset-0 bg-gradient-to-b from-rose-700/20 to-teal-500/20 z-20"
+            className="absolute inset-0 z-20"
             style={{
               clipPath: "circle(150% at 80% 50%)"
             }}
@@ -196,7 +240,7 @@ export function HeroAnimation() {
               }}
             />
             <motion.div
-              className="absolute inset-0 bg-gradient-to-b from-rose-700/20 to-teal-500/20 z-20"
+              className="absolute inset-0 z-20"
               initial={{
                 clipPath: "circle(15% at 80% 50%)",
                 y: "100%"
@@ -236,7 +280,7 @@ export function HeroAnimation() {
               }}
             />
             <motion.div
-              className="absolute inset-0 bg-gradient-to-b from-rose-700/20 to-teal-500/20 z-20"
+              className="absolute inset-0 z-20"
               initial={{
                 clipPath: "circle(150% at 80% 50%)",
                 y: 0
@@ -272,7 +316,7 @@ export function HeroAnimation() {
               }}
             />
             <motion.div
-              className="absolute inset-0 bg-gradient-to-b from-rose-700/20 to-teal-500/20 z-20"
+              className="absolute inset-0 z-20"
               initial={{
                 clipPath: "circle(15% at 80% 50%)",
                 y: direction === 'next' ? "100%" : "-100%"
