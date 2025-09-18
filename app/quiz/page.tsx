@@ -1,8 +1,33 @@
 import { TiltedScrollDemo } from '@/app/components/QuizList'
-import {getTranslations} from 'next-intl/server'
+import { getRandomQuizQuestions, getAllQuizQuestions, type QuizQuestionRecord } from '@/app/database_query_endpoint/quiz-question-actions'
+import { getTranslations } from 'next-intl/server'
+
+type QuizListItem = {
+  id: string
+  text: string
+  fact?: string
+}
 
 export default async function QuizPage() {
   const t = await getTranslations('QuizPage')
+
+  const [randomQuestions, allQuestions] = await Promise.all([
+    getRandomQuizQuestions('myths', 8),
+    getAllQuizQuestions(),
+  ])
+
+  const mapToQuizListItem = (question: QuizQuestionRecord): QuizListItem => {
+    const prefix = question.isTrue ? 'Fact.' : 'Myth.'
+    const explanation = question.explanation?.trim()
+    return {
+      id: question.id.toString(),
+      text: question.statement,
+      fact: explanation ? `${prefix} ${explanation}` : prefix,
+    }
+  }
+
+  const featuredItems = randomQuestions.map(mapToQuizListItem)
+  const allItems = allQuestions.map(mapToQuizListItem)
   const learnItems = t.raw('learn.items') as string[]
 
   return (
@@ -69,7 +94,7 @@ export default async function QuizPage() {
               <div className="relative flex justify-center md:justify-end">
                 <div aria-hidden className="pointer-events-none absolute -inset-x-4 -top-4 -bottom-4 rounded-[2rem] bg-gradient-to-br from-rose-200/20 via-teal-200/15 to-amber-200/15 blur-xl dark:from-rose-400/10 dark:via-teal-400/10 dark:to-amber-400/10" />
                 <div id="quiz-list" className="w-full max-w-2xl md:max-w-none">
-                  <TiltedScrollDemo />
+                  <TiltedScrollDemo featuredItems={featuredItems} allItems={allItems} />
                 </div>
               </div>
             </div>

@@ -8,7 +8,7 @@ import {Button} from "../../components/ui/button";
 import {Label} from "../../components/ui/label";
 import {Switch} from "../../components/ui/switch";
 import {Separator} from "../../components/ui/separator";
-import {Heart, Copy, ExternalLink, ArrowLeft, Wand2, MessageCircle, Lock, Lightbulb, CheckCircle2, Loader2} from "lucide-react";
+import {Heart, Copy, ExternalLink, ArrowLeft, Wand2, MessageCircle, Lock, Lightbulb, CheckCircle2, Loader2, Sparkles} from "lucide-react";
 import {toast} from "sonner";
 import {motion, useReducedMotion} from "framer-motion";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "../../components/ui/tabs";
@@ -76,26 +76,93 @@ export default function RelationshipsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-rose-50 via-purple-50 to-cyan-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-rose-50 via-purple-50 to-cyan-50 dark:from-gray-950 dark:via-gray-900 dark:to-slate-950">
+      <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+        <motion.div
+          initial={{opacity: 0, scale: 0.9}}
+          animate={{opacity: 0.75, scale: 1}}
+          transition={{duration: 1.1, delay: 0.4}}
+          className="absolute -top-20 -right-16 h-[380px] w-[380px] rounded-full bg-gradient-to-br from-rose-300/40 via-amber-200/35 to-teal-200/45 blur-3xl"
+        />
+        <motion.div
+          initial={{opacity: 0, scale: 0.9}}
+          animate={{opacity: 0.45, scale: 1}}
+          transition={{duration: 1.2, delay: 0.6}}
+          className="absolute -bottom-28 left-0 h-[420px] w-[420px] rounded-full bg-gradient-to-br from-teal-400/30 via-sky-300/35 to-indigo-300/25 blur-3xl"
+        />
+        <motion.div
+          initial={{opacity: 0, y: 22}}
+          animate={{opacity: 0.3, y: 0}}
+          transition={{duration: 1, delay: 0.8}}
+          className="absolute inset-x-0 top-2/3 h-[220px] bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.55),_transparent_70%)] dark:bg-[radial-gradient(circle_at_top,_rgba(20,83,45,0.32),_transparent_75%)]"
+        />
+      </div>
       <Toaster richColors position="top-center" />
 
-      <section className="py-8 md:py-12 px-4">
+      <section className="relative py-10 md:py-16 px-4">
         <div className="container mx-auto max-w-7xl">
-          <motion.header className="mb-6 md:mb-8"
+          <motion.header
+            className="relative z-10 mb-8 md:mb-12 rounded-3xl border border-white/40 bg-white/75 p-6 shadow-lg shadow-rose-200/50 backdrop-blur dark:border-emerald-950/40 dark:bg-emerald-950/35 dark:shadow-black/40 md:p-8"
             initial={{opacity: 0, y: reduceMotion ? 0 : 8}}
             animate={{opacity: 1, y: 0}}
             transition={{duration: reduceMotion ? 0 : 0.4}}
           >
-            <Link href="/living-well-with-sti" className="inline-flex items-center gap-2 text-teal-600 hover:text-teal-700 mb-4 transition-colors">
-              <ArrowLeft size={16} />
-              {t("back")}
-            </Link>
-            
-            <div className="flex items-start gap-3 mb-3">
-              <Heart className="text-teal-600 mt-1" />
-              <div>
-                <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent dark:from-gray-100 dark:to-gray-300">{t("partner.title")}</h1>
-                <p className="text-gray-700 dark:text-gray-300 mt-1">{t("partner.subtitle")}</p>
+            <div className="flex flex-col gap-6">
+              <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                <Link
+                  href="/living-well-with-sti"
+                  className="inline-flex w-fit items-center gap-2 rounded-full border border-teal-200/70 bg-teal-50/90 px-4 py-2 text-xs font-medium uppercase tracking-wide text-teal-700 transition hover:-translate-x-0.5 hover:text-teal-800 dark:border-emerald-500/40 dark:bg-emerald-900/30 dark:text-emerald-200"
+                >
+                  <ArrowLeft size={16} />
+                  {t("back")}
+                </Link>
+                <div className="flex items-center gap-2 text-sm text-teal-700 dark:text-emerald-100">
+                  <Sparkles className="h-4 w-4" />
+                  {t("partner.subtitle")}
+                </div>
+              </div>
+
+              <div className="grid gap-6 lg:grid-cols-[minmax(0,2fr),minmax(0,1.2fr)]">
+                <div className="space-y-5">
+                  <div className="flex items-start gap-4">
+                    <div className="relative flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-rose-500 to-amber-400 text-white shadow-lg shadow-rose-300/40 dark:shadow-rose-950/40">
+                      <Heart className="h-6 w-6" />
+                    </div>
+                    <div>
+                      <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white md:text-4xl">
+                        {t("partner.title")}
+                      </h1>
+                      <p className="mt-3 max-w-xl text-base text-slate-600 dark:text-slate-200">
+                        {t("partner.subtitle")}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="rounded-2xl border border-amber-200/70 bg-amber-50 p-4 text-sm text-amber-900 shadow-sm dark:border-amber-700/60 dark:bg-amber-900/25 dark:text-amber-100">
+                    <div className="flex items-start gap-3">
+                      <Lightbulb className="mt-0.5 h-4 w-4 text-amber-500 dark:text-amber-300" />
+                      <p className="leading-relaxed">
+                        {t("partner.templates.desc")}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <motion.div
+                  initial={{opacity: 0, x: reduceMotion ? 0 : 12}}
+                  animate={{opacity: 1, x: 0}}
+                  transition={{duration: reduceMotion ? 0 : 0.45, delay: reduceMotion ? 0 : 0.2}}
+                  className="rounded-3xl border border-white/60 bg-white/80 p-5 shadow-md shadow-teal-200/50 backdrop-blur-sm md:p-6 dark:border-emerald-950/50 dark:bg-emerald-950/35 dark:shadow-black/30"
+                >
+                  <div className="mb-4 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.25em] text-teal-700 dark:text-emerald-200">
+                    <Sparkles className="h-4 w-4" />
+                    Toolkit Highlights
+                  </div>
+                  <div className="space-y-3 text-sm text-slate-600 dark:text-slate-200">
+                    <p>{t("partner.tabs.templates")}: {t("partner.templates.desc")}</p>
+                    <p>{t("partner.tabs.safer")}: {t("partner.safer.desc")}</p>
+                  </div>
+                </motion.div>
               </div>
             </div>
           </motion.header>
