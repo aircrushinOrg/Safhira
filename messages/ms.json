@@ -1465,10 +1465,30 @@
       "title": "Direktori Perkhidmatan STI",
       "subtitle": "Cari pembekal penjagaan kesihatan yang menyediakan ujian STI, PrEP, dan perkhidmatan PEP di Malaysia"
     },
+    "legend": {
+      "title": "Jenis Perkhidmatan",
+      "prep": "Profilaksis Pra-Pendedahan - ubat untuk mencegah jangkitan HIV sebelum pendedahan",
+      "pep": "Profilaksis Pasca-Pendedahan - ubat kecemasan yang diambil selepas kemungkinan pendedahan HIV",
+      "screening": "Saringan STI Percuma",
+      "screeningDesc": "Ujian tanpa kos untuk jangkitan kelamin"
+    },
     "search": {
-      "placeholder": "Cari mengikut nama pembekal...",
+      "placeholder": "Cari mengikut nama pembekal atau alamat...",
       "button": "Cari",
       "filters": "Penapis"
+    },
+    "location": {
+      "title": "Cari Pembekal Berdekatan",
+      "useCurrentLocation": "Gunakan Lokasi Semasa",
+      "gettingLocation": "Mendapatkan lokasi anda...",
+      "description": "Cari pembekal penjagaan kesihatan berdekatan dengan jarak pemanduan yang tepat",
+      "locationSet": "Lokasi ditetapkan - menunjukkan pembekal berdekatan",
+      "calculatingDistances": "Mengira jarak yang tepat...",
+      "maxDistance": "Jarak Maksimum",
+      "updateDistance": "Kemas Kini",
+      "notSupported": "Geolokasi tidak disokong oleh pelayar ini",
+      "error": "Tidak dapat mendapatkan lokasi anda. Sila benarkan akses lokasi dan cuba lagi.",
+      "noApiKey": "Carian lokasi tidak tersedia"
     },
     "filters": {
       "title": "Pilihan Penapis",
@@ -1509,6 +1529,31 @@
       "pep": "PEP",
       "freeScreening": "Saringan STI Percuma",
       "availableServices": "Perkhidmatan Tersedia:"
+    }
+  },
+  "ProviderDetails": {
+    "navigation": {
+      "backToServices": "Kembali ke Perkhidmatan"
+    },
+    "info": {
+      "title": "Maklumat Pembekal",
+      "address": "Alamat",
+      "contact": "Maklumat Perhubungan",
+      "noContact": "Tiada maklumat perhubungan tersedia"
+    },
+    "services": {
+      "title": "Perkhidmatan Tersedia",
+      "available": "Pembekal ini menawarkan:",
+      "prep": "PrEP",
+      "pep": "PEP",
+      "freeScreening": "Saringan STI Percuma",
+      "noServices": "Tiada maklumat perkhidmatan khusus tersedia"
+    },
+    "map": {
+      "title": "Lokasi",
+      "viewInGoogleMaps": "Lihat di Google Maps",
+      "searchInGoogleMaps": "Cari di Google Maps",
+      "notAvailable": "Peta tidak tersedia"
     }
   }
 }

@@ -2,8 +2,9 @@
 
 import React from 'react';
 import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/navigation';
 import { ProviderRecord } from '@/app/database_query_endpoint/provider-actions';
-import { Card, CardContent, CardHeader, CardTitle } from '@/app/components/ui/card';
+import { Card, CardTitle } from '@/app/components/ui/card';
 import { Badge } from '@/app/components/ui/badge';
 import { MapPin, Phone, Mail, CheckCircle } from 'lucide-react';
 
@@ -13,32 +14,59 @@ interface ProviderCardProps {
 
 export function ProviderCard({ provider }: ProviderCardProps) {
   const t = useTranslations('ProviderCard');
+  const router = useRouter();
+  
   const services = [];
   if (provider.providesPrep) services.push(t('services.prep'));
   if (provider.providesPep) services.push(t('services.pep'));
   if (provider.freeStiScreening) services.push(t('services.freeScreening'));
 
+  const handleCardClick = (e: React.MouseEvent) => {
+    // Don't navigate if clicking on a link
+    if ((e.target as HTMLElement).tagName === 'A') {
+      return;
+    }
+    router.push(`/sti-services/${provider.id}`);
+  };
+
   return (
-    <Card className="w-full h-full hover:shadow-lg cursor-pointer bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm transition-shadow p-4 sm:p-6">
-      <div>
-        <div className="flex flex-col gap-6">
-          <CardTitle className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-100 leading-tight mb-4">
-            {provider.name}
-          </CardTitle>
-          {provider.stateName && (
-            <Badge variant="secondary" className="text-xs mb-4 dark:bg-black">
-              {provider.stateName}
-            </Badge>
-          )}
+    <Card 
+      className="w-full h-full hover:shadow-lg cursor-pointer bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm transition-shadow p-4 sm:p-6"
+      onClick={handleCardClick}
+    >
+        <div>
+          <div className="flex flex-col gap-6">
+            <CardTitle className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-100 leading-tight mb-4">
+              {provider.name}
+            </CardTitle>
+            {provider.stateName && (
+              <Badge variant="secondary" className="text-xs mb-4 dark:bg-black">
+                {provider.stateName}
+              </Badge>
+            )}
+          </div>
         </div>
-      </div>
       
       <div className="space-y-3 sm:space-y-4">
         <div className="flex items-start space-x-2 sm:space-x-3">
           <MapPin className="w-4 h-4 mt-1 text-teal-500 flex-shrink-0" />
-          <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-            {provider.address}
-          </p>
+          <div className="flex-1">
+            <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+              {provider.address}
+            </p>
+            {provider.distance && (
+              <div className="mt-1 space-y-1">
+                <p className="text-xs text-teal-600 dark:text-teal-400 font-medium">
+                  {provider.distance} km away
+                </p>
+                {provider.drivingTime && (
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                    {provider.drivingTime} drive
+                  </p>
+                )}
+              </div>
+            )}
+          </div>
         </div>
 
         {provider.phone && (
