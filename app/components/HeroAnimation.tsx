@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Heart, Bot, BookOpen, Hospital, Lightbulb } from 'lucide-react';
+import { Heart, Bot, BookOpen, Hospital, Lightbulb, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from './ui/button';
 import { Link } from '../../i18n/routing';
 import { useTranslations } from 'next-intl';
@@ -184,9 +184,21 @@ export function HeroAnimation() {
     setTouchEnd(null);
   }, [touchStart, touchEnd, isAnimating, currentIndex, changeSlide]);
 
+  const goToPrevious = useCallback(() => {
+    if (isAnimating) return;
+    const newIndex = (currentIndex - 1 + quotes.length) % quotes.length;
+    changeSlide(newIndex, 'prev', true);
+  }, [isAnimating, currentIndex, changeSlide]);
+
+  const goToNext = useCallback(() => {
+    if (isAnimating) return;
+    const newIndex = (currentIndex + 1) % quotes.length;
+    changeSlide(newIndex, 'next', true);
+  }, [isAnimating, currentIndex, changeSlide]);
+
   return (
     <div 
-      className="relative w-full h-[95vh] bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-pink-950 dark:via-gray-800 dark:to-teal-950 overflow-hidden"
+      className="relative w-full h-[92vh] md:h-[95vh] bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-pink-950 dark:via-gray-800 dark:to-teal-950 overflow-hidden"
       style={{ touchAction: 'pan-y' }}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
@@ -333,6 +345,26 @@ export function HeroAnimation() {
           </React.Fragment>
         )}
       </AnimatePresence>
+
+      {/* Arrow Navigation */}
+      <button
+        type="button"
+        aria-label="Previous slide"
+        onClick={goToPrevious}
+        disabled={isAnimating}
+        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-[60] hidden h-12 w-12 items-center justify-center rounded-full bg-white/60 text-gray-900 shadow-lg backdrop-blur transition hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-300 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent disabled:cursor-not-allowed disabled:opacity-60 dark:bg-gray-900/60 dark:text-white dark:hover:bg-gray-900 md:flex"
+      >
+        <ChevronLeft className="h-6 w-6" />
+      </button>
+      <button
+        type="button"
+        aria-label="Next slide"
+        onClick={goToNext}
+        disabled={isAnimating}
+        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-[60] hidden h-12 w-12 items-center justify-center rounded-full bg-white/60 text-gray-900 shadow-lg backdrop-blur transition hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-300 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent disabled:cursor-not-allowed disabled:opacity-60 dark:bg-gray-900/60 dark:text-white dark:hover:bg-gray-900 md:flex"
+      >
+        <ChevronRight className="h-6 w-6" />
+      </button>
 
       {/* Content Overlay */}
       <div className="absolute inset-0 z-50 flex w-screen items-center justify-center py-16 px-8 md:px-16">
