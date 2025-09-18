@@ -2,6 +2,38 @@
   "Common": {
     "loading": "Loading..."
   },
+  "hero": {
+    "slide1": {
+      "heading": "Your Safe Space for ",
+      "headingHighlighted": "Learning Sexual Health",
+      "subheading": "Explore relationships and reproductive health in a safe, stigma-free environment where your questions are always welcomed."
+    },
+    "slide2": {
+      "heading": "Your AI-powered ",
+      "headingHighlighted": "Sexual Health Companion",
+      "subheading": "Get personalized, confidential answers through our AI chatbot, designed to guide you with empathy and reliable information.",
+      "button": "Start Chatting"
+    },
+    "slide3": {
+      "heading": "Empowering You with ",
+      "headingHighlighted": "Knowledge and Support",
+      "subheading": "Access reliable information on STIs, contraception, and relationships, so you can make informed decisions with confidence.",
+      "button1": "STIs Info Hub",
+      "button2": "Living Well with STIs"
+    },
+    "slide4": {
+      "heading": "Find Nearby Providers for ",
+      "headingHighlighted": "Sexual Healthcare",
+      "subheading": "Locate trusted local clinics and services nearby, helping you access sexual healthcare easily when the need arises.",
+      "button": "Find Services"
+    },
+    "slide5": {
+      "heading": "Myth or Truth? ",
+      "headingHighlighted": "Find Out Now",
+      "subheading": "Challenge what you know and uncover the facts about sexual health with our interactive quizzes.",
+      "button": "Take Quiz"
+    }
+  },
   "Landing": {
     "hero": {
       "titlePrefix": "Your Safe Space for",

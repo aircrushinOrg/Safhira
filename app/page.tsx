@@ -1,7 +1,9 @@
 'use client'
 
-import {Suspense} from 'react';
+import { useState, useEffect, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { HeroSection } from './components/landing/HeroSection';
+import { HeroAnimation } from './components/HeroAnimation';
 import { BreakingStigmaSection } from './components/landing/BreakingStigmaSection';
 import { PrevalenceSection } from './components/landing/PrevalenceSection';
 import { FeaturesSection } from './components/landing/FeaturesSection';
@@ -31,7 +33,7 @@ function AppContent() {
           variants={pageVariants}
           transition={pageTransition}
         >
-          <HeroSection />
+          <HeroAnimation />
           <BreakingStigmaSection />
           <PrevalenceSection />
           <FeaturesSection />
