@@ -11,6 +11,28 @@ import {
   QuizLeaderboardStats
 } from '@/types/leaderboard';
 
+async function computeLeaderboardRank(quizType: string, nickname: string): Promise<number | null> {
+  if (!nickname) return null;
+
+  const rankedEntries = await db
+    .select({
+      nickname: quizLeaderboardStats.nickname,
+      rank: sql<number>`rank() over (
+        order by
+          ${quizLeaderboardStats.bestScore} desc,
+          ${quizLeaderboardStats.averageScore} desc,
+          ${quizLeaderboardStats.lastPlayedAt} asc,
+          ${quizLeaderboardStats.nickname} asc
+      )`,
+    })
+    .from(quizLeaderboardStats)
+    .where(eq(quizLeaderboardStats.quizType, quizType));
+
+  const matchingEntry = rankedEntries.find((entry) => entry.nickname === nickname);
+
+  return matchingEntry ? Number(matchingEntry.rank) : null;
+}
+
 export async function submitQuizScore(data: SubmitScoreRequest) {
   try {
     // Validate required fields
@@ -124,24 +146,14 @@ export async function submitQuizScore(data: SubmitScoreRequest) {
         )
       );
 
-    // Calculate rank
-    const betterScoresCount = await db
-      .select({ count: sql<number>`count(*)` })
-      .from(quizLeaderboardStats)
-      .where(
-        and(
-          eq(quizLeaderboardStats.quizType, quizType),
-          sql`${quizLeaderboardStats.bestScore} > ${updatedStats[0].bestScore}`
-        )
-      );
-
-    const rank = (betterScoresCount[0]?.count || 0) + 1;
+    // Calculate rank using the same ordering rules as the leaderboard view
+    const rank = await computeLeaderboardRank(quizType, sanitizedNickname);
 
     return {
       success: true,
       resultId: result.id,
       stats: updatedStats[0],
-      rank,
+      rank: rank ?? null,
       message: 'Score submitted successfully!',
     };
 
@@ -228,23 +240,7 @@ export async function getLeaderboard(
 
       if (userStats) {
         // Calculate user's rank
-        const betterScoresCount = await db
-          .select({ count: sql<number>`count(*)` })
-          .from(quizLeaderboardStats)
-          .where(
-            and(
-              eq(quizLeaderboardStats.quizType, quizType),
-              or(
-                sql`${quizLeaderboardStats.bestScore} > ${userStats.bestScore}`,
-                and(
-                  sql`${quizLeaderboardStats.bestScore} = ${userStats.bestScore}`,
-                  sql`${quizLeaderboardStats.averageScore} > ${userStats.averageScore}`
-                )
-              )
-            )
-          );
-        
-        userRank = (betterScoresCount[0]?.count || 0) + 1;
+        userRank = await computeLeaderboardRank(quizType, userStats.nickname) ?? undefined;
       }
     }
 
@@ -278,21 +274,9 @@ export async function getUserStats(nickname: string, quizType: string = 'myths')
     }
 
     // Calculate rank
-    const betterScoresCount = await db
-      .select({ count: sql<number>`count(*)` })
-      .from(quizLeaderboardStats)
-      .where(
-        and(
-          eq(quizLeaderboardStats.quizType, quizType),
-          sql`${quizLeaderboardStats.bestScore} > ${stats[0].bestScore}`
-        )
-      );
-
-    const rank = (betterScoresCount[0]?.count || 0) + 1;
-
     return {
       ...stats[0],
-      rank,
+      rank: await computeLeaderboardRank(quizType, nickname) ?? null,
     };
 
   } catch (error) {

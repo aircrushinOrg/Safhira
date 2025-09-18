@@ -7,11 +7,10 @@ import {Card} from "../../components/ui/card";
 import {Button} from "../../components/ui/button";
 import {Badge} from "../../components/ui/badge";
 import {Separator} from "../../components/ui/separator";
-import {AlertTriangle, Heart, Bookmark, BookmarkCheck, Flag, ExternalLink, ArrowLeft} from "lucide-react";
+import {AlertTriangle, Heart, Bookmark, BookmarkCheck, ExternalLink, ArrowLeft, ShieldAlert, Sparkles} from "lucide-react";
 import {toast} from "sonner";
 import {motion, useReducedMotion} from "framer-motion";
 import {Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle} from "../../components/ui/dialog";
-import {AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger} from "../../components/ui/alert-dialog";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "../../components/ui/tabs";
 import {Toaster} from "../../components/ui/sonner";
 
@@ -23,8 +22,7 @@ type Story = {
 };
 
 const STORAGE_KEYS = {
-  bookmarks: "lwsti_bookmarks",
-  reports: "lwsti_reports"
+  bookmarks: "lwsti_bookmarks"
 };
 
 export default function LifestylePage() {
@@ -65,7 +63,6 @@ export default function LifestylePage() {
   ], []);
 
   const [bookmarks, setBookmarks] = useState<string[]>([]);
-  const [reported, setReported] = useState<string[]>([]);
   const [activeTab, setActiveTab] = useState<string>("all");
   const [selected, setSelected] = useState<Story | null>(null);
   const [ackWarning, setAckWarning] = useState<boolean>(false);
@@ -75,8 +72,6 @@ export default function LifestylePage() {
     try {
       const bm = localStorage.getItem(STORAGE_KEYS.bookmarks);
       if (bm) setBookmarks(JSON.parse(bm));
-      const rp = localStorage.getItem(STORAGE_KEYS.reports);
-      if (rp) setReported(JSON.parse(rp));
     } catch {}
   }, []);
 
@@ -84,9 +79,8 @@ export default function LifestylePage() {
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEYS.bookmarks, JSON.stringify(bookmarks));
-      localStorage.setItem(STORAGE_KEYS.reports, JSON.stringify(reported));
     } catch {}
-  }, [bookmarks, reported]);
+  }, [bookmarks]);
 
   const getStorySources = (topic: string) => {
     try {
@@ -96,27 +90,86 @@ export default function LifestylePage() {
     }
   };
 
+  const latestReviewed = useMemo(() => {
+    const sorted = [...storyList].sort((a, b) => (a.lastReviewed < b.lastReviewed ? 1 : -1));
+    return sorted[0]?.lastReviewed ?? "";
+  }, [storyList]);
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
       <Toaster richColors position="top-center" />
 
-      <section className="py-8 md:py-12 px-4">
+      <section className="relative py-10 md:py-16 px-4">
         <div className="container mx-auto max-w-7xl">
-          <motion.header className="mb-6 md:mb-8"
+          <motion.header
+            className="mb-8 md:mb-12 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 md:p-8"
             initial={{opacity: 0, y: reduceMotion ? 0 : 8}}
             animate={{opacity: 1, y: 0}}
             transition={{duration: reduceMotion ? 0 : 0.4}}
           >
-            <Link href="/living-well-with-sti" className="inline-flex items-center gap-2 text-teal-600 hover:text-teal-700 mb-4">
-              <ArrowLeft size={16} />
-              {t("back")}
-            </Link>
-            
-            <div className="flex items-start gap-3 mb-3">
-              <Heart className="text-rose-600 mt-1" />
-              <div>
-                <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100">{t("lifestyle.title")}</h1>
-                <p className="text-gray-700 dark:text-gray-300 mt-1">{t("lifestyle.subtitle")}</p>
+            <div className="flex flex-col gap-6">
+              <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                <Link
+                  href="/living-well-with-sti"
+                  className="inline-flex w-fit items-center gap-2 rounded-full border border-teal-200 bg-teal-50 px-4 py-2 text-xs font-medium uppercase tracking-wide text-teal-700 transition hover:-translate-x-0.5 hover:text-teal-800 dark:border-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-200"
+                >
+                  <ArrowLeft size={16} />
+                  {t("back")}
+                </Link>
+                <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
+                  <Sparkles className="h-4 w-4 text-teal-500" />
+                  {t("lifestyle.subtitle")}
+                </div>
+              </div>
+
+              <div className="grid gap-6 lg:grid-cols-[minmax(0,2fr),minmax(0,1.2fr)]">
+                <div className="space-y-5">
+                  <div className="flex items-start gap-4">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-teal-500 text-white shadow-sm">
+                      <Heart className="h-6 w-6" />
+                    </div>
+                    <div>
+                      <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white md:text-4xl">
+                        {t("lifestyle.title")}
+                      </h1>
+                      <p className="mt-3 max-w-xl text-base text-slate-600 dark:text-slate-200">
+                        {t("lifestyle.subtitle")}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900 shadow-sm dark:border-amber-700 dark:bg-amber-900/20 dark:text-amber-100">
+                    <div className="flex items-start gap-3">
+                      <ShieldAlert className="mt-0.5" size={18} />
+                      <p className="leading-relaxed">
+                        <strong>{t("disclaimer.title")}:</strong> {t("disclaimer.text")} {t("disclaimer.emergency")}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <motion.div
+                  initial={{opacity: 0, x: reduceMotion ? 0 : 12}}
+                  animate={{opacity: 1, x: 0}}
+                  transition={{duration: reduceMotion ? 0 : 0.45, delay: reduceMotion ? 0 : 0.2}}
+                  className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm md:p-6 dark:border-slate-800 dark:bg-slate-900"
+                >
+                  <div className="mb-4 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.25em] text-teal-700 dark:text-emerald-200">
+                    <Sparkles className="h-4 w-4" />
+                    {t("lifestyle.tabs.all")}
+                  </div>
+                  <div className="space-y-3 text-sm text-slate-600 dark:text-slate-300">
+                    <p>{t("lifestyle.subtitle")}</p>
+                    <div className="flex flex-wrap gap-2 text-xs text-slate-500 dark:text-slate-400">
+                      <Badge variant="secondary" className="px-3 py-1 text-xs font-medium">
+                        {t("lifestyle.tabs.all")}: {storyList.length}
+                      </Badge>
+                      <Badge variant="outline" className="px-3 py-1 text-xs font-medium">
+                        {t("lifestyle.tabs.bookmarks")}: {bookmarks.length}
+                      </Badge>
+                    </div>
+                  </div>
+                </motion.div>
               </div>
             </div>
           </motion.header>
@@ -127,49 +180,74 @@ export default function LifestylePage() {
             viewport={{once: true, amount: 0.2}}
             transition={{duration: reduceMotion ? 0 : 0.35}}
           >
-            <Card className="p-4 md:p-6">
+            <Card className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm md:p-7 dark:border-slate-800 dark:bg-slate-900">
               <Tabs value={activeTab} onValueChange={setActiveTab}>
-                <TabsList>
-                  <TabsTrigger value="all">{t("lifestyle.tabs.all")}</TabsTrigger>
-                  <TabsTrigger value="bookmarks">{t("lifestyle.tabs.bookmarks")}</TabsTrigger>
+                <TabsList className="grid grid-cols-2 gap-2 rounded-xl bg-slate-100 p-1 text-sm dark:bg-slate-800">
+                  <TabsTrigger value="all" className="rounded-lg px-4 py-2 data-[state=active]:bg-white data-[state=active]:text-teal-700 dark:data-[state=active]:bg-slate-900 dark:data-[state=active]:text-teal-200">
+                    {t("lifestyle.tabs.all")}
+                  </TabsTrigger>
+                  <TabsTrigger value="bookmarks" className="rounded-lg px-4 py-2 data-[state=active]:bg-white data-[state=active]:text-teal-700 dark:data-[state=active]:bg-slate-900 dark:data-[state=active]:text-teal-200">
+                    {t("lifestyle.tabs.bookmarks")}
+                  </TabsTrigger>
                 </TabsList>
-                <Separator className="my-4" />
+                <Separator className="my-6" />
 
                 {(["all", "bookmarks"] as const).map((tab) => (
                   <TabsContent key={tab} value={tab}>
-                    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                    <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
                       {storyList
-                        .filter((s) => !reported.includes(s.id))
                         .filter((s) => (tab === "bookmarks" ? bookmarks.includes(s.id) : true))
-                        .map((s) => (
-                          <Card key={s.id} className="p-4 flex flex-col justify-between h-full">
-                            <div>
-                              <div className="flex items-center gap-2 mb-2">
-                                <Badge variant="secondary" className="capitalize">{t(`lifestyle.stories.${s.topic}.badge`)}</Badge>
+                        .map((s, index) => (
+                          <motion.div
+                            key={s.id}
+                            initial={{opacity: 0, y: reduceMotion ? 0 : 12}}
+                            whileInView={{opacity: 1, y: 0}}
+                            viewport={{once: true, amount: 0.2}}
+                            transition={{duration: reduceMotion ? 0 : 0.35, delay: reduceMotion ? 0 : index * 0.04}}
+                          >
+                            <Card
+                              className="group relative flex h-full flex-col rounded-3xl border border-slate-200/80 bg-gradient-to-br from-white via-slate-50 to-slate-100 p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg before:absolute before:inset-y-6 before:-left-1 before:w-1.5 before:rounded-full before:bg-teal-200/70 before:content-[''] after:absolute after:bottom-5 after:right-6 after:h-1 after:w-20 after:rounded-full after:bg-slate-200/60 after:opacity-0 after:transition dark:border-slate-800 dark:from-slate-950 dark:via-slate-900/70 dark:to-slate-950 dark:before:bg-emerald-800/40 dark:after:bg-slate-700/60 group-hover:after:opacity-100"
+                            >
+                              <div className="mb-4 flex flex-wrap items-center gap-2">
+                                <Badge variant="outline" className="rounded-full px-3 py-1 text-xs font-medium capitalize">
+                                  {t(`lifestyle.stories.${s.topic}.badge`)}
+                                </Badge>
                                 {s.sensitive && (
-                                  <span className="text-xs text-amber-700 dark:text-amber-300 flex items-center gap-1">
+                                  <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2.5 py-1 text-[11px] font-medium text-amber-800 dark:bg-amber-500/20 dark:text-amber-100">
                                     <AlertTriangle size={12} /> {t("lifestyle.contentWarning.short")}
                                   </span>
                                 )}
                               </div>
-                              <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">{t(`lifestyle.stories.${s.topic}.title`)}</h3>
-                              <p className="text-sm text-gray-700 dark:text-gray-300 mb-3">{t(`lifestyle.stories.${s.topic}.summary`)}</p>
-                              <p className="text-xs text-gray-500">{t("lifestyle.lastReviewed")}: {s.lastReviewed}</p>
-                            </div>
-                            
-                            <div className="mt-4 space-y-2">
-                              <Button 
-                                size="sm" 
-                                className="w-full"
-                                onClick={() => { setSelected(s); setAckWarning(!s.sensitive); }}
-                              >
-                                {t("lifestyle.actions.view")}
-                              </Button>
-                              
-                              <div className="flex items-center justify-between gap-2">
-                                <Button 
-                                  size="sm" 
+
+                              <div className="flex-1 space-y-3">
+                                <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-50">
+                                  {t(`lifestyle.stories.${s.topic}.title`)}
+                                </h3>
+                                <p className="text-sm text-slate-600 dark:text-slate-300">
+                                  {t(`lifestyle.stories.${s.topic}.summary`)}
+                                </p>
+                              </div>
+
+                              <div className="mt-6 space-y-3 border-t border-slate-200/60 pt-4 dark:border-slate-800/60">
+                                <p className="text-xs text-slate-500 dark:text-slate-400">
+                                  {t("lifestyle.lastReviewed")}: {s.lastReviewed}
+                                </p>
+
+                                <Button
+                                  size="sm"
+                                  className="w-full"
+                                  onClick={() => {
+                                    setSelected(s);
+                                    setAckWarning(!s.sensitive);
+                                  }}
+                                >
+                                  {t("lifestyle.actions.view")}
+                                </Button>
+
+                                <Button
+                                  size="sm"
                                   variant={bookmarks.includes(s.id) ? "secondary" : "outline"}
+                                  className="w-full justify-center gap-2"
                                   onClick={() => {
                                     setBookmarks((prev) => {
                                       const set = new Set(prev);
@@ -183,48 +261,28 @@ export default function LifestylePage() {
                                   }}
                                   aria-pressed={bookmarks.includes(s.id)}
                                 >
-                                  {bookmarks.includes(s.id) ? 
-                                    <BookmarkCheck size={16} /> : 
-                                    <Bookmark size={16} />
-                                  }
+                                  {bookmarks.includes(s.id) ? (
+                                    <>
+                                      <BookmarkCheck size={16} />
+                                      <span>{t("lifestyle.actions.bookmarked")}</span>
+                                    </>
+                                  ) : (
+                                    <>
+                                      <Bookmark size={16} />
+                                      <span>{t("lifestyle.actions.bookmark")}</span>
+                                    </>
+                                  )}
                                 </Button>
-                                
-                                <AlertDialog>
-                                  <AlertDialogTrigger asChild>
-                                    <Button size="sm" variant="ghost" className="text-red-600 hover:text-red-700">
-                                      <Flag size={16} />
-                                    </Button>
-                                  </AlertDialogTrigger>
-                                  <AlertDialogContent>
-                                    <AlertDialogHeader>
-                                      <AlertDialogTitle>{t("lifestyle.report.title")}</AlertDialogTitle>
-                                      <AlertDialogDescription>
-                                        {t("lifestyle.report.desc")}
-                                      </AlertDialogDescription>
-                                    </AlertDialogHeader>
-                                    <AlertDialogFooter>
-                                      <AlertDialogCancel>{t("lifestyle.report.cancel")}</AlertDialogCancel>
-                                      <AlertDialogAction onClick={() => {
-                                        setReported((prev) => {
-                                          if (prev.includes(s.id)) return prev;
-                                          const next = [...prev, s.id];
-                                          toast.success(t("lifestyle.toast.reported"));
-                                          return next;
-                                        });
-                                      }}>{t("lifestyle.report.confirm")}</AlertDialogAction>
-                                    </AlertDialogFooter>
-                                  </AlertDialogContent>
-                                </AlertDialog>
                               </div>
-                            </div>
-                          </Card>
+                            </Card>
+                          </motion.div>
                         ))}
                     </div>
 
-                    {tab === "bookmarks" && storyList.filter((s) => bookmarks.includes(s.id) && !reported.includes(s.id)).length === 0 && (
-                      <div className="text-center py-8">
-                        <Heart className="mx-auto text-gray-400 mb-3" size={48} />
-                        <p className="text-sm text-gray-600 dark:text-gray-300">{t("lifestyle.emptyBookmarks")}</p>
+                    {tab === "bookmarks" && storyList.filter((s) => bookmarks.includes(s.id)).length === 0 && (
+                      <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-100 py-8 text-center dark:border-slate-700 dark:bg-slate-800/40">
+                        <Heart className="mx-auto mb-4 text-teal-500" size={40} />
+                        <p className="text-sm text-slate-600 dark:text-slate-300">{t("lifestyle.emptyBookmarks")}</p>
                       </div>
                     )}
                   </TabsContent>
@@ -280,10 +338,6 @@ export default function LifestylePage() {
                         ))}
                       </ul>
                     </div>
-                    
-                    <p className="text-xs text-gray-500 pt-2 border-t">
-                      {t("lifestyle.lastReviewed")}: {selected.lastReviewed}
-                    </p>
                   </div>
                   
                   <DialogFooter>

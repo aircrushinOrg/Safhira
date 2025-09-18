@@ -91,7 +91,7 @@ function ViewAllListItem({ item, onSelect, t }: { item: Item; onSelect: (item: I
   );
 }
 
-export default function MythListClient({ items }: { items: Item[] }) {
+export default function MythListClient({ items, allItems }: { items: Item[]; allItems?: Item[] }) {
   const t = useTranslations('Quiz');
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<Item | null>(null);
@@ -116,6 +116,13 @@ export default function MythListClient({ items }: { items: Item[] }) {
   const [leaderboardData, setLeaderboardData] = useState<LeaderboardResponse | null>(null);
   const [viewAllOpen, setViewAllOpen] = useState(false);
 
+  const completeList = useMemo(() => {
+    if (allItems && allItems.length > 0) {
+      return allItems;
+    }
+    return items;
+  }, [items, allItems]);
+
   const handleClick = (item: Item) => {
     setSelected(item);
     setOpen(true);
@@ -126,8 +133,8 @@ export default function MythListClient({ items }: { items: Item[] }) {
   };
 
   const startQuiz = () => {
-    // Build quiz questions from items and pick 5 at random
-    const pool: QuizQuestion[] = items.map((it) => ({
+    // Build quiz questions from the full dataset and pick 5 at random
+    const pool: QuizQuestion[] = completeList.map((it) => ({
       id: it.id,
       statement: it.text,
       isTrue: deriveTruth(it.fact),
@@ -295,7 +302,7 @@ export default function MythListClient({ items }: { items: Item[] }) {
           size="lg"
           className="flex h-12 md:h-14 px-6 md:px-8 py-3 text-base md:text-lg bg-gradient-to-r from-rose-400 to-teal-500 dark:from-rose-400 dark:to-teal-500 hover:from-rose-600 hover:to-teal-600 dark:hover:from-rose-500  dark:hover:to-teal-500 text-white dark:text-slate-800 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 active:scale-95"
           onClick={startQuiz}
-          disabled={items.length === 0}
+          disabled={completeList.length === 0}
         >
           {t('start')}
         </Button>
@@ -603,7 +610,7 @@ export default function MythListClient({ items }: { items: Item[] }) {
           
           <div className="flex-1 overflow-y-auto pr-2">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {items.map((item, index) => {
+              {completeList.map((item, index) => {
                 const isFactual = deriveTruth(item.fact);
                 const factText = item.fact || '';
                 const explanation = factText.replace(/^(myth|fact)\.\s*/i, '');
