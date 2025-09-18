@@ -150,7 +150,7 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
   );
 
   return (
-    <header className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 sticky top-0 z-50">
+    <header className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 sticky top-0 z-[60]">
       <div className="mx-auto px-8 py-4 md:px-16">
         <div className="flex items-center justify-between">
           {/* Logo */}
