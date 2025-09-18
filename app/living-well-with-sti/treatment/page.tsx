@@ -114,11 +114,6 @@ export default function TreatmentAdherencePage() {
       value: settings.times.length ? settings.times.join(', ') : t('reminders.addTime'),
       icon: Clock,
     },
-    {
-      label: t('reminders.days'),
-      value: dayNames.length ? dayNames.join(' • ') : t('reminders.week.0'),
-      icon: CalendarPlus,
-    },
     upcomingDose
       ? {
           label: 'Next dose',
