@@ -36,6 +36,7 @@ export const provider = pgTable('provider', {
   providerProvidePrep: boolean('provider_provide_prep').notNull().default(false),
   providerProvidePep: boolean('provider_provide_pep').notNull().default(false),
   providerFreeStiScreening: boolean('provider_free_sti_screening').notNull().default(false),
+  providerGooglePlaceId: text('provider_google_place_id').notNull(),
 }, (table) => [
   index('idx_provider_state').on(table.stateId),
   index('idx_provider_name').on(table.providerName),

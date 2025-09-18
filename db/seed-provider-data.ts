@@ -14,6 +14,7 @@ interface ProviderRow {
   provider_provide_prep: boolean;
   provider_provide_pep: boolean;
   provider_free_sti_screening: boolean;
+  provider_google_place_id: string;
 }
 
 const STATE_ALIASES: Record<string, string> = {
@@ -167,11 +168,11 @@ async function seedProviders() {
   const sql = postgres(DATABASE_URL, { max: 1, ssl: 'require' });
 
   try {
-    const csvPath = join(__dirname, 'data', 'mypreplocator_dedup.csv');
+    const csvPath = join(__dirname, 'data', 'healthcare_data_geocoded.csv');
     const csvContent = readFileSync(csvPath, 'utf8');
     const rows = parseCsv(csvContent);
     if (!rows.length) {
-      console.log('No rows found in mypreplocator_dedup.csv');
+      console.log('No rows found in healthcare_data_geocoded.csv');
       return;
     }
 
@@ -183,11 +184,12 @@ async function seedProviders() {
       address: columnIndex(headers, 'Full Address'),
       lat: columnIndex(headers, 'lat'),
       lng: columnIndex(headers, 'lng'),
-      phone: columnIndex(headers, 'phone'),
-      email: columnIndex(headers, 'email'),
+      phone: headers.findIndex(h => h.trim().toLowerCase() === 'phone'),
+      email: headers.findIndex(h => h.trim().toLowerCase() === 'email'),
       providesPrep: columnIndex(headers, 'providesPrep'),
       providesPep: columnIndex(headers, 'providesPep'),
       freeScreening: columnIndex(headers, 'freeSTIscreening'),
+      googlePlaceId: columnIndex(headers, 'googlePlaceId'),
     };
 
     const stateCache = new Map<string, number>();
@@ -198,7 +200,6 @@ async function seedProviders() {
     try {
       await sql`delete from provider`;
 
-      let nextProviderId = 1;
       for (let i = 0; i < dataRows.length; i++) {
         const row = dataRows[i];
         const name = (row[idx.name] || '').trim();
@@ -219,33 +220,26 @@ async function seedProviders() {
         }
 
         const providerRecord: ProviderRow = {
-          provider_id: nextProviderId++,
+          provider_id: 0, // Will be auto-generated
           state_id: stateId,
           provider_name: name,
           provider_address: address,
-          provider_phone_num: textOrNull(row[idx.phone]),
-          provider_email: textOrNull(row[idx.email]),
+          provider_phone_num: idx.phone >= 0 ? textOrNull(row[idx.phone]) : null,
+          provider_email: idx.email >= 0 ? textOrNull(row[idx.email]) : null,
           provider_longitude: numericFromCsv(row[idx.lng]),
           provider_latitude: numericFromCsv(row[idx.lat]),
           provider_provide_prep: boolFromCsv(row[idx.providesPrep]),
           provider_provide_pep: boolFromCsv(row[idx.providesPep]),
           provider_free_sti_screening: boolFromCsv(row[idx.freeScreening]),
+          provider_google_place_id: textOrNull(row[idx.googlePlaceId]) || '',
         };
 
         providerRows.push(providerRecord);
       }
 
-      const batchSize = 100;
-      for (let i = 0; i < providerRows.length; i += batchSize) {
-        const batch = providerRows.slice(i, i + batchSize);
-        if (!batch.length) continue;
-        const valueTuples = batch.map((row) =>
-          sql`(${row.provider_id}, ${row.state_id}, ${row.provider_name}, ${row.provider_address}, ${row.provider_phone_num}, ${row.provider_email}, ${row.provider_longitude}, ${row.provider_latitude}, ${row.provider_provide_prep}, ${row.provider_provide_pep}, ${row.provider_free_sti_screening})`
-        );
-
+      for (const row of providerRows) {
         await sql`
           insert into provider (
-            provider_id,
             state_id,
             provider_name,
             provider_address,
@@ -255,28 +249,25 @@ async function seedProviders() {
             provider_latitude,
             provider_provide_prep,
             provider_provide_pep,
-            provider_free_sti_screening
-          ) values ${sql(valueTuples as any)}
-          on conflict (provider_id) do update set
-            state_id = excluded.state_id,
-            provider_name = excluded.provider_name,
-            provider_address = excluded.provider_address,
-            provider_phone_num = excluded.provider_phone_num,
-            provider_email = excluded.provider_email,
-            provider_longitude = excluded.provider_longitude,
-            provider_latitude = excluded.provider_latitude,
-            provider_provide_prep = excluded.provider_provide_prep,
-            provider_provide_pep = excluded.provider_provide_pep,
-            provider_free_sti_screening = excluded.provider_free_sti_screening
+            provider_free_sti_screening,
+            provider_google_place_id
+          ) values (
+            ${row.state_id},
+            ${row.provider_name},
+            ${row.provider_address},
+            ${row.provider_phone_num},
+            ${row.provider_email},
+            ${row.provider_longitude},
+            ${row.provider_latitude},
+            ${row.provider_provide_prep},
+            ${row.provider_provide_pep},
+            ${row.provider_free_sti_screening},
+            ${row.provider_google_place_id}
+          )
         `;
       }
 
-      const lastId = providerRows.length ? providerRows[providerRows.length - 1].provider_id : 0;
-      if (lastId > 0) {
-        await sql`select setval(pg_get_serial_sequence('provider', 'provider_id'), ${lastId}, true)`;
-      } else {
-        await sql`select setval(pg_get_serial_sequence('provider', 'provider_id'), 1, false)`;
-      }
+      // Let the serial field auto-increment naturally
 
       await sql`commit`;
 
