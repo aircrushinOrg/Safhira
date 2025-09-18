@@ -1,7 +1,7 @@
 "use client";
 
 import {useEffect, useMemo, useRef, useState} from "react";
-import {useTranslations} from "next-intl";
+import {useTranslations, useLocale} from "next-intl";
 import {Link} from "../../../i18n/routing";
 import {Card} from "../../components/ui/card";
 import {Button} from "../../components/ui/button";
@@ -34,6 +34,19 @@ type DayDose = {
   status: DoseStatus;
 };
 
+const DEFAULT_DAYS: ReadonlyArray<number> = [1, 2, 3, 4, 5, 6, 0];
+
+function createDefaultSettings(): ReminderSettings {
+  const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  return {
+    enabled: true,
+    times: [],
+    days: [...DEFAULT_DAYS],
+    snoozeMinutes: null,
+    tz: timezone,
+  };
+}
+
 const STORAGE_KEYS = {
   settings: "lwsti_settings",
   regimen: "lwsti_regimen",
@@ -61,18 +74,14 @@ function localTimeToDateToday(time: string) {
 
 export default function TreatmentAdherencePage() {
   const t = useTranslations("LivingWell");
+  const locale = useLocale();
   const reduceMotion = useReducedMotion();
 
   const [regimen, setRegimen] = useState<RegimenType>("daily");
-  const [settings, setSettings] = useState<ReminderSettings>({
-    enabled: true,
-    times: [],
-    days: [1, 2, 3, 4, 5, 6, 0],
-    snoozeMinutes: null,
-    tz: Intl.DateTimeFormat().resolvedOptions().timeZone
-  });
+  const [settings, setSettings] = useState<ReminderSettings>(() => createDefaultSettings());
   const [tzChanged, setTzChanged] = useState(false);
   const [tracking, setTracking] = useState<Record<string, DayDose[]>>({});
+  const [isInitialized, setIsInitialized] = useState(false);
   const lastNotifiedMinuteRef = useRef<string>("");
 
   const dayNames = useMemo(() => settings.days.map((d) => t(`reminders.week.${d}`)), [settings.days, t]);
@@ -87,11 +96,13 @@ export default function TreatmentAdherencePage() {
       date: nextTime,
     };
   }, [settings.times, settings.days]);
-  const formatDateTime = useMemo(() => new Intl.DateTimeFormat(undefined, {
+  const weekdayFormatter = useMemo(() => new Intl.DateTimeFormat(locale ?? undefined, {
     weekday: 'short',
+  }), [locale]);
+  const timeFormatter = useMemo(() => new Intl.DateTimeFormat(locale ?? undefined, {
     hour: '2-digit',
     minute: '2-digit',
-  }), []);
+  }), [locale]);
   const heroStats = useMemo(() => [
     {
       label: t('adherence.regimen.label'),
@@ -111,40 +122,61 @@ export default function TreatmentAdherencePage() {
     upcomingDose
       ? {
           label: 'Next dose',
-          value: `${upcomingDose.label} • ${formatDateTime.format(upcomingDose.date)}`,
+          value: `${weekdayFormatter.format(upcomingDose.date)} • ${timeFormatter.format(upcomingDose.date)}`,
           icon: Droplets,
         }
       : null,
-  ].filter(Boolean) as Array<{ label: string; value: string; icon: typeof Pill }> , [dayNames, formatDateTime, regimenLabel, settings.times, t, upcomingDose]);
+  ].filter(Boolean) as Array<{ label: string; value: string; icon: typeof Pill }> , [dayNames, regimenLabel, settings.times, t, upcomingDose, weekdayFormatter, timeFormatter]);
 
   // Load persisted state
   useEffect(() => {
+    if (typeof window === "undefined") return;
     try {
-      const s = localStorage.getItem(STORAGE_KEYS.settings);
-      if (s) {
-        const parsed = JSON.parse(s) as ReminderSettings;
-        // Always force reminders enabled per requirement
-        setSettings((prev) => ({...prev, ...parsed, enabled: true}));
-        const currentTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      const currentTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      const storedSettings = localStorage.getItem(STORAGE_KEYS.settings);
+      if (storedSettings) {
+        const parsed = JSON.parse(storedSettings) as ReminderSettings;
+        setSettings((prev) => {
+          const base = createDefaultSettings();
+          return {
+            ...base,
+            ...parsed,
+            days: Array.isArray(parsed.days) ? parsed.days : base.days,
+            enabled: true,
+          };
+        });
         if (parsed.tz && parsed.tz !== currentTz) {
           setTzChanged(true);
         }
+      } else {
+        setSettings(createDefaultSettings());
       }
-      const r = localStorage.getItem(STORAGE_KEYS.regimen);
-      if (r) setRegimen(r as RegimenType);
-      const tr = localStorage.getItem(STORAGE_KEYS.tracking);
-      if (tr) setTracking(JSON.parse(tr));
-    } catch {}
+
+      const storedRegimen = localStorage.getItem(STORAGE_KEYS.regimen) as RegimenType | null;
+      if (storedRegimen && ["single", "daily", "multi"].includes(storedRegimen)) {
+        setRegimen(storedRegimen);
+      }
+
+      const storedTracking = localStorage.getItem(STORAGE_KEYS.tracking);
+      if (storedTracking) {
+        setTracking(JSON.parse(storedTracking));
+      }
+    } catch (error) {
+      console.error("Failed to restore treatment settings from localStorage", error);
+    } finally {
+      setIsInitialized(true);
+    }
   }, []);
 
   // Persist state
   useEffect(() => {
+    if (!isInitialized || typeof window === "undefined") return;
     try {
       localStorage.setItem(STORAGE_KEYS.settings, JSON.stringify(settings));
       localStorage.setItem(STORAGE_KEYS.regimen, regimen);
       localStorage.setItem(STORAGE_KEYS.tracking, JSON.stringify(tracking));
     } catch {}
-  }, [settings, regimen, tracking]);
+  }, [settings, regimen, tracking, isInitialized]);
 
   // Ensure today entry exists when times change
   useEffect(() => {
@@ -206,9 +238,11 @@ export default function TreatmentAdherencePage() {
   };
 
   const clearAll = () => {
+    const defaults = createDefaultSettings();
     setTracking({});
-    setSettings({enabled: true, times: [], days: [1, 2, 3, 4, 5, 6, 0], snoozeMinutes: null, tz: Intl.DateTimeFormat().resolvedOptions().timeZone});
+    setSettings(defaults);
     setRegimen("daily");
+    setTzChanged(false);
     try {
       localStorage.removeItem(STORAGE_KEYS.settings);
       localStorage.removeItem(STORAGE_KEYS.regimen);
@@ -225,7 +259,7 @@ export default function TreatmentAdherencePage() {
   };
 
   // Compute next occurrence for a given HH:mm within selected days
-  const nextOccurrence = (time: string, days: number[]) => {
+  function nextOccurrence(time: string, days: number[]) {
     const [hh, mm] = time.split(":").map(Number);
     const now = new Date();
     for (let i = 0; i < 14; i++) { // search up to 2 weeks ahead
@@ -238,7 +272,7 @@ export default function TreatmentAdherencePage() {
     const d = new Date();
     d.setHours(hh, mm, 0, 0);
     return d;
-  };
+  }
 
   // Format to ICS local (floating) time: YYYYMMDDTHHMMSS
   const icsLocal = (d: Date) => {
@@ -555,7 +589,7 @@ export default function TreatmentAdherencePage() {
                     </ul>
                     <div className="mt-4 rounded-xl border border-red-300/70 bg-gradient-to-br from-red-100/90 via-rose-50 to-white/80 p-4 shadow-inner dark:border-red-900/60 dark:from-red-900/40 dark:via-rose-950/40 dark:to-slate-950/40" role="alert">
                       <p className="text-xs text-red-900 dark:text-red-100 leading-relaxed">
-                        <strong>{t("sideEffects.urgent.title")}:</strong> {t("sideEffects.urgent.text")} <Link href="/rights" className="underline font-medium">{t("sideEffects.urgent.resources")}</Link>
+                        <strong>{t("sideEffects.urgent.title")}:</strong> {t("sideEffects.urgent.text")} <Link href="/sti-services" className="underline font-medium">{t("sideEffects.urgent.resources")}</Link>
                       </p>
                     </div>
                   </div>
