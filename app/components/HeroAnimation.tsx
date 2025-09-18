@@ -186,7 +186,7 @@ export function HeroAnimation() {
 
   return (
     <div 
-      className="relative w-full h-screen bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-pink-950 dark:via-gray-800 dark:to-teal-950 overflow-hidden"
+      className="relative w-full h-[95vh] bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-pink-950 dark:via-gray-800 dark:to-teal-950 overflow-hidden"
       style={{ touchAction: 'pan-y' }}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
@@ -359,7 +359,7 @@ export function HeroAnimation() {
                 })}
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-white leading-tight text-center">
                   {t(quotes[currentIndex].headingKey)}
-                  <br />
+                  <br className="hidden md:block" />
                   <span className="bg-gradient-to-r from-rose-400 via-purple-400 to-teal-400 bg-clip-text text-transparent">{t(quotes[currentIndex].headingHighlightedKey)}</span>
                 </h1>
               </div>
@@ -391,7 +391,7 @@ export function HeroAnimation() {
       </div>
 
       {/* Navigation Dots and Progress Bar */}
-      <div className="absolute bottom-32 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center space-y-4">
+      <div className="absolute bottom-24 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center space-y-4">
         {/* Progress Bar */}
         {!isInitialLoad && !isAnimating && (
           <div className="w-16 h-1 bg-white/30 rounded-full overflow-hidden">
