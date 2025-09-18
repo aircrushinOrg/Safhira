@@ -2,6 +2,38 @@
   "Common": {
     "loading": "Memuat..."
   },
+  "hero": {
+    "slide1": {
+      "heading": "Ruang Selamat Anda untuk ",
+      "headingHighlighted": "Pembelajaran Kesihatan Seksual",
+      "subheading": "Terokai hubungan dan kesihatan reproduktif dalam persekitaran yang selamat dan bebas stigma di mana soalan anda sentiasa dialu-alukan."
+    },
+    "slide2": {
+      "heading": "Rakan AI Kesihatan Seksual ",
+      "headingHighlighted": "Yang Berkuasa",
+      "subheading": "Dapatkan jawapan peribadi dan sulit melalui chatbot AI kami, direka untuk membimbing anda dengan empati dan maklumat yang boleh dipercayai.",
+      "button": "Mula Berbual"
+    },
+    "slide3": {
+      "heading": "Memberdayakan Anda dengan ",
+      "headingHighlighted": "Pengetahuan dan Sokongan",
+      "subheading": "Akses maklumat yang boleh dipercayai tentang STI, kontrasepsi, dan hubungan, supaya anda boleh membuat keputusan termaklum dengan yakin.",
+      "button1": "Hub Maklumat STI",
+      "button2": "Hidup Sihat dengan STI"
+    },
+    "slide4": {
+      "heading": "Cari Penyedia Berdekatan untuk ",
+      "headingHighlighted": "Penjagaan Kesihatan Seksual",
+      "subheading": "Temui klinik tempatan dan perkhidmatan yang dipercayai berhampiran, membantu anda mengakses penjagaan kesihatan seksual dengan mudah apabila diperlukan.",
+      "button": "Cari Perkhidmatan"
+    },
+    "slide5": {
+      "heading": "Mitos atau Kebenaran? ",
+      "headingHighlighted": "Ketahui Sekarang",
+      "subheading": "Cabar apa yang anda tahu dan temui fakta tentang kesihatan seksual dengan kuiz interaktif kami.",
+      "button": "Ambil Kuiz"
+    }
+  },
   "Landing": {
     "hero": {
       "titlePrefix": "Ruang Selamat untuk",

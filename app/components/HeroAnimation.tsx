@@ -4,16 +4,17 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Heart, Bot, BookOpen, Hospital, Lightbulb } from 'lucide-react';
 import { Button } from './ui/button';
-import Link from 'next/link';
+import { Link } from '../../i18n/routing';
+import { useTranslations } from 'next-intl';
 
 interface Quote {
-  heading: string;
-  headingHighlighted: string;
-  subheading: string;
+  headingKey: string;
+  headingHighlightedKey: string;
+  subheadingKey: string;
   image: string;
   icon: React.ComponentType<any>;
   buttons?: Array<{
-    text: string;
+    textKey: string;
     href: string;
     variant?: 'default' | 'outline';
   }>;
@@ -21,56 +22,57 @@ interface Quote {
 
 const quotes: Quote[] = [
   {
-    heading: "Your Safe Space for ",
-    headingHighlighted: "Learning Sexual Health",
-    subheading: "Explore relationships and reproductive health in a safe, stigma-free environment where your questions are always welcomed.",
+    headingKey: "hero.slide1.heading",
+    headingHighlightedKey: "hero.slide1.headingHighlighted",
+    subheadingKey: "hero.slide1.subheading",
     image: "/landing-hero-1.png",
     icon: Heart
   },
   {
-    heading: "Your AI-powered ",
-    headingHighlighted: "Sexual Health Companion",
-    subheading: "Get personalized, confidential answers through our AI chatbot, designed to guide you with empathy and reliable information.",
+    headingKey: "hero.slide2.heading",
+    headingHighlightedKey: "hero.slide2.headingHighlighted",
+    subheadingKey: "hero.slide2.subheading",
     image: "/landing-hero-2.png",
     icon: Bot,
     buttons: [
-      { text: "Start Chatting", href: "/chat" }
+      { textKey: "hero.slide2.button", href: "/chat" }
     ]
   },
   {
-    heading: "Empowering You with ",
-    headingHighlighted: "Knowledge and Support",
-    subheading: "Access reliable information on STIs, contraception, and relationships, so you can make informed decisions with confidence.",
+    headingKey: "hero.slide3.heading",
+    headingHighlightedKey: "hero.slide3.headingHighlighted",
+    subheadingKey: "hero.slide3.subheading",
     image: "/landing-hero-3.png",
     icon: BookOpen,
     buttons: [
-      { text: "STIs Info Hub", href: "/stis" },
-      { text: "Living Well with STIs", href: "/living-well-with-sti", variant: "outline" }
+      { textKey: "hero.slide3.button1", href: "/stis" },
+      { textKey: "hero.slide3.button2", href: "/living-well-with-sti", variant: "outline" }
     ]
   },
   {
-    heading: "Find Nearby Providers for ",
-    headingHighlighted: "Sexual Healthcare",
-    subheading: "Locate trusted local clinics and services nearby, helping you access sexual healthcare easily when the need arises.",
+    headingKey: "hero.slide4.heading",
+    headingHighlightedKey: "hero.slide4.headingHighlighted",
+    subheadingKey: "hero.slide4.subheading",
     image: "/landing-hero-4.png",
     icon: Hospital,
     buttons: [
-      { text: "Find Services", href: "/sti-services" }
+      { textKey: "hero.slide4.button", href: "/sti-services" }
     ]
   },
   {
-    heading: "Myth or Truth? ",
-    headingHighlighted: "Find Out Now",
-    subheading: "Challenge what you know and uncover the facts about sexual health with our interactive quizzes.",
+    headingKey: "hero.slide5.heading",
+    headingHighlightedKey: "hero.slide5.headingHighlighted",
+    subheadingKey: "hero.slide5.subheading",
     image: "/landing-hero-5.png",
     icon: Lightbulb,
     buttons: [
-      { text: "Take Quiz", href: "/quiz" }
+      { textKey: "hero.slide5.button", href: "/quiz" }
     ]
   }
 ];
 
 export function HeroAnimation() {
+  const t = useTranslations();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(true);
   const [nextIndex, setNextIndex] = useState(0);
@@ -312,13 +314,13 @@ export function HeroAnimation() {
                   className: "w-12 h-12 md:w-16 md:h-16 mb-4 text-purple-400"
                 })}
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-white leading-tight text-center">
-                  {quotes[currentIndex].heading}
+                  {t(quotes[currentIndex].headingKey)}
                   <br />
-                  <span className="bg-gradient-to-r from-rose-400 via-purple-400 to-teal-400 bg-clip-text text-transparent">{quotes[currentIndex].headingHighlighted}</span>
+                  <span className="bg-gradient-to-r from-rose-400 via-purple-400 to-teal-400 bg-clip-text text-transparent">{t(quotes[currentIndex].headingHighlightedKey)}</span>
                 </h1>
               </div>
               <h2 className="text-lg md:text-xl text-white/80 font-normal mb-6">
-                {quotes[currentIndex].subheading}
+                {t(quotes[currentIndex].subheadingKey)}
               </h2>
               
               {/* Dynamic Buttons */}
@@ -333,7 +335,7 @@ export function HeroAnimation() {
                             : "bg-gradient-to-r from-rose-400 via-purple-400 to-teal-400 hover:from-rose-500 hover:via-purple-500 hover:to-teal-500 text-white border-0 font-medium px-4 md:px-6 py-3 md:py-4 w-full h-full text-lg transition-all duration-200"
                         }
                       >
-                        {button.text}
+                        {t(button.textKey)}
                       </Button>
                     </Link>
                   ))}

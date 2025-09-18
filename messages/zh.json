@@ -2,6 +2,38 @@
   "Common": {
     "loading": "加载中..."
   },
+  "hero": {
+    "slide1": {
+      "heading": "您的安全港湾",
+      "headingHighlighted": "学习性健康知识",
+      "subheading": "在一个安全、无污名的环境中探索人际关系和生殖健康，您的问题总是受到欢迎。"
+    },
+    "slide2": {
+      "heading": "您的AI驱动",
+      "headingHighlighted": "性健康助手",
+      "subheading": "通过我们的AI聊天机器人获得个性化、保密的答案，以同理心和可靠信息为您提供指导。",
+      "button": "开始聊天"
+    },
+    "slide3": {
+      "heading": "用",
+      "headingHighlighted": "知识和支持赋能您",
+      "subheading": "获取关于性传播感染、避孕和人际关系的可靠信息，让您自信地做出明智决定。",
+      "button1": "性传播感染信息中心",
+      "button2": "与性传播感染和谐共处"
+    },
+    "slide4": {
+      "heading": "寻找附近的",
+      "headingHighlighted": "性健康服务提供者",
+      "subheading": "定位您附近可信赖的本地诊所和医疗服务，在需要时轻松获得性健康服务。",
+      "button": "查找服务"
+    },
+    "slide5": {
+      "heading": "谣言还是真相？",
+      "headingHighlighted": "立即发现",
+      "subheading": "挑战您所知道的，通过我们的互动测验揭示性健康的真相。",
+      "button": "参加测验"
+    }
+  },
   "Landing": {
     "hero": {
       "titlePrefix": "你的",
