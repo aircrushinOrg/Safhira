@@ -5,7 +5,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { ThemeToggle } from './ThemeToggle';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from './ui/sheet';
 import { useIsMobile } from './ui/use-mobile';
-import { MessageCircle, Shield, BookOpen, HelpCircle, Award, Menu, MapPin } from 'lucide-react';
+import { MessageCircle, Shield, BookOpen, HelpCircle, Award, Menu, MapPin, ChevronDown } from 'lucide-react';
 import {Link} from '../../i18n/routing';
 import {LocaleSwitcher} from './LocaleSwitcher';
 import { useState } from 'react';
@@ -56,9 +56,10 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
           >
             <BookOpen size={16} />
             <span>{t('nav.resources')}</span>
+            <ChevronDown size={14} />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="start" className="w-56">
+        <DropdownMenuContent align="start" className="w-56 z-[70]">
           <DropdownMenuItem onSelect={() => handleSectionChange('stis')} className="flex items-center gap-2">
             <BookOpen size={14} />
             <span>{t('nav.learnAboutStis')}</span>

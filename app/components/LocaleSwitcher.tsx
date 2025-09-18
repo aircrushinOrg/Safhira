@@ -30,7 +30,7 @@ export function LocaleSwitcher() {
           <Languages className="h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-28">
+      <DropdownMenuContent align="end" className="w-28 z-[70]">
         {(locales as readonly string[]).map((l) => (
           <DropdownMenuItem key={l} onSelect={() => changeLocale(l as (typeof locales)[number])} className="flex items-center gap-2">
             <span className="text-base leading-none">{flags[l] ?? '🏳️'}</span>
