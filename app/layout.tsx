@@ -5,6 +5,7 @@ import {Suspense} from 'react';
 import {ThemeProvider} from './providers/theme-provider';
 import {getLocale} from 'next-intl/server';
 import DifyChatbotEmbed from '@/app/components/DifyChatbotEmbed';
+import Script from 'next/script';
 
 
 const poppins = Poppins({
@@ -55,6 +56,21 @@ export default async function RootLayout({
         >
             {children}
         </ThemeProvider>
+        <Script id="dify-config" strategy="beforeInteractive">
+          {`
+            window.difyChatbotConfig = {
+              token: 'jR3TCPVG1DjZidxk',
+              inputs: {},
+              systemVariables: {},
+              userVariables: {},
+            };
+          `}
+        </Script>
+        <Script
+          src="https://udify.app/embed.min.js"
+          id="jR3TCPVG1DjZidxk"
+          strategy="beforeInteractive"
+        />
         <DifyChatbotEmbed />
       </body>
     </html>
