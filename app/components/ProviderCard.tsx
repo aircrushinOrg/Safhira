@@ -54,14 +54,14 @@ export function ProviderCard({ provider }: ProviderCardProps) {
             <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
               {provider.address}
             </p>
-            {provider.distance && (
+            {provider.distance !== undefined && (
               <div className="mt-1 space-y-1">
                 <p className="text-xs text-teal-600 dark:text-teal-400 font-medium">
-                  {provider.distance} km away
+                  {t('distanceAway', { distance: provider.distance })}
                 </p>
                 {provider.drivingTime && (
                   <p className="text-xs text-gray-500 dark:text-gray-400">
-                    {provider.drivingTime} drive
+                    {t('drivingTime', { time: provider.drivingTime })}
                   </p>
                 )}
               </div>

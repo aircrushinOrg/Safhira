@@ -1479,7 +1479,19 @@
       "useCurrentLocation": "Use Current Location",
       "gettingLocation": "Getting your location...",
       "description": "Find healthcare providers near you with accurate driving distances",
+      "permissionPrompt": "Safhira would like to access your current location to show nearby clinics. Allow access?",
+      "permissionDenied": "Location access cancelled. You can enter your location manually instead.",
+      "manualEntryLabel": "Enter your location",
+      "manualEntryPlaceholder": "City, postcode, or address",
+      "manualEntryButton": "Set location",
+      "manualEntryHelper": "Example: \"Kuala Lumpur\", \"43000 Kajang\" or a nearby landmark.",
+      "manualEntryError": "We couldn't find that location. Try a nearby landmark or use your current location.",
+      "or": "or",
       "locationSet": "Location set - showing nearby providers",
+      "currentLocationLabel": "Current location",
+      "showingNearby": "Showing clinics within {distance} km",
+      "clearLocation": "Clear location",
+      "distanceHelper": "Adjust the distance to see more or fewer nearby clinics.",
       "calculatingDistances": "Calculating accurate distances...",
       "maxDistance": "Max Distance",
       "updateDistance": "Update",
@@ -1526,7 +1538,9 @@
       "pep": "PEP",
       "freeScreening": "Free STI Screening",
       "availableServices": "Available Services:"
-    }
+    },
+    "distanceAway": "{distance} km away",
+    "drivingTime": "{time} drive"
   },
   "ProviderDetails": {
     "navigation": {

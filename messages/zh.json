@@ -1120,7 +1120,19 @@
       "useCurrentLocation": "使用当前位置",
       "gettingLocation": "正在获取您的位置...",
       "description": "查找您附近的医疗提供者，显示准确的驾驶距离",
+      "permissionPrompt": "Safhira 想使用您当前的位置以显示附近的诊所。允许访问吗？",
+      "permissionDenied": "已取消位置访问。您也可以手动输入位置。",
+      "manualEntryLabel": "输入您的位置",
+      "manualEntryPlaceholder": "城市、邮编或地址",
+      "manualEntryButton": "设置位置",
+      "manualEntryHelper": "例如：“吉隆坡”、“43000 Kajang”或附近地标。",
+      "manualEntryError": "无法找到该位置，请尝试附近地标或使用当前位置。",
+      "or": "或",
       "locationSet": "位置已设置 - 显示附近的提供者",
+      "currentLocationLabel": "当前位置",
+      "showingNearby": "显示 {distance} 公里内的诊所",
+      "clearLocation": "清除位置",
+      "distanceHelper": "调整距离以查看更多或更少附近的诊所。",
       "calculatingDistances": "正在计算准确距离...",
       "maxDistance": "最大距离",
       "updateDistance": "更新",
@@ -1167,7 +1179,9 @@
       "pep": "PEP",
       "freeScreening": "免费性传播感染筛查",
       "availableServices": "可用服务："
-    }
+    },
+    "distanceAway": "距您 {distance} 公里",
+    "drivingTime": "车程约 {time}"
   },
   "ProviderDetails": {
     "navigation": {

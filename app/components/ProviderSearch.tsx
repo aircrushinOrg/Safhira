@@ -24,7 +24,10 @@ export function ProviderSearch({ initialProviders = [] }: ProviderSearchProps) {
   const [error, setError] = useState<string | null>(null);
   const [total, setTotal] = useState(0);
   const [showFilters, setShowFilters] = useState(false);
-  
+
+  const distanceOptions = [5, 10, 25, 50, 100];
+  const defaultDistance = 25;
+
   const [filters, setFilters] = useState<ProviderSearchFilters>({
     searchQuery: '',
     stateIds: [],
@@ -33,13 +36,17 @@ export function ProviderSearch({ initialProviders = [] }: ProviderSearchProps) {
     freeStiScreening: false,
     limit: 18,
     offset: 0,
+    maxDistance: defaultDistance,
   });
 
   // Location-related state
-  const [maxDistance, setMaxDistance] = useState<number>(10);
+  const [maxDistance, setMaxDistance] = useState<number>(defaultDistance);
   const [geolocating, setGeolocating] = useState(false);
   const [locationError, setLocationError] = useState<string | null>(null);
   const [calculatingDistances, setCalculatingDistances] = useState(false);
+  const [locationQuery, setLocationQuery] = useState('');
+  const [geocodeLoading, setGeocodeLoading] = useState(false);
+  const [selectedLocationLabel, setSelectedLocationLabel] = useState<string | null>(null);
 
   // Fetch states on component mount
   useEffect(() => {
@@ -71,10 +78,12 @@ export function ProviderSearch({ initialProviders = [] }: ProviderSearchProps) {
       const data = await searchProvidersWithFilters(searchFilters);
       setProviders(data.providers);
       setTotal(data.total);
+      return data;
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred while fetching providers');
       setProviders([]);
       setTotal(0);
+      return undefined;
     } finally {
       setLoading(false);
     }
@@ -101,6 +110,33 @@ export function ProviderSearch({ initialProviders = [] }: ProviderSearchProps) {
     handleFilterChange('stateIds', newStateIds);
   };
 
+  const applyLocationFilters = async (
+    latitude: number,
+    longitude: number,
+    label?: string,
+  ) => {
+    const newFilters = {
+      ...filters,
+      userLatitude: latitude,
+      userLongitude: longitude,
+      maxDistance,
+      offset: 0,
+    };
+
+    setFilters(newFilters);
+    setSelectedLocationLabel(label ?? null);
+    setLocationError(null);
+    setGeolocating(false);
+
+    const data = await fetchProviders(newFilters);
+    if (!data) {
+      setLocationError(t('location.error'));
+      return;
+    }
+
+    await calculateAccurateDistances(latitude, longitude, data.providers, newFilters.maxDistance);
+  };
+
   // Enhanced geolocation with Google Maps distance calculation
   const getCurrentLocation = () => {
     if (!navigator.geolocation) {
@@ -114,32 +150,7 @@ export function ProviderSearch({ initialProviders = [] }: ProviderSearchProps) {
     navigator.geolocation.getCurrentPosition(
       async (position) => {
         const { latitude, longitude } = position.coords;
-        
-        // First get basic results with coordinates
-        const basicFilters = {
-          ...filters,
-          userLatitude: latitude,
-          userLongitude: longitude,
-          maxDistance,
-          offset: 0
-        };
-        
-        setFilters(basicFilters);
-        setGeolocating(false);
-        
-        // Fetch providers and then calculate accurate distances
-        try {
-          const data = await searchProvidersWithFilters(basicFilters);
-          setProviders(data.providers);
-          setTotal(data.total);
-          
-          // Calculate accurate driving distances
-          await calculateAccurateDistances(latitude, longitude, data.providers);
-        } catch (err) {
-          setError(err instanceof Error ? err.message : 'An error occurred while fetching providers');
-          setProviders([]);
-          setTotal(0);
-        }
+        await applyLocationFilters(latitude, longitude, t('location.currentLocationLabel'));
       },
       (error) => {
         setGeolocating(false);
@@ -154,7 +165,84 @@ export function ProviderSearch({ initialProviders = [] }: ProviderSearchProps) {
     );
   };
 
-  const calculateAccurateDistances = async (userLat: number, userLon: number, providers: ProviderRecord[]) => {
+  const handleUseCurrentLocation = () => {
+    const confirmed = window.confirm(t('location.permissionPrompt'));
+    if (!confirmed) {
+      setLocationError(t('location.permissionDenied'));
+      return;
+    }
+
+    setLocationError(null);
+    getCurrentLocation();
+  };
+
+  const handleManualLocationSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const query = locationQuery.trim();
+    if (!query) {
+      return;
+    }
+
+    setGeocodeLoading(true);
+    setLocationError(null);
+
+    try {
+      const response = await fetch(`/api/geocode?query=${encodeURIComponent(query)}`);
+      if (!response.ok) {
+        throw new Error('Geocode failed');
+      }
+
+      const data = await response.json();
+      if (typeof data.lat !== 'number' || typeof data.lon !== 'number') {
+        throw new Error('Invalid coordinates');
+      }
+
+      const displayName = typeof data.displayName === 'string' ? data.displayName : query;
+      setLocationQuery(displayName);
+      await applyLocationFilters(data.lat, data.lon, displayName);
+    } catch (error) {
+      console.error('Manual location search failed:', error);
+      setLocationError(t('location.manualEntryError'));
+    } finally {
+      setGeocodeLoading(false);
+    }
+  };
+
+  const handleMaxDistanceChange = (value: number) => {
+    setMaxDistance(value);
+    const newFilters = {
+      ...filters,
+      maxDistance: value,
+      offset: 0,
+    };
+    setFilters(newFilters);
+
+    if (
+      typeof newFilters.userLatitude === 'number' &&
+      typeof newFilters.userLongitude === 'number'
+    ) {
+      void (async () => {
+        const data = await fetchProviders(newFilters);
+        if (!data) {
+          return;
+        }
+
+        await calculateAccurateDistances(
+          newFilters.userLatitude,
+          newFilters.userLongitude,
+          data.providers,
+          newFilters.maxDistance,
+        );
+      })();
+    }
+  };
+
+  const calculateAccurateDistances = async (
+    userLat: number,
+    userLon: number,
+    providersList: ProviderRecord[],
+    maxDistanceFilter?: number,
+  ) => {
     const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
     if (!apiKey) return;
 
@@ -162,11 +250,11 @@ export function ProviderSearch({ initialProviders = [] }: ProviderSearchProps) {
 
     try {
       // Filter providers that have coordinates
-      const providersWithCoords = providers.filter(p => p.latitude && p.longitude);
+      const providersWithCoords = providersList.filter(p => p.latitude && p.longitude);
       
       // Process in batches of 10 (Google Maps API limit)
       const batchSize = 10;
-      const updatedProviders = [...providers];
+      const updatedProviders = [...providersList];
 
       for (let i = 0; i < providersWithCoords.length; i += batchSize) {
         const batch = providersWithCoords.slice(i, i + batchSize);
@@ -181,7 +269,7 @@ export function ProviderSearch({ initialProviders = [] }: ProviderSearchProps) {
         if (data.status === 'OK') {
           data.rows[0].elements.forEach((element: any, index: number) => {
             if (element.status === 'OK') {
-              const providerIndex = providers.findIndex(p => p.id === batch[index].id);
+              const providerIndex = providersList.findIndex(p => p.id === batch[index].id);
               if (providerIndex !== -1) {
                 updatedProviders[providerIndex] = {
                   ...updatedProviders[providerIndex],
@@ -196,7 +284,11 @@ export function ProviderSearch({ initialProviders = [] }: ProviderSearchProps) {
 
       // Sort by actual driving distance and apply distance filter
       const filteredAndSorted = updatedProviders
-        .filter(p => !p.distance || p.distance <= maxDistance)
+        .filter(p => {
+          if (!maxDistanceFilter) return true;
+          if (typeof p.distance !== 'number') return true;
+          return p.distance <= maxDistanceFilter;
+        })
         .sort((a, b) => {
           if (!a.distance && !b.distance) return 0;
           if (!a.distance) return 1;
@@ -215,11 +307,16 @@ export function ProviderSearch({ initialProviders = [] }: ProviderSearchProps) {
 
   const clearLocation = () => {
     setLocationError(null);
+    setSelectedLocationLabel(null);
+    setMaxDistance(defaultDistance);
+    setLocationQuery('');
+    setCalculatingDistances(false);
+    setGeolocating(false);
     const newFilters = {
       ...filters,
       userLatitude: undefined,
       userLongitude: undefined,
-      maxDistance: undefined,
+      maxDistance: defaultDistance,
       offset: 0
     };
     setFilters(newFilters);
@@ -235,8 +332,15 @@ export function ProviderSearch({ initialProviders = [] }: ProviderSearchProps) {
       freeStiScreening: false,
       limit: 18,
       offset: 0,
+      maxDistance: defaultDistance,
     };
     setFilters(clearedFilters);
+    setMaxDistance(defaultDistance);
+    setSelectedLocationLabel(null);
+    setLocationQuery('');
+    setCalculatingDistances(false);
+    setLocationError(null);
+    setGeolocating(false);
     fetchProviders(clearedFilters);
   };
 
@@ -337,87 +441,119 @@ export function ProviderSearch({ initialProviders = [] }: ProviderSearchProps) {
           </Button>
         </form>
 
-        {/* Location Search */}
-        {/* <Card className='bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm'>
+        <Card className='bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm'>
           <CardHeader>
             <CardTitle className="text-lg font-semibold flex items-center">
               <MapPin className="w-5 h-5 mr-2 text-teal-500" />
               {t('location.title')}
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
-            {!filters.userLatitude || !filters.userLongitude ? (
-              <div className="text-center">
-                <Button
-                  onClick={getCurrentLocation}
-                  disabled={geolocating || calculatingDistances}
-                  className="flex items-center mx-auto"
-                  size="lg"
-                >
-                  {geolocating ? (
-                    <Loader2 className="w-4 h-4 animate-spin mr-2" />
-                  ) : (
-                    <Target className="w-4 h-4 mr-2" />
-                  )}
-                  {geolocating ? t('location.gettingLocation') : t('location.useCurrentLocation')}
-                </Button>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
-                  {t('location.description')}
-                </p>
-              </div>
+          <CardContent className="space-y-5">
+            {typeof filters.userLatitude !== 'number' || typeof filters.userLongitude !== 'number' ? (
+              <>
+                <form onSubmit={handleManualLocationSubmit} className="space-y-3">
+                  <div className="flex flex-col gap-2 sm:flex-row sm:items-end">
+                    <div className="flex-1">
+                      <label className="block text-sm font-medium text-left text-gray-700 dark:text-gray-200 mb-1">
+                        {t('location.manualEntryLabel')}
+                      </label>
+                      <Input
+                        value={locationQuery}
+                        onChange={(event) => setLocationQuery(event.target.value)}
+                        placeholder={t('location.manualEntryPlaceholder')}
+                        disabled={geocodeLoading}
+                        className="bg-slate-100 dark:bg-slate-700 border border-slate-300 dark:border-slate-600"
+                      />
+                    </div>
+                    <Button
+                      type="submit"
+                      disabled={geocodeLoading || locationQuery.trim().length === 0}
+                      className="sm:w-auto"
+                    >
+                      {geocodeLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : t('location.manualEntryButton')}
+                    </Button>
+                  </div>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                    {t('location.manualEntryHelper')}
+                  </p>
+                </form>
+
+                <div className="flex flex-col items-center gap-2 pt-1">
+                  <span className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                    {t('location.or')}
+                  </span>
+                  <Button
+                    onClick={handleUseCurrentLocation}
+                    disabled={geolocating || calculatingDistances}
+                    className="flex items-center"
+                    size="lg"
+                  >
+                    {geolocating ? (
+                      <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                    ) : (
+                      <Target className="w-4 h-4 mr-2" />
+                    )}
+                    {geolocating ? t('location.gettingLocation') : t('location.useCurrentLocation')}
+                  </Button>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
+                    {t('location.description')}
+                  </p>
+                </div>
+              </>
             ) : (
               <>
-                <div className="flex items-center justify-between bg-green-50 dark:bg-green-900/20 p-3 rounded-lg">
-                  <div className="flex items-center space-x-2">
-                    <MapPin className="w-4 h-4 text-green-600" />
-                    <span className="text-sm text-green-700 dark:text-green-400">
-                      {calculatingDistances ? t('location.calculatingDistances') : t('location.locationSet')}
-                    </span>
-                    {calculatingDistances && (
-                      <Loader2 className="w-4 h-4 animate-spin text-green-600" />
-                    )}
+                <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between bg-green-50 dark:bg-green-900/20 p-3 rounded-lg">
+                  <div className="flex items-start gap-2">
+                    <MapPin className="w-4 h-4 text-green-600 mt-1" />
+                    <div>
+                      <p className="text-sm font-medium text-green-700 dark:text-green-300">
+                        {selectedLocationLabel || t('location.locationSet')}
+                      </p>
+                      <p className="text-xs text-green-700 dark:text-green-300">
+                        {calculatingDistances
+                          ? t('location.calculatingDistances')
+                          : t('location.showingNearby', { distance: maxDistance })}
+                      </p>
+                    </div>
                   </div>
-                  <Button variant="ghost" size="sm" onClick={clearLocation}>
-                    <X className="w-4 h-4" />
+                  <Button variant="ghost" size="sm" onClick={clearLocation} className="self-start md:self-auto">
+                    <X className="w-4 h-4 mr-1" />
+                    {t('location.clearLocation')}
                   </Button>
                 </div>
 
-                <div className="flex items-center space-x-3">
-                  <label className="text-sm font-medium">{t('location.maxDistance')}:</label>
-                  <Select value={maxDistance.toString()} onValueChange={(value) => setMaxDistance(Number(value))}>
-                    <SelectTrigger className="w-32">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="5">5 km</SelectItem>
-                      <SelectItem value="10">10 km</SelectItem>
-                      <SelectItem value="25">25 km</SelectItem>
-                      <SelectItem value="50">50 km</SelectItem>
-                      <SelectItem value="100">100 km</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <Button 
-                    size="sm" 
-                    disabled={calculatingDistances}
-                    onClick={() => {
-                      if (filters.userLatitude && filters.userLongitude) {
-                        calculateAccurateDistances(filters.userLatitude, filters.userLongitude, providers);
-                      }
-                    }}
-                  >
-                    {t('location.updateDistance')}
-                  </Button>
+                <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                  <div className="flex items-center gap-3">
+                    <label className="text-sm font-medium text-gray-700 dark:text-gray-200">
+                      {t('location.maxDistance')}
+                    </label>
+                    <Select value={maxDistance.toString()} onValueChange={(value) => handleMaxDistanceChange(Number(value))}>
+                      <SelectTrigger className="w-32">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {distanceOptions.map((option) => (
+                          <SelectItem key={option} value={option.toString()}>
+                            {option} km
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                    {t('location.distanceHelper')}
+                  </p>
                 </div>
               </>
             )}
 
             {locationError && (
-              <div className="text-red-600 dark:text-red-400 text-sm">
+              <div className="text-sm text-red-600 dark:text-red-400">
                 {locationError}
               </div>
             )}
           </CardContent>
-        </Card> */}
+        </Card>
 
         {/* Filters Panel */}
         {showFilters && (
