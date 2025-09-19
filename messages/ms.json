@@ -25,7 +25,7 @@
       "heading": "Cari Penyedia Berdekatan untuk ",
       "headingHighlighted": "Penjagaan Kesihatan Seksual",
       "subheading": "Temui klinik tempatan dan perkhidmatan yang dipercayai berhampiran, membantu anda mengakses penjagaan kesihatan seksual dengan mudah apabila diperlukan.",
-      "button": "Cari Perkhidmatan"
+      "button": "Cari Penjagaan Kesihatan"
     },
     "slide5": {
       "heading": "Mitos atau Kebenaran? ",
@@ -184,7 +184,7 @@
       "learnAboutStis": "Ketahui tentang STI",
       "livingWell": "Hidup Sihat dengan STI",
       "quiz": "Kuiz",
-      "services": "Cari Perkhidmatan"
+      "services": "Cari Penjagaan Kesihatan"
     }
   },
   "Footer": {
@@ -1292,7 +1292,7 @@
       ]
     },
     "partner": {
-      "title": "Pemakluman Pasangan & Seks Lebih Selamat",
+      "title": "Berkomunikasi dengan Pasangan Anda",
       "subtitle": "Cara berkomunikasi dengan hormat dan melindungi satu sama lain, serta panduan seks lebih selamat khusus mengikut jenis STI.",
       "tabs": {
         "templates": "Templat",

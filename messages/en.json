@@ -25,7 +25,7 @@
       "heading": "Find Nearby Providers for ",
       "headingHighlighted": "Sexual Healthcare",
       "subheading": "Locate trusted local clinics and services nearby, helping you access sexual healthcare easily when the need arises.",
-      "button": "Find Services"
+      "button": "Find Healthcare"
     },
     "slide5": {
       "heading": "Myth or Truth? ",
@@ -184,7 +184,7 @@
       "learnAboutStis": "Learn about STIs",
       "livingWell": "Living Well with STIs",
       "quiz": "Quiz",
-      "services": "Find Services"
+      "services": "Find Healthcare"
     }
   },
   "Footer": {
@@ -1292,7 +1292,7 @@
       ]
     },
     "partner": {
-      "title": "Partner Notification & Safer Sex",
+      "title": "Communicating with your Partner",
       "subtitle": "Respectful ways to communicate and protect each other, plus STI‑specific safer sex guidance.",
       "tabs": {
         "templates": "Templates",
