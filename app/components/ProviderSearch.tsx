@@ -44,8 +44,6 @@ export function ProviderSearch({ initialProviders = [] }: ProviderSearchProps) {
   const [geolocating, setGeolocating] = useState(false);
   const [locationError, setLocationError] = useState<string | null>(null);
   const [calculatingDistances, setCalculatingDistances] = useState(false);
-  const [locationQuery, setLocationQuery] = useState('');
-  const [geocodeLoading, setGeocodeLoading] = useState(false);
   const [selectedLocationLabel, setSelectedLocationLabel] = useState<string | null>(null);
 
   // Fetch states on component mount
@@ -176,37 +174,6 @@ export function ProviderSearch({ initialProviders = [] }: ProviderSearchProps) {
     getCurrentLocation();
   };
 
-  const handleManualLocationSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const query = locationQuery.trim();
-    if (!query) {
-      return;
-    }
-
-    setGeocodeLoading(true);
-    setLocationError(null);
-
-    try {
-      const response = await fetch(`/api/geocode?query=${encodeURIComponent(query)}`);
-      if (!response.ok) {
-        throw new Error('Geocode failed');
-      }
-
-      const data = await response.json();
-      if (typeof data.lat !== 'number' || typeof data.lon !== 'number') {
-        throw new Error('Invalid coordinates');
-      }
-
-      const displayName = typeof data.displayName === 'string' ? data.displayName : query;
-      setLocationQuery(displayName);
-      await applyLocationFilters(data.lat, data.lon, displayName);
-    } catch (error) {
-      console.error('Manual location search failed:', error);
-      setLocationError(t('location.manualEntryError'));
-    } finally {
-      setGeocodeLoading(false);
-    }
-  };
 
   const handleMaxDistanceChange = (value: number) => {
     setMaxDistance(value);
@@ -309,7 +276,6 @@ export function ProviderSearch({ initialProviders = [] }: ProviderSearchProps) {
     setLocationError(null);
     setSelectedLocationLabel(null);
     setMaxDistance(defaultDistance);
-    setLocationQuery('');
     setCalculatingDistances(false);
     setGeolocating(false);
     const newFilters = {
@@ -337,7 +303,6 @@ export function ProviderSearch({ initialProviders = [] }: ProviderSearchProps) {
     setFilters(clearedFilters);
     setMaxDistance(defaultDistance);
     setSelectedLocationLabel(null);
-    setLocationQuery('');
     setCalculatingDistances(false);
     setLocationError(null);
     setGeolocating(false);
@@ -427,6 +392,35 @@ export function ProviderSearch({ initialProviders = [] }: ProviderSearchProps) {
           <Button type="submit" disabled={loading}>
             {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : t('search.button')}
           </Button>
+          
+          {/* Location Button */}
+          {typeof filters.userLatitude !== 'number' || typeof filters.userLongitude !== 'number' ? (
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleUseCurrentLocation}
+              disabled={geolocating || calculatingDistances}
+              className="flex items-center whitespace-nowrap"
+            >
+              {geolocating ? (
+                <Loader2 className="w-4 h-4 animate-spin mr-2" />
+              ) : (
+                <Target className="w-4 h-4 mr-2" />
+              )}
+              {geolocating ? t('location.gettingLocation') : t('location.useCurrentLocation')}
+            </Button>
+          ) : (
+            <Button
+              type="button"
+              variant="outline"
+              onClick={clearLocation}
+              className="flex items-center whitespace-nowrap"
+            >
+              <X className="w-4 h-4 mr-2" />
+              {t('location.clearLocation')}
+            </Button>
+          )}
+          
           <Button
             type="button"
             variant="outline"
@@ -441,119 +435,52 @@ export function ProviderSearch({ initialProviders = [] }: ProviderSearchProps) {
           </Button>
         </form>
 
-        <Card className='bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm'>
-          <CardHeader>
-            <CardTitle className="text-lg font-semibold flex items-center">
-              <MapPin className="w-5 h-5 mr-2 text-teal-500" />
-              {t('location.title')}
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-5">
-            {typeof filters.userLatitude !== 'number' || typeof filters.userLongitude !== 'number' ? (
-              <>
-                <form onSubmit={handleManualLocationSubmit} className="space-y-3">
-                  <div className="flex flex-col gap-2 sm:flex-row sm:items-end">
-                    <div className="flex-1">
-                      <label className="block text-sm font-medium text-left text-gray-700 dark:text-gray-200 mb-1">
-                        {t('location.manualEntryLabel')}
-                      </label>
-                      <Input
-                        value={locationQuery}
-                        onChange={(event) => setLocationQuery(event.target.value)}
-                        placeholder={t('location.manualEntryPlaceholder')}
-                        disabled={geocodeLoading}
-                        className="bg-slate-100 dark:bg-slate-700 border border-slate-300 dark:border-slate-600"
-                      />
-                    </div>
-                    <Button
-                      type="submit"
-                      disabled={geocodeLoading || locationQuery.trim().length === 0}
-                      className="sm:w-auto"
-                    >
-                      {geocodeLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : t('location.manualEntryButton')}
-                    </Button>
+        {/* Location Status and Distance Filter */}
+        {(typeof filters.userLatitude === 'number' && typeof filters.userLongitude === 'number') && (
+          <Card className='bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm'>
+            <CardContent className="pt-6">
+              <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between bg-green-50 dark:bg-green-900/20 p-3 rounded-lg">
+                <div className="flex items-start gap-2">
+                  <MapPin className="w-4 h-4 text-green-600 mt-1" />
+                  <div>
+                    <p className="text-sm font-medium text-green-700 dark:text-green-300">
+                      {selectedLocationLabel || t('location.locationSet')}
+                    </p>
+                    <p className="text-xs text-green-700 dark:text-green-300">
+                      {calculatingDistances
+                        ? t('location.calculatingDistances')
+                        : t('location.showingNearby', { distance: maxDistance })}
+                    </p>
                   </div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
-                    {t('location.manualEntryHelper')}
-                  </p>
-                </form>
-
-                <div className="flex flex-col items-center gap-2 pt-1">
-                  <span className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
-                    {t('location.or')}
-                  </span>
-                  <Button
-                    onClick={handleUseCurrentLocation}
-                    disabled={geolocating || calculatingDistances}
-                    className="flex items-center"
-                    size="lg"
-                  >
-                    {geolocating ? (
-                      <Loader2 className="w-4 h-4 animate-spin mr-2" />
-                    ) : (
-                      <Target className="w-4 h-4 mr-2" />
-                    )}
-                    {geolocating ? t('location.gettingLocation') : t('location.useCurrentLocation')}
-                  </Button>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
-                    {t('location.description')}
-                  </p>
                 </div>
-              </>
-            ) : (
-              <>
-                <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between bg-green-50 dark:bg-green-900/20 p-3 rounded-lg">
-                  <div className="flex items-start gap-2">
-                    <MapPin className="w-4 h-4 text-green-600 mt-1" />
-                    <div>
-                      <p className="text-sm font-medium text-green-700 dark:text-green-300">
-                        {selectedLocationLabel || t('location.locationSet')}
-                      </p>
-                      <p className="text-xs text-green-700 dark:text-green-300">
-                        {calculatingDistances
-                          ? t('location.calculatingDistances')
-                          : t('location.showingNearby', { distance: maxDistance })}
-                      </p>
-                    </div>
-                  </div>
-                  <Button variant="ghost" size="sm" onClick={clearLocation} className="self-start md:self-auto">
-                    <X className="w-4 h-4 mr-1" />
-                    {t('location.clearLocation')}
-                  </Button>
+                <div className="flex items-center gap-3">
+                  <label className="text-sm font-medium text-gray-700 dark:text-gray-200">
+                    {t('location.maxDistance')}
+                  </label>
+                  <Select value={maxDistance.toString()} onValueChange={(value) => handleMaxDistanceChange(Number(value))}>
+                    <SelectTrigger className="w-32">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {distanceOptions.map((option) => (
+                        <SelectItem key={option} value={option.toString()}>
+                          {option} km
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
-
-                <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-                  <div className="flex items-center gap-3">
-                    <label className="text-sm font-medium text-gray-700 dark:text-gray-200">
-                      {t('location.maxDistance')}
-                    </label>
-                    <Select value={maxDistance.toString()} onValueChange={(value) => handleMaxDistanceChange(Number(value))}>
-                      <SelectTrigger className="w-32">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {distanceOptions.map((option) => (
-                          <SelectItem key={option} value={option.toString()}>
-                            {option} km
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
-                    {t('location.distanceHelper')}
-                  </p>
-                </div>
-              </>
-            )}
-
-            {locationError && (
-              <div className="text-sm text-red-600 dark:text-red-400">
-                {locationError}
               </div>
-            )}
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Location Error */}
+        {locationError && (
+          <div className="text-sm text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 p-3 rounded-lg">
+            {locationError}
+          </div>
+        )}
 
         {/* Filters Panel */}
         {showFilters && (
