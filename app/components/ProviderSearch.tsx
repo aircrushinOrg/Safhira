@@ -228,8 +228,8 @@ export function ProviderSearch({ initialProviders = [] }: ProviderSearchProps) {
         }
 
         await calculateAccurateDistances(
-          newFilters.userLatitude,
-          newFilters.userLongitude,
+          newFilters.userLatitude!,
+          newFilters.userLongitude!,
           data.providers,
           newFilters.maxDistance,
         );
