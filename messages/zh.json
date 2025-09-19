@@ -1103,10 +1103,30 @@
       "title": "STI服务目录",
       "subtitle": "查找在马来西亚提供性传播感染检测、PrEP和PEP服务的医疗服务提供者"
     },
+    "legend": {
+      "title": "服务类型",
+      "prep": "暴露前预防用药 - 在暴露前预防HIV感染的药物",
+      "pep": "暴露后预防用药 - 在可能的HIV暴露后服用的紧急药物",
+      "screening": "免费性传播感染筛查",
+      "screeningDesc": "免费的性传播感染检测"
+    },
     "search": {
-      "placeholder": "按提供者名称搜索...",
+      "placeholder": "按提供者名称或地址搜索...",
       "button": "搜索",
       "filters": "筛选器"
+    },
+    "location": {
+      "title": "查找附近的提供者",
+      "useCurrentLocation": "使用当前位置",
+      "gettingLocation": "正在获取您的位置...",
+      "description": "查找您附近的医疗提供者，显示准确的驾驶距离",
+      "locationSet": "位置已设置 - 显示附近的提供者",
+      "calculatingDistances": "正在计算准确距离...",
+      "maxDistance": "最大距离",
+      "updateDistance": "更新",
+      "notSupported": "此浏览器不支持地理定位",
+      "error": "无法获取您的位置。请启用位置访问权限并重试。",
+      "noApiKey": "位置搜索不可用"
     },
     "filters": {
       "title": "筛选选项",
@@ -1147,6 +1167,31 @@
       "pep": "PEP",
       "freeScreening": "免费性传播感染筛查",
       "availableServices": "可用服务："
+    }
+  },
+  "ProviderDetails": {
+    "navigation": {
+      "backToServices": "返回服务"
+    },
+    "info": {
+      "title": "医疗提供者信息",
+      "address": "地址",
+      "contact": "联系信息",
+      "noContact": "暂无联系信息"
+    },
+    "services": {
+      "title": "可用服务",
+      "available": "此医疗提供者提供：",
+      "prep": "PrEP",
+      "pep": "PEP",
+      "freeScreening": "免费性传播感染筛查",
+      "noServices": "暂无具体服务信息"
+    },
+    "map": {
+      "title": "位置",
+      "viewInGoogleMaps": "在谷歌地图中查看",
+      "searchInGoogleMaps": "在谷歌地图中搜索",
+      "notAvailable": "地图不可用"
     }
   }
 }

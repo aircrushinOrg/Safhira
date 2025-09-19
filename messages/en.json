@@ -1462,10 +1462,30 @@
       "title": "STI Services Directory",
       "subtitle": "Find healthcare providers that offer STI testing, PrEP, and PEP services in Malaysia"
     },
+    "legend": {
+      "title": "Service Types",
+      "prep": "Pre-Exposure Prophylaxis - medication to prevent HIV infection before exposure",
+      "pep": "Post-Exposure Prophylaxis - emergency medication taken after potential HIV exposure",
+      "screening": "Free STI Screening",
+      "screeningDesc": "No-cost testing for sexually transmitted infections"
+    },
     "search": {
-      "placeholder": "Search by provider name...",
+      "placeholder": "Search by provider name or address...",
       "button": "Search",
       "filters": "Filters"
+    },
+    "location": {
+      "title": "Find Nearby Providers",
+      "useCurrentLocation": "Use Current Location",
+      "gettingLocation": "Getting your location...",
+      "description": "Find healthcare providers near you with accurate driving distances",
+      "locationSet": "Location set - showing nearby providers",
+      "calculatingDistances": "Calculating accurate distances...",
+      "maxDistance": "Max Distance",
+      "updateDistance": "Update",
+      "notSupported": "Geolocation is not supported by this browser",
+      "error": "Unable to get your location. Please enable location access and try again.",
+      "noApiKey": "Location search is not available"
     },
     "filters": {
       "title": "Filter Options",
@@ -1506,6 +1526,31 @@
       "pep": "PEP",
       "freeScreening": "Free STI Screening",
       "availableServices": "Available Services:"
+    }
+  },
+  "ProviderDetails": {
+    "navigation": {
+      "backToServices": "Back to Services"
+    },
+    "info": {
+      "title": "Provider Information",
+      "address": "Address",
+      "contact": "Contact Information",
+      "noContact": "No contact information available"
+    },
+    "services": {
+      "title": "Available Services",
+      "available": "This provider offers:",
+      "prep": "PrEP",
+      "pep": "PEP",
+      "freeScreening": "Free STI Screening",
+      "noServices": "No specific services information available"
+    },
+    "map": {
+      "title": "Location",
+      "viewInGoogleMaps": "View in Google Maps",
+      "searchInGoogleMaps": "Search in Google Maps",
+      "notAvailable": "Map not available"
     }
   }
 }

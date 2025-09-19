@@ -9,7 +9,8 @@ CREATE TABLE "provider" (
 	"provider_latitude" numeric(9, 6),
 	"provider_provide_prep" boolean DEFAULT false NOT NULL,
 	"provider_provide_pep" boolean DEFAULT false NOT NULL,
-	"provider_free_sti_screening" boolean DEFAULT false NOT NULL
+	"provider_free_sti_screening" boolean DEFAULT false NOT NULL,
+	"provider_google_place_id" varchar(255) NOT NULL
 );
 --> statement-breakpoint
 ALTER TABLE "provider" ADD CONSTRAINT "provider_state_id_state_state_id_fk" FOREIGN KEY ("state_id") REFERENCES "public"."state"("state_id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
