@@ -7,7 +7,7 @@ import { ProviderCard } from './ProviderCard';
 import { Button } from '@/app/components/ui/button';
 import { Input } from '@/app/components/ui/input';
 import { Checkbox } from '@/app/components/ui/checkbox';
-import { Card, CardContent, CardHeader, CardTitle } from '@/app/components/ui/card';
+import { Card, CardContent } from '@/app/components/ui/card';
 import { Badge } from '@/app/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/app/components/ui/select';
 import { Search, Filter, X, Loader2, AlertCircle, ChevronLeft, ChevronRight, MapPin, Target } from 'lucide-react';
@@ -23,28 +23,56 @@ export function ProviderSearch({ initialProviders = [] }: ProviderSearchProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [total, setTotal] = useState(0);
-  const [showFilters, setShowFilters] = useState(false);
 
   const distanceOptions = [5, 10, 25, 50, 100];
   const defaultDistance = 25;
 
-  const [filters, setFilters] = useState<ProviderSearchFilters>({
-    searchQuery: '',
-    stateIds: [],
-    providePrep: false,
-    providePep: false,
-    freeStiScreening: false,
-    limit: 18,
-    offset: 0,
-    maxDistance: defaultDistance,
+  const [filters, setFilters] = useState<ProviderSearchFilters>(() => {
+    const baseFilters: ProviderSearchFilters = {
+      searchQuery: '',
+      stateIds: [],
+      providePrep: false,
+      providePep: false,
+      freeStiScreening: false,
+      limit: 18,
+      offset: 0,
+      maxDistance: defaultDistance,
+    };
+
+    // Restore persisted location data
+    if (typeof window !== 'undefined') {
+      const savedLat = sessionStorage.getItem('safhira-user-latitude');
+      const savedLon = sessionStorage.getItem('safhira-user-longitude');
+      const savedDistance = sessionStorage.getItem('safhira-max-distance');
+      
+      if (savedLat && savedLon) {
+        baseFilters.userLatitude = parseFloat(savedLat);
+        baseFilters.userLongitude = parseFloat(savedLon);
+        baseFilters.maxDistance = savedDistance ? parseInt(savedDistance) : defaultDistance;
+      }
+    }
+
+    return baseFilters;
   });
 
-  // Location-related state
-  const [maxDistance, setMaxDistance] = useState<number>(defaultDistance);
+  // Location-related state with persistence
+  const [maxDistance, setMaxDistance] = useState<number>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = sessionStorage.getItem('safhira-max-distance');
+      return saved ? parseInt(saved) : defaultDistance;
+    }
+    return defaultDistance;
+  });
   const [geolocating, setGeolocating] = useState(false);
   const [locationError, setLocationError] = useState<string | null>(null);
   const [calculatingDistances, setCalculatingDistances] = useState(false);
-  const [selectedLocationLabel, setSelectedLocationLabel] = useState<string | null>(null);
+  const [selectedLocationLabel, setSelectedLocationLabel] = useState<string | null>(() => {
+    if (typeof window !== 'undefined') {
+      return sessionStorage.getItem('safhira-location-label') || null;
+    }
+    return null;
+  });
+  const [showFilters, setShowFilters] = useState(false);
 
   // Fetch states on component mount
   useEffect(() => {
@@ -57,6 +85,24 @@ export function ProviderSearch({ initialProviders = [] }: ProviderSearchProps) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Recalculate distances on mount if location is persisted
+  useEffect(() => {
+    const shouldRecalculateDistances = 
+      typeof filters.userLatitude === 'number' && 
+      typeof filters.userLongitude === 'number' && 
+      providers.length > 0;
+
+    if (shouldRecalculateDistances) {
+      calculateAccurateDistances(
+        filters.userLatitude!,
+        filters.userLongitude!,
+        providers,
+        filters.maxDistance
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [providers.length]);
 
   const fetchStates = async () => {
     try {
@@ -121,6 +167,16 @@ export function ProviderSearch({ initialProviders = [] }: ProviderSearchProps) {
       offset: 0,
     };
 
+    // Persist location data to sessionStorage
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem('safhira-user-latitude', latitude.toString());
+      sessionStorage.setItem('safhira-user-longitude', longitude.toString());
+      sessionStorage.setItem('safhira-max-distance', maxDistance.toString());
+      if (label) {
+        sessionStorage.setItem('safhira-location-label', label);
+      }
+    }
+
     setFilters(newFilters);
     setSelectedLocationLabel(label ?? null);
     setLocationError(null);
@@ -177,6 +233,12 @@ export function ProviderSearch({ initialProviders = [] }: ProviderSearchProps) {
 
   const handleMaxDistanceChange = (value: number) => {
     setMaxDistance(value);
+    
+    // Persist max distance to sessionStorage
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem('safhira-max-distance', value.toString());
+    }
+    
     const newFilters = {
       ...filters,
       maxDistance: value,
@@ -210,46 +272,27 @@ export function ProviderSearch({ initialProviders = [] }: ProviderSearchProps) {
     providersList: ProviderRecord[],
     maxDistanceFilter?: number,
   ) => {
-    const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
-    if (!apiKey) return;
-
     setCalculatingDistances(true);
 
     try {
-      // Filter providers that have coordinates
-      const providersWithCoords = providersList.filter(p => p.latitude && p.longitude);
-      
-      // Process in batches of 10 (Google Maps API limit)
-      const batchSize = 10;
-      const updatedProviders = [...providersList];
-
-      for (let i = 0; i < providersWithCoords.length; i += batchSize) {
-        const batch = providersWithCoords.slice(i, i + batchSize);
-        const destinations = batch.map(p => `${p.latitude},${p.longitude}`).join('|');
-        
-        const response = await fetch(
-          `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${userLat},${userLon}&destinations=${destinations}&units=metric&mode=driving&key=${apiKey}`
-        );
-        
-        const data = await response.json();
-        
-        if (data.status === 'OK') {
-          data.rows[0].elements.forEach((element: any, index: number) => {
-            if (element.status === 'OK') {
-              const providerIndex = providersList.findIndex(p => p.id === batch[index].id);
-              if (providerIndex !== -1) {
-                updatedProviders[providerIndex] = {
-                  ...updatedProviders[providerIndex],
-                  distance: parseFloat((element.distance.value / 1000).toFixed(1)), // Convert meters to km
-                  drivingTime: element.duration.text
-                };
-              }
-            }
-          });
+      // Calculate haversine distance for providers that have coordinates
+      const updatedProviders = providersList.map(provider => {
+        if (provider.latitude && provider.longitude) {
+          const distance = calculateHaversineDistance(
+            userLat,
+            userLon,
+            provider.latitude,
+            provider.longitude
+          );
+          return {
+            ...provider,
+            distance: parseFloat(distance.toFixed(1))
+          };
         }
-      }
+        return provider;
+      });
 
-      // Sort by actual driving distance and apply distance filter
+      // Sort by distance and apply distance filter
       const filteredAndSorted = updatedProviders
         .filter(p => {
           if (!maxDistanceFilter) return true;
@@ -272,7 +315,33 @@ export function ProviderSearch({ initialProviders = [] }: ProviderSearchProps) {
     }
   };
 
+  // Haversine formula to calculate distance between two coordinates
+  const calculateHaversineDistance = (
+    lat1: number,
+    lon1: number,
+    lat2: number,
+    lon2: number
+  ): number => {
+    const R = 6371; // Earth's radius in kilometers
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a = 
+      Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
+      Math.sin(dLon/2) * Math.sin(dLon/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return R * c;
+  };
+
   const clearLocation = () => {
+    // Clear persisted location data from sessionStorage
+    if (typeof window !== 'undefined') {
+      sessionStorage.removeItem('safhira-user-latitude');
+      sessionStorage.removeItem('safhira-user-longitude');
+      sessionStorage.removeItem('safhira-max-distance');
+      sessionStorage.removeItem('safhira-location-label');
+    }
+    
     setLocationError(null);
     setSelectedLocationLabel(null);
     setMaxDistance(defaultDistance);
@@ -378,69 +447,156 @@ export function ProviderSearch({ initialProviders = [] }: ProviderSearchProps) {
 
       {/* Search and Filters */}
       <div className="mb-6 space-y-4">
-        <form onSubmit={handleSearchSubmit} className="flex gap-2">
-          <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-            <Input
-              type="text"
-              placeholder={t('search.placeholder')}
-              value={filters.searchQuery || ''}
-              onChange={(e) => handleFilterChange('searchQuery', e.target.value)}
-              className="pl-10 bg-slate-100 dark:bg-slate-700 border border-slate-300 dark:border-slate-600"
-            />
-          </div>
-          <Button type="submit" disabled={loading}>
-            {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : t('search.button')}
-          </Button>
-          
-          {/* Location Button */}
-          {typeof filters.userLatitude !== 'number' || typeof filters.userLongitude !== 'number' ? (
+        <form onSubmit={handleSearchSubmit} className="space-y-3 relative">
+          {/* Search Input Row */}
+          <div className="flex gap-2">
+            <div className="flex-1 relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+              <Input
+                type="text"
+                placeholder={t('search.placeholder')}
+                value={filters.searchQuery || ''}
+                onChange={(e) => handleFilterChange('searchQuery', e.target.value)}
+                className="pl-10 bg-slate-100 dark:bg-slate-700 border border-slate-300 dark:border-slate-600"
+              />
+            </div>
+            <Button type="submit" disabled={loading} className="shrink-0">
+              {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4 sm:hidden" />}
+              <span className="hidden sm:inline">{t('search.button')}</span>
+            </Button>
+            
             <Button
               type="button"
               variant="outline"
-              onClick={handleUseCurrentLocation}
-              disabled={geolocating || calculatingDistances}
-              className="flex items-center whitespace-nowrap"
+              className="relative shrink-0"
+              onClick={() => setShowFilters(!showFilters)}
             >
-              {geolocating ? (
-                <Loader2 className="w-4 h-4 animate-spin mr-2" />
-              ) : (
-                <Target className="w-4 h-4 mr-2" />
+              <Filter className="w-4 h-4 sm:mr-2" />
+              <span className="hidden sm:inline">{t('search.filters')}</span>
+              {activeFiltersCount > 0 && (
+                <Badge className="ml-2 h-5 w-5 p-0 text-xs shrink-0">{activeFiltersCount}</Badge>
               )}
-              {geolocating ? t('location.gettingLocation') : t('location.useCurrentLocation')}
             </Button>
-          ) : (
-            <Button
-              type="button"
-              variant="outline"
-              onClick={clearLocation}
-              className="flex items-center whitespace-nowrap"
-            >
-              <X className="w-4 h-4 mr-2" />
-              {t('location.clearLocation')}
-            </Button>
+          </div>
+          
+          {showFilters && (
+            <>
+              {/* Backdrop */}
+              <div 
+                className="fixed inset-0 bg-black/20 z-40" 
+                onClick={() => setShowFilters(false)}
+              />
+              
+              {/* Filter Dropdown - spans full width */}
+              <div className="absolute left-0 right-0 top-full mt-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg z-50 p-6">
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="text-lg font-semibold">{t('filters.title')}</h3>
+                  <Button variant="ghost" size="sm" onClick={clearFilters}>
+                    {t('filters.clearAll')}
+                  </Button>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* States Multi-select */}
+                  <div>
+                    <h4 className="text-sm font-medium mb-3">{t('filters.statesRegions')}</h4>
+                    <div className="grid grid-cols-2 gap-3 max-h-48 overflow-y-auto">
+                      {states.map((state) => (
+                        <div key={state.stateId} className="flex items-center space-x-2">
+                          <Checkbox
+                            id={`state-${state.stateId}`}
+                            checked={filters.stateIds?.includes(state.stateId) || false}
+                            onCheckedChange={() => handleStateToggle(state.stateId)}
+                            className="dark:border-white"
+                          />
+                          <label
+                            htmlFor={`state-${state.stateId}`}
+                            className="text-sm font-normal leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                          >
+                            {state.stateName}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                    {selectedStates.length > 0 && (
+                      <div className="flex flex-wrap gap-1 mt-3">
+                        {selectedStates.map((state) => (
+                          <Badge
+                            key={state.stateId}
+                            variant="secondary"
+                            className="cursor-pointer"
+                            onClick={() => handleStateToggle(state.stateId)}
+                          >
+                            {state.stateName}
+                            <X className="w-3 h-3 ml-1" />
+                          </Badge>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Services */}
+                  <div>
+                    <h4 className="text-sm font-medium mb-3">{t('filters.availableServices')}</h4>
+                    <div className="space-y-3">
+                      <div className="flex items-center space-x-2">
+                        <Checkbox
+                          id="prep"
+                          checked={filters.providePrep || false}
+                          onCheckedChange={(checked) => handleFilterChange('providePrep', checked)}
+                          className="dark:border-white"
+                        />
+                        <label htmlFor="prep" className="text-sm font-normal cursor-pointer">
+                          {t('services.prep')}
+                        </label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Checkbox
+                          id="pep"
+                          checked={filters.providePep || false}
+                          onCheckedChange={(checked) => handleFilterChange('providePep', checked)}
+                          className="dark:border-white"
+                        />
+                        <label htmlFor="pep" className="text-sm font-normal cursor-pointer">
+                          {t('services.pep')}
+                        </label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Checkbox
+                          id="screening"
+                          checked={filters.freeStiScreening || false}
+                          onCheckedChange={(checked) => handleFilterChange('freeStiScreening', checked)}
+                          className="dark:border-white"
+                        />
+                        <label htmlFor="screening" className="text-sm font-normal cursor-pointer">
+                          {t('services.freeScreening')}
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <Button 
+                  onClick={() => {
+                    fetchProviders();
+                    setShowFilters(false);
+                  }} 
+                  className="w-full mt-6"
+                >
+                  {t('filters.applyFilters')}
+                </Button>
+              </div>
+            </>
           )}
           
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => setShowFilters(!showFilters)}
-            className="relative"
-          >
-            <Filter className="w-4 h-4 mr-2" />
-            {t('search.filters')}
-            {activeFiltersCount > 0 && (
-              <Badge className="ml-2 h-5 w-5 p-0 text-xs">{activeFiltersCount}</Badge>
-            )}
-          </Button>
         </form>
 
-        {/* Location Status and Distance Filter */}
-        {(typeof filters.userLatitude === 'number' && typeof filters.userLongitude === 'number') && (
-          <Card className='bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm'>
-            <CardContent className="pt-6">
+        {/* Location Status Box */}
+        <Card className='bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm'>
+          <CardContent className="pt-6">
+            {(typeof filters.userLatitude === 'number' && typeof filters.userLongitude === 'number') ? (
               <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between bg-green-50 dark:bg-green-900/20 p-3 rounded-lg">
-                <div className="flex items-start gap-2">
+                <div className="flex items-start gap-2 flex-1">
                   <MapPin className="w-4 h-4 text-green-600 mt-1" />
                   <div>
                     <p className="text-sm font-medium text-green-700 dark:text-green-300">
@@ -469,11 +625,47 @@ export function ProviderSearch({ initialProviders = [] }: ProviderSearchProps) {
                       ))}
                     </SelectContent>
                   </Select>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={clearLocation}
+                    className="shrink-0"
+                  >
+                    <X className="w-4 h-4 mr-1" />
+                    <span className="hidden sm:inline">{t('location.clear')}</span>
+                  </Button>
                 </div>
               </div>
-            </CardContent>
-          </Card>
-        )}
+            ) : (
+              <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between bg-gray-50 dark:bg-gray-800/50 p-3 rounded-lg">
+                <div className="flex items-start gap-2 flex-1">
+                  <MapPin className="w-4 h-4 text-gray-400 mt-1" />
+                  <div>
+                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                      {t('location.noLocationSet')}
+                    </p>
+                    <p className="text-xs text-gray-500 dark:text-gray-500">
+                      {t('location.enableLocationDescription')}
+                    </p>
+                  </div>
+                </div>
+                <Button
+                  variant="outline"
+                  onClick={handleUseCurrentLocation}
+                  disabled={geolocating || calculatingDistances}
+                  className="shrink-0"
+                >
+                  {geolocating ? (
+                    <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                  ) : (
+                    <Target className="w-4 h-4 mr-2" />
+                  )}
+                  <span className="truncate">{geolocating ? t('location.gettingLocation') : t('location.useCurrentLocation')}</span>
+                </Button>
+              </div>
+            )}
+          </CardContent>
+        </Card>
 
         {/* Location Error */}
         {locationError && (
@@ -482,102 +674,6 @@ export function ProviderSearch({ initialProviders = [] }: ProviderSearchProps) {
           </div>
         )}
 
-        {/* Filters Panel */}
-        {showFilters && (
-          <Card className='bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm'>
-            <CardHeader>
-              <div className="flex justify-between items-center">
-                <CardTitle className="text-lg font-semibold">{t('filters.title')}</CardTitle>
-                <Button variant="ghost" size="sm" onClick={clearFilters}>
-                  {t('filters.clearAll')}
-                </Button>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {/* States Multi-select */}
-              <div>
-                <h3 className="text-sm font-medium mb-3">{t('filters.statesRegions')}</h3>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-3 max-h-48 overflow-y-auto">
-                  {states.map((state) => (
-                    <div key={state.stateId} className="flex items-center space-x-2">
-                      <Checkbox
-                        id={`state-${state.stateId}`}
-                        checked={filters.stateIds?.includes(state.stateId) || false}
-                        onCheckedChange={() => handleStateToggle(state.stateId)}
-                        className="dark:border-white"
-                      />
-                      <label
-                        htmlFor={`state-${state.stateId}`}
-                        className="text-sm font-normal leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
-                      >
-                        {state.stateName}
-                      </label>
-                    </div>
-                  ))}
-                </div>
-                {selectedStates.length > 0 && (
-                  <div className="flex flex-wrap gap-1 mt-3">
-                    {selectedStates.map((state) => (
-                      <Badge
-                        key={state.stateId}
-                        variant="secondary"
-                        className="cursor-pointer"
-                        onClick={() => handleStateToggle(state.stateId)}
-                      >
-                        {state.stateName}
-                        <X className="w-3 h-3 ml-1" />
-                      </Badge>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              {/* Services */}
-              <div>
-                <h3 className="text-sm font-medium mb-3">{t('filters.availableServices')}</h3>
-                <div className="space-y-3">
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="prep"
-                      checked={filters.providePrep || false}
-                      onCheckedChange={(checked) => handleFilterChange('providePrep', checked)}
-                      className="dark:border-white"
-                    />
-                    <label htmlFor="prep" className="text-sm font-normal cursor-pointer">
-                      {t('services.prep')}
-                    </label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="pep"
-                      checked={filters.providePep || false}
-                      onCheckedChange={(checked) => handleFilterChange('providePep', checked)}
-                      className="dark:border-white"
-                    />
-                    <label htmlFor="pep" className="text-sm font-normal cursor-pointer">
-                      {t('services.pep')}
-                    </label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="screening"
-                      checked={filters.freeStiScreening || false}
-                      onCheckedChange={(checked) => handleFilterChange('freeStiScreening', checked)}
-                      className="dark:border-white"
-                    />
-                    <label htmlFor="screening" className="text-sm font-normal cursor-pointer">
-                      {t('services.freeScreening')}
-                    </label>
-                  </div>
-                </div>
-              </div>
-
-              <Button onClick={() => fetchProviders()} className="w-full">
-                {t('filters.applyFilters')}
-              </Button>
-            </CardContent>
-          </Card>
-        )}
       </div>
 
       {/* Results */}
