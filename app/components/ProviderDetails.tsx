@@ -221,7 +221,7 @@ export function ProviderDetails({ provider }: ProviderDetailsProps) {
                   />
                 </div>
                 
-                <Button 
+                {/* <Button 
                   asChild 
                   className="w-full"
                   variant="outline"
@@ -235,7 +235,7 @@ export function ProviderDetails({ provider }: ProviderDetailsProps) {
                     <ExternalLink className="w-4 h-4 mr-2" />
                     {t('map.viewInGoogleMaps')}
                   </a>
-                </Button>
+                </Button> */}
               </div>
             ) : (
               <div className="w-full h-64 sm:h-80 rounded-lg border border-gray-200 dark:border-gray-700 flex items-center justify-center bg-gray-100 dark:bg-gray-700">

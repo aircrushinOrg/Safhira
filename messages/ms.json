@@ -1500,7 +1500,10 @@
       "updateDistance": "Kemas Kini",
       "notSupported": "Geolokasi tidak disokong oleh pelayar ini",
       "error": "Tidak dapat mendapatkan lokasi anda. Sila benarkan akses lokasi dan cuba lagi.",
-      "noApiKey": "Carian lokasi tidak tersedia"
+      "noApiKey": "Carian lokasi tidak tersedia",
+      "noLocationSet": "Tiada lokasi disambungkan",
+      "enableLocationDescription": "Aktifkan lokasi untuk melihat penyedia berdekatan",
+      "clear": "Kosongkan"
     },
     "filters": {
       "title": "Pilihan Penapis",

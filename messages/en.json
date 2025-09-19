@@ -1497,7 +1497,10 @@
       "updateDistance": "Update",
       "notSupported": "Geolocation is not supported by this browser",
       "error": "Unable to get your location. Please enable location access and try again.",
-      "noApiKey": "Location search is not available"
+      "noApiKey": "Location search is not available",
+      "noLocationSet": "No location connected",
+      "enableLocationDescription": "Enable location to see nearby providers",
+      "clear": "Clear"
     },
     "filters": {
       "title": "Filter Options",
