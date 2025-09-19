@@ -1488,7 +1488,7 @@
       "manualEntryError": "We couldn't find that location. Try a nearby landmark or use your current location.",
       "or": "or",
       "locationSet": "Location set - showing nearby providers",
-      "currentLocationLabel": "Current location",
+      "currentLocationLabel": "Connected to your Current location",
       "showingNearby": "Showing clinics within {distance} km",
       "clearLocation": "Clear location",
       "distanceHelper": "Adjust the distance to see more or fewer nearby clinics.",

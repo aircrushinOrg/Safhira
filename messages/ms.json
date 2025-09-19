@@ -1491,7 +1491,7 @@
       "manualEntryError": "Kami tidak menemui lokasi tersebut. Cuba mercu tanda berdekatan atau guna lokasi semasa.",
       "or": "atau",
       "locationSet": "Lokasi ditetapkan - menunjukkan pembekal berdekatan",
-      "currentLocationLabel": "Lokasi semasa",
+      "currentLocationLabel": "Disambungkan ke lokasi semasa anda",
       "showingNearby": "Menunjukkan klinik dalam jarak {distance} km",
       "clearLocation": "Padam lokasi",
       "distanceHelper": "Laraskan jarak untuk melihat lebih atau kurang klinik berhampiran.",

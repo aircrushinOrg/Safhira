@@ -1129,7 +1129,7 @@
       "manualEntryError": "无法找到该位置，请尝试附近地标或使用当前位置。",
       "or": "或",
       "locationSet": "位置已设置 - 显示附近的提供者",
-      "currentLocationLabel": "当前位置",
+      "currentLocationLabel": "已连接到您的当前位置",
       "showingNearby": "显示 {distance} 公里内的诊所",
       "clearLocation": "清除位置",
       "distanceHelper": "调整距离以查看更多或更少附近的诊所。",
