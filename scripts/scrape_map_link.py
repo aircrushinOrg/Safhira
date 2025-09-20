@@ -207,9 +207,9 @@ def validate_coordinates(df):
 # Example usage
 if __name__ == "__main__":
     # Configuration
-    API_KEY = "AIzaSyBAiYEciWeU1Tzgvh7S_QCz3Ruqp5G2KqI"  # Replace with your actual API key
-    INPUT_CSV = "actual_data.csv"  # Replace with your CSV file path
-    OUTPUT_CSV = "actual_data_geocoded_2.csv"  # Output file name
+    API_KEY = "NEXT_PUBLIC_GOOGLE_MAPS_API_KEY" # Replace with your actual API key
+    INPUT_CSV = "input_file.csv"  # Replace with your CSV file path
+    OUTPUT_CSV = "output_file.csv"  # Output file name
     
     # Process the file
     try:
