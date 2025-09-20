@@ -8,7 +8,7 @@ import { Slider } from '../ui/slider';
 import { Button } from '../ui/button';
 import { Play, Pause, ZoomIn, ZoomOut, LocateFixed, BadgeAlert } from 'lucide-react';
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
-import { stiTypes, type STIType, type Year } from '@/constants/sti-prevalence';
+import { stiTypes, type STIType, type Year } from '@/types/sti-prevalence';
 import { useIsMobile } from '../ui/use-mobile';
 import {useTranslations} from 'next-intl';
 

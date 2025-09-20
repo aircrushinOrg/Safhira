@@ -3,7 +3,7 @@
 import React from 'react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
-import { ProviderRecord } from '@/app/database_query_endpoint/provider-actions';
+import { ProviderRecord } from '@/app/actions/provider-actions';
 import { Card, CardTitle } from '@/app/components/ui/card';
 import { Badge } from '@/app/components/ui/badge';
 import { MapPin, Phone, Mail, CheckCircle } from 'lucide-react';

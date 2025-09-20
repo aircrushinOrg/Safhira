@@ -1,6 +1,6 @@
 import Client, { type STIInfo } from './Client';
 import { notFound } from 'next/navigation';
-import { searchSTIs } from '../../database_query_endpoint/sti-actions';
+import { searchSTIs } from '../../actions/sti-actions';
 
 function slugify(value: string): string {
   return value

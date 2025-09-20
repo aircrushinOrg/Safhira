@@ -19,7 +19,7 @@ import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { Check } from "lucide-react";
 import { useTheme } from "next-themes";
-import { stiTypes } from '@/constants/sti-prevalence';
+import { stiTypes } from '@/types/sti-prevalence';
 import {useTranslations} from 'next-intl';
 
 ChartJS.register(

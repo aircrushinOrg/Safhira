@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 import { useTranslations } from 'next-intl';
-import { ProviderRecord, ProviderSearchFilters, StateOption, getAllStates, searchProvidersWithFilters } from '@/app/database_query_endpoint/provider-actions';
+import { ProviderRecord, ProviderSearchFilters, StateOption, getAllStates, searchProvidersWithFilters } from '@/app/actions/provider-actions';
 import { ProviderCard } from './ProviderCard';
 import { Button } from '@/app/components/ui/button';
 import { Input } from '@/app/components/ui/input';

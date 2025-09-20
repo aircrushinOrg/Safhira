@@ -1,5 +1,5 @@
-import { TiltedScrollDemo } from '@/app/components/QuizList'
-import { getRandomQuizQuestions, getAllQuizQuestions, type QuizQuestionRecord } from '@/app/database_query_endpoint/quiz-question-actions'
+import { TiltedScrollDemo } from '@/app/components/quiz/TiltedScrollDemo'
+import { getRandomQuizQuestions, getAllQuizQuestions, type QuizQuestionRecord } from '@/app/actions/quiz-question-actions'
 import { getTranslations } from 'next-intl/server'
 
 type QuizListItem = {

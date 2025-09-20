@@ -5,7 +5,7 @@ import { useRef, useState, useEffect } from 'react';
 import { STIChoroplethChart } from './STIChoroplethChart';
 import STITrendsChart from './STITrendsChart';
 import { Card, CardContent } from '../ui/card';
-import { getAllUniqueStates, getAllUniqueDiseases, getAllYearDiseaseIncidences } from '../../database_query_endpoint/prevalence-actions';
+import { getAllUniqueStates, getAllUniqueDiseases, getAllYearDiseaseIncidences } from '../../actions/prevalence-actions';
 import {useTranslations} from 'next-intl';
 
 interface SharedData {
