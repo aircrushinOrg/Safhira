@@ -3,8 +3,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Heart, Bot, BookOpen, Hospital, Lightbulb, ChevronLeft, ChevronRight } from 'lucide-react';
-import { Button } from './ui/button';
-import { Link } from '../../i18n/routing';
+import { Button } from '../ui/button';
+import { Link } from '../../../i18n/routing';
 import { useTranslations } from 'next-intl';
 
 interface Quote {
@@ -56,7 +56,7 @@ const quotes: Quote[] = [
     image: "/landing-hero-4.png",
     icon: Hospital,
     buttons: [
-      { textKey: "hero.slide4.button", href: "/sti-services" }
+      { textKey: "hero.slide4.button", href: "/find-healthcare" }
     ]
   },
   {
@@ -71,7 +71,7 @@ const quotes: Quote[] = [
   }
 ];
 
-export function HeroAnimation() {
+export function AnimatedHeroSection() {
   const t = useTranslations();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(true);

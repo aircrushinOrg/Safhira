@@ -80,7 +80,7 @@ export function ProviderDetails({ provider }: ProviderDetailsProps) {
       {/* Header */}
       <div className="mb-6">
         <Link 
-          href="/sti-services"
+          href="/find-healthcare"
           className="inline-flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 mb-4"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />

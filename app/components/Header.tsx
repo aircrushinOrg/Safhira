@@ -71,7 +71,7 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <Link href="/sti-services" className="w-full md:w-auto">
+      <Link href="/find-healthcare" className="w-full md:w-auto">
         <Button
           variant={currentSection === 'providers' ? 'secondary' : 'ghost'}
           size="sm"
@@ -116,7 +116,7 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
           <span>{t('nav.livingWell')}</span>
         </Button>
       </Link>
-      <Link href="/sti-services" className="w-full md:w-auto">
+      <Link href="/find-healthcare" className="w-full md:w-auto">
         <Button
           variant={currentSection === 'providers' ? 'secondary' : 'ghost'}
           size="sm"

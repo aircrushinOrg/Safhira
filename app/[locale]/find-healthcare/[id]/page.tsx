@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getProviderById } from '@/app/database_query_endpoint/provider-actions';
-import { ProviderDetails } from '@/app/components/ProviderDetails';
+import { ProviderDetails } from '@/app/components/find-healthcare/ProviderDetails';
 
 interface ProviderDetailsPageProps {
   params: Promise<{

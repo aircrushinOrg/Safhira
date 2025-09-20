@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { ProviderSearch } from '@/app/components/ProviderSearch';
+import { ProviderSearch } from '@/app/components/find-healthcare/ProviderSearch';
 
 export const metadata: Metadata = {
   title: 'STI Services Directory | Safhira',

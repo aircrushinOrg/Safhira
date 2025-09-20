@@ -26,7 +26,7 @@ export function ProviderCard({ provider }: ProviderCardProps) {
     if ((e.target as HTMLElement).tagName === 'A') {
       return;
     }
-    router.push(`/sti-services/${provider.id}`);
+    router.push(`/find-healthcare/${provider.id}`);
   };
 
   return (

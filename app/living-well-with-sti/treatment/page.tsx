@@ -584,7 +584,7 @@ export default function TreatmentAdherencePage() {
                     </ul>
                     <div className="mt-4 rounded-xl border border-red-300/70 bg-gradient-to-br from-red-100/90 via-rose-50 to-white/80 p-4 shadow-inner dark:border-red-900/60 dark:from-red-900/40 dark:via-rose-950/40 dark:to-slate-950/40" role="alert">
                       <p className="text-xs text-red-900 dark:text-red-100 leading-relaxed">
-                        <strong>{t("sideEffects.urgent.title")}:</strong> {t("sideEffects.urgent.text")} <Link href="/sti-services" className="underline font-medium">{t("sideEffects.urgent.resources")}</Link>
+                        <strong>{t("sideEffects.urgent.title")}:</strong> {t("sideEffects.urgent.text")} <Link href="/find-healthcare" className="underline font-medium">{t("sideEffects.urgent.resources")}</Link>
                       </p>
                     </div>
                   </div>
