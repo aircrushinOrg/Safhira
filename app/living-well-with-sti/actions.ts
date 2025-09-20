@@ -2,6 +2,10 @@
 
 import { db } from "@/app/db";
 import { newsletterSubscriptions } from "@/db/schema";
+import { eq } from "drizzle-orm";
+
+const RESEND_API_URL = "https://api.resend.com/emails";
+const RESEND_DEFAULT_FROM = "henry@news.lucids.top";
 
 export type NewsletterSubscribeResult = {
   status: "success" | "error";
@@ -9,6 +13,66 @@ export type NewsletterSubscribeResult = {
 };
 
 const EMAIL_REGEX = /^[\w.!#$%&'*+/=?^`{|}~-]+@[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?(?:\.[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?)+$/;
+
+async function sendWelcomeEmail(recipientEmail: string) {
+  const apiKey = process.env.RESEND_API_KEY;
+
+  if (!apiKey) {
+    throw new Error("RESEND_API_KEY is not configured");
+  }
+
+  const fromEmail = process.env.RESEND_FROM ?? RESEND_DEFAULT_FROM;
+
+  const subject = "Welcome to Living Well with STI";
+  const plainBody = [
+    "Hi there,",
+    "",
+    "Thanks for signing up to get tips on living well with an STI.",
+    "We'll share practical guides, new resources, and reminders to help you stay informed.",
+    "",
+    "You can unsubscribe anytime via the link in our emails.",
+    "",
+    "Take good care,",
+    "The Living Well with STI team",
+  ].join("\n");
+
+  const htmlBody = `
+    <p>Hi there,</p>
+    <p>Thanks for signing up to get tips on living well with an STI. We'll share practical guides, new resources, and reminders to help you stay informed.</p>
+    <p>You can unsubscribe anytime via the link in our emails.</p>
+    <p>Take good care,<br/>The Living Well with STI team</p>
+  `;
+
+  const response = await fetch(RESEND_API_URL, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      from: fromEmail,
+      to: [recipientEmail],
+      subject,
+      text: plainBody,
+      html: htmlBody,
+    }),
+  });
+
+  if (!response.ok) {
+    let errorMessage = `Resend responded with status ${response.status}`;
+
+    try {
+      const errorBody = await response.json();
+      if (errorBody && typeof errorBody === "object") {
+        errorMessage = `${errorMessage}: ${JSON.stringify(errorBody)}`;
+      }
+    } catch {
+      // Response body not JSON; ignore and use default error message.
+    }
+
+    throw new Error(errorMessage);
+  }
+}
 
 export async function subscribeToNewsletter(email: string): Promise<NewsletterSubscribeResult> {
   const trimmedEmail = typeof email === "string" ? email.trim() : "";
@@ -41,6 +105,20 @@ export async function subscribeToNewsletter(email: string): Promise<NewsletterSu
         status: "success",
         code: "already_subscribed",
       };
+    }
+
+    try {
+      await sendWelcomeEmail(normalizedEmail);
+    } catch (emailError) {
+      console.error("Failed to send welcome email", emailError);
+
+      try {
+        await db.delete(newsletterSubscriptions).where(eq(newsletterSubscriptions.id, inserted[0].id));
+      } catch (cleanupError) {
+        console.error("Failed to roll back subscription after email error", cleanupError);
+      }
+
+      throw emailError;
     }
 
     return {
