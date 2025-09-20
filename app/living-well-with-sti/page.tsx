@@ -1,10 +1,14 @@
 "use client";
 
+import {FormEvent, useId, useState, useTransition} from "react";
 import {useTranslations} from "next-intl";
 import {Link} from "../../i18n/routing";
 import {Card} from "../components/ui/card";
 import {Button} from "../components/ui/button";
-import {Stethoscope, Heart, HeartPulse, HeartHandshake, ShieldAlert, ArrowRight} from "lucide-react";
+import {Input} from "../components/ui/input";
+import {Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogClose} from "../components/ui/dialog";
+import {subscribeToNewsletter, type NewsletterSubscribeResult} from "./actions";
+import {Stethoscope, Heart, HeartPulse, HeartHandshake, ShieldAlert, ArrowRight, Mail, Loader2, CheckCircle2, AlertCircle} from "lucide-react";
 import {motion, useReducedMotion} from "framer-motion";
 import Image from "next/image";
 
@@ -12,6 +16,50 @@ export default function LivingWellWithSTIPage() {
   const t = useTranslations("LivingWell");
   const tRoot = useTranslations();
   const reduceMotion = useReducedMotion();
+  const [email, setEmail] = useState("");
+  const [subscriptionResult, setSubscriptionResult] = useState<NewsletterSubscribeResult | null>(null);
+  const [isPending, startTransition] = useTransition();
+  const feedbackId = useId();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const messageMap: Record<NewsletterSubscribeResult["code"], string> = {
+    subscribed: t("newsletter.success"),
+    already_subscribed: t("newsletter.already"),
+    missing_email: t("newsletter.missing"),
+    invalid_email: t("newsletter.invalid"),
+    server_error: t("newsletter.serverError"),
+  };
+
+  const handleNewsletterSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const submittedEmail = formData.get("email");
+    const emailValue = typeof submittedEmail === "string" ? submittedEmail : "";
+
+    setSubscriptionResult(null);
+    setIsDialogOpen(false);
+
+    startTransition(() => {
+      subscribeToNewsletter(emailValue)
+        .then((result) => {
+          setSubscriptionResult(result);
+          if (result.status === "success") {
+            setEmail("");
+            setIsDialogOpen(true);
+          }
+        })
+        .catch(() => {
+          setSubscriptionResult({ status: "error", code: "server_error" });
+        });
+    });
+  };
+
+  const isError = subscriptionResult?.status === "error";
+  const isSuccess = subscriptionResult?.status === "success";
+  const feedbackMessage = isError && subscriptionResult ? messageMap[subscriptionResult.code] : "";
+  const showFeedback = Boolean(isError);
+  const modalMessage = isSuccess && subscriptionResult ? messageMap[subscriptionResult.code] : t("newsletter.success");
 
   const sections = [
     {
@@ -59,6 +107,37 @@ export default function LivingWellWithSTIPage() {
     <div className="bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <section className="py-8 md:py-12 lg:py-16 xl:py-20 px-4">
         <div className="mx-auto max-w-6xl">
+          <Dialog
+            open={isDialogOpen}
+            onOpenChange={(open) => {
+              setIsDialogOpen(open);
+              if (!open) {
+                setSubscriptionResult(null);
+              }
+            }}
+          >
+            <DialogContent className="max-w-sm text-center sm:max-w-md">
+              <DialogHeader className="items-center gap-3">
+                <span className="grid size-14 place-items-center rounded-full bg-emerald-100 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-300">
+                  <CheckCircle2 size={28} aria-hidden="true" />
+                </span>
+                <DialogTitle className="text-xl text-gray-900 dark:text-gray-100">
+                  {t("newsletter.modalTitle")}
+                </DialogTitle>
+                <DialogDescription className="text-base text-gray-600 dark:text-gray-300">
+                  {modalMessage}
+                </DialogDescription>
+              </DialogHeader>
+              <DialogFooter className="flex-col sm:flex-row sm:justify-center">
+                <DialogClose asChild>
+                  <Button className="bg-emerald-600 text-white hover:bg-emerald-700 focus-visible:ring-emerald-400 dark:bg-emerald-500 dark:hover:bg-emerald-400">
+                    {t("newsletter.close")}
+                  </Button>
+                </DialogClose>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+
           <motion.header className="mb-8 md:mb-12"
             initial={{opacity: 0, y: reduceMotion ? 0 : 12}}
             animate={{opacity: 1, y: 0}}
@@ -113,6 +192,75 @@ export default function LivingWellWithSTIPage() {
               </motion.div>
             </div>
           </motion.header>
+
+          <motion.section
+            className="mb-8 md:mb-12"
+            initial={{opacity: 0, y: reduceMotion ? 0 : 12}}
+            whileInView={{opacity: 1, y: 0}}
+            viewport={{once: true, amount: 0.3}}
+            transition={{duration: reduceMotion ? 0 : 0.5}}
+          >
+            <Card className="relative overflow-hidden border-emerald-200/70 bg-white/90 p-6 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-white/70 dark:border-emerald-900/40 dark:bg-emerald-950/40 md:p-8">
+              <div className="pointer-events-none absolute -top-16 -right-16 hidden size-44 rounded-full bg-emerald-300/50 blur-3xl dark:bg-emerald-600/40 md:block" />
+              <div className="relative flex flex-col gap-6">
+                <div className="flex items-start gap-3">
+                  <span className="grid size-12 flex-shrink-0 place-items-center rounded-xl bg-emerald-500/15 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-300">
+                    <Mail size={24} />
+                  </span>
+                  <div className="space-y-2">
+                    <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 md:text-xl">
+                      {t("newsletter.title")}
+                    </h2>
+                    <p className="text-sm text-gray-600 dark:text-gray-300 md:text-base">
+                      {t("newsletter.description")}
+                    </p>
+                  </div>
+                </div>
+
+                <form onSubmit={handleNewsletterSubmit} className="flex flex-col gap-3" noValidate>
+                  <div className="flex flex-col gap-3 sm:flex-row">
+                    <Input
+                      type="email"
+                      name="email"
+                      autoComplete="email"
+                      inputMode="email"
+                      enterKeyHint="send"
+                      placeholder={t("newsletter.placeholder")}
+                      value={email}
+                      onChange={(event) => {
+                        setEmail(event.target.value);
+                        if (subscriptionResult) {
+                          setSubscriptionResult(null);
+                        }
+                      }}
+                      aria-describedby={showFeedback ? feedbackId : undefined}
+                      aria-invalid={isError}
+                      className="h-11 sm:flex-1"
+                    />
+                    <Button
+                      type="submit"
+                      disabled={isPending}
+                      className="inline-flex h-11 w-full items-center justify-center gap-2 bg-emerald-600 text-white hover:bg-emerald-700 focus-visible:ring-emerald-400 disabled:opacity-70 dark:bg-emerald-500 dark:hover:bg-emerald-400 sm:w-auto"
+                    >
+                      {isPending ? <Loader2 className="size-4 animate-spin" aria-hidden="true" /> : null}
+                      {t("newsletter.cta")}
+                    </Button>
+                  </div>
+                  {showFeedback ? (
+                    <div
+                      id={feedbackId}
+                      role={isError ? "alert" : "status"}
+                      aria-live={isError ? "assertive" : "polite"}
+                      className={`flex items-center gap-2 text-sm ${isError ? "text-rose-600 dark:text-rose-400" : "text-emerald-600 dark:text-emerald-400"}`}
+                    >
+                      {isError ? <AlertCircle size={16} aria-hidden="true" /> : <CheckCircle2 size={16} aria-hidden="true" />}
+                      <span>{feedbackMessage}</span>
+                    </div>
+                  ) : null}
+                </form>
+              </div>
+            </Card>
+          </motion.section>
 
           <div className="grid gap-6 md:gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
             {sections.map((section, index) => {

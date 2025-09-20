@@ -938,6 +938,19 @@
       "text": "Kandungan ini menyokong penjagaan diri tetapi bukan pengganti nasihat perubatan profesional.",
       "emergency": "Dalam kecemasan atau jika gejala teruk, dapatkan rawatan segera."
     },
+    "newsletter": {
+      "title": "Terima kemas kini kesejahteraan terus ke e-mel anda",
+      "description": "Langgan untuk menerima peringatan praktikal mengenai rawatan, sokongan gaya hidup dan perbualan hubungan.",
+      "placeholder": "Masukkan e-mel anda",
+      "cta": "Langgan",
+      "success": "Terima kasih kerana melanggan! Kami akan menghubungi anda tidak lama lagi.",
+      "already": "E-mel ini sudah berdaftar dengan surat berita kami.",
+      "missing": "Masukkan e-mel anda sebelum melanggan.",
+      "invalid": "Sila gunakan alamat e-mel yang sah.",
+      "serverError": "Terdapat masalah menyimpan langganan anda. Cuba lagi sebentar lagi.",
+      "modalTitle": "Langganan berjaya",
+      "close": "Tutup"
+    },
     "adherence": {
       "title": "Kepatuhan Rawatan",
       "subtitle": "Kekal ikut rawatan anda dan urus kesan sampingan dengan berkesan",

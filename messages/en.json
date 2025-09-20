@@ -938,6 +938,19 @@
       "text": "This content supports self‑care but is not a substitute for professional medical advice.",
       "emergency": "In an emergency or if you have severe symptoms, seek urgent care immediately."
     },
+    "newsletter": {
+      "title": "Get wellness updates in your inbox",
+      "description": "Subscribe for practical reminders on treatment, lifestyle support, and relationship conversations.",
+      "placeholder": "Enter your email",
+      "cta": "Subscribe",
+      "success": "Thanks for subscribing! You'll hear from us soon.",
+      "already": "You're already subscribed with this email address.",
+      "missing": "Enter your email before subscribing.",
+      "invalid": "Please use a valid email address.",
+      "serverError": "Something went wrong while saving your subscription. Try again shortly.",
+      "modalTitle": "Subscription confirmed",
+      "close": "Close"
+    },
     "adherence": {
       "title": "Treatment Adherence",
       "subtitle": "Stay on track with your treatment and manage side effects effectively",
