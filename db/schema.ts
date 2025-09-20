@@ -1,4 +1,4 @@
-import { pgTable, serial, varchar, timestamp, text, boolean, integer, decimal, primaryKey, index, date, numeric } from 'drizzle-orm/pg-core';
+import { pgTable, serial, varchar, timestamp, text, boolean, integer, decimal, primaryKey, index, date, numeric, uniqueIndex } from 'drizzle-orm/pg-core';
 // Table Creation
 // State dictionary table
 export const state = pgTable('state', {
@@ -178,6 +178,15 @@ export const quizLeaderboardStats = pgTable('quiz_leaderboard_stats', {
   index('idx_quiz_stats_best_score').on(table.bestScore),
   index('idx_quiz_stats_total_attempts').on(table.totalAttempts),
   index('idx_quiz_stats_quiz_type').on(table.quizType),
+]);
+
+// Newsletter subscriptions table
+export const newsletterSubscriptions = pgTable('newsletter_subscriptions', {
+  id: serial('id').primaryKey(),
+  email: varchar('email', { length: 320 }).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+}, (table) => [
+  uniqueIndex('idx_newsletter_subscriptions_email').on(table.email),
 ]);
 
 // Legacy table kept temporarily for migration compatibility
