@@ -1,6 +1,7 @@
 import { TiltedScrollDemo } from '@/app/components/QuizList'
 import { getRandomQuizQuestions, getAllQuizQuestions, type QuizQuestionRecord } from '@/app/database_query_endpoint/quiz-question-actions'
 import { getTranslations } from 'next-intl/server'
+import BreadcrumbTrail from '@/app/components/BreadcrumbTrail'
 
 type QuizListItem = {
   id: string
@@ -10,6 +11,7 @@ type QuizListItem = {
 
 export default async function QuizPage() {
   const t = await getTranslations('QuizPage')
+  const tBreadcrumbs = await getTranslations('Common.breadcrumbs')
 
   const [randomQuestions, allQuestions] = await Promise.all([
     getRandomQuizQuestions('myths', 8),
@@ -46,6 +48,12 @@ export default async function QuizPage() {
 
       <section className="relative pt-10 pb-8 md:pt-12 md:pb-10 px-4">
         <div className="container mx-auto max-w-6xl">
+          <BreadcrumbTrail
+            items={[
+              { label: tBreadcrumbs('home'), href: '/' },
+              { label: tBreadcrumbs('quiz') },
+            ]}
+          />
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10 items-start">
             {/* Left: Title & intro */}
             <div className="md:col-span-5 lg:col-span-5 xl:col-span-4">

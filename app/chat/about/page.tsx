@@ -6,10 +6,12 @@ import {Link} from '../../../i18n/routing';
 import { motion } from 'framer-motion';
 import {useTranslations} from 'next-intl';
 import { useState, useEffect } from 'react';
+import BreadcrumbTrail from '@/app/components/BreadcrumbTrail';
 
 export default function ChatAboutPage() {
   const [isLoaded, setIsLoaded] = useState(false);
   const t = useTranslations('Chat');
+  const tBreadcrumbs = useTranslations('Common.breadcrumbs');
 
   useEffect(() => {
     setIsLoaded(true);
@@ -51,6 +53,13 @@ export default function ChatAboutPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-secondary/30 to-accent/20">
       <div className="container mx-auto px-4 py-12">
+        <BreadcrumbTrail
+          items={[
+            {label: tBreadcrumbs('home'), href: '/'},
+            {label: tBreadcrumbs('chat'), href: '/chat'},
+            {label: tBreadcrumbs('chatAbout')},
+          ]}
+        />
         <motion.div
           className="max-w-6xl mx-auto"
           variants={containerVariants}

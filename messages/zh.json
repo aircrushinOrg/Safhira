@@ -1,6 +1,22 @@
 {
   "Common": {
-    "loading": "加载中..."
+    "loading": "加载中...",
+    "breadcrumbs": {
+      "home": "首页",
+      "stis": "了解性传播感染",
+      "stiPrevention": "预防",
+      "stiPrevalence": "流行趋势",
+      "livingWell": "与 STI 健康相处",
+      "livingWellTreatment": "治疗依从性",
+      "livingWellLifestyle": "积极生活方式",
+      "livingWellRelationships": "伴侣沟通",
+      "quiz": "谣言测验",
+      "chat": "AI 聊天",
+      "chatAbout": "关于 Safhira AI",
+      "privacyPolicy": "隐私政策",
+      "termsOfUse": "使用条款",
+      "services": "STI 医疗服务"
+    }
   },
   "hero": {
     "slide1": {
@@ -328,11 +344,16 @@
       "subtitle": "提供全面、无评判的 STI 信息，帮助你做出明智健康决策。知识让你更有力量。",
       "imageAlt": "与医疗与健康相关的插画"
     },
-    "support": {
-      "title": "你正在迈出积极一步",
-      "text": "学习 STI 体现成熟与责任。本页面以无评判的方式呈现信息，认识到性健康是整体健康的重要组成。请记住：感染 STI 并不代表你的品格——这只是可以被治疗或管理的健康状况。"
-    },
-    "modules": {
+  "support": {
+    "title": "你正在迈出积极一步",
+    "text": "学习 STI 体现成熟与责任。本页面以无评判的方式呈现信息，认识到性健康是整体健康的重要组成。请记住：感染 STI 并不代表你的品格——这只是可以被治疗或管理的健康状况。"
+  },
+  "video": {
+    "title": "为什么 STI 检测很重要",
+    "description": "这段来自马来西亚卫生部的短片说明早期筛查与治疗如何守护你与伴侣的健康。",
+    "caption": "视频来源：马来西亚卫生部"
+  },
+  "modules": {
       "prevention": {
         "badge": "预防学习模块"
       },
@@ -754,6 +775,7 @@
     },
     "resources": {
       "heading": "更多资源与支持",
+      "local": "马来西亚本地支持",
       "my": {
         "title": "马来西亚相关资源",
         "clinics": {

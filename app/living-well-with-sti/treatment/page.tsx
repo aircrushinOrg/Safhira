@@ -13,6 +13,7 @@ import {AlertTriangle, Bell, CheckCircle2, ShieldAlert, ArrowLeft, Pill, Clock, 
 import {Toaster} from "../../components/ui/sonner";
 import {toast} from "sonner";
 import {motion, useReducedMotion} from "framer-motion";
+import BreadcrumbTrail from "../../components/BreadcrumbTrail";
 
 type RegimenType = "single" | "daily" | "multi";
 
@@ -75,6 +76,7 @@ export default function TreatmentAdherencePage() {
   const t = useTranslations("LivingWell");
   const locale = useLocale();
   const reduceMotion = useReducedMotion();
+  const tBreadcrumbs = useTranslations('Common.breadcrumbs');
 
   const [regimen, setRegimen] = useState<RegimenType>("daily");
   const [settings, setSettings] = useState<ReminderSettings>(() => createDefaultSettings());
@@ -388,6 +390,13 @@ export default function TreatmentAdherencePage() {
 
       <section className="relative py-10 md:py-16 px-4">
         <div className="container mx-auto max-w-7xl">
+          <BreadcrumbTrail
+            items={[
+              {label: tBreadcrumbs('home'), href: '/'},
+              {label: tBreadcrumbs('livingWell'), href: '/living-well-with-sti'},
+              {label: tBreadcrumbs('livingWellTreatment')},
+            ]}
+          />
           <motion.header className="relative z-10 mb-8 md:mb-12 rounded-3xl border border-white/40 bg-white/70 p-6 shadow-lg shadow-rose-200/40 backdrop-blur dark:border-teal-950/40 dark:bg-teal-950/40 dark:shadow-black/40 md:p-8"
             initial={{opacity: 0, y: reduceMotion ? 0 : 8}}
             animate={{opacity: 1, y: 0}}

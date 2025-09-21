@@ -5,14 +5,22 @@ import {useTranslations} from 'next-intl';
 import { useState } from 'react';
 import {Link} from '../../i18n/routing';
 import { Info } from 'lucide-react';
+import BreadcrumbTrail from '../components/BreadcrumbTrail';
 
 export default function ChatPage() {
   const [isIframeLoading, setIsIframeLoading] = useState(true);
   const t = useTranslations('Chat');
+  const tBreadcrumbs = useTranslations('Common.breadcrumbs');
 
   return (
     <div className="min-h-[calc(100vh-80px)] bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <div className="container mx-auto px-4 py-4 md:py-6 pb-12 md:pb-8">
+        <BreadcrumbTrail
+          items={[
+            {label: tBreadcrumbs('home'), href: '/'},
+            {label: tBreadcrumbs('chat')},
+          ]}
+        />
         {/* Chat interface */}
         <motion.div
           className="w-full max-w-7xl mx-auto h-[calc(100vh-200px)] md:h-[calc(100vh-160px)] bg-white dark:bg-gray-800 rounded-lg shadow-xl overflow-hidden"

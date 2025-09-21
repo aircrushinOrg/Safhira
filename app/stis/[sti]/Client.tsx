@@ -8,6 +8,7 @@ import { ArrowLeft, CheckCircle, AlertTriangle, Heart, Shield, Users, Info } fro
 import { motion } from 'framer-motion';
 import {useRouter} from '../../../i18n/routing';
 import {useTranslations} from 'next-intl';
+import BreadcrumbTrail from '../../components/BreadcrumbTrail';
 
 export interface STIInfo {
   name: string;
@@ -49,11 +50,19 @@ export default function STIClient({ stiInfo }: { stiInfo: STIInfo }) {
   const router = useRouter();
   const t = useTranslations('STIDetail');
   const tPage = useTranslations('STIsPage');
+  const tBreadcrumbs = useTranslations('Common.breadcrumbs');
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-      <section className="py-8 sm:py-12 md:py-16 px-4">
-        <div className="container mx-auto">
+      <section className="py-8 sm:py-12 md:py-16 px-4 ">
+        <div className="container mx-auto max-w-6xl">
+          <BreadcrumbTrail
+            items={[
+              {label: tBreadcrumbs('home'), href: '/'},
+              {label: tBreadcrumbs('stis'), href: '/stis'},
+              {label: stiInfo.name},
+            ]}
+          />
           <div className="mb-6 sm:mb-8">
             <Button variant="ghost" onClick={() => router.push('/stis')} className="mb-4 text-sm sm:text-base">
               <ArrowLeft size={16} className="mr-2" />

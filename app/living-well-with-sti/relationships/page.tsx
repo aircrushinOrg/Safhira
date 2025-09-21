@@ -16,12 +16,14 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "../
 import {Textarea} from "../../components/ui/textarea";
 import {Toaster} from "../../components/ui/sonner";
 import {Badge} from "../../components/ui/badge";
+import BreadcrumbTrail from "../../components/BreadcrumbTrail";
 
 type StiType = "chlamydia" | "gonorrhea" | "syphilis" | "hiv" | "herpes";
 
 export default function RelationshipsPage() {
   const t = useTranslations("LivingWell");
   const reduceMotion = useReducedMotion();
+  const tBreadcrumbs = useTranslations('Common.breadcrumbs');
 
   const [stiType, setStiType] = useState<StiType>("chlamydia");
   const [tplKey, setTplKey] = useState<string>("gentle");
@@ -101,6 +103,13 @@ export default function RelationshipsPage() {
 
       <section className="relative py-10 md:py-16 px-4">
         <div className="container mx-auto max-w-7xl">
+          <BreadcrumbTrail
+            items={[
+              {label: tBreadcrumbs('home'), href: '/'},
+              {label: tBreadcrumbs('livingWell'), href: '/living-well-with-sti'},
+              {label: tBreadcrumbs('livingWellRelationships')},
+            ]}
+          />
           <motion.header
             className="relative z-10 mb-8 md:mb-12 rounded-3xl border border-white/40 bg-white/75 p-6 shadow-lg shadow-rose-200/50 backdrop-blur dark:border-emerald-950/40 dark:bg-emerald-950/35 dark:shadow-black/40 md:p-8"
             initial={{opacity: 0, y: reduceMotion ? 0 : 8}}

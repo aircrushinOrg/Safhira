@@ -1,6 +1,22 @@
 {
   "Common": {
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "breadcrumbs": {
+      "home": "Home",
+      "stis": "Learn about STIs",
+      "stiPrevention": "Prevention",
+      "stiPrevalence": "Prevalence Insights",
+      "livingWell": "Living Well with STIs",
+      "livingWellTreatment": "Treatment Support",
+      "livingWellLifestyle": "Lifestyle & Self-care",
+      "livingWellRelationships": "Relationships & Communication",
+      "quiz": "Myth-Busting Quiz",
+      "chat": "AI Chat",
+      "chatAbout": "About Safhira AI",
+      "privacyPolicy": "Privacy Policy",
+      "termsOfUse": "Terms of Use",
+      "services": "STI Services"
+    }
   },
   "hero": {
     "slide1": {
@@ -337,11 +353,16 @@
       "subtitle": "Clear, judgment-free STI info to help you make informed choices.",
       "imageAlt": "Medical illustration representing healthcare and medicine"
     },
-    "support": {
-      "title": "You're Taking a Positive Step",
-      "text": "Learning about STIs is responsible and healthy. Sexual health is part of wellbeing. An STI is a medical condition—treatable or manageable."
-    },
-    "modules": {
+  "support": {
+    "title": "You're Taking a Positive Step",
+    "text": "Learning about STIs is responsible and healthy. Sexual health is part of wellbeing. An STI is a medical condition—treatable or manageable."
+  },
+  "video": {
+    "title": "Why STI Testing Matters",
+    "description": "This short video from the Malaysian Ministry of Health explains how early screening and treatment keeps you and your partners healthy.",
+    "caption": "Video courtesy of the Malaysian Ministry of Health"
+  },
+  "modules": {
       "prevention": {
         "badge": "Prevention Learning Module"
       },
@@ -873,6 +894,7 @@
     },
     "resources": {
       "heading": "Additional Resources & Support",
+      "local": "Local Support in Malaysia",
       "my": {
         "title": "Malaysia-Specific Resources",
         "clinics": {

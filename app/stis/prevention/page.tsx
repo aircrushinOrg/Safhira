@@ -10,6 +10,7 @@ import {useRouter} from '../../../i18n/routing';
 import {Link} from '../../../i18n/routing';
 import Image from 'next/image';
 import {useTranslations} from 'next-intl';
+import BreadcrumbTrail from '../../components/BreadcrumbTrail';
 
 interface PreventionMethod {
   title: string;
@@ -30,6 +31,7 @@ export default function STIPreventionPage() {
   const t = useTranslations('Prevention');
   const tDetail = useTranslations('STIDetail');
   const tLists = useTranslations('Prevention.lists');
+  const tBreadcrumbs = useTranslations('Common.breadcrumbs');
 
   const preventionMethods = tLists.raw('methods') as PreventionMethod[];
   const safeSexPractices = tLists.raw('practices') as PracticeSection[];
@@ -41,7 +43,14 @@ export default function STIPreventionPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <section className="py-8 sm:py-12 md:py-16 px-4">
-        <div className="container mx-auto max-w-7xl">
+        <div className="container mx-auto max-w-6xl">
+          <BreadcrumbTrail
+            items={[
+              {label: tBreadcrumbs('home'), href: '/'},
+              {label: tBreadcrumbs('stis'), href: '/stis'},
+              {label: tBreadcrumbs('stiPrevention')},
+            ]}
+          />
           <div className="mb-6 sm:mb-8">
             <Button variant="ghost" onClick={() => router.push('/stis')} className="mb-4 text-sm sm:text-base">
               <ArrowLeft size={16} className="mr-2" />
@@ -467,4 +476,3 @@ export default function STIPreventionPage() {
     </div>
   );
 }
-
