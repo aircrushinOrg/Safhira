@@ -1,3 +1,8 @@
+/**
+ * Leaderboard display component showing top quiz performers and competitive scoring information.
+ * This component provides ranking visualization, score management, and user achievement tracking.
+ * Features sorting, filtering, time-based rankings, and integration with the scoring system for gamified learning motivation.
+ */
 "use client";
 
 import { useState, useEffect, useCallback } from "react";

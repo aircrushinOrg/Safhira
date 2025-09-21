@@ -1,3 +1,8 @@
+/**
+ * Prevalence section component displaying interactive STI epidemiological data and statistics for Malaysia.
+ * This component features dynamic charts, choropleth maps, and trend analysis for STI prevalence data visualization.
+ * Integrates multiple chart types with filtering capabilities to help users understand public health trends and geographical patterns.
+ */
 'use client'
 
 import { motion, useInView } from 'framer-motion';

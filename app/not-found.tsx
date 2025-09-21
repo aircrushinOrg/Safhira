@@ -1,4 +1,10 @@
 
+/**
+ * Global 404 not found page providing helpful navigation options when users encounter missing pages.
+ * This page offers user-friendly error messaging with clear pathways back to main application sections.
+ * Features animated elements, search suggestions, and navigation links to maintain positive user experience during errors.
+ */
+
 'use client'
 
 import { Card } from './components/ui/card';

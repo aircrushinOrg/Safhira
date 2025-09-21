@@ -1,3 +1,8 @@
+/**
+ * Server actions for STI prevalence data management and epidemiological analysis.
+ * This module handles prevalence data retrieval, statistical analysis, and data visualization support for public health insights.
+ * Features data aggregation, temporal analysis, geographical breakdowns, and statistical queries for epidemiological research.
+ */
 "use server";
 
 import { db } from "../db";

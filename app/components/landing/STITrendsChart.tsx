@@ -1,3 +1,8 @@
+/**
+ * STI trends line chart component displaying temporal patterns and trends in STI prevalence data.
+ * This component provides time-series visualization with multiple disease comparison, state filtering, and interactive controls.
+ * Features Chart.js integration, responsive design, and customizable views for epidemiological trend analysis.
+ */
 "use client";
 
 import { useState, useEffect } from "react";

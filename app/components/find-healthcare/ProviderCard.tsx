@@ -1,3 +1,8 @@
+/**
+ * Provider card component displaying healthcare provider information in a compact, clickable format.
+ * This component shows essential provider details including name, location, services, and contact information.
+ * Features responsive design, service badges, and navigation integration for detailed provider views.
+ */
 'use client';
 
 import React from 'react';

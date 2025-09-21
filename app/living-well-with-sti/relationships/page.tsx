@@ -1,3 +1,8 @@
+/**
+ * Relationship guidance page addressing communication, disclosure, and intimacy concerns for individuals with STIs.
+ * This page provides tools for partner conversations, disclosure strategies, and maintaining healthy intimate relationships.
+ * Features conversation starters, AI-powered response suggestions, and evidence-based advice for relationship navigation.
+ */
 "use client";
 
 import {useEffect, useMemo, useRef, useState} from "react";

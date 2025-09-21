@@ -1,3 +1,8 @@
+/**
+ * Treatment adherence tracking page for individuals managing STI medications and care regimens.
+ * This page provides tools for medication scheduling, dose tracking, appointment management, and adherence monitoring.
+ * Features interactive medication calendar, reminder system, progress tracking, and educational resources for treatment compliance.
+ */
 "use client";
 
 import {useEffect, useMemo, useRef, useState} from "react";

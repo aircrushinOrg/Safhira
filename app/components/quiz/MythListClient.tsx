@@ -1,3 +1,8 @@
+/**
+ * Interactive myth list client component providing gamified STI education through myths and facts.
+ * This component manages quiz interactions, scoring, leaderboards, and educational content delivery.
+ * Features tilted scroll interface, myth revelation, scoring system, and leaderboard integration for engaging learning experiences.
+ */
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";

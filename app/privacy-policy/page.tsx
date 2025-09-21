@@ -1,3 +1,8 @@
+/**
+ * Privacy policy page outlining data collection, usage, and protection practices for the Safhira application.
+ * This page provides transparent information about user privacy rights, data handling procedures, and security measures.
+ * Features structured legal content with clear sections covering various aspects of data privacy and user rights.
+ */
 import BreadcrumbTrail from '@/app/components/BreadcrumbTrail';
 import {getTranslations} from 'next-intl/server';
 

@@ -1,3 +1,8 @@
+/**
+ * STI prevalence data visualization page displaying epidemiological trends and statistics.
+ * This page provides interactive charts and maps showing STI rates, demographic breakdowns, and geographical distribution across Malaysia.
+ * Features data visualization components with filtering capabilities and educational context about public health trends.
+ */
 'use client'
 
 import { PrevalenceSection } from '../../components/landing/PrevalenceSection';

@@ -1,3 +1,8 @@
+/**
+ * Server actions for healthcare provider database operations and search functionality.
+ * This module manages provider data retrieval, location-based search, distance calculations, and filtering capabilities.
+ * Features comprehensive provider queries, geographical search, service filtering, and state-based organization for healthcare access.
+ */
 "use server";
 
 import { db } from "../db";

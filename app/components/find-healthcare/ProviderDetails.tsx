@@ -1,3 +1,8 @@
+/**
+ * Detailed provider information component displaying comprehensive healthcare provider data and contact options.
+ * This component provides full provider profiles with services, hours, location details, and direct contact methods.
+ * Features interactive maps, contact buttons, directions integration, and comprehensive service information display.
+ */
 'use client';
 
 import React, { useState, useEffect } from 'react';

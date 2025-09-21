@@ -1,3 +1,8 @@
+/**
+ * Chat about page providing detailed information about the Safhira AI chatbot's architecture and capabilities.
+ * This page showcases the technical implementation, benchmark results, and safety features of the AI system.
+ * Features animated content sections, architecture diagrams, performance metrics, and comprehensive capability descriptions for transparency and user confidence.
+ */
 'use client';
 
 import { Button } from '@/app/components/ui/button';

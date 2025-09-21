@@ -1,3 +1,8 @@
+/**
+ * Comprehensive STI prevention education page covering various prevention methods and strategies.
+ * This page provides detailed information about barrier methods, testing, vaccination, and behavioral approaches to STI prevention.
+ * Features tabbed interface, interactive elements, and evidence-based educational content with practical guidance for different risk scenarios.
+ */
 'use client'
 
 import { Card } from '../../components/ui/card';

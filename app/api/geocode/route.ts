@@ -1,3 +1,8 @@
+/**
+ * Geocoding API route providing location coordinate lookup using OpenStreetMap Nominatim service.
+ * This endpoint handles address-to-coordinate conversion for Malaysian locations to support provider search functionality.
+ * Features query validation, Malaysia-specific results, and error handling for reliable location services.
+ */
 import { NextRequest, NextResponse } from 'next/server';
 
 const NOMINATIM_ENDPOINT = 'https://nominatim.openstreetmap.org/search';

@@ -1,3 +1,10 @@
+/**
+ * Interactive choropleth map component visualizing STI prevalence data across Malaysian states.
+ * This component provides geographic visualization with color-coded regions, time-based animation, 
+ * and zoom functionality.
+ * Features state selection, disease filtering, temporal controls, and responsive design for 
+ * epidemiological data exploration.
+ */
 'use client'
 
 import { useState, useEffect, useRef } from 'react';
@@ -48,13 +55,11 @@ export function STIChoroplethChart({ sharedData }: STIChoroplethChartProps) {
   
   // Initialize selections when shared data loads
   useEffect(() => {
-    if (!loading && years.length > 0 && selectedYear === 2017) {
+    if (!loading && years.length > 0 && diseases.length > 0) {
       setSelectedYear(years[0] as Year);
-    }
-    if (!loading && diseases.length > 0) {
       setSelectedSTI(diseases[0].toLowerCase().replace(/[^a-z0-9]/g, '') as STIType);
     }
-  }, [loading, years, diseases, selectedYear]);
+  }, [loading, years, diseases]);
 
   // Load Malaysia GeoJSON data on mount
   useEffect(() => {

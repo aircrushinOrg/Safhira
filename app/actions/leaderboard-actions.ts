@@ -1,3 +1,8 @@
+/**
+ * Server actions for leaderboard management and quiz scoring functionality.
+ * This module handles score submission, ranking calculations, leaderboard retrieval, and competitive gaming features.
+ * Features score validation, ranking algorithms, statistical analysis, and user achievement tracking for gamified learning.
+ */
 'use server';
 
 import { db } from '@/app/db';
