@@ -15,6 +15,8 @@ export const pathnames = {
   '/chat': '/chat',
   '/chat/about': '/chat/about',
   '/quiz': '/quiz',
+  '/sti-services': '/sti-services',
+  '/sti-services/[id]': '/sti-services/[id]',
   '/living-well-with-sti': '/living-well-with-sti',
   '/living-well-with-sti/lifestyle': '/living-well-with-sti/lifestyle',
   '/living-well-with-sti/relationships': '/living-well-with-sti/relationships',

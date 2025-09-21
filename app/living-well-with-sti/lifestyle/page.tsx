@@ -13,6 +13,7 @@ import {motion, useReducedMotion} from "framer-motion";
 import {Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle} from "../../components/ui/dialog";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "../../components/ui/tabs";
 import {Toaster} from "../../components/ui/sonner";
+import BreadcrumbTrail from "../../components/BreadcrumbTrail";
 
 type Story = {
   id: string;
@@ -28,6 +29,7 @@ const STORAGE_KEYS = {
 export default function LifestylePage() {
   const t = useTranslations("LivingWell");
   const reduceMotion = useReducedMotion();
+  const tBreadcrumbs = useTranslations('Common.breadcrumbs');
 
   const storyList: Story[] = useMemo(() => [
     {
@@ -101,6 +103,13 @@ export default function LifestylePage() {
 
       <section className="relative py-10 md:py-16 px-4">
         <div className="container mx-auto max-w-7xl">
+          <BreadcrumbTrail
+            items={[
+              {label: tBreadcrumbs('home'), href: '/'},
+              {label: tBreadcrumbs('livingWell'), href: '/living-well-with-sti'},
+              {label: tBreadcrumbs('livingWellLifestyle')},
+            ]}
+          />
           <motion.header
             className="mb-8 md:mb-12 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 md:p-8"
             initial={{opacity: 0, y: reduceMotion ? 0 : 8}}

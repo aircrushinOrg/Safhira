@@ -1,6 +1,22 @@
 {
   "Common": {
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "breadcrumbs": {
+      "home": "Home",
+      "stis": "Learn about STIs",
+      "stiPrevention": "Prevention",
+      "stiPrevalence": "Prevalence Insights",
+      "livingWell": "Living Well with STIs",
+      "livingWellTreatment": "Treatment Support",
+      "livingWellLifestyle": "Lifestyle & Self-care",
+      "livingWellRelationships": "Relationships & Communication",
+      "quiz": "Myth-Busting Quiz",
+      "chat": "AI Chat",
+      "chatAbout": "About Safhira AI",
+      "privacyPolicy": "Privacy Policy",
+      "termsOfUse": "Terms of Use",
+      "services": "STI Services"
+    }
   },
   "hero": {
     "slide1": {
@@ -334,21 +350,26 @@
   "STIsPage": {
     "hero": {
       "title": "Learn About STIs",
-      "subtitle": "Comprehensive, judgment-free information about sexually transmitted infections. Knowledge empowers you to make informed decisions about your health.",
+      "subtitle": "Clear, judgment-free STI info to help you make informed choices.",
       "imageAlt": "Medical illustration representing healthcare and medicine"
     },
-    "support": {
-      "title": "You're Taking a Positive Step",
-      "text": "Learning about STIs shows maturity and responsibility. This information is presented without judgment, recognizing that sexual health is an important part of overall wellbeing. Remember: having an STI doesn't reflect your character—it's a health condition that can be treated or managed."
-    },
-    "modules": {
+  "support": {
+    "title": "You're Taking a Positive Step",
+    "text": "Learning about STIs is responsible and healthy. Sexual health is part of wellbeing. An STI is a medical condition—treatable or manageable."
+  },
+  "video": {
+    "title": "Why STI Testing Matters",
+    "description": "This short video from the Malaysian Ministry of Health explains how early screening and treatment keeps you and your partners healthy.",
+    "caption": "Video courtesy of the Malaysian Ministry of Health"
+  },
+  "modules": {
       "prevention": {
         "badge": "Prevention Learning Module"
       },
       "prevalence": {
         "badge": "Community Health Data",
         "title": "STI Prevalence in Malaysia",
-        "desc": "Interactive visualizations showing STI prevalence across Malaysian states. Understand that sexual health concerns are common and treatable."
+        "desc": "See STI prevalence across Malaysian states. Sexual health concerns are common and treatable."
       }
     },
     "badges": {
@@ -725,7 +746,7 @@
   "Prevention": {
     "hero": {
       "title": "STI Prevention & Safe Sex Practices",
-      "subtitle": "Evidence-based, culturally-sensitive information to help you make informed decisions while respecting your personal values."
+      "subtitle": "Evidence-based, culturally-aware guidance that respects your values."
     },
     "lists": {
       "methods": [
@@ -842,7 +863,7 @@
     },
     "cultural": {
       "title": "Respectful & Inclusive Approach",
-      "text": "This information is presented with respect for diverse cultural backgrounds, religious beliefs, and personal values. Sexual health decisions are deeply personal, and everyone deserves access to accurate information without judgment. You can adapt these practices to align with your values and circumstances."
+      "text": "We respect different cultures, beliefs, and values. Use what fits your life—no judgment."
     },
     "tabs": {
       "methods": "Prevention Methods",
@@ -861,7 +882,7 @@
     },
     "adapt": {
       "title": "Adapting to Your Circumstances",
-      "text": "These practices can be adapted to fit your cultural background, relationship style, and personal comfort level. The key principles—communication, respect, and protection—remain consistent while allowing for personal and cultural variations in implementation."
+      "text": "Adapt tips to your culture, relationships, and comfort. Core principles: communicate, respect, protect."
     },
     "comm": {
       "heading": "Respectful Communication About Sexual Health",
@@ -873,6 +894,7 @@
     },
     "resources": {
       "heading": "Additional Resources & Support",
+      "local": "Local Support in Malaysia",
       "my": {
         "title": "Malaysia-Specific Resources",
         "clinics": {
@@ -930,12 +952,12 @@
   "LivingWell": {
     "hero": {
       "title": "Living Well with STIs",
-      "subtitle": "Practical guidance to stay on track with treatment, manage side effects, and protect your well‑being."
+      "subtitle": "Practical tips for treatment, side effects, and wellbeing."
     },
     "back": "Back to Living Well",
     "disclaimer": {
       "title": "Educational Guidance Only",
-      "text": "This content supports self‑care but is not a substitute for professional medical advice.",
+      "text": "Educational only—not medical advice.",
       "emergency": "In an emergency or if you have severe symptoms, seek urgent care immediately."
     },
     "newsletter": {

@@ -3,11 +3,12 @@
 import { Card } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
-import { ArrowLeft, Heart, BookOpen, ChevronRight } from 'lucide-react';
+import { Heart, BookOpen, ChevronRight, PlayCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import {Link, useRouter} from '../../i18n/routing';
 import {useTranslations} from 'next-intl';
 import Image from 'next/image';
+import BreadcrumbTrail from '../components/BreadcrumbTrail';
 
 interface STIInfo {
   id: string;
@@ -43,6 +44,7 @@ export default function STIsPage() {
   const tPage = useTranslations('STIsPage');
   const tPrev = useTranslations('Prevention');
   const tDetail = useTranslations('STIDetail');
+  const tBreadcrumbs = useTranslations('Common.breadcrumbs');
 
   const stiList = tPage.raw('list') as STIInfo[];
   const whereToGet = tPage.raw('resources.where.items') as string[];
@@ -51,7 +53,13 @@ export default function STIsPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <section className="py-8 sm:py-12 md:py-16 px-4">
-        <div className="container mx-auto max-w-7xl">
+        <div className="container mx-auto max-w-6xl">
+          <BreadcrumbTrail
+            items={[
+              {label: tBreadcrumbs('home'), href: '/'},
+              {label: tBreadcrumbs('stis')},
+            ]}
+          />
           <div className="mb-6 sm:mb-8">
             <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 items-center mb-6 sm:mb-8">
               <div>
@@ -90,6 +98,39 @@ export default function STIsPage() {
                   </h3>
                   <p className="text-teal-700 dark:text-teal-300 text-sm sm:text-base leading-relaxed">
                     {tPage('support.text')}
+                  </p>
+                </div>
+              </div>
+            </Card>
+
+            {/* Educational Video */}
+            <Card className="p-4 sm:p-6 bg-white/85 dark:bg-gray-800/85 border-teal-100 dark:border-gray-700 mb-6 sm:mb-8 shadow-sm">
+              <div className="grid gap-6 lg:grid-cols-[1fr,1.4fr] items-center">
+                <div className="space-y-4">
+                  <div className="inline-flex items-center gap-2 rounded-full bg-teal-100/70 px-3 py-1 text-xs font-medium uppercase tracking-wide text-teal-700 dark:bg-teal-900/40 dark:text-teal-200">
+                    <PlayCircle size={16} />
+                    {t('learnMore')}
+                  </div>
+                  <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 dark:text-gray-100">
+                    {tPage('video.title')}
+                  </h2>
+                  <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed">
+                    {tPage('video.description')}
+                  </p>
+                </div>
+                <div className="space-y-3">
+                  <div className="relative aspect-video overflow-hidden rounded-xl shadow-md">
+                    <iframe
+                      src="https://www.youtube.com/embed/gVH1gY05MsA"
+                      title={tPage('video.title')}
+                      loading="lazy"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                      className="absolute inset-0 h-full w-full"
+                    />
+                  </div>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 text-center lg:text-left">
+                    {tPage('video.caption')}
                   </p>
                 </div>
               </div>

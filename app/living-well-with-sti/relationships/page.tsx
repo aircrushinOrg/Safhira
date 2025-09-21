@@ -16,12 +16,14 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "../
 import {Textarea} from "../../components/ui/textarea";
 import {Toaster} from "../../components/ui/sonner";
 import {Badge} from "../../components/ui/badge";
+import BreadcrumbTrail from "../../components/BreadcrumbTrail";
 
 type StiType = "chlamydia" | "gonorrhea" | "syphilis" | "hiv" | "herpes";
 
 export default function RelationshipsPage() {
   const t = useTranslations("LivingWell");
   const reduceMotion = useReducedMotion();
+  const tBreadcrumbs = useTranslations('Common.breadcrumbs');
 
   const [stiType, setStiType] = useState<StiType>("chlamydia");
   const [tplKey, setTplKey] = useState<string>("gentle");
@@ -101,6 +103,13 @@ export default function RelationshipsPage() {
 
       <section className="relative py-10 md:py-16 px-4">
         <div className="container mx-auto max-w-7xl">
+          <BreadcrumbTrail
+            items={[
+              {label: tBreadcrumbs('home'), href: '/'},
+              {label: tBreadcrumbs('livingWell'), href: '/living-well-with-sti'},
+              {label: tBreadcrumbs('livingWellRelationships')},
+            ]}
+          />
           <motion.header
             className="relative z-10 mb-8 md:mb-12 rounded-3xl border border-white/40 bg-white/75 p-6 shadow-lg shadow-rose-200/50 backdrop-blur dark:border-emerald-950/40 dark:bg-emerald-950/35 dark:shadow-black/40 md:p-8"
             initial={{opacity: 0, y: reduceMotion ? 0 : 8}}
@@ -175,9 +184,19 @@ export default function RelationshipsPage() {
           >
             <Card className="p-4 md:p-6 backdrop-blur-sm bg-white/80 dark:bg-gray-800/80 border-white/20 shadow-xl">
               <Tabs defaultValue="templates">
-                <TabsList className="grid w-full grid-cols-2 bg-gray-100/80 dark:bg-gray-700/80">
-                  <TabsTrigger value="templates" className="data-[state=active]:bg-white data-[state=active]:shadow-sm">{t("partner.tabs.templates")}</TabsTrigger>
-                  <TabsTrigger value="safer" className="data-[state=active]:bg-white data-[state=active]:shadow-sm">{t("partner.tabs.safer")}</TabsTrigger>
+                <TabsList className="grid w-full grid-cols-2 rounded-full bg-gray-100/80 p-1 shadow-inner dark:border dark:border-emerald-900/40 dark:bg-emerald-950/40 dark:shadow-[inset_0_1px_4px_rgba(16,185,129,0.25)]">
+                  <TabsTrigger
+                    value="templates"
+                    className="rounded-full text-gray-700 transition-colors data-[state=active]:bg-white data-[state=active]:text-gray-900 data-[state=active]:shadow-sm dark:text-emerald-200 dark:data-[state=active]:border-emerald-600/40 dark:data-[state=active]:bg-emerald-900/55 dark:data-[state=active]:text-emerald-100 dark:data-[state=active]:shadow-[0_8px_20px_rgba(16,185,129,0.28)]"
+                  >
+                    {t("partner.tabs.templates")}
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="safer"
+                    className="rounded-full text-gray-700 transition-colors data-[state=active]:bg-white data-[state=active]:text-gray-900 data-[state=active]:shadow-sm dark:text-emerald-200 dark:data-[state=active]:border-emerald-600/40 dark:data-[state=active]:bg-emerald-900/55 dark:data-[state=active]:text-emerald-100 dark:data-[state=active]:shadow-[0_8px_20px_rgba(16,185,129,0.28)]"
+                  >
+                    {t("partner.tabs.safer")}
+                  </TabsTrigger>
                 </TabsList>
 
                 {/* Templates Tab */}

@@ -1,85 +1,66 @@
 # Critical Analysis of Risks
 
-Context: Next.js App Router with Drizzle ORM, pages for home, `/stis`, maps, and chat; seed/migrations under `db/`; Tailwind for UI; manual testing via `pnpm dev`.
+Context: Safhira is a Next.js (App Router) platform with Drizzle ORM, Tailwind UI, and rich content around STI education. Key flows include educational pages (e.g., `/stis`), interactive geographic resources, anonymous chat, and AI-assisted tone tuning via `/api/tone-tune`. Data origins mix moderated content, user submissions, and optional third-party datasets.
 
-Mission: Provide trustworthy STI information, maps, and community interaction; balance engagement with privacy, safety, and data integrity.
+Mission: Deliver trustworthy, stigma-aware guidance while protecting sensitive conversations and location insights. The product must balance reach, privacy, and operational reliability as features evolve.
 
-Constraint: No automated tests; early-stage visibility and community traction likely constrained.
+Constraints: No automated test suite, early-stage moderation capacity, restricted engineering bandwidth, and evolving dataset pipelines.
 
-## Insufficient Community Engagement
+## 1. Privacy & Confidentiality
 
-- Issue: Static content and one‑way interaction limit contributions and feedback loops beyond casual browsing.
-- Why it matters: Without a participatory core, chat and map features underperform and content stales; growth stalls from lack of network effects.
-- Early signals: Low repeat sessions, shallow time‑on‑page on `/stis`, minimal chat activity, few UGC submissions (if any).
-- Mitigations: Add lightweight contribution flows, recognition systems, gentle prompts, and periodic community challenges; keep contribution UX 1–2 clicks.
+- **Issue**: Chat transcripts, AI prompts, and optional location sharing can surface health-related or identifying data. Without strict minimization, logs or analytics may retain sensitive details.
+- **Why it matters**: Breaches erode trust and may trigger regulatory exposure (PDPA/GDPR analogues). Users expect anonymity when discussing STI topics.
+- **Signals**: Support tickets about unwanted retention, requests to delete messages, appearance of phone numbers or addresses in logs, or pushback from community partners.
+- **Mitigations**: Redact PII at ingress, expire raw chat/AI payloads, log only metadata, and publish retention/disclaimer messaging. Require secure storage (`DATABASE_URL` via env vars, TLS). Build self-service deletion requests into the roadmap.
 
-## Weak Marketing and Limited Outreach
+## 2. Data Accuracy & Integrity
 
-- Issue: Minimal presence across social and local partners inhibits reach to target audiences (youth, students, community orgs).
-- Why it matters: Without top‑of‑funnel acquisition, even great UX won’t compound; maps and chat rely on critical mass.
-- Early signals: Flat traffic outside dev bursts, absence of referral/organic channels, no partner traffic or backlinks.
-- Mitigations: Launch focused editorial calendar, partner toolkits, and creator collabs; track source in analytics; run small on‑campus and clinic pilots.
+- **Issue**: STI fact sheets, legal notes, and clinic directories drift over time. Manual updates lack version tracking, raising the odds of outdated or conflicting advice.
+- **Why it matters**: Incorrect care guidance can cause real-world harm or legal risk; credibility plummets when high-impact details (clinic hours, safer sex advice) are wrong.
+- **Signals**: User reports of incorrect info, broken resource links, clinic partners flagging mismatches, or inconsistent copy between locales.
+- **Mitigations**: Enforce review cadences, store provenance and last-verified timestamps in Drizzle models, add “Report an issue” affordances, and sync with official datasets where possible. Highlight stale entries in internal dashboards.
 
-## Lack of Sustained User Motivation
+## 3. AI Tone Tuning Risk
 
-- Issue: Few mechanisms for retention (personalization, progress, saved items, reminders); chat lacks scaffolds for safe, helpful exchanges.
-- Why it matters: Visits don’t convert to habits; health learning requires spaced repetition and supportive communities.
-- Early signals: Low D7/D30 retention, minimal favorites/saves, high chat bounce rate, no return via notifications or email.
-- Mitigations: Add saves and history, tailored recommendations, gentle streaks/badges, prompts to revisit topics; make chat sticky with “follow topic” and summaries.
+- **Issue**: `/api/tone-tune` can hallucinate medical advice, leak system prompts, or be exploited for prompt-injection attacks that expose internals.
+- **Why it matters**: Harmful or misleading AI output increases liability and undermines the safe-disclosure mission. Prompt abuse could disclose secrets or manipulate downstream systems.
+- **Signals**: Users quoting unsafe AI guidance, sudden spikes in API usage, atypical prompt patterns, or bug reports showing leaked template content.
+- **Mitigations**: Filter prompts for disallowed topics/PII, cap response length, attach disclaimers, log abuse metrics without bodies, and add a human review fallback. Version prompts in Git and review changes with security.
 
-## Data Accuracy and Upkeep
+## 4. Community Moderation & Abuse
 
-- Issue: Manual curation doesn’t scale; STI facts, clinic locations, hours, and services drift without pipelines and review cycles.
-- Why it matters: In health contexts, stale or wrong info erodes trust and carries real‑world harm.
-- Early signals: User reports of incorrect clinic hours, broken links, inconsistent terminology across `/stis` pages.
-- Mitigations: Blend official source syncs, crowdsourced flags with expert moderation, scheduled audits; add provenance fields and review states in `db/`.
+- **Issue**: Anonymous chat and resource submissions invite harassment, misinformation, or stigma-laden language. Manual moderation alone may not scale.
+- **Why it matters**: Unsafe spaces deter the most vulnerable users, damage institutional partnerships, and can trigger platform bans or PR backlash.
+- **Signals**: Growth in reported messages, repeat offenders, moderator overload, or unaddressed flags staying in queues too long.
+- **Mitigations**: Layer keyword filters, rate limits, and human review; offer in-product reporting; publish clear community guidelines; log moderation actions for auditability; rotate moderators during campaigns.
 
-## Privacy, Safety, and Compliance
+## 5. Platform Reliability & Observability
 
-- Issue: STI topics are sensitive; chat and any stored interactions risk exposing PII; ambiguous scope may drift toward health advice.
-- Why it matters: Legal/regulatory exposure and user harm from confidentiality breaches; reputational damage is hard to recover.
-- Early signals: Users sharing phone numbers or medical histories in chat; requests for diagnosis; logs containing identifiers.
-- Mitigations: Privacy by default, content disclaimers, automated PII redaction, guardrails for advice; strict `DATABASE_URL` handling in `.env.local`; data minimization and clear retention.
+- **Issue**: Limited automated testing and monitoring raise regression risk across maps, chat, and localization. Deployments may fail silently.
+- **Why it matters**: Downtime or slow responses on map/chat pages interrupt critical support moments. Regressions erode trust with partners.
+- **Signals**: Increased 5xx responses, slow map tiles, chat send failures, or deployment rollbacks without root cause.
+- **Mitigations**: Add smoke tests before deploy (`/`, `/stis`, map render, chat send/receive), instrument API latency/error metrics, and document rollback procedures for Vercel + database migrations.
 
-## Content Quality and Moderation (Chat and UGC)
+## 6. Database & Schema Governance
 
-- Issue: Misinformation, harassment, or stigmatizing language in chat can spread quickly without moderation tools.
-- Why it matters: Safety and trust degrade; vulnerable users churn first.
-- Early signals: Reports on chat, blocked words appearing, high delete rates, or mod backlog.
-- Mitigations: Add report/flag flows, tiered moderation (auto + human), stigma‑aware language filters, conversation prompts steering to vetted resources.
+- **Issue**: Schema drift or unsafe migrations via Drizzle can corrupt content. Seed data may diverge from production if not curated.
+- **Why it matters**: Content integrity depends on accurate references between STI topics, regions, and resources; a migration misstep can break entire flows.
+- **Signals**: Failed `pnpm db:migrate`, conflicting migrations in PRs, or inconsistent staging/production schemas.
+- **Mitigations**: Require reviews on migrations, run `pnpm db:generate` + `db:push` in CI, back up before releases, and keep fixtures in `db/data/` free of sensitive info.
 
-## Technical Reliability and Scalability
+## 7. Web Application Security
 
-- Issue: Map tiles, search, and chat can degrade under load; lack of tests increases regressions; migrations can drift.
-- Why it matters: Outages or slow maps break core value; silent data issues compound.
-- Early signals: Slow TTFB/LCP on map pages, API 5xx spikes, long `pnpm build`, flaky local runs.
-- Mitigations: Cache map data, defer heavy components, add simple e2e smoke paths; performance budgets; monitor tile provider limits and add fallbacks.
+- **Issue**: Potential XSS through chat, injection via map query params, and missing rate limits/headers. Dependency drift increases vulnerability surface.
+- **Why it matters**: Exploits put user data at risk and can deface educational content, eroding credibility.
+- **Signals**: Lint warnings ignored, security header scanners failing, dependency alerts, or suspicious activity in server logs.
+- **Mitigations**: Enforce CSP, sanitize/escape UGC, validate all API inputs, implement rate limiting, and patch dependencies promptly. Use secret scanning and restrict CORS.
 
-## Database and Migration Risk
+## Summary & Next Steps
 
-- Issue: Schema drift, unsafe migrations, or poor seeding can corrupt data; `drizzle.config.ts` mispaths lead to missing or partial migrations.
-- Why it matters: Integrity issues undermine trust and complicate rollback; data loss becomes operational crisis.
-- Early signals: Divergent local vs prod schemas, failed `pnpm db:migrate`, manual hotfixes, inconsistent foreign keys.
-- Mitigations: Enforce migration discipline (`pnpm db:generate` → review → `db:migrate`), seed with non‑PII fixtures in `db/data/`, add constraints and indexes for critical relations.
+- Ship privacy safeguards first: data minimization, retention policies, user disclosures, and redaction pipelines.
+- Stand up accuracy workflows: provenance tracking, scheduled reviews, and “report issue” affordances for maps/resources.
+- Harden AI and community features: prompt filtering, disclaimers, moderation tooling, and rate limiting.
+- Invest in reliability: smoke tests, observability, and documented release/rollback steps.
+- Institutionalize database governance: reviewed migrations, backups, and safe seeding practices.
 
-## Security Posture
-
-- Issue: Potential XSS in rich text, injection via chat inputs, exposed environment vars, missing rate limits and CSRF protections.
-- Why it matters: Exploits risk user data and platform integrity; public health context raises stakes.
-- Early signals: Dependency alerts, lint warnings ignored, errors around unescaped HTML, elevated 429/401 logs without mitigation.
-- Mitigations: Strict output encoding, input validation, CSP and headers, rate limiting on chat/APIs, secret hygiene, periodic dependency updates.
-
-## Operational Gaps
-
-- Issue: No automated tests; unclear on-call/monitoring; deployment and rollback paths unspecified.
-- Why it matters: Incidents linger, regressions slip; team load increases as complexity grows.
-- Early signals: Manual QA only, lack of logs/metrics, inconsistent release notes.
-- Mitigations: Add minimal smoke tests for `/`, `/stis`, maps, chat; structured logging; a simple release checklist and rollback script.
-
-## Summary and Path Forward
-
-- Prioritize community and retention: Add saves, recommendations, and recognition to convert visitors into contributors.
-- Build data trust: Introduce provenance, expert review states, and scheduled audits; integrate official sources where possible.
-- Safeguard users: Implement privacy guardrails, moderation workflows, and clear disclaimers around non‑diagnostic content.
-- Harden the stack: Add basic e2e smoke checks, caching, rate limits, and safe migrations with `db/migrations`.
-- Grow visibility intentionally: Run small partner pilots and measured social campaigns; track acquisition and retention with analytics.
+Addressing these domains keeps Safhira trustworthy for people seeking sensitive STI guidance while preparing the platform for broader adoption.

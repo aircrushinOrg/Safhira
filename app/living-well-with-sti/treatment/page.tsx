@@ -8,12 +8,12 @@ import {Button} from "../../components/ui/button";
 import {Label} from "../../components/ui/label";
 import {Input} from "../../components/ui/input";
 import {Checkbox} from "../../components/ui/checkbox";
-import {Switch} from "../../components/ui/switch";
 import {Separator} from "../../components/ui/separator";
 import {AlertTriangle, Bell, CheckCircle2, ShieldAlert, ArrowLeft, Pill, Clock, CalendarPlus, Sparkles, Droplets} from "lucide-react";
 import {Toaster} from "../../components/ui/sonner";
 import {toast} from "sonner";
 import {motion, useReducedMotion} from "framer-motion";
+import BreadcrumbTrail from "../../components/BreadcrumbTrail";
 
 type RegimenType = "single" | "daily" | "multi";
 
@@ -76,6 +76,7 @@ export default function TreatmentAdherencePage() {
   const t = useTranslations("LivingWell");
   const locale = useLocale();
   const reduceMotion = useReducedMotion();
+  const tBreadcrumbs = useTranslations('Common.breadcrumbs');
 
   const [regimen, setRegimen] = useState<RegimenType>("daily");
   const [settings, setSettings] = useState<ReminderSettings>(() => createDefaultSettings());
@@ -389,6 +390,13 @@ export default function TreatmentAdherencePage() {
 
       <section className="relative py-10 md:py-16 px-4">
         <div className="container mx-auto max-w-7xl">
+          <BreadcrumbTrail
+            items={[
+              {label: tBreadcrumbs('home'), href: '/'},
+              {label: tBreadcrumbs('livingWell'), href: '/living-well-with-sti'},
+              {label: tBreadcrumbs('livingWellTreatment')},
+            ]}
+          />
           <motion.header className="relative z-10 mb-8 md:mb-12 rounded-3xl border border-white/40 bg-white/70 p-6 shadow-lg shadow-rose-200/40 backdrop-blur dark:border-teal-950/40 dark:bg-teal-950/40 dark:shadow-black/40 md:p-8"
             initial={{opacity: 0, y: reduceMotion ? 0 : 8}}
             animate={{opacity: 1, y: 0}}
@@ -605,18 +613,9 @@ export default function TreatmentAdherencePage() {
                   <Bell className="text-indigo-600" />
                   <h2 className="font-semibold text-lg">{t("reminders.title")}</h2>
                 </div>
-                  <div className="flex items-center justify-between gap-4 mb-4">
-                    <p className="text-sm text-gray-700 dark:text-gray-300">{t("reminders.desc")}</p>
-                    <div className="flex items-center gap-2">
-                      <Label htmlFor="reminders-switch" className="text-sm">{t("reminders.enable")}</Label>
-                      <Switch
-                        id="reminders-switch"
-                        checked
-                        disabled
-                        onCheckedChange={() => {}}
-                      />
-                    </div>
-                  </div>
+                <div className="mb-4">
+                  <p className="text-sm text-gray-700 dark:text-gray-300">{t("reminders.desc")}</p>
+                </div>
 
                 <fieldset>
                   <div className="grid gap-4">

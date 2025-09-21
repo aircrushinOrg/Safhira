@@ -8,6 +8,7 @@ import { ArrowLeft, CheckCircle, AlertTriangle, Heart, Shield, Users, Info } fro
 import { motion } from 'framer-motion';
 import {useRouter} from '../../../i18n/routing';
 import {useTranslations} from 'next-intl';
+import BreadcrumbTrail from '../../components/BreadcrumbTrail';
 
 export interface STIInfo {
   name: string;
@@ -49,11 +50,19 @@ export default function STIClient({ stiInfo }: { stiInfo: STIInfo }) {
   const router = useRouter();
   const t = useTranslations('STIDetail');
   const tPage = useTranslations('STIsPage');
+  const tBreadcrumbs = useTranslations('Common.breadcrumbs');
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-      <section className="py-8 sm:py-12 md:py-16 px-4">
-        <div className="container mx-auto">
+      <section className="py-8 sm:py-12 md:py-16 px-4 ">
+        <div className="container mx-auto max-w-6xl">
+          <BreadcrumbTrail
+            items={[
+              {label: tBreadcrumbs('home'), href: '/'},
+              {label: tBreadcrumbs('stis'), href: '/stis'},
+              {label: stiInfo.name},
+            ]}
+          />
           <div className="mb-6 sm:mb-8">
             <Button variant="ghost" onClick={() => router.push('/stis')} className="mb-4 text-sm sm:text-base">
               <ArrowLeft size={16} className="mr-2" />
@@ -121,7 +130,7 @@ export default function STIClient({ stiInfo }: { stiInfo: STIInfo }) {
                         General Symptoms
                       </h3>
                       <ul className="space-y-2 sm:space-y-3">
-                        {stiInfo.symptoms.common.map((symptom, index) => (
+                        {stiInfo.symptoms.common.slice(0, 5).map((symptom, index) => (
                           <li key={index} className="flex items-start space-x-2 sm:space-x-3">
                             <CheckCircle size={16} className="text-teal-500 mt-1 flex-shrink-0" />
                             <span className="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed">{symptom}</span>
@@ -136,7 +145,7 @@ export default function STIClient({ stiInfo }: { stiInfo: STIInfo }) {
                           {t('symptoms.women')}
                         </h3>
                         <ul className="space-y-2 sm:space-y-3">
-                          {stiInfo.symptoms.women.map((symptom, index) => (
+                          {stiInfo.symptoms.women.slice(0, 5).map((symptom, index) => (
                             <li key={index} className="flex items-start space-x-2 sm:space-x-3">
                               <CheckCircle size={14} className="text-pink-500 mt-1 flex-shrink-0" />
                               <span className="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed">{symptom}</span>
@@ -150,7 +159,7 @@ export default function STIClient({ stiInfo }: { stiInfo: STIInfo }) {
                           {t('symptoms.men')}
                         </h3>
                         <ul className="space-y-2 sm:space-y-3">
-                          {stiInfo.symptoms.men.map((symptom, index) => (
+                          {stiInfo.symptoms.men.slice(0, 5).map((symptom, index) => (
                             <li key={index} className="flex items-start space-x-2 sm:space-x-3">
                               <CheckCircle size={14} className="text-blue-500 mt-1 flex-shrink-0" />
                               <span className="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed">{symptom}</span>
@@ -166,7 +175,7 @@ export default function STIClient({ stiInfo }: { stiInfo: STIInfo }) {
                           {t('symptoms.other')}
                         </h3>
                         <ul className="space-y-2 sm:space-y-3">
-                          {stiInfo.symptoms.general.map((symptom, index) => (
+                          {stiInfo.symptoms.general.slice(0, 5).map((symptom, index) => (
                             <li key={index} className="flex items-start space-x-2 sm:space-x-3">
                               <CheckCircle size={14} className="text-purple-500 mt-1 flex-shrink-0" />
                               <span className="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed">{symptom}</span>
@@ -185,7 +194,7 @@ export default function STIClient({ stiInfo }: { stiInfo: STIInfo }) {
                       {t('transmission.title', { name: stiInfo.name })}
                     </h3>
                     <ul className="space-y-3 sm:space-y-4">
-                      {stiInfo.transmission.map((method, index) => (
+                      {stiInfo.transmission.slice(0, 5).map((method, index) => (
                         <li key={index} className="flex items-start space-x-2 sm:space-x-3">
                           <CheckCircle size={16} className="text-orange-500 mt-1 flex-shrink-0" />
                           <span className="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed">{method}</span>
@@ -202,7 +211,7 @@ export default function STIClient({ stiInfo }: { stiInfo: STIInfo }) {
                       {t('effects.title')}
                     </h3>
                     <ul className="space-y-3 sm:space-y-4">
-                      {stiInfo.healthEffects.map((effect, index) => (
+                      {stiInfo.healthEffects.slice(0, 5).map((effect, index) => (
                         <li key={index} className="flex items-start space-x-2 sm:space-x-3">
                           <CheckCircle size={16} className="text-red-500 mt-1 flex-shrink-0" />
                           <span className="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed">{effect}</span>
@@ -219,7 +228,7 @@ export default function STIClient({ stiInfo }: { stiInfo: STIInfo }) {
                       {t('prevention.title')}
                     </h3>
                     <ul className="space-y-3 sm:space-y-4">
-                      {stiInfo.prevention.map((method, index) => (
+                      {stiInfo.prevention.slice(0, 5).map((method, index) => (
                         <li key={index} className="flex items-start space-x-2 sm:space-x-3">
                           <CheckCircle size={16} className="text-green-500 mt-1 flex-shrink-0" />
                           <span className="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed">{method}</span>

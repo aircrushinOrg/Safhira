@@ -1,6 +1,22 @@
 {
   "Common": {
-    "loading": "Memuat..."
+    "loading": "Memuat...",
+    "breadcrumbs": {
+      "home": "Laman Utama",
+      "stis": "Ketahui tentang STI",
+      "stiPrevention": "Pencegahan",
+      "stiPrevalence": "Trend Prevalens",
+      "livingWell": "Hidup Sihat dengan STI",
+      "livingWellTreatment": "Kepatuhan Rawatan",
+      "livingWellLifestyle": "Gaya Hidup Positif",
+      "livingWellRelationships": "Komunikasi dengan Pasangan",
+      "quiz": "Kuiz Mitos",
+      "chat": "AI Chat",
+      "chatAbout": "Tentang Safhira AI",
+      "privacyPolicy": "Dasar Privasi",
+      "termsOfUse": "Terma Penggunaan",
+      "services": "Perkhidmatan STI"
+    }
   },
   "hero": {
     "slide1": {
@@ -337,11 +353,16 @@
       "subtitle": "Maklumat menyeluruh dan bebas penghakiman tentang jangkitan penyakit kelamin (STI). Pengetahuan membantu anda membuat keputusan kesihatan yang bermaklumat.",
       "imageAlt": "Ilustrasi perubatan yang mewakili penjagaan kesihatan"
     },
-    "support": {
-      "title": "Anda Sedang Melangkah dengan Positif",
-      "text": "Mempelajari STI menunjukkan kematangan dan tanggungjawab. Maklumat ini disampaikan tanpa penghakiman kerana kesihatan seksual adalah sebahagian penting daripada kesejahteraan. Ingat: mempunyai STI tidak mencerminkan peribadi anda—ia adalah keadaan kesihatan yang boleh dirawat atau diurus."
-    },
-    "modules": {
+  "support": {
+    "title": "Anda Sedang Melangkah dengan Positif",
+    "text": "Mempelajari STI menunjukkan kematangan dan tanggungjawab. Maklumat ini disampaikan tanpa penghakiman kerana kesihatan seksual adalah sebahagian penting daripada kesejahteraan. Ingat: mempunyai STI tidak mencerminkan peribadi anda—ia adalah keadaan kesihatan yang boleh dirawat atau diurus."
+  },
+  "video": {
+    "title": "Mengapa Saringan STI Penting",
+    "description": "Video ringkas daripada Kementerian Kesihatan Malaysia ini menerangkan bagaimana saringan dan rawatan awal melindungi anda serta pasangan anda.",
+    "caption": "Video ihsan Kementerian Kesihatan Malaysia"
+  },
+  "modules": {
       "prevention": {
         "badge": "Modul Pembelajaran Pencegahan"
       },
@@ -760,6 +781,7 @@
     },
     "resources": {
       "heading": "Sumber & Sokongan Tambahan",
+      "local": "Sokongan Tempatan di Malaysia",
       "my": {
         "title": "Sumber Khusus Malaysia",
         "clinics": {

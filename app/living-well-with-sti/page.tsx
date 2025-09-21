@@ -11,10 +11,12 @@ import {subscribeToNewsletter, type NewsletterSubscribeResult} from "./actions";
 import {Stethoscope, Heart, HeartPulse, HeartHandshake, ShieldAlert, ArrowRight, Mail, Loader2, CheckCircle2, AlertCircle} from "lucide-react";
 import {motion, useReducedMotion} from "framer-motion";
 import Image from "next/image";
+import BreadcrumbTrail from "../components/BreadcrumbTrail";
 
 export default function LivingWellWithSTIPage() {
   const t = useTranslations("LivingWell");
   const tRoot = useTranslations();
+  const tBreadcrumbs = useTranslations('Common.breadcrumbs');
   const reduceMotion = useReducedMotion();
   const [email, setEmail] = useState("");
   const [subscriptionResult, setSubscriptionResult] = useState<NewsletterSubscribeResult | null>(null);
@@ -105,8 +107,14 @@ export default function LivingWellWithSTIPage() {
 
   return (
     <div className="bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-      <section className="py-8 md:py-12 lg:py-16 xl:py-20 px-4">
-        <div className="mx-auto max-w-6xl">
+      <section className="py-8 sm:py-12 md:py-16 px-4">
+        <div className="container mx-auto max-w-6xl">
+          <BreadcrumbTrail
+            items={[
+              {label: tBreadcrumbs('home'), href: '/'},
+              {label: tBreadcrumbs('livingWell')},
+            ]}
+          />
           <Dialog
             open={isDialogOpen}
             onOpenChange={(open) => {

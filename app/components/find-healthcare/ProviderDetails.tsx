@@ -17,6 +17,7 @@ import {
   ExternalLink,
   Navigation
 } from 'lucide-react';
+import BreadcrumbTrail from './BreadcrumbTrail';
 
 interface ProviderDetailsProps {
   provider: ProviderRecord;
@@ -24,6 +25,7 @@ interface ProviderDetailsProps {
 
 export function ProviderDetails({ provider }: ProviderDetailsProps) {
   const t = useTranslations('ProviderDetails');
+  const tBreadcrumbs = useTranslations('Common.breadcrumbs');
   const [isClient, setIsClient] = useState(false);
   
   useEffect(() => {
@@ -77,6 +79,13 @@ export function ProviderDetails({ provider }: ProviderDetailsProps) {
 
   return (
     <div className="w-full max-w-4xl mx-auto p-6">
+      <BreadcrumbTrail
+        items={[
+          {label: tBreadcrumbs('home'), href: '/'},
+          {label: tBreadcrumbs('services'), href: '/sti-services'},
+          {label: provider.name},
+        ]}
+      />
       {/* Header */}
       <div className="mb-6">
         <Link 
