@@ -8,7 +8,6 @@ import {Button} from "../../components/ui/button";
 import {Label} from "../../components/ui/label";
 import {Input} from "../../components/ui/input";
 import {Checkbox} from "../../components/ui/checkbox";
-import {Switch} from "../../components/ui/switch";
 import {Separator} from "../../components/ui/separator";
 import {AlertTriangle, Bell, CheckCircle2, ShieldAlert, ArrowLeft, Pill, Clock, CalendarPlus, Sparkles, Droplets} from "lucide-react";
 import {Toaster} from "../../components/ui/sonner";
@@ -605,18 +604,9 @@ export default function TreatmentAdherencePage() {
                   <Bell className="text-indigo-600" />
                   <h2 className="font-semibold text-lg">{t("reminders.title")}</h2>
                 </div>
-                  <div className="flex items-center justify-between gap-4 mb-4">
-                    <p className="text-sm text-gray-700 dark:text-gray-300">{t("reminders.desc")}</p>
-                    <div className="flex items-center gap-2">
-                      <Label htmlFor="reminders-switch" className="text-sm">{t("reminders.enable")}</Label>
-                      <Switch
-                        id="reminders-switch"
-                        checked
-                        disabled
-                        onCheckedChange={() => {}}
-                      />
-                    </div>
-                  </div>
+                <div className="mb-4">
+                  <p className="text-sm text-gray-700 dark:text-gray-300">{t("reminders.desc")}</p>
+                </div>
 
                 <fieldset>
                   <div className="grid gap-4">

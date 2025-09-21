@@ -23,7 +23,7 @@ async function sendWelcomeEmail(recipientEmail: string) {
 
   const fromEmail = process.env.RESEND_FROM ?? RESEND_DEFAULT_FROM;
 
-  const subject = "Henry from Safhira: how to live well with sti";
+  const subject = "Safhira: how to live well with sti";
   const plainBody = [
     "Hi there,",
     "",

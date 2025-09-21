@@ -82,6 +82,19 @@ export function FeaturesSection() {
       buttonText: t('features.learnMore')
     },
     {
+      id: 'mapper',
+      title: t('features.mapper.title'),
+      description: t('features.mapper.description'),
+      icon: MapPin,
+      color: 'from-orange-500 to-orange-600 dark:from-orange-400 dark:to-orange-500',
+      bgColor: 'bg-orange-50 dark:bg-orange-900/20',
+      borderColor: 'border-orange-200 dark:border-orange-800',
+      textColor: 'text-orange-700 dark:text-orange-300',
+      iconColor: 'text-orange-500',
+      action: () => router.push('/sti-services'),
+      buttonText: t('features.learnMore')
+    },
+    {
       id: 'education',
       title: t('features.education.title'),
       description: t('features.education.description'),
@@ -110,18 +123,6 @@ export function FeaturesSection() {
   ];
 
   const upcomingFeatures: UpcomingFeature[] = [
-    {
-      id: 'mapper',
-      title: t('features.mapper.title'),
-      description: t('features.mapper.description'),
-      icon: MapPin,
-      color: 'from-orange-500 to-orange-600 dark:from-orange-400 dark:to-orange-500',
-      bgColor: 'bg-gray-100 dark:bg-gray-700/50',
-      borderColor: 'border-gray-300 dark:border-gray-600',
-      textColor: 'text-gray-600 dark:text-gray-300',
-      iconColor: 'text-gray-500',
-      comingSoon: true
-    },
     {
       id: 'simulator',
       title: t('features.simulator.title'),
