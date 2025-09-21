@@ -1,3 +1,8 @@
+/**
+ * Interactive Quiz page that presents myths and facts about STIs in an engaging format.
+ * This page features a tilted scroll interface displaying quiz questions, educational content, and evidence-based information.
+ * Helps users learn about sexual health through gamified content while breaking down stigma and misconceptions.
+ */
 import { TiltedScrollDemo } from '@/app/components/quiz/TiltedScrollDemo'
 import { getRandomQuizQuestions, getAllQuizQuestions, type QuizQuestionRecord } from '@/app/actions/quiz-question-actions'
 import { getTranslations } from 'next-intl/server'

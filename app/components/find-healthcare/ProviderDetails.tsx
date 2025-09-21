@@ -17,7 +17,7 @@ import {
   ExternalLink,
   Navigation
 } from 'lucide-react';
-import BreadcrumbTrail from './BreadcrumbTrail';
+import BreadcrumbTrail from '../BreadcrumbTrail';
 
 interface ProviderDetailsProps {
   provider: ProviderRecord;

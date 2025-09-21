@@ -1,3 +1,8 @@
+/**
+ * Header wrapper component that manages navigation state and provides routing integration for the main header.
+ * This component tracks the current page section and handles navigation events while supporting internationalization routing.
+ * Features intelligent section detection based on URL paths and provides chat functionality integration.
+ */
 'use client'
 
 import {useState, useEffect} from 'react';

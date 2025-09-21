@@ -1,3 +1,8 @@
+/**
+ * Language/locale switcher component that allows users to change the application language.
+ * This component provides a dropdown menu with flag icons for different supported languages (English, Chinese, Malay).
+ * Integrates with Next.js internationalization routing to preserve the current page while switching locales.
+ */
 'use client'
 
 import {Languages} from 'lucide-react';

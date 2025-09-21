@@ -1,3 +1,8 @@
+/**
+ * Root layout component for the Safhira application providing global styles, font configuration, and core providers.
+ * This layout sets up the foundational structure including theme provider, internationalization support, and global metadata.
+ * Includes chatbot integration, Google Analytics, and Hotjar tracking for user insights and support functionality.
+ */
 import './globals.css';
 
 import {Poppins} from 'next/font/google';

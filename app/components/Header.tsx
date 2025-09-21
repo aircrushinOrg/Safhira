@@ -1,3 +1,8 @@
+/**
+ * Main application header component providing navigation, language switching, and theme toggle functionality.
+ * This component features a responsive design with mobile sheet menu, dropdown navigation for STI resources, and integration with internationalization.
+ * Supports section-based navigation and includes chat functionality access with proper accessibility features.
+ */
 "use client";
 
 import { Button } from './ui/button';

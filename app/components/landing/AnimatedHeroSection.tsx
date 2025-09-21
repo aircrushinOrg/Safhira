@@ -1,3 +1,8 @@
+/**
+ * Animated hero section component featuring slideshow with multiple educational slides and call-to-action buttons.
+ * This component provides the main visual centerpiece of the landing page with rotating content about STI education, AI chat, resources, and healthcare access.
+ * Features smooth transitions, automatic slideshow progression, manual navigation controls, and responsive design with illustration integration.
+ */
 'use client'
 
 import React, { useState, useEffect, useCallback } from 'react';

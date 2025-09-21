@@ -1,3 +1,8 @@
+/**
+ * Resources section component displaying emergency contacts, support services, and important healthcare information.
+ * This component provides users with quick access to crisis helplines, support organizations, and location-based healthcare resources.
+ * Features interactive modals for contact information and location services with appropriate safety warnings and accessibility considerations.
+ */
 import { Card } from './ui/card';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';

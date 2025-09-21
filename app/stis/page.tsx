@@ -1,3 +1,8 @@
+/**
+ * Comprehensive STI information hub page displaying a grid of different sexually transmitted infections.
+ * This page provides an overview of various STIs with categorization by type (bacterial, viral, parasitic), severity levels, and treatability options.
+ * Features educational video content, prevention modules, prevalence data visualization, and detailed STI cards with filtering capabilities.
+ */
 'use client'
 
 import { Card } from '../components/ui/card';

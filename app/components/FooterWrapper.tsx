@@ -1,3 +1,8 @@
+/**
+ * Footer wrapper component that conditionally renders the footer based on current route.
+ * This component manages footer visibility by hiding it on chat pages where it might interfere with the chat interface.
+ * Features intelligent path detection that works with internationalized routing to determine when to show or hide the footer.
+ */
 'use client'
 
 import {usePathname} from '../../i18n/routing';

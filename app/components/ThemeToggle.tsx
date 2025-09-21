@@ -1,3 +1,8 @@
+/**
+ * Theme toggle component that allows users to switch between light and dark modes.
+ * This component provides a simple button interface with appropriate icons and accessibility features.
+ * Integrates with next-themes for persistent theme state management across the application.
+ */
 "use client";
 
 import * as React from "react";

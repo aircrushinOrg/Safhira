@@ -122,7 +122,7 @@ export default function TreatmentAdherencePage() {
           icon: Droplets,
         }
       : null,
-  ].filter(Boolean) as Array<{ label: string; value: string; icon: typeof Pill }> , [dayNames, regimenLabel, settings.times, t, upcomingDose, weekdayFormatter, timeFormatter]);
+  ].filter(Boolean) as Array<{ label: string; value: string; icon: typeof Pill }> , [regimenLabel, settings.times, t, upcomingDose, weekdayFormatter, timeFormatter]);
 
   // Load persisted state
   useEffect(() => {

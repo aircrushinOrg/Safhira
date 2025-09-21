@@ -1,3 +1,8 @@
+/**
+ * AI Chat interface page that embeds the Safhira AI chatbot for STI-related questions.
+ * This page provides a conversational interface where users can ask questions about sexual health in a safe, private environment.
+ * Features loading states, responsive design, and a disclaimer about medical advice limitations.
+ */
 'use client'
 
 import { motion } from 'framer-motion';
