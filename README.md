@@ -10,45 +10,67 @@
 
 Safhira is a comprehensive sexual health education platform specifically designed for Malaysian youth. Built with cultural sensitivity and modern web technologies, it provides accessible, stigma-free education about sexually transmitted infections (STIs) through an interactive and user-friendly experience.
 
-### Key Features
+### ✨ Key Features
 
-- **📚 Educational Content**: Comprehensive STI information with symptoms, prevention, and treatment
-- **🗺️ Interactive Prevalence Maps**: 
-  - Choropleth maps visualizing STI data across Malaysian states (2017-2022)
+- **📚 Comprehensive STI Education**: Detailed information on symptoms, transmission, prevention, and treatment for major STIs
+- **🗺️ Interactive Data Visualization**: 
+  - Choropleth maps visualizing STI prevalence across Malaysian states (2017-2022)
   - Real-time year slider with animated transitions
   - Color-coded intensity based on incidence rates
   - Hover tooltips with detailed state statistics
   - Zoom and pan functionality for detailed exploration
-- **📈 Data Visualization**: 
+- **📈 Advanced Analytics**: 
   - Time series charts showing STI trends over time
   - Statistical summaries (highest, lowest, average rates)
   - Multi-disease comparison capabilities
-- **💬 AI Chat Support**: Get personalized guidance and answers to health questions
-- **📊 Interactive Quizzes (Under Development)**: Test knowledge with gamified learning experiences
-- **🏥 Resource Directory (Under Development)**: Find testing centers and healthcare resources
-- **🎨 Culturally Sensitive Design**: Interface designed with Malaysian youth in mind
-- **🌙 Dark/Light Theme**: Comfortable viewing in any environment
-- **📱 Responsive Design**: Optimized for mobile and desktop experiences
-- **♿ Accessibility**: Built with inclusive design principles
+- **💬 AI-Powered Chat Assistant**: 
+  - Personalized guidance and answers to health questions
+  - RAG (Retrieval-Augmented Generation) architecture
+  - Web search integration for current information
+  - Location-based healthcare provider recommendations
+- **🎮 Interactive Learning**: 
+  - Gamified quiz system with myths vs facts
+  - Leaderboard and scoring system
+  - Tilted scroll interface for engaging content delivery
+- **🏥 Healthcare Provider Directory**: 
+  - Searchable database of STI testing centers
+  - Location-based filtering and distance calculation
+  - Service-specific search (STI testing, PrEP, PEP)
+- **🏠 Living Well Resources**: 
+  - Treatment adherence tracking tools
+  - Lifestyle management guidance
+  - Relationship communication support with AI-powered tone tuning
+- **🎨 Modern Design System**: 
+  - Dark/light theme support
+  - Responsive design for all devices
+  - Accessibility-first approach
+  - Smooth animations and transitions
 
 ## 🛠️ Tech Stack
 
 ### Frontend
-- **Framework**: Next.js 14 with App Router and Server Components
+- **Framework**: Next.js 15 with App Router and Server Components
 - **Language**: TypeScript with strict type checking
 - **Styling**: Tailwind CSS + Shadcn/ui + Radix UI components
 - **Animations**: Framer Motion for smooth transitions
 - **Charts**: Chart.js for time series, React Simple Maps for choropleth visualizations
+- **Internationalization**: Next-intl for multi-language support
 - **Theme**: Next Themes with system preference support
 - **Icons**: Lucide React for consistent iconography
-- **Fonts**: Geist font family for modern typography
+- **Fonts**: Poppins font family for modern typography
 
 ### Backend & Database
 - **Database**: PostgreSQL (supports Vercel Postgres, Neon, local instances)
 - **ORM**: Drizzle ORM with full type safety and relation queries
-- **Authentication**: Custom session management with expiration tracking
+- **APIs**: RESTful APIs with Next.js API Routes
 - **Migrations**: Drizzle Kit for automated schema versioning
 - **Data Processing**: Server Actions for form handling and data mutations
+
+### AI & External Services
+- **AI Chat**: OpenAI integration for conversational AI
+- **Web Search**: Tavily API for real-time information retrieval
+- **Maps**: Google Maps API for location services and distance calculation
+- **Geocoding**: OpenStreetMap Nominatim for address lookup
 
 ### Development Tools
 - **Package Manager**: pnpm for fast, efficient dependency management
@@ -82,13 +104,26 @@ Safhira is a comprehensive sexual health education platform specifically designe
    
    Create a `.env.local` file:
    ```env
+   # Database (Required)
    DATABASE_URL="postgresql://username:password@host:5432/database?sslmode=require"
+   
+   # AI Services (Optional - for chat functionality)
+   OPENAI_API_KEY="your_openai_api_key"
+   TAVILY_API_KEY="your_tavily_api_key"
+   
+   # Google Maps (Optional - for location services)
+   NEXT_PUBLIC_GOOGLE_MAPS_API_KEY="your_google_maps_api_key"
    ```
 
    **Database Options:**
    - **Vercel Postgres**: Create at [Vercel Dashboard](https://vercel.com/dashboard)
    - **Neon**: Free tier at [neon.tech](https://neon.tech/)
    - **Local PostgreSQL**: Set up local instance
+   
+   **External Service Setup:**
+   - **OpenAI**: Get API key from [OpenAI Platform](https://platform.openai.com/)
+   - **Tavily**: Register at [Tavily](https://tavily.com/) for web search
+   - **Google Maps**: Enable Maps JavaScript API at [Google Cloud Console](https://console.cloud.google.com/)
 
 4. **Database setup**
    ```bash
@@ -113,52 +148,81 @@ Safhira is a comprehensive sexual health education platform specifically designe
 
 ```
 safhira/
-├── app/                          # Next.js App Router
-│   ├── actions/                # Server actions
-│   ├── components/              # React components
-│   │   ├── ui/                 # Shadcn/ui components
-│   │   ├── landing/            # Landing page components
-│   │   │   ├── BreakingStigmaSection.tsx # Anti-stigma messaging
-│   │   │   ├── FeaturesSection.tsx      # Feature highlights
-│   │   │   ├── FinalNoteSection.tsx     # Closing message
-│   │   │   ├── HeroSection.tsx          # Main hero section
-│   │   │   ├── PrevalenceSection.tsx    # STI data visualization
-│   │   │   ├── STIChoroplethChart.tsx   # Interactive Malaysia map
-│   │   │   └── STITrendsChart.tsx       # Time series charts
-│   │   ├── Header.tsx          # Navigation header with mobile menu
-│   │   ├── Footer.tsx          # Site footer
-│   │   ├── AIChat.tsx          # AI chat interface
-│   │   ├── LearningModules.tsx # Educational content (Under Development)
-│   │   ├── QuizSection.tsx     # Interactive quizzes (Under Development)
-│   │   ├── ResourcesSection.tsx # Healthcare resources (Under Development)
-│   │   └── ThemeToggle.tsx     # Dark/light mode toggle
-│   ├── chat/                   # AI chat pages
-│   ├── stis/                   # STI information pages
-│   │   ├── [sti]/page.tsx     # Dynamic STI detail pages
-│   │   └── prevalence/page.tsx # Interactive prevalence maps
-│   ├── providers/              # React context providers
-│   ├── privacy-policy/         # Privacy policy page (Under Development)
-│   ├── terms-of-use/          # Terms of use page (Under Development)
-│   ├── rights/                # User rights page (Under Development)
-│   ├── layout.tsx              # Root layout with theme provider
-│   ├── page.tsx               # Landing page
-│   ├── not-found.tsx          # 404 error page
-│   ├── sitemap.ts             # SEO sitemap
-│   ├── robots.ts              # SEO robots.txt
-│   ├── globals.css            # Global Tailwind styles
-│   └── db.ts                  # Database connection
-├── constants/                   # App constants
-│   └── sti-prevalence.ts      # STI types and state data
-├── db/                          # Database layer
-│   ├── schema.ts              # Drizzle schema definitions
-│   └── migrations/            # Auto-generated migration files
-├── lib/                        # Utility functions
-│   └── utils.ts              # Tailwind utilities and helpers
-├── public/                     # Static assets
-│   ├── landing-hero-*.png    # Hero section images
-│   ├── landing-my-map.json   # Malaysia GeoJSON data
-│   └── *.svg                 # Various illustrations
-└── README.md                 # This file
+├── app/                              # Next.js App Router
+│   ├── [locale]/                     # Internationalized routes
+│   │   ├── chat/                     # AI chat pages with about section
+│   │   ├── find-healthcare/          # Healthcare provider directory
+│   │   ├── living-well-with-sti/     # Post-diagnosis support resources
+│   │   ├── quiz/                     # Interactive learning quizzes
+│   │   ├── stis/                     # STI information and data
+│   │   ├── privacy-policy/           # Privacy policy page
+│   │   ├── terms-of-use/            # Terms of service page
+│   │   └── layout.tsx               # Locale-specific layout
+│   ├── actions/                      # Server actions for data operations
+│   │   ├── sti-actions.ts           # STI database operations
+│   │   ├── provider-actions.ts      # Healthcare provider queries
+│   │   ├── quiz-question-actions.ts # Quiz content management
+│   │   ├── leaderboard-actions.ts   # Scoring and rankings
+│   │   └── prevalence-actions.ts    # Epidemiological data
+│   ├── api/                          # API routes
+│   │   ├── geocode/                 # Location coordinate lookup
+│   │   ├── calculate-distances/     # Provider distance calculation
+│   │   ├── leaderboard/             # Quiz scoring system
+│   │   └── tone-tune/               # AI conversation assistance
+│   ├── components/                   # React components
+│   │   ├── ui/                      # Shadcn/ui design system components
+│   │   ├── landing/                 # Homepage sections
+│   │   │   ├── AnimatedHeroSection.tsx    # Dynamic hero slideshow
+│   │   │   ├── BreakingStigmaSection.tsx  # Anti-stigma messaging
+│   │   │   ├── FeaturesSection.tsx        # Platform capabilities
+│   │   │   ├── FAQSection.tsx             # Frequently asked questions
+│   │   │   ├── PrevalenceSection.tsx      # Data visualization hub
+│   │   │   ├── STIChoroplethChart.tsx     # Interactive Malaysia map
+│   │   │   └── STITrendsChart.tsx         # Time series analytics
+│   │   ├── find-healthcare/         # Provider directory components
+│   │   │   ├── ProviderSearch.tsx         # Search and filtering
+│   │   │   ├── ProviderCard.tsx           # Provider information cards
+│   │   │   └── ProviderDetails.tsx        # Detailed provider profiles
+│   │   ├── quiz/                    # Interactive learning components
+│   │   │   ├── TiltedScrollDemo.tsx       # Scroll-based quiz interface
+│   │   │   └── MythListClient.tsx         # Myth vs fact content
+│   │   ├── leaderboard/             # Gamification components
+│   │   │   ├── LeaderboardDisplay.tsx     # Ranking visualization
+│   │   │   ├── NicknameInputDialog.tsx    # Score submission
+│   │   │   └── ScoreSubmittedDialog.tsx   # Achievement feedback
+│   │   ├── Header.tsx               # Navigation with locale switcher
+│   │   ├── Footer.tsx               # Site footer with resources
+│   │   ├── ThemeToggle.tsx          # Dark/light mode toggle
+│   │   ├── BreadcrumbTrail.tsx      # Navigation breadcrumbs
+│   │   ├── ResourcesSection.tsx     # Emergency resources and contacts
+│   │   └── DifyChatbotEmbed.tsx     # External chatbot integration
+│   ├── chat/                         # Direct chat routes (non-localized)
+│   ├── stis/                         # Direct STI routes (non-localized)
+│   ├── living-well-with-sti/         # Direct wellness routes
+│   ├── quiz/                         # Direct quiz routes
+│   ├── privacy-policy/               # Direct policy routes
+│   ├── terms-of-use/                # Direct terms routes
+│   ├── providers/                    # React context providers
+│   ├── layout.tsx                    # Root layout with global providers
+│   ├── page.tsx                      # Landing page
+│   ├── not-found.tsx                # Global 404 error page
+│   ├── sitemap.ts                    # SEO sitemap generation
+│   ├── robots.ts                     # Search engine directives
+│   ├── globals.css                   # Global Tailwind styles
+│   └── db.ts                        # Database connection setup
+├── db/                               # Database layer
+│   ├── schema.ts                    # Drizzle schema definitions
+│   └── migrations/                  # Auto-generated migration files
+├── i18n/                            # Internationalization configuration
+├── lib/                             # Utility functions
+│   └── utils.ts                    # Helper functions and utilities
+├── public/                          # Static assets
+│   ├── landing-hero-*.png          # Hero section illustrations
+│   ├── landing-my-map.json         # Malaysia GeoJSON data
+│   ├── logo.svg                    # Application logo
+│   └── *.svg                       # Various illustrations
+├── types/                           # TypeScript type definitions
+└── README.md                       # Project documentation
 ```
 
 ## 🎯 Development Commands
@@ -181,14 +245,26 @@ pnpm db:studio        # Open Drizzle Studio for database inspection
 
 ### Core Tables
 
-- **`sti_state`**: STI incidence data by Malaysian states, years, and disease types
+- **`sti_state`**: STI prevalence data by Malaysian states, years, and disease types
   - Primary key: (date, state, disease)
   - Tracks cases and incidence rates per 100,000 population
-  - Indexed on date, state, and disease for optimized queries
-- **`sti_info`**: Comprehensive STI information database
+  - Supports choropleth map visualizations and trend analysis
+- **`sti`**: Comprehensive STI information database
   - Detailed symptoms, transmission methods, prevention strategies
   - Treatment options and Malaysian-specific context
   - Categorized by type (Bacterial/Viral/Parasitic) and severity
+- **`provider`**: Healthcare provider directory for STI services
+  - Location data with coordinates for mapping
+  - Service types (STI testing, PrEP, PEP)
+  - Contact information and operating hours
+- **`quiz_questions`**: Interactive quiz content for education
+  - Myth vs fact statements with explanations
+  - Categorization and difficulty levels
+- **`quiz_results`**: User quiz performance tracking
+  - Score history and leaderboard functionality
+  - Anonymous participation tracking
+- **`quiz_leaderboard_stats`**: Aggregated leaderboard statistics
+  - Ranking calculations and performance metrics
 
 ### Key Features
 
@@ -197,6 +273,7 @@ pnpm db:studio        # Open Drizzle Studio for database inspection
 - **Composite primary keys** for complex relationships
 - **Strategic indexing** for optimized data retrieval
 - **JSON-stored arrays** for flexible symptom and prevention data
+- **Geospatial support** for location-based provider search
 
 ## 🎨 Design System
 
@@ -212,39 +289,64 @@ pnpm db:studio        # Open Drizzle Studio for database inspection
 ## 🌐 Pages & Features
 
 ### 🏠 Landing Page (`/`)
-- **Hero Section**: Animated imagery with feature highlights and call-to-action
-- **Breaking Stigma Section**: Anti-stigma messaging with supportive tone
+- **Animated Hero Section**: Dynamic slideshow highlighting key platform features
+- **Breaking Stigma Section**: Anti-stigma messaging with supportive educational content
 - **Prevalence Section**: Interactive STI data visualization for Malaysia
   - Choropleth map with state-by-state data (2017-2022)
-  - Time series trends chart
-  - Real-time statistics and comparisons
-- **Features Section**: Platform capabilities overview
-- **Final Note Section**: Encouraging closing message
+  - Time series trends chart with disease comparison
+  - Real-time statistics and demographic analysis
+- **Features Section**: Platform capabilities and benefits overview
+- **FAQ Section**: Common questions about sexual health and platform usage
+- **Final Note Section**: Encouraging message and next steps
 
 ### 💬 AI Chat (`/chat`)
-- Interactive AI assistant for health questions
-- Contextual responses about sexual health
-- Anonymous and supportive environment
-- Privacy-focused design
+- **Interactive AI Assistant**: RAG-powered chatbot for health questions
+- **About Page** (`/chat/about`): Technical architecture and benchmark results
+- **Contextual Responses**: Evidence-based sexual health information
+- **Web Search Integration**: Real-time information retrieval
+- **Location Services**: Healthcare provider recommendations
+- **Privacy-Focused Design**: Anonymous and secure conversations
 
 ### 📊 STI Information (`/stis`)
-- **Individual STI pages** (`/stis/[sti]`): Detailed information per STI including symptoms, transmission, treatment
-- **Prevalence maps** (`/stis/prevalence`): Full-screen interactive visualization
-  - Malaysian state data with zoom functionality
+- **STI Directory**: Overview of major sexually transmitted infections
+- **Individual STI Pages** (`/stis/[sti]`): Comprehensive information including:
+  - Symptoms by gender and general presentation
+  - Transmission methods and risk factors
+  - Health effects and complications
+  - Prevention strategies and treatment options
+  - Malaysian-specific context and statistics
+- **Prevalence Maps** (`/stis/prevalence`): Full-screen data visualization
+  - Interactive choropleth map with zoom and pan
   - Multi-year comparison (2017-2022)
-  - Disease-specific filtering (HIV, AIDS, Gonorrhea, Syphilis, Chancroid)
-  - Statistical analysis tools
+  - Disease-specific filtering and analysis
+  - Statistical summaries and trends
 
-### 📚 Educational Content (Under Development)
-- Interactive learning modules with cultural sensitivity
-- Knowledge assessment quizzes
-- Myth-busting sections
-- Resource directory for healthcare access
+### 🎮 Interactive Quiz (`/quiz`)
+- **Gamified Learning**: Myth vs fact educational content
+- **Tilted Scroll Interface**: Engaging visual presentation
+- **Scoring System**: Performance tracking and feedback
+- **Leaderboard**: Competitive learning with rankings
+- **Progress Tracking**: Individual learning analytics
 
-### 📄 Legal & Privacy (Under Development)
-- **Privacy Policy** (`/privacy-policy`): Data handling transparency
-- **Terms of Use** (`/terms-of-use`): Platform usage guidelines
-- **User Rights** (`/rights`): User empowerment and rights information
+### 🏥 Find Healthcare (`/find-healthcare`)
+- **Provider Search**: Comprehensive directory of STI testing centers
+- **Location-Based Filtering**: Find nearby healthcare providers
+- **Service-Specific Search**: Filter by STI testing, PrEP, PEP services
+- **Distance Calculation**: Real-time travel distance and time
+- **Detailed Provider Profiles**: Contact information, hours, services
+- **Interactive Map Integration**: Visual location browsing
+
+### 🏠 Living Well with STI (`/living-well-with-sti`)
+- **Treatment Adherence** (`/treatment`): Medication tracking and reminders
+- **Lifestyle Management** (`/lifestyle`): Health and wellness guidance
+- **Relationship Support** (`/relationships`): Communication tools and advice
+- **AI-Powered Tone Tuning**: Conversation assistance for difficult topics
+- **Resource Bookmarking**: Save important information for later
+
+### 📄 Legal & Privacy
+- **Privacy Policy** (`/privacy-policy`): Comprehensive data handling transparency
+- **Terms of Use** (`/terms-of-use`): Platform usage guidelines and responsibilities
+- **Multi-language Support**: Available in English, Malay, and Chinese
 
 ## 🔧 Configuration Files
 
