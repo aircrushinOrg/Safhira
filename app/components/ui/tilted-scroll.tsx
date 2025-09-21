@@ -1,7 +1,7 @@
 "use client"
 
 import { cn } from "@/lib/utils"
-import { useRef, useState, useEffect } from "react"
+import { useRef, useState, useEffect, useCallback } from "react"
 import { Button } from "./button"
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "./tooltip"
 import { ChevronUp, ChevronDown } from "lucide-react"
@@ -27,25 +27,43 @@ export function TiltedScroll({
   const [isAutoScrollPaused, setIsAutoScrollPaused] = useState(false)
   const [currentScrollOffset, setCurrentScrollOffset] = useState(0)
   const animationRef = useRef<number | null>(null)
-  
+  const resumeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  const pauseAutoScroll = useCallback((duration?: number) => {
+    setIsAutoScrollPaused(true)
+    if (resumeTimeoutRef.current) {
+      clearTimeout(resumeTimeoutRef.current)
+      resumeTimeoutRef.current = null
+    }
+
+    if (duration) {
+      resumeTimeoutRef.current = setTimeout(() => {
+        setIsAutoScrollPaused(false)
+        resumeTimeoutRef.current = null
+      }, duration)
+    }
+  }, [])
+
+  const resumeAutoScroll = useCallback(() => {
+    if (resumeTimeoutRef.current) {
+      clearTimeout(resumeTimeoutRef.current)
+      resumeTimeoutRef.current = null
+    }
+    setIsAutoScrollPaused(false)
+  }, [])
+
   // Create duplicated items for infinite scroll (duplicate to ensure seamless loop)
   const infiniteItems = [...items, ...items]
 
   // Manual scroll functions
   const scrollUp = () => {
-    setIsAutoScrollPaused(true)
+    pauseAutoScroll(3000)
     setCurrentScrollOffset(prev => prev + 120) // Move up (positive direction)
-    
-    // Resume auto scroll after 3 seconds
-    setTimeout(() => setIsAutoScrollPaused(false), 3000)
   }
 
   const scrollDown = () => {
-    setIsAutoScrollPaused(true)
+    pauseAutoScroll(3000)
     setCurrentScrollOffset(prev => prev - 120) // Move down (negative direction)
-    
-    // Resume auto scroll after 3 seconds
-    setTimeout(() => setIsAutoScrollPaused(false), 3000)
   }
 
   // Auto scroll animation
@@ -103,6 +121,15 @@ export function TiltedScroll({
 
     const handleMouseLeave = () => {
       isHovered = false
+      resumeAutoScroll()
+    }
+
+    const handlePointerDown = () => {
+      pauseAutoScroll()
+    }
+
+    const handlePointerUp = () => {
+      pauseAutoScroll(1200)
     }
 
     const handleWheel = (e: WheelEvent) => {
@@ -114,7 +141,7 @@ export function TiltedScroll({
       const scrollDirection = e.deltaY > 0 ? 'down' : 'up'
       const scrollAmount = Math.abs(e.deltaY) * 0.8 // Adjust sensitivity
       
-      setIsAutoScrollPaused(true)
+      pauseAutoScroll(3000)
       
       setCurrentScrollOffset(prev => {
         let newOffset = prev
@@ -139,21 +166,33 @@ export function TiltedScroll({
         return newOffset
       })
       
-      // Resume auto scroll after 3 seconds
-      setTimeout(() => setIsAutoScrollPaused(false), 3000)
     }
 
     // Add event listeners
     scrollContainer.addEventListener('mouseenter', handleMouseEnter)
     scrollContainer.addEventListener('mouseleave', handleMouseLeave)
     scrollContainer.addEventListener('wheel', handleWheel, { passive: false })
+    scrollContainer.addEventListener('pointerdown', handlePointerDown)
+    scrollContainer.addEventListener('pointerup', handlePointerUp)
+    scrollContainer.addEventListener('pointercancel', handlePointerUp)
 
     return () => {
       scrollContainer.removeEventListener('mouseenter', handleMouseEnter)
       scrollContainer.removeEventListener('mouseleave', handleMouseLeave)
       scrollContainer.removeEventListener('wheel', handleWheel)
+      scrollContainer.removeEventListener('pointerdown', handlePointerDown)
+      scrollContainer.removeEventListener('pointerup', handlePointerUp)
+      scrollContainer.removeEventListener('pointercancel', handlePointerUp)
     }
-  }, [items.length])
+  }, [items.length, pauseAutoScroll, resumeAutoScroll])
+
+  useEffect(() => {
+    return () => {
+      if (resumeTimeoutRef.current) {
+        clearTimeout(resumeTimeoutRef.current)
+      }
+    }
+  }, [])
 
   return (
     <div className={cn("relative flex items-center justify-center", className)}>

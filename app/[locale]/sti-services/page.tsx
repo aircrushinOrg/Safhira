@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function STIServicesPage() {
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 md:py-10">
+    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-gray-100 dark:from-slate-950 dark:via-gray-900 dark:to-slate-950 md:py-10">
       <ProviderSearch />
     </div>
   );

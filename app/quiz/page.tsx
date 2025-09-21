@@ -31,7 +31,7 @@ export default async function QuizPage() {
   const learnItems = t.raw('learn.items') as string[]
 
   return (
-    <div className="md:py-10 relative isolate overflow-hidden bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
+    <div className="md:py-10 relative isolate overflow-hidden bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 min-h-[90vh]">
       {/* Subtle grid background */}
       <div 
         className="absolute inset-0 opacity-[0.10] dark:opacity-[0.2]"
