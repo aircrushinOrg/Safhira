@@ -9,7 +9,7 @@
 
 import { Card } from './components/ui/card';
 import { Button } from './components/ui/button';
-import { Home, Search, MessageCircle, BookOpen } from 'lucide-react';
+import { Home, Search, MessageCircle, BookOpen, MapPin } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
@@ -78,7 +78,7 @@ export default function NotFound() {
             </motion.div>
 
             <motion.div variants={itemVariants}>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
                 <Link href="/" className="w-full">
                   <Button className="w-full bg-teal-600 hover:bg-teal-700 text-white">
                     <Home size={16} className="mr-2" />
@@ -106,6 +106,13 @@ export default function NotFound() {
                     Take Quiz
                   </Button>
                 </Link>
+
+                <Link href="/find-healthcare" className="w-full">
+                  <Button variant="outline" className="w-full">
+                    <MapPin size={16} className="mr-2" />
+                    Find Care
+                  </Button>
+                </Link>
               </div>
             </motion.div>
 
@@ -128,10 +135,16 @@ export default function NotFound() {
                     Prevention
                   </Link>
                   <Link 
-                    href="/rights" 
+                    href="/find-healthcare" 
                     className="text-teal-600 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300 p-2 rounded hover:bg-teal-50 dark:hover:bg-teal-900/20 transition-colors"
                   >
-                    Testing
+                    Find Care
+                  </Link>
+                  <Link 
+                    href="/living-well-with-sti" 
+                    className="text-teal-600 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300 p-2 rounded hover:bg-teal-50 dark:hover:bg-teal-900/20 transition-colors"
+                  >
+                    Living Well
                   </Link>
                   <Link 
                     href="/quiz" 
@@ -140,16 +153,10 @@ export default function NotFound() {
                     Myths & Facts
                   </Link>
                   <Link 
-                    href="/stis/chlamydia" 
+                    href="/stis/prevalence" 
                     className="text-teal-600 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300 p-2 rounded hover:bg-teal-50 dark:hover:bg-teal-900/20 transition-colors"
                   >
-                    Chlamydia
-                  </Link>
-                  <Link 
-                    href="/stis/hiv" 
-                    className="text-teal-600 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300 p-2 rounded hover:bg-teal-50 dark:hover:bg-teal-900/20 transition-colors"
-                  >
-                    HIV
+                    Prevalence
                   </Link>
                 </div>
               </div>

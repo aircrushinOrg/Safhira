@@ -105,7 +105,7 @@ export default function LivingWellWithSTIPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
+    <div className="min-h-screen bg-gradient-to-br from-rose-50 via-white to-teal-50 dark:bg-slate-950">
       <section className="relative px-4 py-8 sm:py-12 md:py-16">
         <div className="container mx-auto max-w-6xl space-y-12 sm:space-y-14">
           <BreadcrumbTrail
@@ -261,16 +261,20 @@ export default function LivingWellWithSTIPage() {
           </motion.section>
 
           <motion.section
-            className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-8"
+            className="relative overflow-hidden rounded-3xl border border-emerald-100/60 bg-white/90 p-6 shadow-lg ring-1 ring-inset ring-white/60 backdrop-blur-sm transition-shadow dark:border-emerald-500/20 dark:bg-slate-900/80 dark:ring-white/10 sm:p-8"
             initial={{opacity: 0, y: reduceMotion ? 0 : 12}}
             whileInView={{opacity: 1, y: 0}}
             viewport={{once: true, amount: 0.3}}
             transition={{duration: reduceMotion ? 0 : 0.45}}
           >
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br from-emerald-50/80 via-white to-cyan-50/70 dark:from-emerald-500/15 dark:via-slate-900 dark:to-slate-950"
+            />
             <div className="flex flex-col gap-6">
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex items-start gap-3">
-                  <span className="grid h-12 w-12 flex-shrink-0 place-items-center rounded-xl bg-emerald-100 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-300">
+                  <span className="grid h-12 w-12 flex-shrink-0 place-items-center rounded-xl bg-gradient-to-br from-emerald-100 via-white to-emerald-50 text-emerald-600 shadow-sm ring-1 ring-emerald-100/80 dark:bg-emerald-500/15 dark:text-emerald-300 dark:ring-emerald-500/40">
                     <Mail size={24} aria-hidden="true" />
                   </span>
                   <div className="space-y-2">
@@ -284,8 +288,8 @@ export default function LivingWellWithSTIPage() {
                 </div>
               </div>
 
-              <form onSubmit={handleNewsletterSubmit} className="flex flex-col gap-3" noValidate>
-                <div className="flex flex-col gap-3 sm:flex-row">
+              <form onSubmit={handleNewsletterSubmit} className="flex flex-col gap-4" noValidate>
+                <div className="flex flex-col gap-3 rounded-2xl border border-emerald-100/70 bg-white/70 p-3 shadow-inner sm:flex-row sm:items-center dark:border-emerald-500/30 dark:bg-slate-900/60">
                   <Input
                     type="email"
                     name="email"
@@ -302,12 +306,12 @@ export default function LivingWellWithSTIPage() {
                     }}
                     aria-describedby={showFeedback ? feedbackId : undefined}
                     aria-invalid={isError}
-                    className="h-11 rounded-xl border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 sm:flex-1"
+                    className="h-11 rounded-xl border border-transparent bg-white/90 px-4 text-slate-900 shadow-sm focus-visible:ring-2 focus-visible:ring-emerald-300 dark:bg-slate-900/70 dark:text-slate-100 dark:placeholder:text-slate-400 sm:flex-1"
                   />
                   <Button
                     type="submit"
                     disabled={isPending}
-                    className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 px-6 text-white shadow-sm hover:bg-emerald-700 focus-visible:ring-emerald-400 disabled:opacity-70 dark:bg-emerald-500 dark:hover:bg-emerald-400 sm:w-auto"
+                    className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 px-6 font-medium text-white shadow-md focus-visible:ring-emerald-300 hover:from-emerald-600 hover:to-teal-600 disabled:opacity-70 dark:from-emerald-500 dark:to-teal-500 dark:hover:from-emerald-400 dark:hover:to-teal-400 sm:w-auto"
                   >
                     {isPending ? <Loader2 className="size-4 animate-spin" aria-hidden="true" /> : null}
                     {t("newsletter.cta")}

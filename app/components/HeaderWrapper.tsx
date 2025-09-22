@@ -27,16 +27,38 @@ export function HeaderWrapper() {
     const normalized = stripLocale(pathname);
     if (normalized === '/') {
       setCurrentSection('home');
-    } else if (normalized.startsWith('/stis')) {
-      setCurrentSection('stis');
-    } else if (normalized.startsWith('/chat')) {
-      setCurrentSection('chat');
-    } else {
-      // For other pages, set a default or extract from pathname
-      const pathSegments = normalized.split('/').filter(Boolean);
-      const section = pathSegments[0] || 'home';
-      setCurrentSection(section);
+      return;
     }
+
+    if (normalized.startsWith('/stis')) {
+      setCurrentSection('stis');
+      return;
+    }
+
+    if (normalized.startsWith('/living-well-with-sti')) {
+      setCurrentSection('living-well-with-sti');
+      return;
+    }
+
+    if (normalized.startsWith('/find-healthcare')) {
+      setCurrentSection('providers');
+      return;
+    }
+
+    if (normalized.startsWith('/quiz')) {
+      setCurrentSection('quiz');
+      return;
+    }
+
+    if (normalized.startsWith('/chat')) {
+      setCurrentSection('chat');
+      return;
+    }
+
+    // For other pages, fall back to the first path segment
+    const pathSegments = normalized.split('/').filter(Boolean);
+    const section = pathSegments[0] || 'home';
+    setCurrentSection(section);
   }, [pathname]);
 
   const handleChatOpen = () => {
@@ -48,6 +70,7 @@ export function HeaderWrapper() {
     if (section === 'home') router.push('/');
     else if (section === 'stis') router.push('/stis');
     else if (section === 'quiz') router.push('/quiz');
+    else if (section === 'providers') router.push('/find-healthcare');
     else router.push(`/${section}`);
     setCurrentSection(section);
   };
