@@ -357,6 +357,15 @@
     "title": "You're Taking a Positive Step",
     "text": "Learning about STIs is responsible and healthy. Sexual health is part of wellbeing."
   },
+  "sections": {
+    "learn": "Learn the essentials",
+    "learnDescription": "Watch a quick overview on why screening matters and how to stay on top of your sexual health.",
+    "guides": "Dive deeper with guided modules",
+    "guidesDescription": "Explore focused modules that help you build prevention habits and understand local STI trends.",
+    "exploreDescription": "Browse conditions by severity, treatability, and type to understand what support might look like.",
+    "resources": "Get support when you need it",
+    "resourcesDescription": "Find confidential care options and reminders so you know what to expect before booking an appointment."
+  },
   "grid": {
     "title": "Common STI diseases"
   },

@@ -348,6 +348,15 @@
     "title": "你正在迈出积极一步",
     "text": "学习 STI 是负责任且有益健康的做法。性健康是整体健康的一部分。"
   },
+  "sections": {
+    "learn": "先掌握核心知识",
+    "learnDescription": "观看一段短视频，了解为何及早筛检重要，以及如何照顾你的性健康。",
+    "guides": "深入学习导览模块",
+    "guidesDescription": "探索聚焦模块，帮助你建立预防习惯并理解本地 STI 趋势。",
+    "exploreDescription": "按严重程度、可治疗性与类型浏览疾病，了解可能需要的支援方式。",
+    "resources": "需要时及时获得协助",
+    "resourcesDescription": "寻找保密的医疗资源与贴心提醒，在预约前先知晓会遇到什么。"
+  },
   "grid": {
     "title": "常见性传播感染"
   },

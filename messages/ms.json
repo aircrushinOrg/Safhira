@@ -357,6 +357,15 @@
     "title": "Anda Sedang Melangkah dengan Positif",
     "text": "Mempelajari STI adalah tindakan bertanggungjawab dan baik untuk kesihatan. Kesihatan seksual ialah sebahagian daripada kesejahteraan."
   },
+  "sections": {
+    "learn": "Kenali perkara asas",
+    "learnDescription": "Tonton gambaran ringkas tentang kepentingan saringan dan cara menjaga kesihatan seksual anda.",
+    "guides": "Dalami modul berpandu",
+    "guidesDescription": "Terokai modul fokus yang membantu membina rutin pencegahan dan memahami trend STI tempatan.",
+    "exploreDescription": "Semak keadaan mengikut tahap keterukan, kebolehan dirawat dan jenis untuk memahami bentuk sokongan yang diperlukan.",
+    "resources": "Dapatkan sokongan apabila diperlukan",
+    "resourcesDescription": "Cari pilihan penjagaan sulit dan peringatan supaya anda tahu apa yang perlu dijangka sebelum membuat temu janji."
+  },
   "grid": {
     "title": "Penyakit STI yang Lazim"
   },
