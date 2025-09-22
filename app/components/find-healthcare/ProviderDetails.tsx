@@ -1,9 +1,14 @@
+/**
+ * Detailed provider information component displaying comprehensive healthcare provider data and contact options.
+ * This component provides full provider profiles with services, hours, location details, and direct contact methods.
+ * Features interactive maps, contact buttons, directions integration, and comprehensive service information display.
+ */
 'use client';
 
 import React, { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
-import { ProviderRecord } from '@/app/database_query_endpoint/provider-actions';
+import { ProviderRecord } from '@/app/actions/provider-actions';
 import { Card, CardContent, CardHeader, CardTitle } from '@/app/components/ui/card';
 import { Badge } from '@/app/components/ui/badge';
 import { Button } from '@/app/components/ui/button';
@@ -17,7 +22,7 @@ import {
   ExternalLink,
   Navigation
 } from 'lucide-react';
-import BreadcrumbTrail from './BreadcrumbTrail';
+import BreadcrumbTrail from '../BreadcrumbTrail';
 
 interface ProviderDetailsProps {
   provider: ProviderRecord;
@@ -89,7 +94,7 @@ export function ProviderDetails({ provider }: ProviderDetailsProps) {
       {/* Header */}
       <div className="mb-6">
         <Link 
-          href="/sti-services"
+          href="/find-healthcare"
           className="inline-flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 mb-4"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />

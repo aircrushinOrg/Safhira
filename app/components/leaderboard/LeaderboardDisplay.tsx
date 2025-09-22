@@ -1,3 +1,8 @@
+/**
+ * Leaderboard display component showing top quiz performers and competitive scoring information.
+ * This component provides ranking visualization, score management, and user achievement tracking.
+ * Features sorting, filtering, time-based rankings, and integration with the scoring system for gamified learning motivation.
+ */
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
@@ -14,7 +19,7 @@ import { Badge } from "../ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { LeaderboardEntry, LeaderboardResponse, SortBy } from "@/types/leaderboard";
-import { getLeaderboard } from "@/app/database_query_endpoint/leaderboard-actions";
+import { getLeaderboard } from "@/app/actions/leaderboard-actions";
 
 interface LeaderboardDisplayProps {
   open: boolean;

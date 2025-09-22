@@ -1,6 +1,11 @@
+/**
+ * Dynamic STI detail page displaying comprehensive information about specific sexually transmitted infections.
+ * This page provides detailed medical information, symptoms, treatment options, and prevention strategies for individual STIs.
+ * Features dynamic routing, content validation, and integration with the STI database for accurate, up-to-date medical information.
+ */
 import Client, { type STIInfo } from './Client';
 import { notFound } from 'next/navigation';
-import { searchSTIs } from '../../database_query_endpoint/sti-actions';
+import { searchSTIs } from '../../actions/sti-actions';
 
 function slugify(value: string): string {
   return value

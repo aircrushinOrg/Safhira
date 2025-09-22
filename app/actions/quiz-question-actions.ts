@@ -1,3 +1,10 @@
+/**
+ * Server actions for quiz question management and educational content delivery.
+ * This module handles quiz question retrieval, categorization, random selection, 
+ * and content management for interactive learning.
+ * Features quiz data queries, myth/fact management, category filtering, and 
+ * educational content organization for gamified learning experiences.
+ */
 "use server";
 
 import { db } from "../db";

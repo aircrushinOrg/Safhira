@@ -1,9 +1,12 @@
+/**
+ * Main landing page component for the Safhira application.
+ * This page serves as the homepage and provides an overview of STI education resources, featuring animated sections for breaking stigma, prevalence data, key features, and FAQs.
+ * Built with Framer Motion animations and includes a responsive layout with loading states.
+ */
 'use client'
 
-import { useState, useEffect, Suspense } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { HeroSection } from './components/landing/HeroSection';
-import { HeroAnimation } from './components/HeroAnimation';
+import { Suspense } from 'react';
+import { AnimatedHeroSection } from './components/landing/AnimatedHeroSection';
 import { BreakingStigmaSection } from './components/landing/BreakingStigmaSection';
 import { PrevalenceSection } from './components/landing/PrevalenceSection';
 import { FeaturesSection } from './components/landing/FeaturesSection';
@@ -33,7 +36,7 @@ function AppContent() {
           variants={pageVariants}
           transition={pageTransition}
         >
-          <HeroAnimation />
+          <AnimatedHeroSection />
           <BreakingStigmaSection />
           <PrevalenceSection />
           <FeaturesSection />

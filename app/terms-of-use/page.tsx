@@ -1,3 +1,8 @@
+/**
+ * Terms of use page detailing legal terms, conditions, and user responsibilities for the Safhira platform.
+ * This page outlines acceptable use policies, user obligations, and platform limitations for legal compliance.
+ * Features comprehensive terms covering liability, content usage, and service provision with clear legal language.
+ */
 import BreadcrumbTrail from '@/app/components/BreadcrumbTrail';
 import {getTranslations} from 'next-intl/server';
 

@@ -1,3 +1,8 @@
+/**
+ * Server actions for STI database operations providing comprehensive STI information management.
+ * This module handles STI data retrieval, search functionality, and related content queries for symptoms, transmission, and prevention.
+ * Features database queries for STI details, health effects, prevention methods, and symptom information with optimized performance.
+ */
 "use server";
 
 import { db } from "../db";

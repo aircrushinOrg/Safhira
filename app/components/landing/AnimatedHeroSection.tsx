@@ -1,10 +1,15 @@
+/**
+ * Animated hero section component featuring slideshow with multiple educational slides and call-to-action buttons.
+ * This component provides the main visual centerpiece of the landing page with rotating content about STI education, AI chat, resources, and healthcare access.
+ * Features smooth transitions, automatic slideshow progression, manual navigation controls, and responsive design with illustration integration.
+ */
 'use client'
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Heart, Bot, BookOpen, Hospital, Lightbulb, ChevronLeft, ChevronRight } from 'lucide-react';
-import { Button } from './ui/button';
-import { Link } from '../../i18n/routing';
+import { Button } from '../ui/button';
+import { Link } from '../../../i18n/routing';
 import { useTranslations } from 'next-intl';
 
 interface Quote {
@@ -56,7 +61,7 @@ const quotes: Quote[] = [
     image: "/landing-hero-4.png",
     icon: Hospital,
     buttons: [
-      { textKey: "hero.slide4.button", href: "/sti-services" }
+      { textKey: "hero.slide4.button", href: "/find-healthcare" }
     ]
   },
   {
@@ -71,7 +76,7 @@ const quotes: Quote[] = [
   }
 ];
 
-export function HeroAnimation() {
+export function AnimatedHeroSection() {
   const t = useTranslations();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(true);

@@ -1,3 +1,7 @@
+/**
+ * Lifestyle management page providing guidance for maintaining physical and mental wellbeing while living with an STI.
+  * This page offers practical tips, coping strategies, and resources for healthy sexual lifestyle choices.
+ */
 "use client";
 
 import {useEffect, useMemo, useState} from "react";

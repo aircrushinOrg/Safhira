@@ -1,9 +1,14 @@
+/**
+ * Provider card component displaying healthcare provider information in a compact, clickable format.
+ * This component shows essential provider details including name, location, services, and contact information.
+ * Features responsive design, service badges, and navigation integration for detailed provider views.
+ */
 'use client';
 
 import React from 'react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
-import { ProviderRecord } from '@/app/database_query_endpoint/provider-actions';
+import { ProviderRecord } from '@/app/actions/provider-actions';
 import { Card, CardTitle } from '@/app/components/ui/card';
 import { Badge } from '@/app/components/ui/badge';
 import { MapPin, Phone, Mail, CheckCircle } from 'lucide-react';
@@ -26,7 +31,7 @@ export function ProviderCard({ provider }: ProviderCardProps) {
     if ((e.target as HTMLElement).tagName === 'A') {
       return;
     }
-    router.push(`/sti-services/${provider.id}`);
+    router.push(`/find-healthcare/${provider.id}`);
   };
 
   return (

@@ -1,3 +1,8 @@
+/**
+ * Features section component showcasing the main capabilities and benefits of the Safhira platform.
+ * This component highlights key features like AI chat, educational resources, provider directory, and interactive learning tools.
+ * Features animated cards with icons, descriptions, and call-to-action buttons to guide users to different platform sections.
+ */
 'use client'
 
 import { motion, useInView } from 'framer-motion';

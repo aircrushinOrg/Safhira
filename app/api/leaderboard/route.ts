@@ -1,3 +1,8 @@
+/**
+ * Leaderboard API route handling quiz score rankings and leaderboard data retrieval.
+ * This endpoint manages leaderboard queries, filtering, and ranking calculations for competitive learning features.
+ * Features score aggregation, ranking algorithms, and pagination support for gamified educational experiences.
+ */
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/app/db';
 import { quizResults, quizLeaderboardStats } from '@/db/schema';

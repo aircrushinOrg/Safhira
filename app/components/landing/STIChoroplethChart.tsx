@@ -1,3 +1,10 @@
+/**
+ * Interactive choropleth map component visualizing STI prevalence data across Malaysian states.
+ * This component provides geographic visualization with color-coded regions, time-based animation, 
+ * and zoom functionality.
+ * Features state selection, disease filtering, temporal controls, and responsive design for 
+ * epidemiological data exploration.
+ */
 'use client'
 
 import { useState, useEffect, useRef } from 'react';
@@ -8,7 +15,7 @@ import { Slider } from '../ui/slider';
 import { Button } from '../ui/button';
 import { Play, Pause, ZoomIn, ZoomOut, LocateFixed, BadgeAlert } from 'lucide-react';
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
-import { stiTypes, type STIType, type Year } from '@/constants/sti-prevalence';
+import { stiTypes, type STIType, type Year } from '@/types/sti-prevalence';
 import { useIsMobile } from '../ui/use-mobile';
 import {useTranslations} from 'next-intl';
 
@@ -48,13 +55,11 @@ export function STIChoroplethChart({ sharedData }: STIChoroplethChartProps) {
   
   // Initialize selections when shared data loads
   useEffect(() => {
-    if (!loading && years.length > 0 && selectedYear === 2017) {
+    if (!loading && years.length > 0 && diseases.length > 0) {
       setSelectedYear(years[0] as Year);
-    }
-    if (!loading && diseases.length > 0) {
       setSelectedSTI(diseases[0].toLowerCase().replace(/[^a-z0-9]/g, '') as STIType);
     }
-  }, [loading, years, diseases, selectedYear]);
+  }, [loading, years, diseases]);
 
   // Load Malaysia GeoJSON data on mount
   useEffect(() => {

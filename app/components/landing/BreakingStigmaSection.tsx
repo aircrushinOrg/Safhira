@@ -1,3 +1,8 @@
+/**
+ * Breaking stigma section component promoting awareness and education about STI-related stigma and discrimination.
+ * This component provides educational content, statistics, and messaging to combat stigma and promote understanding.
+ * Features animated elements, compelling visuals, and evidence-based information to challenge misconceptions about STIs.
+ */
 'use client'
 
 import { Card } from '../ui/card';

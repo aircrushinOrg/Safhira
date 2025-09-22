@@ -1,5 +1,10 @@
+/**
+ * STI Services Directory page that helps users find healthcare providers in Malaysia.
+ * This page provides a searchable interface for locating providers that offer STI testing, PrEP, and PEP services.
+ * Features location-based search, filtering options, and detailed provider information with contact details.
+ */
 import { Metadata } from 'next';
-import { ProviderSearch } from '@/app/components/ProviderSearch';
+import { ProviderSearch } from '@/app/components/find-healthcare/ProviderSearch';
 import BreadcrumbTrail from '@/app/components/BreadcrumbTrail';
 import {getTranslations} from 'next-intl/server';
 

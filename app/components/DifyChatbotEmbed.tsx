@@ -1,3 +1,8 @@
+/**
+ * Dify chatbot embed component that manages the visibility of the chatbot widget based on current route.
+ * This component conditionally hides the chatbot bubble on chat pages to avoid duplication and shows it on other pages.
+ * Handles dynamic script loading and provides route-aware chatbot integration for the Safhira AI assistant.
+ */
 'use client';
 
 import {useEffect} from 'react';

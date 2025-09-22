@@ -1,3 +1,8 @@
+/**
+ * Nickname input dialog component for capturing user names when submitting quiz scores to the leaderboard.
+ * This component provides form validation, character limits, and user-friendly input experience for score submission.
+ * Features input validation, submission handling, and integration with the leaderboard system for competitive gameplay.
+ */
 "use client";
 
 import { useState } from "react";

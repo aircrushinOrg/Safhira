@@ -1,3 +1,8 @@
+/**
+ * Distance calculation API route using Google Maps Distance Matrix API for provider location services.
+ * This endpoint calculates travel distances and times between user locations and healthcare providers.
+ * Features batch processing, coordinate validation, and integration with Google Maps services for accurate distance calculations.
+ */
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {

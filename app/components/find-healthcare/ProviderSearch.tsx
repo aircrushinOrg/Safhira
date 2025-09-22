@@ -1,8 +1,13 @@
+/**
+ * Healthcare provider search component with advanced filtering and location-based features.
+ * This component provides a comprehensive search interface for finding STI testing, PrEP, and PEP providers in Malaysia.
+ * Features include text search, location filtering, service type filtering, distance calculation, and paginated results with detailed provider information.
+ */
 'use client';
 
 import React, { useState, useEffect, useMemo } from 'react';
 import { useTranslations } from 'next-intl';
-import { ProviderRecord, ProviderSearchFilters, StateOption, getAllStates, searchProvidersWithFilters } from '@/app/database_query_endpoint/provider-actions';
+import { ProviderRecord, ProviderSearchFilters, StateOption, getAllStates, searchProvidersWithFilters } from '@/app/actions/provider-actions';
 import { ProviderCard } from './ProviderCard';
 import { Button } from '@/app/components/ui/button';
 import { Input } from '@/app/components/ui/input';

@@ -1,3 +1,8 @@
+/**
+ * FAQ section component providing answers to common questions about STI education, privacy, and platform usage.
+ * This component features an accordion interface with categorized questions covering medical, privacy, and platform concerns.
+ * Designed to address user concerns and provide clear, accessible information about sexual health topics and platform policies.
+ */
 'use client'
 
 import { useRef } from 'react';

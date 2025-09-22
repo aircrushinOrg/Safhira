@@ -1,3 +1,8 @@
+/**
+ * STI detail client component providing comprehensive information display for individual sexually transmitted infections.
+ * This component renders detailed STI information in a tabbed interface covering symptoms, transmission, effects, prevention, and treatment.
+ * Features responsive design, categorized content display, Malaysian context integration, and support chat navigation for comprehensive STI education.
+ */
 'use client'
 
 import { Card } from '../../components/ui/card';

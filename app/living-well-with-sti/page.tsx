@@ -1,3 +1,8 @@
+/**
+ * Living Well with STI hub page providing comprehensive support and resources for individuals diagnosed with STIs.
+ * This page serves as a central navigation point for treatment adherence, lifestyle management, and relationship guidance.
+ * Features a newsletter subscription, educational sections, and practical advice for managing life with an STI diagnosis.
+ */
 "use client";
 
 import {FormEvent, useId, useState, useTransition} from "react";

@@ -1,3 +1,8 @@
+/**
+ * Breadcrumb navigation component that displays the current page's location within the site hierarchy.
+ * This component provides user-friendly navigation trails with clickable links and proper accessibility support.
+ * Integrates with the internationalization routing system and supports customizable styling for different page contexts.
+ */
 'use client';
 
 import React from 'react';

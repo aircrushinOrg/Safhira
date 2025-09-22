@@ -1,3 +1,8 @@
+/**
+ * STI-specific 404 not found page providing helpful navigation when users encounter missing STI information pages.
+ * This component offers user-friendly error messaging with direct links to available STI resources and main navigation.
+ * Features animated content, available STI listings, and clear pathways back to relevant sections for improved user experience.
+ */
 'use client'
 
 import { Card } from '../components/ui/card';

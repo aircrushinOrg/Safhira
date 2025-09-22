@@ -1,3 +1,8 @@
+/**
+ * Internationalized layout component that wraps pages with locale-specific providers and navigation structure.
+ * This layout handles Next.js internationalization, message loading, and provides consistent header/footer structure across all localized pages.
+ * Supports multiple languages (English, Malay, Chinese) with proper fallback handling and static generation for optimal performance.
+ */
 import {NextIntlClientProvider} from 'next-intl';
 import {getMessages, setRequestLocale} from 'next-intl/server';
 import {Suspense} from 'react';

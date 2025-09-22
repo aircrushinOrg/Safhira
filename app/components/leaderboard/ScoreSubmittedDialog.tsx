@@ -1,3 +1,8 @@
+/**
+ * Score submitted confirmation dialog component displaying quiz results and leaderboard ranking achievements.
+ * This component provides celebratory feedback when users submit quiz scores, showing their rank, statistics, and encouraging messages.
+ * Features animated elements, rank-based messaging, performance statistics, and navigation options for continued engagement.
+ */
 "use client";
 
 import { motion } from "framer-motion";

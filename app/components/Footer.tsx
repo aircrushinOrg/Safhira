@@ -1,3 +1,8 @@
+/**
+ * Application footer component providing site information, navigation links, and branding.
+ * This component displays comprehensive footer content including mission statement, important links, and educational resources.
+ * Features responsive design with organized sections for legal information, contact details, and social responsibility messaging.
+ */
 "use client";
 
 import { Card } from './ui/card';

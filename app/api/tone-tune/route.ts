@@ -1,3 +1,8 @@
+/**
+ * Tone tuning API route providing AI-powered conversation response generation for relationship guidance.
+ * This endpoint uses OpenAI to generate contextually appropriate responses with specific tones for sensitive conversations.
+ * Features tone customization, conversation context awareness, and safety guidelines for relationship communication support.
+ */
 import OpenAI from "openai";
 import { NextResponse } from "next/server";
 

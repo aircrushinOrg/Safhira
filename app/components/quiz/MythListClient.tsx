@@ -1,7 +1,12 @@
+/**
+ * Interactive myth list client component providing gamified STI education through myths and facts.
+ * This component manages quiz interactions, scoring, leaderboards, and educational content delivery.
+ * Features tilted scroll interface, myth revelation, scoring system, and leaderboard integration for engaging learning experiences.
+ */
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { TiltedScroll } from "./ui/tilted-scroll";
+import { TiltedScroll } from "../ui/tilted-scroll";
 import { motion } from "framer-motion";
 import {
   Dialog,
@@ -9,14 +14,14 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from "./ui/dialog";
-import { Badge } from "./ui/badge";
-import { Button } from "./ui/button";
-import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "./ui/tooltip";
-import NicknameInputDialog from "./leaderboard/NicknameInputDialog";
-import ScoreSubmittedDialog from "./leaderboard/ScoreSubmittedDialog";
-import LeaderboardDisplay from "./leaderboard/LeaderboardDisplay";
-import { submitQuizScore } from "../database_query_endpoint/leaderboard-actions";
+} from "../ui/dialog";
+import { Badge } from "../ui/badge";
+import { Button } from "../ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "../ui/tooltip";
+import NicknameInputDialog from "../leaderboard/NicknameInputDialog";
+import ScoreSubmittedDialog from "../leaderboard/ScoreSubmittedDialog";
+import LeaderboardDisplay from "../leaderboard/LeaderboardDisplay";
+import { submitQuizScore } from "../../actions/leaderboard-actions";
 import { LeaderboardResponse } from "@/types/leaderboard";
 import {useTranslations} from 'next-intl';
 
