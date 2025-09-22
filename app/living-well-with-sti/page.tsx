@@ -75,51 +75,46 @@ export default function LivingWellWithSTIPage() {
       title: t("adherence.title"),
       description: t("adherence.subtitle"),
       href: "/living-well-with-sti/treatment",
-      color: "text-teal-600",
-      bgColor: "bg-teal-50 dark:bg-teal-900/20",
-      borderColor: "border-teal-200 dark:border-teal-800",
-      buttonClass: "bg-teal-600 hover:bg-teal-700 dark:bg-teal-500 dark:hover:bg-teal-600",
-      glowLight: "bg-teal-300/60",
-      glowDark: "dark:bg-teal-800/60"
+      accentText: "text-teal-600 dark:text-teal-300",
+      borderClass: "border-teal-100 dark:border-teal-900",
+      iconBg: "bg-teal-50 dark:bg-teal-950/40",
+      buttonClass: "bg-teal-600 hover:bg-teal-700 focus-visible:ring-teal-500 dark:bg-teal-500 dark:hover:bg-teal-400",
     },
     {
-      id: "lifestyle", 
+      id: "lifestyle",
       icon: HeartPulse,
       title: t("lifestyle.title"),
       description: t("lifestyle.subtitle"),
       href: "/living-well-with-sti/lifestyle",
-      color: "text-rose-600",
-      bgColor: "bg-rose-50 dark:bg-rose-900/20", 
-      borderColor: "border-rose-200 dark:border-rose-800",
-      buttonClass: "bg-rose-600 hover:bg-rose-700 dark:bg-rose-500 dark:hover:bg-rose-600",
-      glowLight: "bg-rose-300/60",
-      glowDark: "dark:bg-rose-800/60"
+      accentText: "text-rose-600 dark:text-rose-300",
+      borderClass: "border-rose-100 dark:border-rose-900",
+      iconBg: "bg-rose-50 dark:bg-rose-950/40",
+      buttonClass: "bg-rose-600 hover:bg-rose-700 focus-visible:ring-rose-500 dark:bg-rose-500 dark:hover:bg-rose-400",
     },
     {
       id: "relationships",
       icon: HeartHandshake,
-      title: t("partner.title"), 
+      title: t("partner.title"),
       description: t("partner.subtitle"),
       href: "/living-well-with-sti/relationships",
-      color: "text-indigo-600",
-      bgColor: "bg-indigo-50 dark:bg-indigo-900/20",
-      borderColor: "border-indigo-200 dark:border-indigo-800",
-      buttonClass: "bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600",
-      glowLight: "bg-indigo-300/60",
-      glowDark: "dark:bg-indigo-800/60"
+      accentText: "text-indigo-600 dark:text-indigo-300",
+      borderClass: "border-indigo-100 dark:border-indigo-900",
+      iconBg: "bg-indigo-50 dark:bg-indigo-950/40",
+      buttonClass: "bg-indigo-600 hover:bg-indigo-700 focus-visible:ring-indigo-500 dark:bg-indigo-500 dark:hover:bg-indigo-400",
     }
   ];
 
   return (
-    <div className="bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-      <section className="py-8 sm:py-12 md:py-16 px-4">
-        <div className="container mx-auto max-w-6xl">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
+      <section className="relative px-4 py-8 sm:py-12 md:py-16">
+        <div className="container mx-auto max-w-6xl space-y-12 sm:space-y-14">
           <BreadcrumbTrail
             items={[
               {label: tBreadcrumbs('home'), href: '/'},
               {label: tBreadcrumbs('livingWell')},
             ]}
           />
+
           <Dialog
             open={isDialogOpen}
             onOpenChange={(open) => {
@@ -129,19 +124,19 @@ export default function LivingWellWithSTIPage() {
               }
             }}
           >
-            <DialogContent className="max-w-sm text-center sm:max-w-md">
-              <DialogHeader className="items-center gap-3">
+            <DialogContent className="max-w-md rounded-2xl bg-white p-6 text-center shadow-lg dark:bg-slate-900 sm:p-8">
+              <DialogHeader className="items-center gap-3 text-left sm:text-center">
                 <span className="grid size-14 place-items-center rounded-full bg-emerald-100 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-300">
                   <CheckCircle2 size={28} aria-hidden="true" />
                 </span>
-                <DialogTitle className="text-xl text-gray-900 dark:text-gray-100">
+                <DialogTitle className="text-xl font-semibold text-slate-900 dark:text-slate-100">
                   {t("newsletter.modalTitle")}
                 </DialogTitle>
-                <DialogDescription className="text-base text-gray-600 dark:text-gray-300">
+                <DialogDescription className="text-base text-slate-600 dark:text-slate-300">
                   {modalMessage}
                 </DialogDescription>
               </DialogHeader>
-              <DialogFooter className="flex-col sm:flex-row sm:justify-center">
+              <DialogFooter className="mt-4 flex flex-col sm:flex-row sm:justify-center">
                 <DialogClose asChild>
                   <Button className="bg-emerald-600 text-white hover:bg-emerald-700 focus-visible:ring-emerald-400 dark:bg-emerald-500 dark:hover:bg-emerald-400">
                     {t("newsletter.close")}
@@ -151,191 +146,188 @@ export default function LivingWellWithSTIPage() {
             </DialogContent>
           </Dialog>
 
-          <motion.header className="mb-8 md:mb-12"
+          <motion.section
+            className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900"
             initial={{opacity: 0, y: reduceMotion ? 0 : 12}}
             animate={{opacity: 1, y: 0}}
             transition={{duration: reduceMotion ? 0 : 0.5}}
           >
-            {/* Header Left-Right Layout */}
-            <div className="grid lg:grid-cols-2 gap-8 items-center mb-12">
-              {/* Left side - Title, Description, and Disclaimer */}
-              <motion.div 
-                className="text-center lg:text-left"
-                initial={{opacity: 0, x: reduceMotion ? 0 : -20}}
+            <div className="grid items-start gap-12 px-6 py-8 sm:px-8 sm:py-10 lg:grid-cols-[minmax(0,7fr),minmax(0,5fr)]">
+              <motion.div
+                initial={{opacity: 0, x: reduceMotion ? 0 : -16}}
                 animate={{opacity: 1, x: 0}}
-                transition={{duration: reduceMotion ? 0 : 0.6}}
+                transition={{duration: reduceMotion ? 0 : 0.5}}
+                className="space-y-8 text-left"
               >
-                <div className="flex items-center justify-center lg:justify-start gap-3 mb-4">
-                  <Heart className="text-rose-600" size={32} />
-                  <h1 className="text-3xl md:text-4xl font-semibold text-gray-900 dark:text-gray-100">
-                    {t("hero.title")}
-                  </h1>
-                </div>
-                <p className="text-lg text-gray-700 dark:text-gray-300 mb-6">
-                  {t("hero.subtitle")}
-                </p>
-                
-                {/* Disclaimer moved here */}
-                <div className="rounded-md bg-amber-50 dark:bg-amber-900/20 p-4 border border-amber-200 dark:border-amber-800" role="note">
-                  <div className="flex items-start gap-3 text-amber-800 dark:text-amber-200">
-                    <ShieldAlert className="mt-0.5 flex-shrink-0" size={20} />
-                    <div className="text-sm leading-relaxed">
-                      <p className="font-medium mb-1">{t("disclaimer.title")}</p>
-                      <p>{t("disclaimer.text")} {t("disclaimer.emergency")}</p>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Right side - Illustration */}
-              <motion.div 
-                className="flex justify-center lg:justify-start"
-                initial={{opacity: 0, x: reduceMotion ? 0 : 20}}
-                animate={{opacity: 1, x: 0}}
-                transition={{duration: reduceMotion ? 0 : 0.6, delay: reduceMotion ? 0 : 0.2}}
-              >
-                <Image
-                  src="/undraw_living_well.svg"
-                  alt="Living well illustration"
-                  width={400}
-                  height={300}
-                  className="max-w-full h-auto hidden md:block"
-                  priority
-                />
-              </motion.div>
-            </div>
-          </motion.header>
-
-          <motion.section
-            className="mb-8 md:mb-12"
-            initial={{opacity: 0, y: reduceMotion ? 0 : 12}}
-            whileInView={{opacity: 1, y: 0}}
-            viewport={{once: true, amount: 0.3}}
-            transition={{duration: reduceMotion ? 0 : 0.5}}
-          >
-            <Card className="relative overflow-hidden border-emerald-200/70 bg-white/90 p-6 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-white/70 dark:border-emerald-900/40 dark:bg-emerald-950/40 md:p-8">
-              <div className="pointer-events-none absolute -top-16 -right-16 hidden size-44 rounded-full bg-emerald-300/50 blur-3xl dark:bg-emerald-600/40 md:block" />
-              <div className="relative flex flex-col gap-6">
-                <div className="flex items-start gap-3">
-                  <span className="grid size-12 flex-shrink-0 place-items-center rounded-xl bg-emerald-500/15 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-300">
-                    <Mail size={24} />
+                <div className="flex flex-col gap-5">
+                  <span className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-rose-100 text-rose-600 dark:bg-rose-900/40 dark:text-rose-300">
+                    <Heart size={24} aria-hidden="true" />
                   </span>
-                  <div className="space-y-2">
-                    <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 md:text-xl">
-                      {t("newsletter.title")}
-                    </h2>
-                    <p className="text-sm text-gray-600 dark:text-gray-300 md:text-base">
-                      {t("newsletter.description")}
+                  <div className="space-y-4">
+                    <h1 className="text-3xl font-semibold tracking-tight text-slate-900 dark:text-slate-100 sm:text-4xl">
+                      {t("hero.title")}
+                    </h1>
+                    <p className="text-lg text-slate-600 dark:text-slate-300">
+                      {t("hero.subtitle")}
                     </p>
                   </div>
                 </div>
 
-                <form onSubmit={handleNewsletterSubmit} className="flex flex-col gap-3" noValidate>
-                  <div className="flex flex-col gap-3 sm:flex-row">
-                    <Input
-                      type="email"
-                      name="email"
-                      autoComplete="email"
-                      inputMode="email"
-                      enterKeyHint="send"
-                      placeholder={t("newsletter.placeholder")}
-                      value={email}
-                      onChange={(event) => {
-                        setEmail(event.target.value);
-                        if (subscriptionResult) {
-                          setSubscriptionResult(null);
-                        }
-                      }}
-                      aria-describedby={showFeedback ? feedbackId : undefined}
-                      aria-invalid={isError}
-                      className="h-11 sm:flex-1"
-                    />
-                    <Button
-                      type="submit"
-                      disabled={isPending}
-                      className="inline-flex h-11 w-full items-center justify-center gap-2 bg-emerald-600 text-white hover:bg-emerald-700 focus-visible:ring-emerald-400 disabled:opacity-70 dark:bg-emerald-500 dark:hover:bg-emerald-400 sm:w-auto"
-                    >
-                      {isPending ? <Loader2 className="size-4 animate-spin" aria-hidden="true" /> : null}
-                      {t("newsletter.cta")}
-                    </Button>
+                <div className="space-y-6">
+                  <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
+                    {t("hero.description")}
+                  </p>
+                  
+                  <div className="grid gap-4 sm:gap-6">
+                    {sections.map((section) => {
+                      const Icon = section.icon;
+                      return (
+                        <Link 
+                          key={section.id} 
+                          href={section.href}
+                          className="group flex items-start gap-4 rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 shadow-sm transition-all duration-200 hover:border-slate-300 hover:shadow-md hover:-translate-y-0.5 dark:border-slate-800 dark:bg-slate-800/60 dark:hover:border-slate-700"
+                        >
+                          <span className={`grid h-12 w-12 place-items-center rounded-xl ${section.iconBg} ${section.accentText} transition-transform duration-200 group-hover:scale-105`}>
+                            <Icon size={20} aria-hidden="true" />
+                          </span>
+                          <div className="flex-1 space-y-2">
+                            <h3 className="font-semibold text-slate-900 dark:text-slate-100 group-hover:text-slate-700 dark:group-hover:text-slate-200 transition-colors">
+                              {section.title}
+                            </h3>
+                            <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+                              {section.description}
+                            </p>
+                          </div>
+                          <ArrowRight 
+                            size={18} 
+                            className={`${section.accentText} transition-transform duration-200 group-hover:translate-x-1`} 
+                            aria-hidden="true" 
+                          />
+                        </Link>
+                      );
+                    })}
                   </div>
-                  {showFeedback ? (
-                    <div
-                      id={feedbackId}
-                      role={isError ? "alert" : "status"}
-                      aria-live={isError ? "assertive" : "polite"}
-                      className={`flex items-center gap-2 text-sm ${isError ? "text-rose-600 dark:text-rose-400" : "text-emerald-600 dark:text-emerald-400"}`}
-                    >
-                      {isError ? <AlertCircle size={16} aria-hidden="true" /> : <CheckCircle2 size={16} aria-hidden="true" />}
-                      <span>{feedbackMessage}</span>
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{opacity: 0, x: reduceMotion ? 0 : 16}}
+                animate={{opacity: 1, x: 0}}
+                transition={{duration: reduceMotion ? 0 : 0.5, delay: reduceMotion ? 0 : 0.15}}
+                className="flex h-full flex-col justify-between gap-8 rounded-2xl border border-slate-100 bg-slate-50 p-6 dark:border-slate-800 dark:bg-slate-900/60"
+              >
+                <div className="space-y-6">
+                  <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900 shadow-sm dark:border-amber-800 dark:bg-amber-900/20 dark:text-amber-100" role="note">
+                    <div className="flex items-start gap-3">
+                      <ShieldAlert className="mt-0.5" size={18} aria-hidden="true" />
+                      <div className="space-y-1">
+                        <p className="font-medium">{t("disclaimer.title")}</p>
+                        <p className="leading-relaxed">
+                          {t("disclaimer.text")} {t("disclaimer.emergency")}
+                        </p>
+                      </div>
                     </div>
-                  ) : null}
-                </form>
-              </div>
-            </Card>
+                  </div>
+                  
+                  <div className="space-y-3">
+                    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
+                      {tRoot("STIs.learnMore")}
+                    </p>
+                    <p className="text-sm text-slate-600 dark:text-slate-300">
+                      {t("newsletter.description")}
+                    </p>
+                    <ul className="space-y-2">
+                      {sections.map((section) => (
+                        <li key={section.id} className="flex items-start gap-2 text-sm text-slate-600 dark:text-slate-300">
+                          <ArrowRight size={14} className={`${section.accentText}`} aria-hidden="true" />
+                          <span>{section.title}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+                <div className="relative aspect-[5/4] overflow-hidden rounded-2xl bg-white shadow-inner dark:bg-slate-800">
+                  <Image
+                    src="/undraw_living_well.svg"
+                    alt="Living well illustration"
+                    fill
+                    sizes="(max-width: 1024px) 80vw, 360px"
+                    className="object-contain p-6"
+                    priority
+                  />
+                </div>
+              </motion.div>
+            </div>
           </motion.section>
 
-          <div className="grid gap-6 md:gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
-            {sections.map((section, index) => {
-              const Icon = section.icon;
-              return (
-                <motion.div
-                  key={section.id}
-                  initial={{opacity: 0, y: reduceMotion ? 0 : 16}}
-                  whileInView={{opacity: 1, y: 0}}
-                  viewport={{once: true, amount: 0.3}}
-                  transition={{
-                    duration: reduceMotion ? 0 : 0.4,
-                    delay: reduceMotion ? 0 : index * 0.1
-                  }}
-                  className="h-full"
-                >
-                  <Card className={`group p-6 md:p-7 h-full flex flex-col relative overflow-hidden ${section.bgColor} ${section.borderColor} transition-all duration-300 hover:shadow-xl hover:-translate-y-0.5`}>
-                    {/* Decorative glow */}
-                    <div className={`pointer-events-none absolute -top-10 -right-10 size-28 rounded-full blur-3xl opacity-60 transition-opacity duration-300 group-hover:opacity-90 ${section.glowLight} ${section.glowDark}`} />
+          <motion.section
+            className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-8"
+            initial={{opacity: 0, y: reduceMotion ? 0 : 12}}
+            whileInView={{opacity: 1, y: 0}}
+            viewport={{once: true, amount: 0.3}}
+            transition={{duration: reduceMotion ? 0 : 0.45}}
+          >
+            <div className="flex flex-col gap-6">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex items-start gap-3">
+                  <span className="grid h-12 w-12 flex-shrink-0 place-items-center rounded-xl bg-emerald-100 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-300">
+                    <Mail size={24} aria-hidden="true" />
+                  </span>
+                  <div className="space-y-2">
+                    <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100 md:text-xl">
+                      {t("newsletter.title")}
+                    </h2>
+                    <p className="text-sm text-slate-600 dark:text-slate-300 md:text-base">
+                      {t("newsletter.description")}
+                    </p>
+                  </div>
+                </div>
+              </div>
 
-                    <div className="relative flex flex-col items-center text-center h-full">
-                      {/* Icon */}
-                      <div className={`relative ${section.color} mb-5`}>
-                        <span className="absolute -inset-2 rounded-2xl bg-current/10 blur-xl opacity-70 group-hover:opacity-90 transition-opacity" />
-                        <div className="relative size-14 grid place-items-center rounded-2xl bg-white/80 dark:bg-gray-900/40 shadow-sm ring-1 ring-current/20 backdrop-blur">
-                          <Icon size={28} className="transition-transform duration-300 group-hover:scale-110" />
-                        </div>
-                      </div>
+              <form onSubmit={handleNewsletterSubmit} className="flex flex-col gap-3" noValidate>
+                <div className="flex flex-col gap-3 sm:flex-row">
+                  <Input
+                    type="email"
+                    name="email"
+                    autoComplete="email"
+                    inputMode="email"
+                    enterKeyHint="send"
+                    placeholder={t("newsletter.placeholder")}
+                    value={email}
+                    onChange={(event) => {
+                      setEmail(event.target.value);
+                      if (subscriptionResult) {
+                        setSubscriptionResult(null);
+                      }
+                    }}
+                    aria-describedby={showFeedback ? feedbackId : undefined}
+                    aria-invalid={isError}
+                    className="h-11 rounded-xl border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800 sm:flex-1"
+                  />
+                  <Button
+                    type="submit"
+                    disabled={isPending}
+                    className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 px-6 text-white shadow-sm hover:bg-emerald-700 focus-visible:ring-emerald-400 disabled:opacity-70 dark:bg-emerald-500 dark:hover:bg-emerald-400 sm:w-auto"
+                  >
+                    {isPending ? <Loader2 className="size-4 animate-spin" aria-hidden="true" /> : null}
+                    {t("newsletter.cta")}
+                  </Button>
+                </div>
+                {showFeedback ? (
+                  <div
+                    id={feedbackId}
+                    role={isError ? "alert" : "status"}
+                    aria-live={isError ? "assertive" : "polite"}
+                    className={`flex items-center gap-2 text-sm ${isError ? "text-rose-600 dark:text-rose-400" : "text-emerald-600 dark:text-emerald-400"}`}
+                  >
+                    {isError ? <AlertCircle size={16} aria-hidden="true" /> : <CheckCircle2 size={16} aria-hidden="true" />}
+                    <span>{feedbackMessage}</span>
+                  </div>
+                ) : null}
+              </form>
+            </div>
+          </motion.section>
 
-                      {/* Content */}
-                      <div className="flex-1 flex flex-col justify-between w-full">
-                        <div>
-                          <h3 className="text-lg md:text-xl font-semibold text-gray-900 dark:text-gray-100 mb-3 leading-tight">
-                            {section.title}
-                          </h3>
-                          <p className="text-gray-700 dark:text-gray-300 mb-6 leading-relaxed text-sm">
-                            {section.description}
-                          </p>
-                        </div>
-
-                        {/* Button */}
-                        <div className="mt-auto">
-                          <Link href={section.href}>
-                            <Button
-                              className={`group/btn inline-flex items-center gap-2 ${section.buttonClass} text-white font-medium px-5 py-3 rounded-lg shadow-sm hover:shadow-md transition-all duration-300`}
-                              size="sm"
-                            >
-                              {tRoot("STIs.learnMore")}
-                              <ArrowRight
-                                size={16}
-                                className="transition-transform duration-300 group-hover/btn:translate-x-1"
-                              />
-                            </Button>
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  </Card>
-                </motion.div>
-              );
-            })}
-          </div>
         </div>
       </section>
     </div>

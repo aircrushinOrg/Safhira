@@ -372,7 +372,7 @@
   "video": {
     "title": "Why STI Testing Matters",
     "description": "This short video explains how early screening and treatment keeps you and your partners healthy.",
-    "caption": "Video courtesy the overall description of STI"
+    "caption": "Video tells the overall description of STI"
   },
   "modules": {
       "prevention": {
@@ -965,7 +965,8 @@
   "LivingWell": {
     "hero": {
       "title": "Living Well with STIs",
-      "subtitle": "Practical tips for treatment, side effects, and wellbeing."
+      "subtitle": "Practical tips for treatment, side effects, and wellbeing.",
+      "description": "Use this hub to find treatment guidance, lifestyle support, and relationship tools that help you feel confident and cared for."
     },
     "back": "Back to Living Well",
     "disclaimer": {

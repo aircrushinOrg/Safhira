@@ -965,7 +965,8 @@
   "LivingWell": {
     "hero": {
       "title": "Hidup Sihat dengan STI",
-      "subtitle": "Panduan praktikal untuk kekal patuh rawatan, mengurus kesan sampingan dan menjaga kesejahteraan anda."
+      "subtitle": "Panduan praktikal untuk kekal patuh rawatan, mengurus kesan sampingan dan menjaga kesejahteraan anda.",
+      "description": "Gunakan hab ini untuk mendapatkan panduan rawatan, sokongan gaya hidup dan alat perhubungan supaya anda berasa yakin serta terjaga."
     },
     "back": "Kembali ke Hidup Sihat",
     "disclaimer": {
