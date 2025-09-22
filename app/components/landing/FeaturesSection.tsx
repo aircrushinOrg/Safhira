@@ -96,7 +96,7 @@ export function FeaturesSection() {
       borderColor: 'border-orange-200 dark:border-orange-800',
       textColor: 'text-orange-700 dark:text-orange-300',
       iconColor: 'text-orange-500',
-      action: () => router.push('/sti-services'),
+      action: () => router.push('/find-healthcare'),
       buttonText: t('features.learnMore')
     },
     {
