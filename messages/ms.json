@@ -355,12 +355,15 @@
     },
   "support": {
     "title": "Anda Sedang Melangkah dengan Positif",
-    "text": "Mempelajari STI menunjukkan kematangan dan tanggungjawab. Maklumat ini disampaikan tanpa penghakiman kerana kesihatan seksual adalah sebahagian penting daripada kesejahteraan. Ingat: mempunyai STI tidak mencerminkan peribadi anda—ia adalah keadaan kesihatan yang boleh dirawat atau diurus."
+    "text": "Mempelajari STI adalah tindakan bertanggungjawab dan baik untuk kesihatan. Kesihatan seksual ialah sebahagian daripada kesejahteraan."
+  },
+  "grid": {
+    "title": "Penyakit STI yang Lazim"
   },
   "video": {
     "title": "Mengapa Saringan STI Penting",
-    "description": "Video ringkas daripada Kementerian Kesihatan Malaysia ini menerangkan bagaimana saringan dan rawatan awal melindungi anda serta pasangan anda.",
-    "caption": "Video ihsan Kementerian Kesihatan Malaysia"
+    "description": "Video ringkas ini menerangkan bagaimana saringan dan rawatan awal memastikan anda serta pasangan kekal sihat.",
+    "caption": "Video ihsan penerangan menyeluruh mengenai STI"
   },
   "modules": {
       "prevention": {
@@ -480,7 +483,8 @@
   "Chat": {
     "page": {
       "loading": "Memuat sembang...",
-      "disclaimer": "Safhira juga mungkin membuat kesilapan. Sila sahkan maklumat penting."
+      "disclaimer": "Safhira juga mungkin membuat kesilapan. Sila sahkan maklumat penting.",
+      "aboutTooltip": "Perihal sembang ini"
     },
     "about": {
       "start": "Mula Bersembang",

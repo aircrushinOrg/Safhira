@@ -11,6 +11,7 @@ import { useState } from 'react';
 import {Link} from '../../i18n/routing';
 import { Info } from 'lucide-react';
 import BreadcrumbTrail from '../components/BreadcrumbTrail';
+import { Tooltip, TooltipTrigger, TooltipContent } from '../components/ui/tooltip';
 
 export default function ChatPage() {
   const [isIframeLoading, setIsIframeLoading] = useState(true);
@@ -28,7 +29,7 @@ export default function ChatPage() {
         />
         {/* Chat interface */}
         <motion.div
-          className="w-full max-w-7xl mx-auto h-[calc(100vh-200px)] md:h-[calc(100vh-160px)] bg-white dark:bg-gray-800 rounded-lg shadow-xl overflow-hidden"
+          className="w-full max-w-7xl mx-auto h-[calc(100vh-240px)] md:h-[calc(100vh-200px)] bg-white dark:bg-gray-800 rounded-lg shadow-xl overflow-hidden"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.3, ease: "easeOut" }}
@@ -64,16 +65,24 @@ export default function ChatPage() {
 
         {/* Floating About Button */}
         <Link href="/chat/about">
-          <motion.button
-            className="hidden md:flex fixed bottom-12 md:bottom-16 right-6 md:right-8 w-8 h-8 md:w-10 md:h-10 bg-teal-500 hover:bg-teal-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200 items-center justify-center z-50"
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.3, delay: 0.8 }}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Info className="w-5 h-5 md:w-6 md:h-6" />
-          </motion.button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <motion.button
+                className="hidden md:flex fixed bottom-12 md:bottom-16 right-6 md:right-8 w-8 h-8 md:w-10 md:h-10 bg-teal-500 hover:bg-teal-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200 items-center justify-center z-50"
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3, delay: 0.8 }}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                aria-label={t('page.aboutTooltip')}
+              >
+                <Info className="w-5 h-5 md:w-6 md:h-6" />
+              </motion.button>
+            </TooltipTrigger>
+            <TooltipContent sideOffset={8}>
+              {t('page.aboutTooltip')}
+            </TooltipContent>
+          </Tooltip>
         </Link>
       </div>
     </div>

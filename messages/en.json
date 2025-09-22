@@ -355,12 +355,15 @@
     },
   "support": {
     "title": "You're Taking a Positive Step",
-    "text": "Learning about STIs is responsible and healthy. Sexual health is part of wellbeing. An STI is a medical condition—treatable or manageable."
+    "text": "Learning about STIs is responsible and healthy. Sexual health is part of wellbeing."
+  },
+  "grid": {
+    "title": "Common STI diseases"
   },
   "video": {
     "title": "Why STI Testing Matters",
-    "description": "This short video from the Malaysian Ministry of Health explains how early screening and treatment keeps you and your partners healthy.",
-    "caption": "Video courtesy of the Malaysian Ministry of Health"
+    "description": "This short video explains how early screening and treatment keeps you and your partners healthy.",
+    "caption": "Video courtesy the overall description of STI"
   },
   "modules": {
       "prevention": {
@@ -480,7 +483,8 @@
   "Chat": {
     "page": {
       "loading": "Loading chat...",
-      "disclaimer": "Safhira may also make mistakes. Please verify important information."
+      "disclaimer": "Safhira may also make mistakes. Please verify important information.",
+      "aboutTooltip": "About this chat"
     },
     "about": {
       "start": "Start Chatting",

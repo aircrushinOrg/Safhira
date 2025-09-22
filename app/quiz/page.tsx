@@ -38,7 +38,7 @@ export default async function QuizPage() {
   const learnItems = t.raw('learn.items') as string[]
 
   return (
-    <div className="md:py-10 relative isolate overflow-hidden bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 min-h-[90vh]">
+    <div className="relative isolate flex min-h-screen items-center overflow-hidden bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950">
       {/* Subtle grid background */}
       <div 
         className="absolute inset-0 opacity-[0.10] dark:opacity-[0.2]"
@@ -51,7 +51,7 @@ export default async function QuizPage() {
         }}
       />
 
-      <section className="relative pt-10 pb-8 md:pt-12 md:pb-10 px-4">
+      <section className="relative w-full px-4">
         <div className="container mx-auto max-w-6xl">
           <BreadcrumbTrail
             items={[

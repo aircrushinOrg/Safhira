@@ -67,20 +67,34 @@ export default function STIsPage() {
           />
           <div className="mb-6 sm:mb-8">
             <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 items-center mb-6 sm:mb-8">
-              <div>
+              <div className="flex flex-col gap-5">
                 <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-3 sm:mb-4">
                   {tPage('hero.title')}
                 </h1>
                 <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
                   {tPage('hero.subtitle')}
                 </p>
+                {/* Supportive Message */}
+                <Card className="p-4 sm:p-6 bg-teal-50 dark:bg-teal-900/20 border-teal-200 dark:border-teal-800">
+                  <div className="flex items-start space-x-3">
+                    <Heart className="text-teal-500 mt-1 flex-shrink-0" size={18} />
+                    <div>
+                      <h3 className="font-semibold text-teal-800 dark:text-teal-200 mb-2 text-sm sm:text-base">
+                        {tPage('support.title')}
+                      </h3>
+                      <p className="text-teal-700 dark:text-teal-300 text-sm sm:text-base leading-relaxed">
+                        {tPage('support.text')}
+                      </p>
+                    </div>
+                  </div>
+                </Card>
               </div>
               <div className="flex justify-center lg:justify-end order-first lg:order-last">
                 <motion.div
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5, delay: 0.2 }}
-                  className="w-48 h-36 sm:w-64 sm:h-48 md:w-72 md:h-64 relative"
+                  className="w-52 h-40 sm:w-72 sm:h-54 md:w-80 md:h-72 relative"
                 >
                   <Image
                     src="/undraw_medicine_hqqg.svg"
@@ -92,57 +106,8 @@ export default function STIsPage() {
                 </motion.div>
               </div>
             </div>
-            
-            {/* Supportive Message */}
-            <Card className="p-4 sm:p-6 bg-teal-50 dark:bg-teal-900/20 border-teal-200 dark:border-teal-800 mb-6 sm:mb-8">
-              <div className="flex items-start space-x-3">
-                <Heart className="text-teal-500 mt-1 flex-shrink-0" size={18} />
-                <div>
-                  <h3 className="font-semibold text-teal-800 dark:text-teal-200 mb-2 text-sm sm:text-base">
-                    {tPage('support.title')}
-                  </h3>
-                  <p className="text-teal-700 dark:text-teal-300 text-sm sm:text-base leading-relaxed">
-                    {tPage('support.text')}
-                  </p>
-                </div>
-              </div>
-            </Card>
 
-            {/* Educational Video */}
-            <Card className="p-4 sm:p-6 bg-white/85 dark:bg-gray-800/85 border-teal-100 dark:border-gray-700 mb-6 sm:mb-8 shadow-sm">
-              <div className="grid gap-6 lg:grid-cols-[1fr,1.4fr] items-center">
-                <div className="space-y-4">
-                  <div className="inline-flex items-center gap-2 rounded-full bg-teal-100/70 px-3 py-1 text-xs font-medium uppercase tracking-wide text-teal-700 dark:bg-teal-900/40 dark:text-teal-200">
-                    <PlayCircle size={16} />
-                    {t('learnMore')}
-                  </div>
-                  <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 dark:text-gray-100">
-                    {tPage('video.title')}
-                  </h2>
-                  <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed">
-                    {tPage('video.description')}
-                  </p>
-                </div>
-                <div className="space-y-3">
-                  <div className="relative aspect-video overflow-hidden rounded-xl shadow-md">
-                    <iframe
-                      src="https://www.youtube.com/embed/gVH1gY05MsA"
-                      title={tPage('video.title')}
-                      loading="lazy"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      allowFullScreen
-                      className="absolute inset-0 h-full w-full"
-                    />
-                  </div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 text-center lg:text-left">
-                    {tPage('video.caption')}
-                  </p>
-                </div>
-              </div>
-            </Card>
-          </div>
-
-          {/* Featured Learning Modules */}
+                      {/* Featured Learning Modules */}
           <div className="grid gap-4 sm:gap-6 lg:grid-cols-2 mb-6 sm:mb-8">
             {/* Prevention Learning Module */}
             <Card className="p-4 sm:p-6 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 border-green-200 dark:border-green-800">
@@ -197,7 +162,43 @@ export default function STIsPage() {
             </Card>
           </div>
 
+            {/* Educational Video */}
+            <Card className="p-4 sm:p-6 bg-white/85 dark:bg-gray-800/85 border-teal-100 dark:border-gray-700 mb-6 sm:mb-8 shadow-sm">
+              <div className="grid gap-6 lg:grid-cols-[1fr,1.4fr] items-center">
+                <div className="space-y-4">
+                  <div className="inline-flex items-center gap-2 rounded-full bg-teal-100/70 px-3 py-1 text-xs font-medium uppercase tracking-wide text-teal-700 dark:bg-teal-900/40 dark:text-teal-200">
+                    <PlayCircle size={16} />
+                    {t('learnMore')}
+                  </div>
+                  <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 dark:text-gray-100">
+                    {tPage('video.title')}
+                  </h2>
+                  <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300 leading-relaxed">
+                    {tPage('video.description')}
+                  </p>
+                </div>
+                <div className="space-y-3">
+                  <div className="relative aspect-video overflow-hidden rounded-xl shadow-md">
+                    <iframe
+                      src="https://www.youtube.com/embed/gVH1gY05MsA"
+                      title={tPage('video.title')}
+                      loading="lazy"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                      className="absolute inset-0 h-full w-full"
+                    />
+                  </div>
+                </div>
+              </div>
+            </Card>
+          </div>
+
           {/* STI Grid */}
+          <div className="mb-4 sm:mb-6">
+            <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 dark:text-gray-100">
+              {tPage('grid.title')}
+            </h2>
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12">
             {stiList.map((sti, index) => (
               <motion.div
