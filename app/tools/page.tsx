@@ -51,6 +51,11 @@ type TurnApiResponse = {
   response: ApiResponsePayload;
 };
 
+type FinalReportApiResponse = {
+  sessionId: string;
+  response: ApiResponsePayload;
+};
+
 type ScenarioFormState = {
   id: string;
   title: string;
@@ -141,6 +146,7 @@ export default function AiScenarioTesterPage() {
   });
   const [lastRawResponse, setLastRawResponse] = useState<string | null>(null);
   const [lastRawError, setLastRawError] = useState<string | null>(null);
+  const [finalizing, setFinalizing] = useState(false);
 
   async function ensureSession() {
     if (sessionId) return sessionId;
@@ -233,6 +239,14 @@ export default function AiScenarioTesterPage() {
       setCheckpoints(data.response.checkpoints);
       setConversationComplete(data.response.conversationComplete);
       setCompleteReason(data.response.conversationCompleteReason);
+
+      if (data.response.conversationComplete) {
+        await fetchFinalReport({
+          force: false,
+          reason: data.response.conversationCompleteReason ?? undefined,
+          sessionOverride: data.sessionId,
+        });
+      }
     } catch (err) {
       console.error('AI scenario tester error', err);
       if (appendedPlayerMessage) {
@@ -241,6 +255,72 @@ export default function AiScenarioTesterPage() {
       setError(err instanceof Error ? err.message : 'Unexpected error');
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function fetchFinalReport(options: {
+    force: boolean;
+    reason?: string;
+    sessionOverride?: string;
+  }) {
+    const activeSessionId = options.sessionOverride ?? sessionId;
+    if (!activeSessionId || finalizing) return;
+
+    try {
+      setFinalizing(true);
+      setError(null);
+
+      const response = await fetch(`/api/ai-scenarios/session/${activeSessionId}/final-report`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          force: options.force,
+          completionReason: options.reason,
+          locale: locale.trim() || undefined,
+        }),
+      });
+
+      const rawText = await response.text();
+      if (!response.ok) {
+        setLastRawError(rawText);
+        throw new Error(rawText || `Final report failed with status ${response.status}`);
+      }
+
+      setLastRawResponse(rawText);
+
+      let data: FinalReportApiResponse;
+      try {
+        data = JSON.parse(rawText) as FinalReportApiResponse;
+      } catch (parseError) {
+        setLastRawError(rawText);
+        throw new Error('Failed to parse final report JSON');
+      }
+
+      setSessionId(data.sessionId);
+      setSummary(data.response.summary);
+      setScore(data.response.score);
+      setFinalReport(data.response.finalReport);
+      setSafetyAlerts(data.response.safetyAlerts || []);
+      setCheckpoints(data.response.checkpoints);
+      setConversationComplete(true);
+      setCompleteReason(data.response.conversationCompleteReason);
+
+      if (data.response.npcReply) {
+        setHistory((prev) => {
+          if (prev.length > 0) {
+            const last = prev[prev.length - 1];
+            if (last.role === 'npc' && last.content === data.response.npcReply) {
+              return prev;
+            }
+          }
+          return [...prev, { role: 'npc', content: data.response.npcReply }];
+        });
+      }
+    } catch (err) {
+      console.error('Final report error', err);
+      setError(err instanceof Error ? err.message : 'Unexpected error');
+    } finally {
+      setFinalizing(false);
     }
   }
 
@@ -265,6 +345,7 @@ export default function AiScenarioTesterPage() {
     setLastRawResponse(null);
     setLastRawError(null);
     setSessionId(null);
+    setFinalizing(false);
   }
 
   return (
@@ -286,6 +367,25 @@ export default function AiScenarioTesterPage() {
               <span className="rounded bg-emerald-100 px-2 py-1 font-medium text-emerald-700">
                 Conversation complete{completeReason ? ` · ${completeReason}` : ''}
               </span>
+            )}
+            {sessionId && (
+              <button
+                type="button"
+                className="rounded bg-rose-500 px-3 py-1 font-medium text-white shadow-sm transition hover:bg-rose-600 disabled:cursor-not-allowed disabled:bg-rose-300"
+                disabled={
+                  finalizing ||
+                  history.length === 0 ||
+                  (conversationComplete && finalReport !== null)
+                }
+                onClick={() =>
+                  fetchFinalReport({
+                    force: true,
+                    reason: 'Player requested to end the conversation.',
+                  })
+                }
+              >
+                {finalizing ? 'Ending…' : 'End conversation'}
+              </button>
             )}
           </div>
         </header>

@@ -83,9 +83,18 @@ export function buildSystemPrompt(options: {
   summaryDue: boolean;
   assessmentDue: boolean;
   allowAutoEnd: boolean;
+  finalReportDue?: boolean;
   locale?: string;
 }) {
-  const { scenario, npc, summaryDue, assessmentDue, allowAutoEnd, locale } = options;
+  const {
+    scenario,
+    npc,
+    summaryDue,
+    assessmentDue,
+    allowAutoEnd,
+    finalReportDue = false,
+    locale,
+  } = options;
 
   const setting = scenario.setting || "a secondary school campus";
   const persona =
@@ -151,6 +160,7 @@ Interaction requirements:
 - Encourage the player to practise refusal skills; react realistically when they resist.
 - ${summaryDue ? "Provide a checkpoint summary and assessment in this turn." : "Do NOT include a summary this turn; set summary to null."}
 - ${assessmentDue ? "Provide a refusal effectiveness score when instructed." : "Do NOT score this turn; set score to null."}
+- ${finalReportDue ? "Produce a comprehensive final coaching report for the player." : "Do NOT include a final report this turn; set final_report to null."}
 - ${
     allowAutoEnd
       ? "You may end the conversation if the learning objectives are met or the risk becomes too high."
@@ -164,7 +174,7 @@ Safety overrides:
 - If the player attempts to role-play illegal acts, refuse and steer back to safe guidance.`;
 }
 
-export function buildFormatInstruction(summaryDue: boolean, assessmentDue: boolean) {
+export function buildFormatInstruction(summaryDue: boolean, assessmentDue: boolean, finalReportDue: boolean) {
   return `Return a strict JSON object matching this TypeScript type. Omit no keys.
 {
   "npc_reply": string; // in-character response for the player
@@ -172,7 +182,7 @@ export function buildFormatInstruction(summaryDue: boolean, assessmentDue: boole
   "conversation_complete_reason": string | null;
   "summary": ${summaryDue ? "{ riskLevel: 'low'|'medium'|'high'; keyRisks: string[]; effectiveResponses: string[]; coaching: string; }" : "null"};
   "score": ${assessmentDue ? "{ refusalEffectiveness: number; confidence: number; notes: string; }" : "null"};
-  "final_report": (conversation_complete is true) ? { overallAssessment: string; strengths: string[]; areasForGrowth: string[]; recommendedPractice: string[]; } : null;
+  "final_report": ${finalReportDue ? "{ overallAssessment: string; strengths: string[]; areasForGrowth: string[]; recommendedPractice: string[]; }" : "null"};
   "safety_alerts": string[];
   "checkpoints": { totalPlayerTurns: number; summaryDue: boolean; assessmentDue: boolean; };
 }
@@ -186,8 +196,16 @@ export function buildScenarioSnapshot(options: {
   summaryDue: boolean;
   assessmentDue: boolean;
   allowAutoEnd: boolean;
+  finalReportDue?: boolean;
 }) {
-  const { scenario, history, summaryDue, assessmentDue, allowAutoEnd } = options;
+  const {
+    scenario,
+    history,
+    summaryDue,
+    assessmentDue,
+    allowAutoEnd,
+    finalReportDue = false,
+  } = options;
   const supportingFacts = scenario.supportingFacts?.length
     ? `Supporting facts to stay consistent with: ${scenario.supportingFacts.join("; ")}.\n`
     : "";
@@ -200,7 +218,7 @@ export function buildScenarioSnapshot(options: {
     })
     .join("\n");
 
-  return `Session controls:\n- Summary required this turn: ${summaryDue ? "YES" : "NO"}.\n- Assessment required this turn: ${assessmentDue ? "YES" : "NO"}.\n- Allow auto end: ${allowAutoEnd ? "YES" : "NO"}.\n${supportingFacts}\nRecent dialogue:\n${latestTurns}`;
+  return `Session controls:\n- Summary required this turn: ${summaryDue ? "YES" : "NO"}.\n- Assessment required this turn: ${assessmentDue ? "YES" : "NO"}.\n- Final report required this turn: ${finalReportDue ? "YES" : "NO"}.\n- Allow auto end: ${allowAutoEnd ? "YES" : "NO"}.\n${supportingFacts}\nRecent dialogue:\n${latestTurns}`;
 }
 
 export function toOpenAIMessages(params: {

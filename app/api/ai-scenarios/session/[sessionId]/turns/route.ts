@@ -103,6 +103,7 @@ export async function POST(
 
     const summaryDue = Boolean(forceSummary) || (playerTurns > 0 && playerTurns % SUMMARY_INTERVAL === 0);
     const assessmentDue = Boolean(forceAssessment) || summaryDue;
+    const finalReportDue = false;
 
     const scenarioLearning = normaliseStringArray(session.learningObjectives ?? []);
     const supportingFacts = normaliseStringArray(session.supportingFacts ?? []);
@@ -147,16 +148,18 @@ export async function POST(
       summaryDue,
       assessmentDue,
       allowAutoEnd: effectiveAllowAutoEnd,
+      finalReportDue,
       locale: effectiveLocale,
     });
 
-    const formatInstruction = buildFormatInstruction(summaryDue, assessmentDue);
+    const formatInstruction = buildFormatInstruction(summaryDue, assessmentDue, finalReportDue);
     const scenarioSnapshot = buildScenarioSnapshot({
       scenario: scenarioDescriptor,
       history: historyForModel,
       summaryDue,
       assessmentDue,
       allowAutoEnd: effectiveAllowAutoEnd,
+      finalReportDue,
     });
 
     const messages = toOpenAIMessages({
@@ -220,7 +223,7 @@ export async function POST(
       conversationCompleteReason: parsed.conversationCompleteReason,
       summary: parsed.summary,
       score: parsed.score,
-      finalReport: parsed.finalReport,
+      finalReport: null,
       safetyAlerts: parsed.safetyAlerts,
       checkpoints: {
         totalPlayerTurns: playerTurns,
