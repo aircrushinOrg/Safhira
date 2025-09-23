@@ -51,7 +51,7 @@ export default async function QuizPage() {
         }}
       />
 
-      <section className="relative w-full px-4">
+      <section className="relative w-full px-4 py-8 sm:py-12 md:py-16">
         <div className="container mx-auto max-w-6xl">
           <BreadcrumbTrail
             items={[
