@@ -106,8 +106,8 @@ export default function LivingWellWithSTIPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-rose-50 via-white to-teal-50 dark:bg-slate-950">
-      <section className="relative px-4 py-8 sm:py-12 md:py-16">
-        <div className="container mx-auto max-w-6xl space-y-12 sm:space-y-14">
+      <section className="px-4 py-8 sm:py-12 md:py-16">
+        <div className="container mx-auto max-w-6xl">
           <BreadcrumbTrail
             items={[
               {label: tBreadcrumbs('home'), href: '/'},
@@ -115,7 +115,8 @@ export default function LivingWellWithSTIPage() {
             ]}
           />
 
-          <Dialog
+          <div className="space-y-12 sm:space-y-14">
+            <Dialog
             open={isDialogOpen}
             onOpenChange={(open) => {
               setIsDialogOpen(open);
@@ -332,6 +333,7 @@ export default function LivingWellWithSTIPage() {
             </div>
           </motion.section>
 
+          </div>
         </div>
       </section>
     </div>

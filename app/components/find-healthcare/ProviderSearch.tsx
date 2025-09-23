@@ -15,13 +15,16 @@ import { Checkbox } from '@/app/components/ui/checkbox';
 import { Card, CardContent } from '@/app/components/ui/card';
 import { Badge } from '@/app/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/app/components/ui/select';
+import { cn } from '@/app/components/ui/utils';
 import { Search, Filter, X, Loader2, AlertCircle, ChevronLeft, ChevronRight, MapPin, Target } from 'lucide-react';
 
 interface ProviderSearchProps {
   initialProviders?: ProviderRecord[];
+  showHero?: boolean;
+  className?: string;
 }
 
-export function ProviderSearch({ initialProviders = [] }: ProviderSearchProps) {
+export function ProviderSearch({ initialProviders = [], showHero = true, className }: ProviderSearchProps) {
   const t = useTranslations('ProviderSearch');
   const [providers, setProviders] = useState<ProviderRecord[]>(initialProviders);
   const [states, setStates] = useState<StateOption[]>([]);
@@ -410,45 +413,47 @@ export function ProviderSearch({ initialProviders = [] }: ProviderSearchProps) {
   };
 
   return (
-    <div className="w-full max-w-7xl mx-auto p-6">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-          {t('hero.title')}
-        </h1>
-        <p className="text-gray-600 dark:text-gray-400">
-          {t('hero.subtitle')}
-        </p>
-        
-        {/* Services Legend */}
-        <div className="mt-4 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
-          <h3 className="text-sm font-medium text-blue-900 dark:text-blue-100 mb-2">
-            {t('legend.title')}
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
-            <div className="flex items-start space-x-2">
-              <div className="w-2 h-2 bg-green-500 rounded-full mt-1.5 flex-shrink-0"></div>
-              <div>
-                <span className="font-medium text-blue-900 dark:text-blue-100">PrEP:</span>
-                <span className="text-blue-700 dark:text-blue-200 ml-1">{t('legend.prep')}</span>
+    <div className={cn('w-full max-w-6xl mx-auto p-6', className)}>
+      {showHero && (
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+            {t('hero.title')}
+          </h1>
+          <p className="text-gray-600 dark:text-gray-400">
+            {t('hero.subtitle')}
+          </p>
+
+          {/* Services Legend */}
+          <div className="mt-4 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+            <h3 className="text-sm font-medium text-blue-900 dark:text-blue-100 mb-2">
+              {t('legend.title')}
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
+              <div className="flex items-start space-x-2">
+                <div className="w-2 h-2 bg-green-500 rounded-full mt-1.5 flex-shrink-0" />
+                <div>
+                  <span className="font-medium text-blue-900 dark:text-blue-100">PrEP:</span>
+                  <span className="text-blue-700 dark:text-blue-200 ml-1">{t('legend.prep')}</span>
+                </div>
               </div>
-            </div>
-            <div className="flex items-start space-x-2">
-              <div className="w-2 h-2 bg-green-500 rounded-full mt-1.5 flex-shrink-0"></div>
-              <div>
-                <span className="font-medium text-blue-900 dark:text-blue-100">PEP:</span>
-                <span className="text-blue-700 dark:text-blue-200 ml-1">{t('legend.pep')}</span>
+              <div className="flex items-start space-x-2">
+                <div className="w-2 h-2 bg-green-500 rounded-full mt-1.5 flex-shrink-0" />
+                <div>
+                  <span className="font-medium text-blue-900 dark:text-blue-100">PEP:</span>
+                  <span className="text-blue-700 dark:text-blue-200 ml-1">{t('legend.pep')}</span>
+                </div>
               </div>
-            </div>
-            <div className="flex items-start space-x-2">
-              <div className="w-2 h-2 bg-green-500 rounded-full mt-1.5 flex-shrink-0"></div>
-              <div>
-                <span className="font-medium text-blue-900 dark:text-blue-100">{t('legend.screening')}:</span>
-                <span className="text-blue-700 dark:text-blue-200 ml-1">{t('legend.screeningDesc')}</span>
+              <div className="flex items-start space-x-2">
+                <div className="w-2 h-2 bg-green-500 rounded-full mt-1.5 flex-shrink-0" />
+                <div>
+                  <span className="font-medium text-blue-900 dark:text-blue-100">{t('legend.screening')}:</span>
+                  <span className="text-blue-700 dark:text-blue-200 ml-1">{t('legend.screeningDesc')}</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Search and Filters */}
       <div className="mb-6 space-y-4">

@@ -1,4 +1,5 @@
-import { pgTable, serial, varchar, timestamp, text, boolean, integer, decimal, primaryKey, index, date, numeric, uniqueIndex } from 'drizzle-orm/pg-core';
+import { pgTable, serial, varchar, timestamp, text, boolean, integer, decimal, primaryKey, index, date, numeric, uniqueIndex, jsonb } from 'drizzle-orm/pg-core';
+import { sql } from 'drizzle-orm';
 // Table Creation
 // State dictionary table
 export const state = pgTable('state', {
@@ -41,6 +42,12 @@ export const provider = pgTable('provider', {
   index('idx_provider_state').on(table.stateId),
   index('idx_provider_name').on(table.providerName),
 ]);
+
+// Participant table records quiz/chat participants by nickname
+export const participant = pgTable('participant', {
+  participantId: serial('participant_id').primaryKey(),
+  participantNickname: varchar('participant_nickname', { length: 255 }).notNull(),
+});
 
 // STI table (renamed from sti_info)
 // Dropped JSON array text columns into separate relation tables (see below)
@@ -187,6 +194,70 @@ export const newsletterSubscriptions = pgTable('newsletter_subscriptions', {
   createdAt: timestamp('created_at').defaultNow().notNull(),
 }, (table) => [
   uniqueIndex('idx_newsletter_subscriptions_email').on(table.email),
+]);
+
+// AI scenario simulation persistence
+export const aiScenarioSessions = pgTable('ai_scenario_sessions', {
+  sessionId: varchar('session_id', { length: 128 }).primaryKey(),
+  scenarioId: varchar('scenario_id', { length: 128 }).notNull(),
+  scenarioTitle: varchar('scenario_title', { length: 255 }),
+  scenarioSetting: varchar('scenario_setting', { length: 255 }),
+  tensionLevel: varchar('tension_level', { length: 16 }),
+  learningObjectives: jsonb('learning_objectives').notNull().default(sql`'[]'::jsonb`),
+  supportingFacts: jsonb('supporting_facts').notNull().default(sql`'[]'::jsonb`),
+  locale: varchar('locale', { length: 16 }),
+  allowAutoEnd: boolean('allow_auto_end').notNull().default(true),
+  npcId: varchar('npc_id', { length: 128 }).notNull(),
+  npcName: varchar('npc_name', { length: 255 }).notNull(),
+  npcRole: varchar('npc_role', { length: 255 }).notNull(),
+  npcPersona: text('npc_persona'),
+  npcGoals: jsonb('npc_goals').notNull().default(sql`'[]'::jsonb`),
+  npcTactics: jsonb('npc_tactics').notNull().default(sql`'[]'::jsonb`),
+  npcBoundaries: jsonb('npc_boundaries').notNull().default(sql`'[]'::jsonb`),
+  lastSummaryRisk: varchar('last_summary_risk', { length: 16 }),
+  lastScore: integer('last_score'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+  completedAt: timestamp('completed_at'),
+  completionReason: text('completion_reason'),
+}, (table) => [
+  index('idx_ai_scenario_sessions_created_at').on(table.createdAt),
+  index('idx_ai_scenario_sessions_npc').on(table.npcId),
+  index('idx_ai_scenario_sessions_scenario').on(table.scenarioId),
+]);
+
+export const aiScenarioTurns = pgTable('ai_scenario_turns', {
+  id: serial('id').primaryKey(),
+  sessionId: varchar('session_id', { length: 128 }).notNull().references(() => aiScenarioSessions.sessionId, { onDelete: 'cascade' }),
+  turnIndex: integer('turn_index').notNull(),
+  role: varchar('role', { length: 16 }).notNull(),
+  content: text('content').notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+}, (table) => [
+  index('idx_ai_scenario_turns_session').on(table.sessionId),
+  index('idx_ai_scenario_turns_turn_index').on(table.turnIndex),
+  uniqueIndex('uq_ai_scenario_turns_session_index').on(table.sessionId, table.turnIndex),
+]);
+
+export const aiScenarioResponses = pgTable('ai_scenario_responses', {
+  id: serial('id').primaryKey(),
+  sessionId: varchar('session_id', { length: 128 }).notNull().references(() => aiScenarioSessions.sessionId, { onDelete: 'cascade' }),
+  playerTurnCount: integer('player_turn_count').notNull(),
+  summaryDue: boolean('summary_due').notNull().default(false),
+  assessmentDue: boolean('assessment_due').notNull().default(false),
+  npcReply: text('npc_reply').notNull(),
+  summary: jsonb('summary'),
+  score: jsonb('score'),
+  finalReport: jsonb('final_report'),
+  safetyAlerts: jsonb('safety_alerts').notNull().default(sql`'[]'::jsonb`),
+  conversationComplete: boolean('conversation_complete').notNull().default(false),
+  conversationCompleteReason: text('conversation_complete_reason'),
+  rawResponse: jsonb('raw_response'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+}, (table) => [
+  index('idx_ai_scenario_responses_session').on(table.sessionId),
+  index('idx_ai_scenario_responses_player_turn_count').on(table.playerTurnCount),
+  uniqueIndex('uq_ai_scenario_responses_session_turns').on(table.sessionId, table.playerTurnCount),
 ]);
 
 // Legacy table kept temporarily for migration compatibility

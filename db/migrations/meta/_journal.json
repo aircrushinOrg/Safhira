@@ -43,6 +43,13 @@
       "when": 1758338925000,
       "tag": "0005_add_newsletter_subscriptions",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1760000000000,
+      "tag": "0006_add_ai_scenario_tables",
+      "breakpoints": true
     }
   ]
 }
