@@ -15,6 +15,7 @@ import {
   LeaderboardEntry,
   QuizLeaderboardStats
 } from '@/types/leaderboard';
+import { containsProfanity, sanitizeNickname } from '@/lib/profanity';
 
 async function computeLeaderboardRank(quizType: string, nickname: string): Promise<number | null> {
   if (!nickname) return null;
@@ -73,7 +74,15 @@ export async function submitQuizScore(data: SubmitScoreRequest) {
     } = data;
 
     // Sanitize nickname
-    const sanitizedNickname = nickname.trim();
+    const sanitizedNickname = sanitizeNickname(nickname);
+
+    // Profanity check (server-side enforcement)
+    if (containsProfanity(sanitizedNickname)) {
+      return {
+        success: false,
+        error: 'Nickname contains inappropriate language'
+      };
+    }
 
     // Start a transaction
     const result = await db.transaction(async (tx) => {

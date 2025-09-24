@@ -276,6 +276,7 @@
     "actions": {
       "true": "Benar",
       "false": "Palsu",
+      "previous": "Sebelumnya",
       "next": "Seterusnya",
       "finish": "Tamat",
       "submitScore": "Hantar Skor",

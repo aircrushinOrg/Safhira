@@ -110,6 +110,9 @@ export default function MythListClient({ items, allItems }: { items: Item[]; all
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [showConfetti, setShowConfetti] = useState(false);
 
+  // Track per-question responses so users can go back to review without editing
+  const [responses, setResponses] = useState<(null | { userAnswer: boolean; isCorrect: boolean })[]>([]);
+
   // Leaderboard states
   const [nicknameDialogOpen, setNicknameDialogOpen] = useState(false);
   const [scoreSubmittedDialogOpen, setScoreSubmittedDialogOpen] = useState(false);
@@ -153,6 +156,7 @@ export default function MythListClient({ items, allItems }: { items: Item[]; all
     setFinished(false);
     setAnswered(false);
     setIsCorrect(null);
+    setResponses(Array(chosen.length).fill(null));
     setQuizOpen(true);
   };
 
@@ -163,6 +167,11 @@ export default function MythListClient({ items, allItems }: { items: Item[]; all
     const correct = q.isTrue === userSaysTrue;
     setIsCorrect(correct);
     setAnswered(true);
+    setResponses((prev) => {
+      const next = [...prev];
+      next[current] = { userAnswer: userSaysTrue, isCorrect: correct };
+      return next;
+    });
     if (correct) setScore((s) => s + 1);
   }, [questions, current, answered]);
 
@@ -180,10 +189,20 @@ export default function MythListClient({ items, allItems }: { items: Item[]; all
       }
     } else {
       setCurrent(next);
-      setAnswered(false);
-      setIsCorrect(null);
+      const resp = responses[next];
+      setAnswered(!!resp);
+      setIsCorrect(resp ? resp.isCorrect : null);
     }
-  }, [answered, current, questions.length, score]);
+  }, [answered, current, questions.length, score, responses]);
+
+  const goPrev = useCallback(() => {
+    const prev = current - 1;
+    if (prev < 0) return;
+    setCurrent(prev);
+    const resp = responses[prev];
+    setAnswered(!!resp);
+    setIsCorrect(resp ? resp.isCorrect : null);
+  }, [current, responses]);
 
   // Handle quiz completion and show nickname input
   const handleQuizComplete = () => {
@@ -452,20 +471,31 @@ export default function MythListClient({ items, allItems }: { items: Item[]; all
               </div>
 
               {!answered ? (
-                <div className="flex gap-3 justify-end mt-8">
-                  <Button
-                    variant="outline"
-                    onClick={() => answer(false)}
-                    className="transition-transform active:scale-95"
-                  >
-                    {t('actions.false')}
-                  </Button>
-                  <Button
-                    onClick={() => answer(true)}
-                    className="transition-transform active:scale-95"
-                  >
-                    {t('actions.true')}
-                  </Button>
+                <div className={`flex items-center ${current > 0 ? 'justify-between' : 'justify-end'} mt-8`}>
+                  {current > 0 && (
+                    <Button
+                      variant="ghost"
+                      onClick={goPrev}
+                      className="transition-transform active:scale-95"
+                    >
+                      ← {t('actions.previous')}
+                    </Button>
+                  )}
+                  <div className="flex gap-3">
+                    <Button
+                      variant="outline"
+                      onClick={() => answer(false)}
+                      className="transition-transform active:scale-95"
+                    >
+                      {t('actions.false')}
+                    </Button>
+                    <Button
+                      onClick={() => answer(true)}
+                      className="transition-transform active:scale-95"
+                    >
+                      {t('actions.true')}
+                    </Button>
+                  </div>
                 </div>
               ) : (
                 <div className="space-y-3">
@@ -518,7 +548,16 @@ export default function MythListClient({ items, allItems }: { items: Item[]; all
                       )}
                     </div>
                   </div>
-                  <div className="flex justify-end">
+                  <div className={`flex items-center ${current > 0 ? 'justify-between' : 'justify-end'}`}>
+                    {current > 0 && (
+                      <Button
+                        variant="ghost"
+                        onClick={goPrev}
+                        className="transition-transform active:scale-95"
+                      >
+                        ← {t('actions.previous')}
+                      </Button>
+                    )}
                     <Button
                       onClick={goNext}
                       className="transition-transform active:scale-95"

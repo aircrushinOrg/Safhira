@@ -20,6 +20,7 @@ import { Label } from "../ui/label";
 import { Badge } from "../ui/badge";
 import { motion } from "framer-motion";
 import generateRandomNickname from "@/lib/nickname";
+import { containsProfanity, sanitizeNickname } from "@/lib/profanity";
 
 interface NicknameInputDialogProps {
   open: boolean;
@@ -44,10 +45,15 @@ export default function NicknameInputDialog({
   const [error, setError] = useState("");
 
   const handleSubmit = () => {
-    const trimmed = nickname.trim();
+    const trimmed = sanitizeNickname(nickname);
     
     if (!trimmed) {
       setError("Please enter a nickname");
+      return;
+    }
+
+    if (containsProfanity(trimmed)) {
+      setError("Please choose a respectful nickname");
       return;
     }
     

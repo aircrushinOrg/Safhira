@@ -276,6 +276,7 @@
     "actions": {
       "true": "True",
       "false": "False",
+        "previous": "Previous",
       "next": "Next",
       "finish": "Finish",
       "submitScore": "Submit Score",
