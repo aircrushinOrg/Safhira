@@ -106,7 +106,7 @@ export default function LifestylePage() {
       <Toaster richColors position="top-center" />
 
       <section className="relative py-10 md:py-16 px-4">
-        <div className="container mx-auto max-w-7xl">
+        <div className="container mx-auto max-w-6xl">
           <BreadcrumbTrail
             items={[
               {label: tBreadcrumbs('home'), href: '/'},

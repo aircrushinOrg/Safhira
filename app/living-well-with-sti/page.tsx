@@ -105,7 +105,7 @@ export default function LivingWellWithSTIPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-rose-50 via-white to-teal-50 dark:bg-slate-950">
+    <div className="min-h-screen bg-gradient-to-br from-rose-50 via-white to-teal-50 dark:bg-gradient-to-br dark:from-slate-950 dark:via-slate-900 dark:to-slate-800">
       <section className="px-4 py-8 sm:py-12 md:py-16">
         <div className="container mx-auto max-w-6xl">
           <BreadcrumbTrail
@@ -148,7 +148,7 @@ export default function LivingWellWithSTIPage() {
           </Dialog>
 
           <motion.section
-            className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900"
+            className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-slate-700/50 dark:bg-slate-900/90 dark:shadow-2xl dark:shadow-slate-950/50"
             initial={{opacity: 0, y: reduceMotion ? 0 : 12}}
             animate={{opacity: 1, y: 0}}
             transition={{duration: reduceMotion ? 0 : 0.5}}
@@ -215,7 +215,7 @@ export default function LivingWellWithSTIPage() {
                 initial={{opacity: 0, x: reduceMotion ? 0 : 16}}
                 animate={{opacity: 1, x: 0}}
                 transition={{duration: reduceMotion ? 0 : 0.5, delay: reduceMotion ? 0 : 0.15}}
-                className="flex h-full flex-col justify-between gap-8 rounded-2xl border border-slate-100 bg-slate-50 p-6 dark:border-slate-800 dark:bg-slate-900/60"
+                className="flex h-full flex-col justify-between gap-8 rounded-2xl border border-slate-100 bg-slate-50 p-6 dark:border-slate-700/60 dark:bg-slate-800/80 dark:backdrop-blur-sm"
               >
                 <div className="space-y-6">
                   <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900 shadow-sm dark:border-amber-800 dark:bg-amber-900/20 dark:text-amber-100" role="note">
@@ -247,7 +247,7 @@ export default function LivingWellWithSTIPage() {
                     </ul>
                   </div>
                 </div>
-                <div className="relative aspect-[5/4] overflow-hidden rounded-2xl bg-white shadow-inner dark:bg-slate-800">
+                <div className="relative aspect-[5/4] overflow-hidden rounded-2xl bg-white shadow-inner dark:bg-slate-800/90 dark:ring-1 dark:ring-slate-700/50">
                   <Image
                     src="/undraw_living_well.svg"
                     alt="Living well illustration"
@@ -262,7 +262,7 @@ export default function LivingWellWithSTIPage() {
           </motion.section>
 
           <motion.section
-            className="relative overflow-hidden rounded-3xl border border-emerald-100/60 bg-white/90 p-6 shadow-lg ring-1 ring-inset ring-white/60 backdrop-blur-sm transition-shadow dark:border-emerald-500/20 dark:bg-slate-900/80 dark:ring-white/10 sm:p-8"
+            className="relative overflow-hidden rounded-3xl border border-emerald-100/60 bg-white/90 p-6 shadow-lg ring-1 ring-inset ring-white/60 backdrop-blur-sm transition-shadow dark:border-emerald-500/30 dark:bg-slate-900/90 dark:ring-slate-700/20 dark:shadow-2xl dark:shadow-slate-950/30 sm:p-8"
             initial={{opacity: 0, y: reduceMotion ? 0 : 12}}
             whileInView={{opacity: 1, y: 0}}
             viewport={{once: true, amount: 0.3}}
@@ -270,12 +270,12 @@ export default function LivingWellWithSTIPage() {
           >
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br from-emerald-50/80 via-white to-cyan-50/70 dark:from-emerald-500/15 dark:via-slate-900 dark:to-slate-950"
+              className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br from-emerald-50/80 via-white to-cyan-50/70 dark:from-emerald-500/10 dark:via-slate-800/50 dark:to-slate-900/80"
             />
             <div className="flex flex-col gap-6">
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex items-start gap-3">
-                  <span className="grid h-12 w-12 flex-shrink-0 place-items-center rounded-xl bg-gradient-to-br from-emerald-100 via-white to-emerald-50 text-emerald-600 shadow-sm ring-1 ring-emerald-100/80 dark:bg-emerald-500/15 dark:text-emerald-300 dark:ring-emerald-500/40">
+                  <span className="grid h-12 w-12 flex-shrink-0 place-items-center rounded-xl bg-gradient-to-br from-emerald-100 via-white to-emerald-50 text-emerald-600 shadow-sm ring-1 ring-emerald-100/80 dark:bg-gradient-to-br dark:from-emerald-500/20 dark:via-emerald-600/10 dark:to-emerald-700/15 dark:text-emerald-300 dark:ring-emerald-500/50 dark:shadow-lg dark:shadow-emerald-500/20">
                     <Mail size={24} aria-hidden="true" />
                   </span>
                   <div className="space-y-2">
@@ -290,7 +290,7 @@ export default function LivingWellWithSTIPage() {
               </div>
 
               <form onSubmit={handleNewsletterSubmit} className="flex flex-col gap-4" noValidate>
-                <div className="flex flex-col gap-3 rounded-2xl border border-emerald-100/70 bg-white/70 p-3 shadow-inner sm:flex-row sm:items-center dark:border-emerald-500/30 dark:bg-slate-900/60">
+                <div className="flex flex-col gap-3 rounded-2xl border border-emerald-100/70 bg-white/70 p-3 shadow-inner sm:flex-row sm:items-center dark:border-emerald-500/40 dark:bg-slate-800/70 dark:shadow-lg dark:shadow-slate-950/20">
                   <Input
                     type="email"
                     name="email"
@@ -307,12 +307,12 @@ export default function LivingWellWithSTIPage() {
                     }}
                     aria-describedby={showFeedback ? feedbackId : undefined}
                     aria-invalid={isError}
-                    className="h-11 rounded-xl border border-transparent bg-white/90 px-4 text-slate-900 shadow-sm focus-visible:ring-2 focus-visible:ring-emerald-300 dark:bg-slate-900/70 dark:text-slate-100 dark:placeholder:text-slate-400 sm:flex-1"
+                    className="h-11 rounded-xl border border-transparent bg-white/90 px-4 text-slate-900 shadow-sm focus-visible:ring-2 focus-visible:ring-emerald-300 dark:bg-slate-900/80 dark:text-slate-100 dark:placeholder:text-slate-400 dark:border-slate-700/50 dark:shadow-inner dark:focus-visible:ring-emerald-400 sm:flex-1"
                   />
                   <Button
                     type="submit"
                     disabled={isPending}
-                    className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 px-6 font-medium text-white shadow-md focus-visible:ring-emerald-300 hover:from-emerald-600 hover:to-teal-600 disabled:opacity-70 dark:from-emerald-500 dark:to-teal-500 dark:hover:from-emerald-400 dark:hover:to-teal-400 sm:w-auto"
+                    className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 px-6 font-medium text-white shadow-md focus-visible:ring-emerald-300 hover:from-emerald-600 hover:to-teal-600 disabled:opacity-70 dark:from-emerald-600 dark:to-teal-600 dark:hover:from-emerald-500 dark:hover:to-teal-500 dark:shadow-lg dark:shadow-emerald-500/25 dark:focus-visible:ring-emerald-400 sm:w-auto"
                   >
                     {isPending ? <Loader2 className="size-4 animate-spin" aria-hidden="true" /> : null}
                     {t("newsletter.cta")}
@@ -321,7 +321,7 @@ export default function LivingWellWithSTIPage() {
                 {showFeedback ? (
                   <div
                     id={feedbackId}
-                    role={isError ? "alert" : "status"}
+                    {...(isError && { role: "alert" })}
                     aria-live={isError ? "assertive" : "polite"}
                     className={`flex items-center gap-2 text-sm ${isError ? "text-rose-600 dark:text-rose-400" : "text-emerald-600 dark:text-emerald-400"}`}
                   >

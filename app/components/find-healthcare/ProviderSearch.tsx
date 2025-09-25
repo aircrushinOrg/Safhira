@@ -510,7 +510,7 @@ export function ProviderSearch({ initialProviders = [], showHero = true, classNa
                   {/* States Multi-select */}
                   <div>
                     <h4 className="text-sm font-medium mb-3">{t('filters.statesRegions')}</h4>
-                    <div className="grid grid-cols-2 gap-3 max-h-48 overflow-y-auto">
+                    <div className="grid grid-cols-2 gap-3 max-h-80 overflow-y-auto">
                       {states.map((state) => (
                         <div key={state.stateId} className="flex items-center space-x-2">
                           <Checkbox

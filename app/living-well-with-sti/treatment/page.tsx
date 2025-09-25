@@ -394,7 +394,7 @@ export default function TreatmentAdherencePage() {
       <Toaster richColors position="top-center" />
 
       <section className="relative py-10 md:py-16 px-4">
-        <div className="container mx-auto max-w-7xl">
+        <div className="container mx-auto max-w-6xl">
           <BreadcrumbTrail
             items={[
               {label: tBreadcrumbs('home'), href: '/'},
@@ -707,7 +707,7 @@ export default function TreatmentAdherencePage() {
                     <div className="mt-3">
                       <Button
                         size="sm"
-                        className="rounded-full border border-rose-300/70 bg-gradient-to-r from-rose-100 via-white to-rose-50 px-4 py-2 text-rose-700 shadow-sm hover:from-rose-200 hover:to-rose-100 dark:border-rose-800/50 dark:bg-rose-900/30 dark:text-rose-200"
+                        className="rounded-full border border-rose-300/70 bg-gradient-to-r from-rose-100 via-white to-rose-50 px-4 py-2 text-rose-700 shadow-sm hover:from-rose-200 hover:to-rose-100 dark:border-rose-500/60 dark:bg-gradient-to-r dark:from-rose-600/90 dark:via-rose-500/80 dark:to-rose-600/90 dark:text-white dark:shadow-lg dark:shadow-rose-500/25 dark:hover:from-rose-500 dark:hover:to-rose-500 dark:focus-visible:ring-rose-400"
                         onClick={clearAll}
                       >
                         {t("privacy.clearLocal")}
