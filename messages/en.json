@@ -748,6 +748,7 @@
       "selectSti": "Select STI",
       "chooseDisease": "Choose a disease",
       "selectStates": "Select States",
+      "selectAll": "Select All",
       "clear": "Clear",
       "chooseStates": "Choose states",
       "selectPrompt": "Please select a disease to view the chart",

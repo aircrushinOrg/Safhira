@@ -128,6 +128,12 @@ export default function STITrendsChart({ sharedData }: STITrendsChartProps) {
     setSelectedStates([]);
   };
 
+  const handleSelectAllStates = () => {
+    if (states && states.length > 0) {
+      setSelectedStates(states);
+    }
+  };
+
   const getChartData = () => {
     if (!selectedDisease) {
       return { labels: [], datasets: [] };
@@ -300,15 +306,26 @@ export default function STITrendsChart({ sharedData }: STITrendsChartProps) {
           <div className="flex-1">
             <div className="flex items-center justify-between mb-2">
               <label className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('trends.selectStates')}</label>
-              <Button
-                onClick={handleClearAllStates}
-                size="sm"
-                variant="outline"
-                className="flex items-center gap-1 text-xs bg-transparent dark:border-slate-600 dark:hover:bg-slate-700 transition-all duration-200"
-                disabled={selectedStates.length === 0}
-              >
-                {t('trends.clear')}
-              </Button>
+              <div className="flex items-center gap-2">
+                <Button
+                  onClick={handleSelectAllStates}
+                  size="sm"
+                  variant="outline"
+                  className="flex items-center gap-1 text-xs bg-transparent dark:border-slate-600 dark:hover:bg-slate-700 transition-all duration-200"
+                  disabled={states.length === 0 || selectedStates.length === states.length}
+                >
+                  {t('trends.selectAll')}
+                </Button>
+                <Button
+                  onClick={handleClearAllStates}
+                  size="sm"
+                  variant="outline"
+                  className="flex items-center gap-1 text-xs bg-transparent dark:border-slate-600 dark:hover:bg-slate-700 transition-all duration-200"
+                  disabled={selectedStates.length === 0}
+                >
+                  {t('trends.clear')}
+                </Button>
+              </div>
             </div>
             <Select>
               <SelectTrigger className="!h-auto w-full bg-slate-100 dark:bg-slate-700 border border-slate-300 dark:border-slate-600">
