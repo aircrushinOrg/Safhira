@@ -152,7 +152,7 @@ export default function NotFound() {
             <motion.div variants={itemVariants}>
               <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
                 <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Need immediate help? Our AI assistant is available 24/7 to answer your questions about sexual health.
+                  {t('aiHelp')}
                 </p>
               </div>
             </motion.div>
