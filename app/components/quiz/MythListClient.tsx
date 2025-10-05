@@ -123,6 +123,7 @@ export default function MythListClient({ items, allItems }: { items: Item[]; all
   const [userStats, setUserStats] = useState<any>(null);
   const [leaderboardData, setLeaderboardData] = useState<LeaderboardResponse | null>(null);
   const [viewAllOpen, setViewAllOpen] = useState(false);
+  const [viewAllFilter, setViewAllFilter] = useState<"all" | "myth" | "fact">("all");
 
   const completeList = useMemo(() => {
     if (allItems && allItems.length > 0) {
@@ -130,6 +131,16 @@ export default function MythListClient({ items, allItems }: { items: Item[]; all
     }
     return items;
   }, [items, allItems]);
+
+  const filteredList = useMemo(() => {
+    if (viewAllFilter === "all") {
+      return completeList;
+    }
+    return completeList.filter((item) => {
+      const isFactual = deriveTruth(item.fact);
+      return viewAllFilter === "fact" ? isFactual : !isFactual;
+    });
+  }, [completeList, viewAllFilter]);
 
   const handleClick = (item: Item) => {
     setSelected(item);
@@ -652,9 +663,37 @@ export default function MythListClient({ items, allItems }: { items: Item[]; all
             </DialogDescription>
           </DialogHeader>
           
+          {/* Filter Buttons */}
+          <div className="flex gap-2 border-b pb-3">
+            <Button
+              size="sm"
+              variant={viewAllFilter === "all" ? "default" : "outline"}
+              onClick={() => setViewAllFilter("all")}
+              className="transition-all duration-200"
+            >
+              {t('viewAll.filterAll', {count: completeList.length})}
+            </Button>
+            <Button
+              size="sm"
+              variant={viewAllFilter === "myth" ? "default" : "outline"}
+              onClick={() => setViewAllFilter("myth")}
+              className="transition-all duration-200"
+            >
+              ✗ {t('viewAll.filterMyths', {count: completeList.filter(item => !deriveTruth(item.fact)).length})}
+            </Button>
+            <Button
+              size="sm"
+              variant={viewAllFilter === "fact" ? "default" : "outline"}
+              onClick={() => setViewAllFilter("fact")}
+              className="transition-all duration-200"
+            >
+              ✓ {t('viewAll.filterFacts', {count: completeList.filter(item => deriveTruth(item.fact)).length})}
+            </Button>
+          </div>
+          
           <div className="flex-1 overflow-y-auto pr-2">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {completeList.map((item, index) => {
+              {filteredList.map((item, index) => {
                 const isFactual = deriveTruth(item.fact);
                 const factText = item.fact || '';
                 const explanation = factText.replace(/^(myth|fact)\.\s*/i, '');

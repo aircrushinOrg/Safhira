@@ -59,8 +59,6 @@ export const SUMMARY_INTERVAL = 3;
 
 export const DEFAULT_MODEL =
   process.env.SCENARIO_MODEL_NAME ||
-  process.env.SAFETY_SIM_MODEL ||
-  process.env.OPENAI_MODEL ||
   "x-ai/grok-4-fast:free";
 
 export function isNonEmptyString(value: unknown): value is string {

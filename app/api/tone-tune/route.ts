@@ -55,7 +55,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const model = process.env.TUNE_MODEL_NAME || process.env.OPENAI_MODEL || "openrouter/sonoma-dusk-alpha";
+    const model = process.env.TUNE_MODEL_NAME || "openrouter/sonoma-dusk-alpha";
     const baseURL = process.env.OPENAI_BASE_URL;
     const client = new OpenAI({ apiKey, baseURL });
 
