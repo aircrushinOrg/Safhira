@@ -5,7 +5,7 @@
  */
 import './globals.css';
 
-import {Poppins} from 'next/font/google';
+import {Poppins, Press_Start_2P} from 'next/font/google';
 import {Suspense} from 'react';
 import {ThemeProvider} from './providers/theme-provider';
 import {getLocale} from 'next-intl/server';
@@ -17,6 +17,12 @@ const poppins = Poppins({
   subsets: ['latin'],
   weight: ['300', '400', '500', '600', '700'],
   variable: '--font-poppins',
+});
+
+const pressStart2P = Press_Start_2P({
+  subsets: ['latin'],
+  weight: ['400'],
+  variable: '--font-press-start-2p',
 });
 
 let title = 'Safhira - Safe Sexual Health for Malaysian Youth';
@@ -52,7 +58,7 @@ export default async function RootLayout({
   const locale = await getLocale();
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body className={poppins.variable}>
+      <body className={`${poppins.variable} ${pressStart2P.variable}`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"

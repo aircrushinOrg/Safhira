@@ -3,155 +3,140 @@ import * as Phaser from 'phaser';
 export class TitleScene extends Phaser.Scene {
   private startButton!: Phaser.GameObjects.Text;
   private instructionButton!: Phaser.GameObjects.Text;
-  private titleText!: Phaser.GameObjects.Text;
-  private isTouchDevice = false;
+  private selector!: Phaser.GameObjects.Text;
+  private menuItems: Phaser.GameObjects.Text[] = [];
+  private selectedIndex = 0;
 
   constructor() {
     super({ key: 'TitleScene' });
   }
 
-  init() {
-    // Detect if touch device
-    this.isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-  }
-
   create() {
-    // Add background color
-    this.cameras.main.setBackgroundColor('#2c3e50');
-
     // Get screen dimensions
     const { width, height } = this.cameras.main;
 
-    // Create title text
-    this.titleText = this.add.text(width / 2, height * 0.3, 'SAFHIRA', {
-      fontSize: '64px',
-      color: '#ffffff',
-      fontStyle: 'bold',
-      fontFamily: 'Arial, sans-serif'
-    });
-    this.titleText.setOrigin(0.5);
+    // Add background image
+    const background = this.add.image(width / 2, height / 2, 'game-title');
+    background.setDisplaySize(width, height);
 
-    // Add subtitle
-    const subtitleText = this.add.text(width / 2, height * 0.4, 'Adventure Game', {
+
+    // Create menu items as simple text (no backgrounds)
+    this.startButton = this.add.text(width / 2, height * 0.5, 'START GAME', {
       fontSize: '24px',
-      color: '#bdc3c7',
-      fontFamily: 'Arial, sans-serif'
-    });
-    subtitleText.setOrigin(0.5);
-
-    // Create Start Game button
-    this.startButton = this.add.text(width / 2, height * 0.6, 'START GAME', {
-      fontSize: '32px',
       color: '#ffffff',
-      backgroundColor: '#e74c3c',
-      padding: { x: 20, y: 10 },
-      fontFamily: 'Arial, sans-serif'
+      fontFamily: '"Press Start 2P", monospace'
     });
     this.startButton.setOrigin(0.5);
-    this.startButton.setInteractive({ useHandCursor: true });
 
-    // Create Instructions button
-    this.instructionButton = this.add.text(width / 2, height * 0.75, 'INSTRUCTIONS', {
+    this.instructionButton = this.add.text(width / 2, height * 0.6, 'INSTRUCTIONS', {
       fontSize: '24px',
       color: '#ffffff',
-      backgroundColor: '#3498db',
-      padding: { x: 15, y: 8 },
-      fontFamily: 'Arial, sans-serif'
+      fontFamily: '"Press Start 2P", monospace'
     });
     this.instructionButton.setOrigin(0.5);
-    this.instructionButton.setInteractive({ useHandCursor: true });
 
-    // Add button interactions
-    this.setupButtonInteractions();
+    // Store menu items in array for easy navigation
+    this.menuItems = [this.startButton, this.instructionButton];
 
-    // Add some visual flair
+    // Create selector arrow
+    this.selector = this.add.text(0, 0, '>', {
+      fontSize: '32px',
+      color: '#7f2be6',
+      fontFamily: '"Press Start 2P", monospace'
+    });
+    this.selector.setOrigin(0.5);
+    this.selector.setDepth(10); // Ensure selector appears on top
+
+    // Setup navigation
+    this.setupNavigation();
+    this.updateSelector();
+
+    // Add visual effects
     this.addVisualEffects();
   }
 
 
-  private setupButtonInteractions(): void {
-    // Start button interactions
-    this.startButton.on('pointerover', () => {
-      this.startButton.setStyle({ backgroundColor: '#c0392b' });
-      this.startButton.setScale(1.05);
+  private setupNavigation(): void {
+    // Arrow key navigation with preventDefault to stop page scrolling
+    this.input.keyboard!.on('keydown-UP', (event: KeyboardEvent) => {
+      event.preventDefault();
+      this.selectedIndex = Math.max(0, this.selectedIndex - 1);
+      this.updateSelector();
     });
 
-    this.startButton.on('pointerout', () => {
-      this.startButton.setStyle({ backgroundColor: '#e74c3c' });
-      this.startButton.setScale(1);
+    this.input.keyboard!.on('keydown-DOWN', (event: KeyboardEvent) => {
+      event.preventDefault();
+      this.selectedIndex = Math.min(this.menuItems.length - 1, this.selectedIndex + 1);
+      this.updateSelector();
     });
 
-    this.startButton.on('pointerdown', () => {
-      this.startButton.setScale(0.95);
+    // Enter key to confirm selection
+    this.input.keyboard!.on('keydown-ENTER', (event: KeyboardEvent) => {
+      event.preventDefault();
+      this.confirmSelection();
     });
 
-    this.startButton.on('pointerup', () => {
-      this.startButton.setScale(1.05);
-      this.scene.start('GenderSelectionScene');
-    });
+    // Touch/mouse support for menu items
+    this.menuItems.forEach((item, index) => {
+      item.setInteractive({ useHandCursor: true });
 
-    // Instruction button interactions
-    this.instructionButton.on('pointerover', () => {
-      this.instructionButton.setStyle({ backgroundColor: '#2980b9' });
-      this.instructionButton.setScale(1.05);
-    });
+      item.on('pointerover', () => {
+        this.selectedIndex = index;
+        this.updateSelector();
+      });
 
-    this.instructionButton.on('pointerout', () => {
-      this.instructionButton.setStyle({ backgroundColor: '#3498db' });
-      this.instructionButton.setScale(1);
-    });
-
-    this.instructionButton.on('pointerdown', () => {
-      this.instructionButton.setScale(0.95);
-    });
-
-    this.instructionButton.on('pointerup', () => {
-      this.instructionButton.setScale(1.05);
-      this.scene.start('InstructionScene');
-    });
-
-    // Keyboard support
-    this.input.keyboard!.on('keydown-ENTER', () => {
-      this.scene.start('GenderSelectionScene');
-    });
-
-    this.input.keyboard!.on('keydown-I', () => {
-      this.scene.start('InstructionScene');
+      item.on('pointerup', () => {
+        this.confirmSelection();
+      });
     });
   }
 
+  private updateSelector(): void {
+    const selectedItem = this.menuItems[this.selectedIndex];
+    // Position selector to the left of the text, accounting for text width
+    const textBounds = selectedItem.getBounds();
+    this.selector.setPosition(textBounds.left - 20, selectedItem.y);
+
+    // Update text colors to show selection
+    this.menuItems.forEach((item, index) => {
+      if (index === this.selectedIndex) {
+        item.setStyle({ color: '#7f2be6' });
+      } else {
+        item.setStyle({ color: '#ffffff' });
+      }
+    });
+  }
+
+  private confirmSelection(): void {
+    switch (this.selectedIndex) {
+      case 0: // Start Game
+        this.scene.start('GenderSelectionScene');
+        break;
+      case 1: // Instructions
+        this.scene.start('InstructionScene');
+        break;
+    }
+  }
+
   private addVisualEffects(): void {
-    // Add floating animation to title
+    // Add pulsing animation to selector arrow
     this.tweens.add({
-      targets: this.titleText,
-      y: this.titleText.y - 10,
+      targets: this.selector,
+      alpha: 0.3,
+      duration: 800,
+      ease: 'Sine.easeInOut',
+      yoyo: true,
+      repeat: -1
+    });
+
+    // Add subtle glow effect to menu items
+    this.tweens.add({
+      targets: this.menuItems,
+      alpha: 0.9,
       duration: 2000,
       ease: 'Sine.easeInOut',
       yoyo: true,
       repeat: -1
     });
-
-    // Add subtle glow effect to buttons
-    this.tweens.add({
-      targets: [this.startButton, this.instructionButton],
-      alpha: 0.8,
-      duration: 1500,
-      ease: 'Sine.easeInOut',
-      yoyo: true,
-      repeat: -1
-    });
-
-    // Add keyboard hints
-    const keyboardHint = this.add.text(
-      this.cameras.main.width / 2,
-      this.cameras.main.height * 0.9,
-      this.isTouchDevice ? 'Tap buttons to navigate' : 'Press ENTER to start • Press I for instructions',
-      {
-        fontSize: '16px',
-        color: '#95a5a6',
-        fontFamily: 'Arial, sans-serif'
-      }
-    );
-    keyboardHint.setOrigin(0.5);
   }
 }

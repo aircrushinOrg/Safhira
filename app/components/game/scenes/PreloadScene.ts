@@ -52,8 +52,9 @@ export class PreloadScene extends Phaser.Scene {
       percentText.destroy();
     });
 
-    // Load game map
+    // Load game assets
     this.load.image('map', '/game-map.png');
+    this.load.image('game-title', '/game-title.png');
 
     // Load boy player sprite sheets
     this.load.spritesheet('player-boy-idle', '/game-boy-idle.png', {
