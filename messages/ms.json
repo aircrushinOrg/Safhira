@@ -327,7 +327,10 @@
     "viewAll": {
       "button": "Lihat Semua",
       "title": "Semua Mitos & Fakta",
-      "subtitle": "Senarai lengkap semua kenyataan dan penjelasannya. Klik mana-mana item untuk lihat butiran."
+      "subtitle": "Senarai lengkap semua kenyataan dan penjelasannya. Klik mana-mana item untuk lihat butiran.",
+      "filterAll": "Semua ({count})",
+      "filterMyths": "Mitos ({count})",
+      "filterFacts": "Fakta ({count})"
     }
   },
   "NotFound": {

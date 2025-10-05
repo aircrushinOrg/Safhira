@@ -239,9 +239,14 @@ export default function LivingWellWithSTIPage() {
                     </p>
                     <ul className="space-y-2">
                       {sections.map((section) => (
-                        <li key={section.id} className="flex items-start gap-2 text-sm text-slate-600 dark:text-slate-300">
-                          <ArrowRight size={14} className={`${section.accentText}`} aria-hidden="true" />
-                          <span>{section.title}</span>
+                        <li key={section.id} className="flex items-start gap-2 text-sm">
+                          <ArrowRight size={14} className={`${section.accentText} mt-0.5`} aria-hidden="true" />
+                          <Link 
+                            href={section.href} 
+                            className="text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-slate-100 underline-offset-2 hover:underline transition-colors"
+                          >
+                            {section.title}
+                          </Link>
                         </li>
                       ))}
                     </ul>

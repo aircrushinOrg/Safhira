@@ -91,7 +91,7 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
 
   const NavigationItemsMobile = () => (
     <>
-      <Link href="/quiz" className="w-full md:w-auto">
+      <Link href="/quiz" className="w-full md:w-auto" onClick={() => setIsSheetOpen(false)}>
         <Button
           variant={currentSection === 'quiz' ? 'secondary' : 'ghost'}
           size="sm"
@@ -101,7 +101,7 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
           <span>{t('nav.quiz')}</span>
         </Button>
       </Link>
-      <Link href="/stis" className="w-full md:w-auto">
+      <Link href="/stis" className="w-full md:w-auto" onClick={() => setIsSheetOpen(false)}>
         <Button
           variant={currentSection === 'stis' ? 'secondary' : 'ghost'}
           size="sm"
@@ -111,7 +111,7 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
           <span>{t('nav.learnAboutStis')}</span>
         </Button>
       </Link>
-      <Link href="/living-well-with-sti" className="w-full md:w-auto">
+      <Link href="/living-well-with-sti" className="w-full md:w-auto" onClick={() => setIsSheetOpen(false)}>
         <Button
           variant={currentSection === 'living-well-with-sti' ? 'secondary' : 'ghost'}
           size="sm"
@@ -121,7 +121,7 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
           <span>{t('nav.livingWell')}</span>
         </Button>
       </Link>
-      <Link href="/find-healthcare" className="w-full md:w-auto">
+      <Link href="/find-healthcare" className="w-full md:w-auto" onClick={() => setIsSheetOpen(false)}>
         <Button
           variant={currentSection === 'providers' ? 'secondary' : 'ghost'}
           size="sm"
