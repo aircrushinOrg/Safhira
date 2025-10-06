@@ -245,7 +245,7 @@ pnpm db:studio        # Open Drizzle Studio for database inspection
 
 ### Core Tables
 
-- **`sti_state`**: STI prevalence data by Malaysian states, years, and disease types
+- **`prevalence`**: STI prevalence data by Malaysian states, years, and disease types
   - Primary key: (date, state, disease)
   - Tracks cases and incidence rates per 100,000 population
   - Supports choropleth map visualizations and trend analysis

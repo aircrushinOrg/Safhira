@@ -9,8 +9,7 @@ export const state = pgTable('state', {
   index('idx_state_name').on(table.stateName),
 ]);
 
-// Prevalence table (renamed from sti_state)
-// Records STI prevalence per Malaysian state and year
+// Prevalence table storing STI data per state and year
 export const prevalence = pgTable('prevalence', {
   stiId: integer('sti_id').notNull().references(() => sti.stiId, { onDelete: 'cascade' }),
   stateId: integer('state_id').notNull().references(() => state.stateId),
@@ -260,17 +259,3 @@ export const aiScenarioResponses = pgTable('ai_scenario_responses', {
   uniqueIndex('uq_ai_scenario_responses_session_turns').on(table.sessionId, table.playerTurnCount),
 ]);
 
-// Legacy table kept temporarily for migration compatibility
-// TODO: migrate data to `prevalence` and drop this table via migration
-export const stiState = pgTable('sti_state', {
-  date: integer('date').notNull(),
-  state: varchar('state', { length: 255 }).notNull(),
-  disease: varchar('disease', { length: 255 }).notNull(),
-  cases: integer('cases').notNull(),
-  incidence: numeric('incidence', { precision: 10, scale: 2 }).notNull(),
-}, (table) => [
-  primaryKey({ columns: [table.date, table.state, table.disease] }),
-  index('idx_sti_state_date').on(table.date),
-  index('idx_sti_state_state').on(table.state),
-  index('idx_sti_state_disease').on(table.disease),
-]);
