@@ -5,7 +5,7 @@
  */
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -24,7 +24,6 @@ import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { Check } from "lucide-react";
 import { useTheme } from "next-themes";
-import { stiTypes } from '@/types/sti-prevalence';
 import {useTranslations} from 'next-intl';
 
 ChartJS.register(
@@ -63,7 +62,7 @@ export default function STITrendsChart({ sharedData }: STITrendsChartProps) {
   const t = useTranslations('Charts');
   const { theme, systemTheme } = useTheme();
   const [selectedStates, setSelectedStates] = useState<string[]>([]);
-  const [selectedDisease, setSelectedDisease] = useState<string>("AIDS");
+  const [selectedDisease, setSelectedDisease] = useState<string>('');
   const [fontFamily, setFontFamily] = useState<string>('Poppins, sans-serif');
   const [loaded, setLoaded] = useState(false);
 
@@ -89,30 +88,18 @@ export default function STITrendsChart({ sharedData }: STITrendsChartProps) {
 
   // Use shared data
   const { states, diseases, incidenceData: data, loading } = sharedData;
-
-  // Helper function to map display names to database keys
-  const getDbKeyFromDisplayName = (displayName: string): string => {
-    const entry = Object.entries(stiTypes).find(([, value]) => value === displayName);
-    return entry ? entry[0] : displayName;
-  };
-
-  // Helper function to map database keys to display names
-  const getDisplayNameFromDbKey = (dbKey: string): string => {
-    return stiTypes[dbKey as keyof typeof stiTypes] || dbKey;
-  };
+  const sortedDiseases = useMemo(() => [...diseases].sort((a, b) => a.localeCompare(b)), [diseases]);
 
   // Initialize selections when shared data loads
   useEffect(() => {
-    if (!loading && diseases.length > 0 && selectedDisease === "") {
-      // Set the first disease using its display name
-      const firstDiseaseDisplayName = getDisplayNameFromDbKey(diseases[0]);
-      setSelectedDisease(firstDiseaseDisplayName);
+    if (!loading && sortedDiseases.length > 0 && selectedDisease === '') {
+      setSelectedDisease(sortedDiseases[0]);
     }
     if (!loading && !loaded && states.length > 0 && selectedStates.length === 0) {
       setLoaded(true);
       setSelectedStates([states[0]]);
     }
-  }, [loading, diseases, states, selectedDisease, selectedStates.length, loaded]);
+  }, [loading, sortedDiseases, states, selectedDisease, selectedStates.length, loaded]);
 
   const handleAddState = (state: string) => {
     if (!selectedStates.includes(state)) {
@@ -148,10 +135,8 @@ export default function STITrendsChart({ sharedData }: STITrendsChartProps) {
       };
     }
 
-    // Convert display name back to database key for filtering
-    const dbDisease = getDbKeyFromDisplayName(selectedDisease);
     const filteredData = data.filter(
-      item => item.disease === dbDisease && selectedStates.includes(item.state)
+      item => item.disease === selectedDisease && selectedStates.includes(item.state)
     );
 
     const years = Array.from(new Set(filteredData.map(item => item.year))).sort();
@@ -291,10 +276,8 @@ export default function STITrendsChart({ sharedData }: STITrendsChartProps) {
                 <SelectValue placeholder={t('trends.chooseDisease')} />
               </SelectTrigger>
               <SelectContent className="bg-slate-100 dark:bg-slate-700">
-                {Object.entries(stiTypes)
-                  .sort(([, a], [, b]) => a.localeCompare(b))
-                  .map(([key, label]) => (
-                    <SelectItem key={key} value={label}>
+                {sortedDiseases.map((label) => (
+                    <SelectItem key={label} value={label}>
                       {label}
                     </SelectItem>
                   ))}
