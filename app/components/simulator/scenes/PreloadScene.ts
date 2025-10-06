@@ -58,50 +58,49 @@ export class PreloadScene extends Phaser.Scene {
     });
 
     // Load game assets
-    this.load.image('map', '/game-map.png');
-    this.load.image('game-title', '/game-title.png');
-    this.load.image('game-background', '/game-background.png');
+    this.load.image('map', '/simulator-map.png');
+    this.load.image('simulator-background', '/simulator-background.png');
 
     // Load boy player sprite sheets
-    this.load.spritesheet('player-boy-idle', '/game-boy-idle.png', {
+    this.load.spritesheet('player-boy-idle', '/simulator-boy-idle.png', {
       frameWidth: 32,
       frameHeight: 64,
     });
-    this.load.spritesheet('player-boy-up', '/game-boy-up.png', {
+    this.load.spritesheet('player-boy-up', '/simulator-boy-up.png', {
       frameWidth: 32,
       frameHeight: 64,
     });
-    this.load.spritesheet('player-boy-down', '/game-boy-down.png', {
+    this.load.spritesheet('player-boy-down', '/simulator-boy-down.png', {
       frameWidth: 32,
       frameHeight: 64,
     });
-    this.load.spritesheet('player-boy-left', '/game-boy-left.png', {
+    this.load.spritesheet('player-boy-left', '/simulator-boy-left.png', {
       frameWidth: 32,
       frameHeight: 64,
     });
-    this.load.spritesheet('player-boy-right', '/game-boy-right.png', {
+    this.load.spritesheet('player-boy-right', '/simulator-boy-right.png', {
       frameWidth: 32,
       frameHeight: 64,
     });
 
     // Load girl player sprite sheets
-    this.load.spritesheet('player-girl-idle', '/game-girl-idle.png', {
+    this.load.spritesheet('player-girl-idle', '/simulator-girl-idle.png', {
       frameWidth: 32,
       frameHeight: 64,
     });
-    this.load.spritesheet('player-girl-up', '/game-girl-up.png', {
+    this.load.spritesheet('player-girl-up', '/simulator-girl-up.png', {
       frameWidth: 32,
       frameHeight: 64,
     });
-    this.load.spritesheet('player-girl-down', '/game-girl-down.png', {
+    this.load.spritesheet('player-girl-down', '/simulator-girl-down.png', {
       frameWidth: 32,
       frameHeight: 64,
     });
-    this.load.spritesheet('player-girl-left', '/game-girl-left.png', {
+    this.load.spritesheet('player-girl-left', '/simulator-girl-left.png', {
       frameWidth: 32,
       frameHeight: 64,
     });
-    this.load.spritesheet('player-girl-right', '/game-girl-right.png', {
+    this.load.spritesheet('player-girl-right', '/simulator-girl-right.png', {
       frameWidth: 32,
       frameHeight: 64,
     });

@@ -280,7 +280,7 @@ export default function GameEmbed() {
       {/* Game Container */}
       <div
         ref={containerRef}
-        id="phaser-game-container"
+        id="phaser-simulator-container"
         className="w-full h-full"
         style={{
           width: '100%',

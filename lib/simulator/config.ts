@@ -13,7 +13,7 @@ import { GameScene } from '../../app/components/simulator/scenes/GameScene';
 // Base configuration for the game
 const baseConfig: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
-  parent: 'phaser-game-container',
+  parent: 'phaser-simulator-container',
   backgroundColor: '#2d2d2d',
   physics: {
     default: 'arcade',
@@ -46,10 +46,10 @@ export function createGameConfig(): Phaser.Types.Core.GameConfig {
     scale: {
       mode: Phaser.Scale.RESIZE,
       autoCenter: Phaser.Scale.CENTER_BOTH,
-      parent: 'phaser-game-container',
+      parent: 'phaser-simulator-container',
       width: '100%',
       height: '100%',
-      fullscreenTarget: 'phaser-game-container',
+      fullscreenTarget: 'phaser-simulator-container',
       expandParent: true,
     },
     input: {

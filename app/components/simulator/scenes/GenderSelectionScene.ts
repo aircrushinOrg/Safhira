@@ -24,7 +24,7 @@ export class GenderSelectionScene extends Phaser.Scene {
     const { width, height } = this.cameras.main;
 
     // Add background image with smart scaling
-    const background = this.add.image(width / 2, height / 2, 'game-background');
+    const background = this.add.image(width / 2, height / 2, 'simulator-background');
     const imageWidth = background.width;
     const imageHeight = background.height;
 
