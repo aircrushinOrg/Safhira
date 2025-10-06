@@ -13,22 +13,75 @@ export default function GameEmbed() {
   const gameRef = useRef<Phaser.Game | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isClient, setIsClient] = useState(false);
+  const [hasLoadError, setHasLoadError] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Set client-side flag
   useEffect(() => {
     setIsClient(true);
   }, []);
 
+  // Function to reload the simulator
+  const reloadSimulator = () => {
+    // Clean up existing game instance
+    if (gameRef.current) {
+      gameRef.current.destroy(true);
+      gameRef.current = null;
+    }
+
+    // Reset state and trigger re-initialization
+    setHasLoadError(false);
+    setIsLoading(true);
+  };
+
+  // Function to simulate error (for testing only)
+  const simulateError = () => {
+    setIsLoading(false);
+    setHasLoadError(true);
+  };
+
   useEffect(() => {
     // Only initialize on client side after isClient is true
     if (isClient && typeof window !== 'undefined' && !gameRef.current && containerRef.current) {
-      // Create responsive game config
-      const config = {
-        ...createGameConfig(),
-        parent: containerRef.current,
-      };
+      try {
+        setIsLoading(true);
+        setHasLoadError(false);
 
-      gameRef.current = new Phaser.Game(config);
+        // Create responsive game config
+        const config = {
+          ...createGameConfig(),
+          parent: containerRef.current,
+        };
+
+        gameRef.current = new Phaser.Game(config);
+
+        // Add error handling for game events
+        if (gameRef.current) {
+          // Listen for ready event to know when game has loaded successfully
+          gameRef.current.events.once('ready', () => {
+            setIsLoading(false);
+            setHasLoadError(false);
+          });
+
+          // Set a timeout to catch cases where the game never loads
+          const loadTimeout = setTimeout(() => {
+            if (isLoading) {
+              setIsLoading(false);
+              setHasLoadError(true);
+              console.error('Game failed to load within timeout');
+            }
+          }, 10000); // 10 second timeout
+
+          // Clear timeout if component unmounts
+          return () => {
+            clearTimeout(loadTimeout);
+          };
+        }
+      } catch (error) {
+        console.error('Failed to initialize game:', error);
+        setIsLoading(false);
+        setHasLoadError(true);
+      }
     }
 
     return () => {
@@ -37,7 +90,7 @@ export default function GameEmbed() {
         gameRef.current = null;
       }
     };
-  }, [isClient]);
+  }, [isClient, isLoading]);
 
   // Handle window and container resize to adapt game size
   useEffect(() => {
@@ -200,7 +253,31 @@ export default function GameEmbed() {
   }, []);
 
   return (
-    <div className="w-full h-full bg-gray-900">
+    <div className="w-full h-full bg-gray-900 relative">
+      {/* Error State */}
+      {hasLoadError && (
+        <div className="absolute inset-0 flex items-center justify-center bg-gray-900 z-10">
+          <div className="text-center text-white max-w-md mx-auto px-6">
+            <div className="text-red-500 text-6xl mb-4">⚠️</div>
+            <h2 className="text-2xl font-bold mb-4 text-red-400">Failed to Load Simulator</h2>
+            <p className="text-gray-300 mb-6">
+              We're sorry, but the simulator failed to load properly. This could be due to a
+              network issue or a temporary problem with the game assets.
+            </p>
+            <button
+              onClick={reloadSimulator}
+              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900"
+            >
+              Reload Simulator
+            </button>
+            <p className="text-sm text-gray-400 mt-4">
+              If the problem persists, please refresh the page or try again later.
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* Game Container */}
       <div
         ref={containerRef}
         id="phaser-game-container"
@@ -210,8 +287,21 @@ export default function GameEmbed() {
           height: '100%',
           pointerEvents: 'auto',
           touchAction: 'pan-y',
+          opacity: (isLoading || hasLoadError) ? 0 : 1,
+          transition: 'opacity 0.3s ease-in-out',
         }}
       />
+
+      {/* Error loading button - Remove later */}
+      {!hasLoadError && !isLoading && (
+        <button
+          onClick={simulateError}
+          className="absolute bottom-12 left-8 bg-red-600 hover:bg-red-700 text-white text-sm px-3 py-2 rounded z-20"
+          title="Simulate Error (Dev Only)"
+        >
+          Test Load Error
+        </button>
+      )}
     </div>
   );
 }
