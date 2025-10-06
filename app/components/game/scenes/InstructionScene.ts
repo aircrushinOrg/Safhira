@@ -20,18 +20,56 @@ export class InstructionScene extends Phaser.Scene {
   }
 
   create() {
-    // Create instructions scene
-    this.cameras.main.setBackgroundColor('#34495e');
-
     const { width, height } = this.cameras.main;
 
+    // Add background image with smart scaling
+    const background = this.add.image(width / 2, height / 2, 'game-background');
+    const imageWidth = background.width;
+    const imageHeight = background.height;
+
+    // Calculate scale ratios
+    const scaleX = width / imageWidth;
+    const scaleY = height / imageHeight;
+
+    // Smart scaling logic
+    if (width < imageWidth || height < imageHeight) {
+      background.setScale(1.0);
+
+      // Ensure the image covers the screen by using the larger scale if needed
+      const minScale = Math.max(scaleX, scaleY);
+      if (minScale > 1.0) {
+        background.setScale(minScale);
+      }
+
+      // Focus towards bottom center of image
+      const scaledImageHeight = background.height * background.scaleY;
+      const excessHeight = scaledImageHeight - height;
+      if (excessHeight > 0) {
+        background.y = (height / 2) - (excessHeight * 0.3);
+      }
+    } else {
+      // Screen is bigger than image - resize to fill
+      const fillScale = Math.max(scaleX, scaleY);
+      background.setScale(fillScale);
+
+      const scaledImageHeight = background.height * fillScale;
+      const excessHeight = scaledImageHeight - height;
+      if (excessHeight > 0) {
+        background.y = (height / 2) - (excessHeight * 0.3);
+      }
+    }
+
+    // Add semi-transparent overlay for better text readability
+    const overlay = this.add.rectangle(width / 2, height / 2, width, height, 0x000000, 0.6);
+    overlay.setDepth(1);
+
     const titleText = this.add.text(width / 2, height * 0.1, 'HOW TO PLAY', {
-      fontSize: '48px',
+      fontSize: '32px',
       color: '#ffffff',
-      fontStyle: 'bold',
-      fontFamily: 'Arial, sans-serif'
+      fontFamily: '"Press Start 2P", monospace'
     });
     titleText.setOrigin(0.5);
+    titleText.setDepth(2);
 
     this.createMovementSection(width, height);
     this.createInteractionSection(width, height);
@@ -45,87 +83,92 @@ export class InstructionScene extends Phaser.Scene {
   private createMovementSection(width: number, height: number): void {
     // Movement section
     const movementTitle = this.add.text(width * 0.1, height * 0.25, 'MOVEMENT', {
-      fontSize: '24px',
+      fontSize: '18px',
       color: '#e74c3c',
-      fontStyle: 'bold',
-      fontFamily: 'Arial, sans-serif'
+      fontFamily: '"Press Start 2P", monospace'
     });
+    movementTitle.setDepth(2);
 
     let movementText: string;
     if (this.isTouchDevice) {
-      movementText = '• Use the virtual joystick in the bottom-left corner\n• Drag the joystick to move your character\n• Release to stop moving';
+      movementText = '* Use the virtual joystick\n  in the bottom-right corner\n* Drag the joystick to move\n  your character\n* Release to stop moving';
     } else {
-      movementText = '• Use WASD keys or Arrow keys to move\n• W / ↑ : Move up\n• S / ↓ : Move down\n• A / ← : Move left\n• D / → : Move right';
+      movementText = '* Use WASD keys or Arrow keys\n* W / UP : Move up\n* S / DOWN : Move down\n* A / LEFT : Move left\n* D / RIGHT : Move right';
     }
 
     const movementInstructions = this.add.text(width * 0.1, height * 0.3, movementText, {
-      fontSize: '18px',
+      fontSize: '14px',
       color: '#bdc3c7',
-      fontFamily: 'Arial, sans-serif',
-      lineSpacing: 5
+      fontFamily: '"Press Start 2P", monospace',
+      lineSpacing: 8
     });
+    movementInstructions.setDepth(2);
   }
 
   private createInteractionSection(width: number, height: number): void {
     // Interaction section
     const interactionTitle = this.add.text(width * 0.1, height * 0.5, 'INTERACTION', {
-      fontSize: '24px',
+      fontSize: '18px',
       color: '#f39c12',
-      fontStyle: 'bold',
-      fontFamily: 'Arial, sans-serif'
+      fontFamily: '"Press Start 2P", monospace'
     });
+    interactionTitle.setDepth(2);
 
-    const interactionText = 'Walk up to NPCs (Non-Player Characters) to interact\n NPCs may have quests, information, or items for you\n Your character will automatically face the direction you move';
+    const interactionText = '* Walk up to NPCs to interact\n* NPCs may have quests,\n  information, or items\n* Your character faces the\n  direction you move';
 
     const interactionInstructions = this.add.text(width * 0.1, height * 0.55, interactionText, {
-      fontSize: '18px',
+      fontSize: '14px',
       color: '#bdc3c7',
-      fontFamily: 'Arial, sans-serif',
-      lineSpacing: 5
+      fontFamily: '"Press Start 2P", monospace',
+      lineSpacing: 8
     });
+    interactionInstructions.setDepth(2);
   }
 
   private createMinimapSection(width: number, height: number): void {
     // Minimap section
     const minimapTitle = this.add.text(width * 0.1, height * 0.7, 'MINIMAP', {
-      fontSize: '24px',
+      fontSize: '18px',
       color: '#9b59b6',
-      fontStyle: 'bold',
-      fontFamily: 'Arial, sans-serif'
+      fontFamily: '"Press Start 2P", monospace'
     });
+    minimapTitle.setDepth(2);
 
-    const minimapText = 'The minimap in the top-left shows your surroundings\n Red dot: Your character position\n Green rectangle: Your current view area\n Use it to navigate the game world';
+    const minimapText = '* Minimap in top-left shows\n  your surroundings\n* Red dot: Your character\n* Green rectangle:\n  Your current view area\n* Use it to navigate';
 
     const minimapInstructions = this.add.text(width * 0.1, height * 0.75, minimapText, {
-      fontSize: '18px',
+      fontSize: '14px',
       color: '#bdc3c7',
-      fontFamily: 'Arial, sans-serif',
-      lineSpacing: 5
+      fontFamily: '"Press Start 2P", monospace',
+      lineSpacing: 8
     });
+    minimapInstructions.setDepth(2);
   }
 
   private createNavigationButtons(width: number, height: number): void {
     // Back to Title button
     this.backButton = this.add.text(width * 0.2, height * 0.9, 'BACK TO TITLE', {
-      fontSize: '20px',
+      fontSize: '16px',
       color: '#ffffff',
       backgroundColor: '#95a5a6',
       padding: { x: 15, y: 8 },
-      fontFamily: 'Arial, sans-serif'
+      fontFamily: '"Press Start 2P", monospace'
     });
     this.backButton.setOrigin(0.5);
     this.backButton.setInteractive({ useHandCursor: true });
+    this.backButton.setDepth(2);
 
     // Start Game button
     this.startButton = this.add.text(width * 0.8, height * 0.9, 'START GAME', {
-      fontSize: '20px',
+      fontSize: '16px',
       color: '#ffffff',
       backgroundColor: '#27ae60',
       padding: { x: 15, y: 8 },
-      fontFamily: 'Arial, sans-serif'
+      fontFamily: '"Press Start 2P", monospace'
     });
     this.startButton.setOrigin(0.5);
     this.startButton.setInteractive({ useHandCursor: true });
+    this.startButton.setDepth(2);
 
     this.setupButtonInteractions();
   }
@@ -192,11 +235,12 @@ export class InstructionScene extends Phaser.Scene {
       this.cameras.main.height * 0.95,
       this.isTouchDevice ? 'Tap buttons to navigate' : 'ESC: Back to Title | ENTER/SPACE: Start Game',
       {
-        fontSize: '14px',
+        fontSize: '12px',
         color: '#7f8c8d',
-        fontFamily: 'Arial, sans-serif'
+        fontFamily: '"Press Start 2P", monospace'
       }
     );
     keyboardHint.setOrigin(0.5);
+    keyboardHint.setDepth(2);
   }
 }

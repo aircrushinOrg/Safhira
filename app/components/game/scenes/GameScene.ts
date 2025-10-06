@@ -79,15 +79,6 @@ export class GameScene extends Phaser.Scene {
     // Reset camera zoom to 1 (no zoom)
     this.cameras.main.setZoom(1);
 
-    // Create minimap
-    this.minimap = new Minimap(this, this.player, {
-      width: 200,
-      height: 150,
-      padding: 10,
-      zoom: 0.1
-    });
-    this.minimap.create(map);
-
     // Setup keyboard input
     this.cursors = this.input.keyboard!.createCursorKeys();
     this.wasdKeys = {
@@ -101,12 +92,21 @@ export class GameScene extends Phaser.Scene {
     if (this.isTouchDevice) {
       this.virtualJoystick = new VirtualJoystick(this, {
         x: this.cameras.main.width - 80,
-        y: this.cameras.main.height - 120,
+        y: this.cameras.main.height - 160,
         radius: 65,
         forceMin: 16
       });
       this.virtualJoystick.create();
     }
+
+    // Create minimap (after joystick so we can pass joystick reference)
+    this.minimap = new Minimap(this, this.player, {
+      width: 200,
+      height: 150,
+      padding: 10,
+      zoom: 0.08
+    }, this.virtualJoystick?.getRawJoystick());
+    this.minimap.create(map);
 
     // Create menu button
     this.createMenuButton();
