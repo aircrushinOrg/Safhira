@@ -261,7 +261,7 @@ export default function GameEmbed() {
             <div className="text-red-500 text-6xl mb-4">⚠️</div>
             <h2 className="text-2xl font-bold mb-4 text-red-400">Failed to Load Simulator</h2>
             <p className="text-gray-300 mb-6">
-              We're sorry, but the simulator failed to load properly. This could be due to a
+              We&apos;re sorry, but the simulator failed to load properly. This could be due to a
               network issue or a temporary problem with the game assets.
             </p>
             <button
