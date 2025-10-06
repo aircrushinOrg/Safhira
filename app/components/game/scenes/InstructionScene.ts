@@ -1,5 +1,9 @@
+/**
+ * This file defines the InstructionScene class for a Phaser-based game.
+ * It provides an instruction screen that guides players on how to play the game.
+ * The scene includes sections on movement, interaction, and minimap usage, along with navigation buttons and keyboard shortcuts.
+ */
 import * as Phaser from 'phaser';
-import type { PlayerGender } from '../../../../types/game';
 
 export class InstructionScene extends Phaser.Scene {
   private backButton!: Phaser.GameObjects.Text;

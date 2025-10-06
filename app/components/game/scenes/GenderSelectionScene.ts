@@ -1,3 +1,7 @@
+/**
+ * This file defines the GenderSelectionScene class for a Phaser-based game.
+ * It provides an interactive scene where players can select their character
+ */
 import * as Phaser from 'phaser';
 import type { PlayerGender } from '../../../../types/game';
 
