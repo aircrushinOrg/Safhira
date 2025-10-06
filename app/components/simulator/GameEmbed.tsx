@@ -7,7 +7,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import * as Phaser from 'phaser';
-import { createGameConfig } from '@/lib/game/config';
+import { createGameConfig } from '@/lib/simulator/config';
 
 export default function GameEmbed() {
   const gameRef = useRef<Phaser.Game | null>(null);
