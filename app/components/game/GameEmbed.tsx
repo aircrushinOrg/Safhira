@@ -69,8 +69,6 @@ export default function GameEmbed() {
               const currentScene = activeScenes[0];
               const currentSceneKey = currentScene.scene.key;
 
-              console.log('Restarting scene:', currentSceneKey, 'with new size:', containerWidth, 'x', containerHeight);
-
               // Store player position if this is the GameScene
               let playerPosition = null;
               let playerGender = null;
@@ -80,7 +78,6 @@ export default function GameEmbed() {
                   y: (currentScene as any).player.y
                 };
                 playerGender = (currentScene as any).playerGender;
-                console.log('Storing player position:', playerPosition, 'gender:', playerGender);
               }
 
               gameRef.current.scene.stop(currentSceneKey);
@@ -167,8 +164,6 @@ export default function GameEmbed() {
             capture: true,
             passive: false
           });
-
-          console.log('Scroll listeners attached to canvas and container');
 
           return () => {
             canvas.removeEventListener('wheel', handleWheel, { capture: true });

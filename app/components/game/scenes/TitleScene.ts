@@ -78,7 +78,7 @@ export class TitleScene extends Phaser.Scene {
 
     this.titleText = this.add.text(width / 2, height * 0.25, 'SAFHIRA', {
       fontSize: titleFontSize,
-      color: '#ffb5d6',
+      color: '#ffacb1',
       fontFamily: '"Press Start 2P", monospace',
       stroke: '#7f2be6',
       strokeThickness: strokeThickness

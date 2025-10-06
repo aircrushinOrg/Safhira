@@ -16,11 +16,13 @@ export class Minimap {
   private playerDot!: Phaser.GameObjects.Text;
   private viewportRect!: Phaser.GameObjects.Graphics;
   private player: Phaser.GameObjects.Sprite;
+  private joystick?: any;
 
-  constructor(scene: Phaser.Scene, player: Phaser.GameObjects.Sprite, config: MinimapConfig) {
+  constructor(scene: Phaser.Scene, player: Phaser.GameObjects.Sprite, config: MinimapConfig, joystick?: any) {
     this.scene = scene;
     this.player = player;
     this.config = config;
+    this.joystick = joystick;
   }
 
   create(map: Phaser.GameObjects.Image): void {
@@ -79,13 +81,13 @@ export class Minimap {
   }
 
   private createViewportRect(): void {
-    // Create viewport rectangle as a world object that shows main camera view on minimap
+    // Create viewport rectangle that shows main camera view on minimap
     this.viewportRect = this.scene.add.graphics();
     this.viewportRect.setDepth(999); // Below player dot layer
   }
 
   private createPlayerDot(): void {
-    // Create player indicator (red dot) as a world object that the minimap camera will render
+    // Create player indicator (red dot) that the minimap camera will render
     this.playerDot = this.scene.add.text(
       this.player.x,
       this.player.y,
@@ -102,12 +104,20 @@ export class Minimap {
   }
 
   private setupCameraIgnoreRules(): void {
-    // Ignore some main camera UI elements in minimap camera 
-    this.camera.ignore([
+    // Build list of objects to ignore in minimap camera
+    const ignoreList = [
       this.background,
       this.border,
-      this.player, // Ignore main player sprite to avoid duplication
-    ]);
+      this.player,
+    ];
+
+    // Add joystick objects if joystick exists
+    if (this.joystick && this.joystick.base && this.joystick.thumb) {
+      ignoreList.push(this.joystick.base, this.joystick.thumb);
+    }
+
+    // Ignore UI elements in minimap camera
+    this.camera.ignore(ignoreList);
 
     // Make the main camera ignore minimap-only objects
     this.scene.cameras.main.ignore([
@@ -146,7 +156,7 @@ export class Minimap {
     this.viewportRect.fillRect(viewportX, viewportY, viewportWidth, viewportHeight);
   }
 
-  // Getter methods for accessing private properties if needed
+  // Getter methods
   getCamera(): Phaser.Cameras.Scene2D.Camera {
     return this.camera;
   }
@@ -157,5 +167,12 @@ export class Minimap {
 
   getViewportRect(): Phaser.GameObjects.Graphics {
     return this.viewportRect;
+  }
+
+  // Method to ignore menu button in minimap camera
+  ignoreMenuButton(menuButton: Phaser.GameObjects.Text): void {
+    if (this.camera && menuButton) {
+      this.camera.ignore(menuButton);
+    }
   }
 }
