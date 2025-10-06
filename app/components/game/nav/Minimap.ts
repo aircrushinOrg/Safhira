@@ -1,3 +1,9 @@
+/**
+ * This file defines a Minimap class for a Phaser-based game.
+ * It creates a minimap that displays the player's position and the main camera's viewport.
+ * The minimap includes a background, border, player indicator, and viewport rectangle.
+ * It also handles updating the minimap elements based on player movement and camera changes.
+ */
 import * as Phaser from 'phaser';
 import { MinimapConfig } from '@/types/game';
 

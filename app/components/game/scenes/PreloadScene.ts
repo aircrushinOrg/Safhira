@@ -1,3 +1,8 @@
+/**
+ * This file defines the PreloadScene class for a Phaser-based game.
+ * It handles the loading of game assets and displays a loading bar to indicate progress.
+ * Once loading is complete, it transitions to the TitleScene.
+ */
 import * as Phaser from 'phaser';
 
 export class PreloadScene extends Phaser.Scene {
@@ -55,6 +60,7 @@ export class PreloadScene extends Phaser.Scene {
     // Load game assets
     this.load.image('map', '/game-map.png');
     this.load.image('game-title', '/game-title.png');
+    this.load.image('game-background', '/game-background.png');
 
     // Load boy player sprite sheets
     this.load.spritesheet('player-boy-idle', '/game-boy-idle.png', {
