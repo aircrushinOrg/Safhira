@@ -36,13 +36,14 @@ export class GameScene extends Phaser.Scene {
     this.preservedPosition = data.preservedPosition;
     // Detect if touch device
     this.isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-    console.log('Touch device detected:', this.isTouchDevice);
-    if (this.preservedPosition) {
-      console.log('GameScene: Preserving player position:', this.preservedPosition);
-    }
   }
 
   create() {
+    // Determine screen size for responsive design
+    const screenWidth = this.cameras.main.width;
+    const isSmallScreen = screenWidth < 600;
+    const isMediumScreen = screenWidth >= 600 && screenWidth < 1000;
+
     // Add the map (no auto-scaling to prevent zoom issues)
     const map = this.add.image(0, 0, 'map').setOrigin(0, 0);
 
@@ -67,11 +68,6 @@ export class GameScene extends Phaser.Scene {
     const playerBody = this.player.body as Phaser.Physics.Arcade.Body;
     playerBody.setCollideWorldBounds(true);
 
-    // Log position restoration if applicable
-    if (this.preservedPosition) {
-      console.log('GameScene: Player position restored to:', { x: startX, y: startY });
-    }
-
     // Setup camera to follow player with smooth following
     this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
     this.cameras.main.setBounds(0, 0, map.width, map.height);
@@ -91,7 +87,7 @@ export class GameScene extends Phaser.Scene {
     // Add virtual joystick for touch devices
     if (this.isTouchDevice) {
       this.virtualJoystick = new VirtualJoystick(this, {
-        x: this.cameras.main.width - 80,
+        x: isSmallScreen ? this.cameras.main.width / 2 : this.cameras.main.width - 80,
         y: this.cameras.main.height - 160,
         radius: 65,
         forceMin: 16
@@ -99,17 +95,22 @@ export class GameScene extends Phaser.Scene {
       this.virtualJoystick.create();
     }
 
-    // Create minimap (after joystick so we can pass joystick reference)
-    this.minimap = new Minimap(this, this.player, {
-      width: 200,
-      height: 150,
-      padding: 10,
-      zoom: 0.08
-    }, this.virtualJoystick?.getRawJoystick());
+    // Create minimap (smaller only for small screens < 600px width)
+    const minimapConfig = {
+      width: isSmallScreen ? 180 : isMediumScreen ? 200 : 250,
+      height: isSmallScreen ? 120 : isMediumScreen ? 150 : 200,
+      padding: isSmallScreen ? 5 : isMediumScreen ? 10 : 15,
+      zoom: isSmallScreen ? 0.06 : isMediumScreen ? 0.08 : 0.1,
+    };
+
+    this.minimap = new Minimap(this, this.player, minimapConfig, this.virtualJoystick?.getRawJoystick());
     this.minimap.create(map);
 
     // Create menu button
     this.createMenuButton();
+
+    // Update minimap to ignore menu button
+    this.minimap.ignoreMenuButton(this.menuButton);
   }
 
   private createMenuButton(): void {
@@ -208,13 +209,6 @@ export class GameScene extends Phaser.Scene {
 
       if (isActive) {
         const degrees = this.virtualJoystick.getAngle(); // Already in degrees
-
-        console.log('Joystick active:', { 
-          angleDeg: degrees, 
-          isActive,
-          forceX: this.virtualJoystick.getForceX(),
-          forceY: this.virtualJoystick.getForceY()
-        });
 
         // Snap to 4 cardinal directions based on angle in degrees
         // 0° = Right, 90° = Down, -90° = Up, ±180° = Left

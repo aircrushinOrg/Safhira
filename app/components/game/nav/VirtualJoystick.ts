@@ -47,7 +47,6 @@ export class VirtualJoystick {
       if (distance < radius * 1.5) { // Slightly larger hit area
         isDragging = true;
         updateJoystick(pointer);
-        console.log('Joystick touch started at:', { x: pointer.x, y: pointer.y, baseX, baseY });
       }
     };
 
@@ -69,22 +68,6 @@ export class VirtualJoystick {
       // Update thumb position (still use radians for cos/sin)
       thumb.x = baseX + Math.cos(angleRad) * clampedDistance;
       thumb.y = baseY + Math.sin(angleRad) * clampedDistance;
-
-      console.log('Joystick moved:', {
-        pointerX: pointer.x,
-        pointerY: pointer.y,
-        baseX,
-        baseY,
-        dx,
-        dy,
-        angleRad,
-        angleDeg: currentAngle,
-        distance: clampedDistance,
-        force: currentForce,
-        normalizedForce: currentForce / radius,
-        thumbX: thumb.x,
-        thumbY: thumb.y
-      });
     };
 
     const onPointerMove = (pointer: Phaser.Input.Pointer) => {
@@ -100,7 +83,6 @@ export class VirtualJoystick {
         thumb.y = baseY;
         currentForce = 0;
         currentAngle = 0;
-        console.log('Joystick touch ended');
       }
     };
 
@@ -170,15 +152,12 @@ export class VirtualJoystick {
 
     // Handle both plugin joystick and simple joystick
     if (typeof this.joystick.angle === 'number') {
-      console.log('getAngle() returning:', this.joystick.angle, 'degrees:', Phaser.Math.RadToDeg(this.joystick.angle));
       return this.joystick.angle;
     } else if (typeof this.joystick.angle === 'function') {
       const angle = this.joystick.angle();
-      console.log('getAngle() from function returning:', angle, 'degrees:', Phaser.Math.RadToDeg(angle));
       return angle;
     }
 
-    console.log('getAngle() returning default: 0');
     return 0;
   }
 
