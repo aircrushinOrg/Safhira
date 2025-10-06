@@ -24,7 +24,7 @@ export class GenderSelectionScene extends Phaser.Scene {
     const { width, height } = this.cameras.main;
 
     // Add background image with smart scaling
-    const background = this.add.image(width / 2, height / 2, 'game-background');
+    const background = this.add.image(width / 2, height / 2, 'simulator-background');
     const imageWidth = background.width;
     const imageHeight = background.height;
 
@@ -168,7 +168,7 @@ export class GenderSelectionScene extends Phaser.Scene {
     this.characterPreview.setDepth(5);
 
     // Play idle frame
-    this.characterPreview.play(`${this.selectedGender}-idle-down`);
+    this.characterPreview.setTexture(`player-${this.selectedGender}-idle`, 3);
 
     // Add a subtle background circle
     const previewBackground = this.add.circle(width / 2, height * 0.40, 80, 0x34495e, 0.5);
@@ -207,7 +207,6 @@ export class GenderSelectionScene extends Phaser.Scene {
   private updateCharacterPreview(): void {
     // Update character preview
     this.characterPreview.setTexture(`player-${this.selectedGender}-idle`, 3);
-    this.characterPreview.play(`${this.selectedGender}-idle-down`);
 
     // Add a little bounce animation when switching
     this.tweens.add({

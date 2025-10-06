@@ -4,16 +4,16 @@
  */
 import * as Phaser from 'phaser';
 import VirtualJoystickPlugin from 'phaser3-rex-plugins/plugins/virtualjoystick-plugin.js';
-import { PreloadScene } from '../../app/components/game/scenes/PreloadScene';
-import { TitleScene } from '../../app/components/game/scenes/TitleScene';
-import { GenderSelectionScene } from '../../app/components/game/scenes/GenderSelectionScene';
-import { InstructionScene } from '../../app/components/game/scenes/InstructionScene';
-import { GameScene } from '../../app/components/game/scenes/GameScene';
+import { PreloadScene } from '../../app/components/simulator/scenes/PreloadScene';
+import { TitleScene } from '../../app/components/simulator/scenes/TitleScene';
+import { GenderSelectionScene } from '../../app/components/simulator/scenes/GenderSelectionScene';
+import { InstructionScene } from '../../app/components/simulator/scenes/InstructionScene';
+import { GameScene } from '../../app/components/simulator/scenes/GameScene';
 
 // Base configuration for the game
 const baseConfig: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
-  parent: 'phaser-game-container',
+  parent: 'phaser-simulator-container',
   backgroundColor: '#2d2d2d',
   physics: {
     default: 'arcade',
@@ -46,10 +46,10 @@ export function createGameConfig(): Phaser.Types.Core.GameConfig {
     scale: {
       mode: Phaser.Scale.RESIZE,
       autoCenter: Phaser.Scale.CENTER_BOTH,
-      parent: 'phaser-game-container',
+      parent: 'phaser-simulator-container',
       width: '100%',
       height: '100%',
-      fullscreenTarget: 'phaser-game-container',
+      fullscreenTarget: 'phaser-simulator-container',
       expandParent: true,
     },
     input: {

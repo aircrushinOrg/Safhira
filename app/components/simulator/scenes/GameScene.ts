@@ -7,6 +7,7 @@ import * as Phaser from 'phaser';
 import type { PlayerGender, Direction } from '../../../../types/game';
 import { Minimap } from '../nav/Minimap';
 import { VirtualJoystick } from '../nav/VirtualJoystick';
+import { CollisionManager } from '../utils/CollisionManager';
 
 export class GameScene extends Phaser.Scene {
   private player!: Phaser.GameObjects.Sprite;
@@ -26,9 +27,13 @@ export class GameScene extends Phaser.Scene {
   private minimap!: Minimap;
   private menuButton!: Phaser.GameObjects.Text;
   private preservedPosition?: { x: number; y: number };
+  private collisionManager: CollisionManager;
+  private lastSafePosition: { x: number; y: number } = { x: 0, y: 0 };
+  private collisionDebugGraphics?: Phaser.GameObjects.Graphics;
 
   constructor() {
     super({ key: 'GameScene' });
+    this.collisionManager = new CollisionManager(32); // 32px tile size
   }
 
   init(data: { playerGender?: PlayerGender; preservedPosition?: { x: number; y: number } }) {
@@ -55,13 +60,16 @@ export class GameScene extends Phaser.Scene {
 
     // Create player sprite at starting position (center of map or preserved position)
     const startX = this.preservedPosition?.x || map.width / 2;
-    const startY = this.preservedPosition?.y || map.height / 2;
+    const startY = this.preservedPosition?.y || map.height / 3;
     this.player = this.add.sprite(startX, startY, `player-${this.playerGender}-down`);
     this.player.setScale(1.5); // Make player slightly bigger
     this.player.setDepth(10); // Ensure player is above the map
 
+    // Set initial safe position
+    this.lastSafePosition = { x: startX, y: startY };
+
     // Play initial idle frame
-    this.player.play(`${this.playerGender}-idle-down`);
+    this.player.setTexture(`player-${this.playerGender}-idle`, 3);
 
     // Enable physics for player
     this.physics.add.existing(this.player);
@@ -74,6 +82,10 @@ export class GameScene extends Phaser.Scene {
 
     // Reset camera zoom to 1 (no zoom)
     this.cameras.main.setZoom(1);
+
+    // Add foreground layer above the player
+    const foreground = this.add.image(0, 0, 'simulator-foreground').setOrigin(0, 0);
+    foreground.setDepth(15); // Above player (depth 10) but below UI elements
 
     // Setup keyboard input
     this.cursors = this.input.keyboard!.createCursorKeys();
@@ -97,7 +109,7 @@ export class GameScene extends Phaser.Scene {
 
     // Create minimap (smaller only for small screens < 600px width)
     const minimapConfig = {
-      width: isSmallScreen ? 180 : isMediumScreen ? 200 : 250,
+      width: isSmallScreen ? 160 : isMediumScreen ? 200 : 250,
       height: isSmallScreen ? 120 : isMediumScreen ? 150 : 200,
       padding: isSmallScreen ? 5 : isMediumScreen ? 10 : 15,
       zoom: isSmallScreen ? 0.06 : isMediumScreen ? 0.08 : 0.1,
@@ -108,6 +120,9 @@ export class GameScene extends Phaser.Scene {
 
     // Create menu button
     this.createMenuButton();
+
+    // Create collision debug visualization
+    // this.createCollisionDebug();
 
     // Update minimap to ignore menu button
     this.minimap.ignoreMenuButton(this.menuButton);
@@ -165,6 +180,33 @@ export class GameScene extends Phaser.Scene {
     });
   }
 
+  private createCollisionDebug(): void {
+    // Create graphics object for collision debug visualization
+    this.collisionDebugGraphics = this.add.graphics();
+    this.collisionDebugGraphics.setDepth(5); // Above map but below player
+
+    // Get collision map dimensions and tile size
+    const mapDimensions = this.collisionManager.getMapDimensions();
+    const tileSize = this.collisionManager.getTileSize();
+
+    // Set red color with some transparency
+    this.collisionDebugGraphics.fillStyle(0xff0000, 0.5);
+
+    // Loop through all tiles and draw red squares for collision tiles
+    for (let y = 0; y < mapDimensions.height; y++) {
+      for (let x = 0; x < mapDimensions.width; x++) {
+        const collisionValue = this.collisionManager.getCollisionAt(x, y);
+        if (collisionValue === 246) { // Collision tile
+          // Convert tile coordinates to world coordinates
+          const worldX = x * tileSize;
+          const worldY = y * tileSize;
+
+          // Draw red square
+          this.collisionDebugGraphics.fillRect(worldX, worldY, tileSize, tileSize);
+        }
+      }
+    }
+  }
 
   private createPlayerAnimations() {
     const directions: Direction[] = ['up', 'down', 'left', 'right'];
@@ -270,8 +312,35 @@ export class GameScene extends Phaser.Scene {
       }
     }
 
+    // Check if player is in a collision tile and reset if needed
+    if (this.isPlayerInCollision()) {
+      // Player is in a collision, reset to last safe position
+      this.player.setPosition(this.lastSafePosition.x, this.lastSafePosition.y);
+    } else {
+      // Player is in a safe position, update the last safe position
+      this.lastSafePosition = { x: this.player.x, y: this.player.y };
+    }
+
     // Update minimap
     this.minimap.update();
   }
 
+  private isPlayerInCollision(): boolean {
+    // Create an expanded hitbox around the player
+    const hitboxExpansion = 14; // Pixels to expand the hitbox
+    const playerX = this.player.x;
+    const playerY = this.player.y;
+
+    // Check multiple points around the player to create a larger collision area
+    const checkPoints = [
+      { x: playerX, y: playerY }, // Center
+      { x: playerX - 8 - hitboxExpansion, y: playerY }, // Left
+      { x: playerX + 8 + hitboxExpansion, y: playerY }, // Right
+      { x: playerX, y: playerY - hitboxExpansion }, // Top
+      { x: playerX, y: playerY + 32 + hitboxExpansion }, // Bottom
+    ];
+
+    // If any check point is in a collision, consider the player colliding
+    return checkPoints.some(point => this.collisionManager.isColliding(point.x, point.y));
+  }
 }

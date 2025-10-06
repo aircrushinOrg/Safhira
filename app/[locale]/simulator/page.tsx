@@ -9,7 +9,7 @@ import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
 
 // Dynamic import to load Phaser only on the game page
-const GameEmbed = dynamic(() => import('@/app/components/game/GameEmbed'), {
+const GameEmbed = dynamic(() => import('@/app/components/simulator/GameEmbed'), {
   ssr: false,
   loading: () => (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
@@ -21,9 +21,9 @@ const GameEmbed = dynamic(() => import('@/app/components/game/GameEmbed'), {
   ),
 });
 
-export default function GamePage() {
+export default function SimulatorPage() {
   return (
-    <div className="w-full h-[92vh] md:h-[95vh]">
+    <div className="w-full h-[90vh] md:h-[94vh]">
       <Suspense
         fallback={
           <div className="flex items-center justify-center h-full bg-gray-100 dark:bg-gray-900">

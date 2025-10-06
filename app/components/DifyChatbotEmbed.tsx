@@ -12,9 +12,9 @@ export default function DifyChatbotEmbed() {
   const pathname = usePathname() || '/';
 
   const isChatRoute = /^(?:\/(?:en|ms|zh))?\/chat(?:\/|$)/.test(pathname);
-  const isGameRoute = /^(?:\/(?:en|ms|zh))?\/game(?:\/|$)/.test(pathname);
+  const isSimulatorRoute = /^(?:\/(?:en|ms|zh))?\/simulator(?:\/|$)/.test(pathname);
 
-  const shouldHideChatbot = isChatRoute || isGameRoute;
+  const shouldHideChatbot = isChatRoute || isSimulatorRoute;
 
   useEffect(() => {
     const styleId = 'dify-hide-style';
