@@ -50,6 +50,13 @@
       "when": 1760000000000,
       "tag": "0006_add_ai_scenario_tables",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1759763190909,
+      "tag": "0007_drop_sti_state_table",
+      "breakpoints": true
     }
   ]
 }
