@@ -1,9 +1,16 @@
+/** 
+ * This file defines the TitleScene class for a Phaser-based game. 
+ * It sets up the title screen with a background image, title text, menu options, and navigation controls. 
+ * The scene includes visual effects and responsive design to adapt to different screen sizes.
+ */
 import * as Phaser from 'phaser';
 
 export class TitleScene extends Phaser.Scene {
   private startButton!: Phaser.GameObjects.Text;
   private instructionButton!: Phaser.GameObjects.Text;
   private selector!: Phaser.GameObjects.Text;
+  private titleText!: Phaser.GameObjects.Text;
+  private titleShadow!: Phaser.GameObjects.Text;
   private menuItems: Phaser.GameObjects.Text[] = [];
   private selectedIndex = 0;
 
@@ -12,24 +19,91 @@ export class TitleScene extends Phaser.Scene {
   }
 
   create() {
-    // Get screen dimensions
     const { width, height } = this.cameras.main;
 
     // Add background image
-    const background = this.add.image(width / 2, height / 2, 'game-title');
-    background.setDisplaySize(width, height);
+    const background = this.add.image(width / 2, height / 2, 'game-background');
+    const imageWidth = background.width;
+    const imageHeight = background.height;
 
+    // Calculate scale ratios
+    const scaleX = width / imageWidth;
+    const scaleY = height / imageHeight;
 
-    // Create menu items as simple text (no backgrounds)
+    // Smart scaling logic
+    if (width < imageWidth || height < imageHeight) {
+      background.setScale(1.0);
+
+      // Ensure the image covers the screen by using the larger scale if needed
+      const minScale = Math.max(scaleX, scaleY);
+      if (minScale > 1.0) {
+        background.setScale(minScale);
+      }
+
+      // Focus towards bottom center of image
+      const scaledImageHeight = background.height * background.scaleY;
+      const excessHeight = scaledImageHeight - height;
+      if (excessHeight > 0) {
+        background.y = (height / 2) - (excessHeight * 0.3);
+      }
+    } else {
+      // Screen is bigger than image - resize to fill
+      const fillScale = Math.max(scaleX, scaleY);
+      background.setScale(fillScale);
+
+      const scaledImageHeight = background.height * fillScale;
+      const excessHeight = scaledImageHeight - height;
+      if (excessHeight > 0) {
+        background.y = (height / 2) - (excessHeight * 0.3);
+      }
+    }
+
+    // Create responsive font sizes based on screen width
+    const titleFontSize = width < 600 ? '48px' : '64px';
+    const subtitleFontSize = width < 600 ? '20px' : '24px';
+    const shadowOffset = width < 600 ? 6 : 8;
+    const strokeThickness = width < 600 ? 4 : 6;
+    const subtitleYOffset = width < 600 ? 0.33 : 0.35;
+
+    // Create main game title
+    this.titleShadow = this.add.text(width / 2, height * 0.25 + shadowOffset, 'SAFHIRA', {
+      fontSize: titleFontSize,
+      color: '#1a9790', 
+      fontFamily: '"Press Start 2P", monospace',
+      stroke: '#7f2be6', 
+      strokeThickness: strokeThickness
+    });
+    this.titleShadow.setOrigin(0.5);
+    this.titleShadow.setDepth(1);
+
+    this.titleText = this.add.text(width / 2, height * 0.25, 'SAFHIRA', {
+      fontSize: titleFontSize,
+      color: '#ffb5d6',
+      fontFamily: '"Press Start 2P", monospace',
+      stroke: '#7f2be6',
+      strokeThickness: strokeThickness
+    });
+    this.titleText.setOrigin(0.5);
+    this.titleText.setDepth(2);
+
+    // Create subtitle text
+    const subtitleText = this.add.text(width / 2, height * subtitleYOffset, 'SIMULATION GAME', {
+      fontSize: subtitleFontSize,
+      color: '#7f2be6',
+      fontFamily: '"Press Start 2P", monospace'
+    });
+    subtitleText.setOrigin(0.5);
+
+    // Create menu items
     this.startButton = this.add.text(width / 2, height * 0.5, 'START GAME', {
-      fontSize: '24px',
+      fontSize: '20px',
       color: '#ffffff',
       fontFamily: '"Press Start 2P", monospace'
     });
     this.startButton.setOrigin(0.5);
 
-    this.instructionButton = this.add.text(width / 2, height * 0.6, 'INSTRUCTIONS', {
-      fontSize: '24px',
+    this.instructionButton = this.add.text(width / 2, height * 0.58, 'INSTRUCTIONS', {
+      fontSize: '20px',
       color: '#ffffff',
       fontFamily: '"Press Start 2P", monospace'
     });
@@ -57,7 +131,7 @@ export class TitleScene extends Phaser.Scene {
 
 
   private setupNavigation(): void {
-    // Arrow key navigation with preventDefault to stop page scrolling
+    // Arrow key navigation
     this.input.keyboard!.on('keydown-UP', (event: KeyboardEvent) => {
       event.preventDefault();
       this.selectedIndex = Math.max(0, this.selectedIndex - 1);
@@ -108,32 +182,41 @@ export class TitleScene extends Phaser.Scene {
   }
 
   private confirmSelection(): void {
+    // Navigate to the selected scene
     switch (this.selectedIndex) {
-      case 0: // Start Game
+      case 0:
         this.scene.start('GenderSelectionScene');
         break;
-      case 1: // Instructions
+      case 1:
         this.scene.start('InstructionScene');
         break;
     }
   }
 
   private addVisualEffects(): void {
-    // Add pulsing animation to selector arrow
+    // Add animations to title text, shadow, and selector arrow
     this.tweens.add({
-      targets: this.selector,
-      alpha: 0.3,
-      duration: 800,
+      targets: [this.titleText],
+      y: this.titleText.y - 10,
+      duration: 2000,
       ease: 'Sine.easeInOut',
       yoyo: true,
       repeat: -1
     });
 
-    // Add subtle glow effect to menu items
     this.tweens.add({
-      targets: this.menuItems,
-      alpha: 0.9,
+      targets: [this.titleShadow],
+      y: this.titleText.y - 2,
       duration: 2000,
+      ease: 'Sine.easeInOut',
+      yoyo: true,
+      repeat: -1
+    });
+
+    this.tweens.add({
+      targets: this.selector,
+      alpha: 0.3,
+      duration: 800,
       ease: 'Sine.easeInOut',
       yoyo: true,
       repeat: -1
