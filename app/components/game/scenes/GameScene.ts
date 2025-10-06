@@ -1,3 +1,8 @@
+/**
+ * This file defines the GameScene class for a Phaser-based game.
+ * It sets up the main game scene with player movement, camera control, minimap, and input handling.
+ * The scene supports both keyboard and touch input, including a virtual joystick for mobile devices.
+ */
 import * as Phaser from 'phaser';
 import type { PlayerGender, Direction } from '../../../../types/game';
 import { Minimap } from '../nav/Minimap';
@@ -20,15 +25,21 @@ export class GameScene extends Phaser.Scene {
   private isTouchDevice = false;
   private minimap!: Minimap;
   private menuButton!: Phaser.GameObjects.Text;
+  private preservedPosition?: { x: number; y: number };
 
   constructor() {
     super({ key: 'GameScene' });
   }
 
-  init(data: { playerGender?: PlayerGender }) {
+  init(data: { playerGender?: PlayerGender; preservedPosition?: { x: number; y: number } }) {
     this.playerGender = data.playerGender || 'boy';
+    this.preservedPosition = data.preservedPosition;
     // Detect if touch device
     this.isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    console.log('Touch device detected:', this.isTouchDevice);
+    if (this.preservedPosition) {
+      console.log('GameScene: Preserving player position:', this.preservedPosition);
+    }
   }
 
   create() {
@@ -41,8 +52,10 @@ export class GameScene extends Phaser.Scene {
     // Create animations BEFORE creating the player sprite
     this.createPlayerAnimations();
 
-    // Create player sprite at starting position (center of map)
-    this.player = this.add.sprite(map.width / 2, map.height / 2, `player-${this.playerGender}-down`);
+    // Create player sprite at starting position (center of map or preserved position)
+    const startX = this.preservedPosition?.x || map.width / 2;
+    const startY = this.preservedPosition?.y || map.height / 2;
+    this.player = this.add.sprite(startX, startY, `player-${this.playerGender}-down`);
     this.player.setScale(1.5); // Make player slightly bigger
     this.player.setDepth(10); // Ensure player is above the map
 
@@ -53,6 +66,11 @@ export class GameScene extends Phaser.Scene {
     this.physics.add.existing(this.player);
     const playerBody = this.player.body as Phaser.Physics.Arcade.Body;
     playerBody.setCollideWorldBounds(true);
+
+    // Log position restoration if applicable
+    if (this.preservedPosition) {
+      console.log('GameScene: Player position restored to:', { x: startX, y: startY });
+    }
 
     // Setup camera to follow player with smooth following
     this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
@@ -82,9 +100,9 @@ export class GameScene extends Phaser.Scene {
     // Add virtual joystick for touch devices
     if (this.isTouchDevice) {
       this.virtualJoystick = new VirtualJoystick(this, {
-        x: this.cameras.main.width - 120,
+        x: this.cameras.main.width - 80,
         y: this.cameras.main.height - 120,
-        radius: 50,
+        radius: 65,
         forceMin: 16
       });
       this.virtualJoystick.create();
@@ -185,32 +203,47 @@ export class GameScene extends Phaser.Scene {
     this.isMoving = false;
 
     // Handle joystick input on touch devices
-    if (this.isTouchDevice && this.virtualJoystick?.isActive()) {
-      const angle = this.virtualJoystick.getAngle();
-      const degrees = Phaser.Math.RadToDeg(angle);
+    if (this.isTouchDevice && this.virtualJoystick) {
+      const isActive = this.virtualJoystick.isActive();
 
-      // Snap to 4 cardinal directions only
-      if (degrees >= -45 && degrees < 45) {
-        // Right
-        playerBody.setVelocityX(this.playerSpeed);
-        this.currentDirection = 'right';
-      } else if (degrees >= 45 && degrees < 135) {
-        // Down
-        playerBody.setVelocityY(this.playerSpeed);
-        this.currentDirection = 'down';
-      } else if (degrees >= -135 && degrees < -45) {
-        // Up
-        playerBody.setVelocityY(-this.playerSpeed);
-        this.currentDirection = 'up';
-      } else {
-        // Left
-        playerBody.setVelocityX(-this.playerSpeed);
-        this.currentDirection = 'left';
+      if (isActive) {
+        const degrees = this.virtualJoystick.getAngle(); // Already in degrees
+
+        console.log('Joystick active:', { 
+          angleDeg: degrees, 
+          isActive,
+          forceX: this.virtualJoystick.getForceX(),
+          forceY: this.virtualJoystick.getForceY()
+        });
+
+        // Snap to 4 cardinal directions based on angle in degrees
+        // 0° = Right, 90° = Down, -90° = Up, ±180° = Left
+        
+        if (degrees >= -45 && degrees < 45) {
+          // Right (between -45° and 45°)
+          playerBody.setVelocityX(this.playerSpeed);
+          this.currentDirection = 'right';
+          this.isMoving = true;
+        } else if (degrees >= 45 && degrees < 135) {
+          // Down (between 45° and 135°)
+          playerBody.setVelocityY(this.playerSpeed);
+          this.currentDirection = 'down';
+          this.isMoving = true;
+        } else if (degrees >= -135 && degrees < -45) {
+          // Up (between -135° and -45°)
+          playerBody.setVelocityY(-this.playerSpeed);
+          this.currentDirection = 'up';
+          this.isMoving = true;
+        } else {
+          // Left (between 135° and 180° OR between -180° and -135°)
+          playerBody.setVelocityX(-this.playerSpeed);
+          this.currentDirection = 'left';
+          this.isMoving = true;
+        }
       }
-      this.isMoving = true;
     } else {
       // Handle keyboard input for 4 cardinal directions only
-      // Prioritise vertical movement takes precedence over horizontal
+      // Vertical movement takes precedence over horizontal
       if (this.cursors.up.isDown || this.wasdKeys.up.isDown) {
         playerBody.setVelocityY(-this.playerSpeed);
         this.currentDirection = 'up';
