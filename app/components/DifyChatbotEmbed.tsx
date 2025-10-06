@@ -12,10 +12,13 @@ export default function DifyChatbotEmbed() {
   const pathname = usePathname() || '/';
 
   const isChatRoute = /^(?:\/(?:en|ms|zh))?\/chat(?:\/|$)/.test(pathname);
+  const isGameRoute = /^(?:\/(?:en|ms|zh))?\/game(?:\/|$)/.test(pathname);
+
+  const shouldHideChatbot = isChatRoute || isGameRoute;
 
   useEffect(() => {
     const styleId = 'dify-hide-style';
-    if (isChatRoute) {
+    if (shouldHideChatbot) {
       if (!document.getElementById(styleId)) {
         const style = document.createElement('style');
         style.id = styleId;
@@ -26,7 +29,7 @@ export default function DifyChatbotEmbed() {
       const s = document.getElementById(styleId);
       if (s) s.remove();
     }
-  }, [isChatRoute]);
+  }, [shouldHideChatbot]);
 
   return null;
 }
