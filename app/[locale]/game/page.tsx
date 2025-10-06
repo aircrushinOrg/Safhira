@@ -23,7 +23,7 @@ const GameEmbed = dynamic(() => import('@/app/components/game/GameEmbed'), {
 
 export default function GamePage() {
   return (
-    <div className="w-full h-[92vh] md:h-[95vh]">
+    <div className="w-full h-[90vh] md:h-[94vh]">
       <Suspense
         fallback={
           <div className="flex items-center justify-center h-full bg-gray-100 dark:bg-gray-900">

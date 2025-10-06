@@ -55,7 +55,7 @@ export class GameScene extends Phaser.Scene {
 
     // Create player sprite at starting position (center of map or preserved position)
     const startX = this.preservedPosition?.x || map.width / 2;
-    const startY = this.preservedPosition?.y || map.height / 2;
+    const startY = this.preservedPosition?.y || map.height / 3;
     this.player = this.add.sprite(startX, startY, `player-${this.playerGender}-down`);
     this.player.setScale(1.5); // Make player slightly bigger
     this.player.setDepth(10); // Ensure player is above the map
@@ -97,7 +97,7 @@ export class GameScene extends Phaser.Scene {
 
     // Create minimap (smaller only for small screens < 600px width)
     const minimapConfig = {
-      width: isSmallScreen ? 180 : isMediumScreen ? 200 : 250,
+      width: isSmallScreen ? 160 : isMediumScreen ? 200 : 250,
       height: isSmallScreen ? 120 : isMediumScreen ? 150 : 200,
       padding: isSmallScreen ? 5 : isMediumScreen ? 10 : 15,
       zoom: isSmallScreen ? 0.06 : isMediumScreen ? 0.08 : 0.1,
