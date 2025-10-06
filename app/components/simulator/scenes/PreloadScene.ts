@@ -60,6 +60,7 @@ export class PreloadScene extends Phaser.Scene {
     // Load game assets
     this.load.image('map', '/simulator-map.png');
     this.load.image('simulator-background', '/simulator-background.png');
+    this.load.image('simulator-foreground', '/simulator-foreground.png');
 
     // Load boy player sprite sheets
     this.load.spritesheet('player-boy-idle', '/simulator-boy-idle.png', {
