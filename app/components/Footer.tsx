@@ -7,14 +7,15 @@
 
 import { Card } from './ui/card';
 import { Badge } from './ui/badge';
-import { 
-  Heart, 
-  Shield, 
-  Mail, 
-  Globe, 
-  Users, 
+import {
+  Heart,
+  Shield,
+  Mail,
+  Globe,
+  Users,
   BookOpen,
-  AlertTriangle
+  AlertTriangle,
+  Compass
 } from 'lucide-react';
 import Image from 'next/image';
 import {Link} from '../../i18n/routing';
@@ -25,7 +26,7 @@ export function Footer() {
   return (
     <footer className="bg-gradient-to-t from-pink-50/50 via-gray-50 to-teal-50/50 dark:from-pink-950/30 dark:via-gray-900 dark:to-teal-950/30 text-gray-800 dark:text-white py-12 px-8 md:px-16">
       <div className="container mx-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-8 mb-8">
           {/* Brand */}
           <div>
             <div className="flex items-center space-x-3 mb-4">
@@ -65,10 +66,20 @@ export function Footer() {
             <ul className="space-y-2 text-sm">
               <li><Link href="/stis" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-white transition-colors">{t('links.stiBasics')}</Link></li>
               <li><Link href="/stis/prevention" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-white transition-colors">{t('links.prevention')}</Link></li>
-              {/* <li><Link href="/living-well-with-sti" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-white transition-colors">{t('links.livingWell')}</Link></li> */}
+              <li><Link href="/stis/prevalence" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-white transition-colors">{t('links.prevalence')}</Link></li>
+            </ul>
+          </div>
+
+          {/* Hub */}
+          <div>
+            <h4 className="font-semibold mb-4 flex items-center space-x-2">
+              <Compass size={16} />
+              <span>{t('sections.hub')}</span>
+            </h4>
+            <ul className="space-y-2 text-sm">
               <li><Link href="/quiz" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-white transition-colors">{t('links.quiz')}</Link></li>
-              {/* <li><a href="/?section=basics" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-white transition-colors">Testing & Treatment</a></li> */}
-              {/* <li><a href="/?section=myths" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-white transition-colors">Myths vs Facts</a></li> */}
+              <li><Link href="/simulator" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-white transition-colors">{t('links.simulator')}</Link></li>
+              <li><Link href="/find-healthcare" className="text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-white transition-colors">{t('links.findHealthcare')}</Link></li>
             </ul>
           </div>
 

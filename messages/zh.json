@@ -114,11 +114,13 @@
       },
       "mapper": {
         "title": "诊所地图",
-        "description": "查找附近的性健康诊所与检测中心，并查看隐私评分。"
+        "description": "查找附近的性健康诊所与检测中心，并查看隐私评分。",
+        "button": "查找诊所"
       },
       "simulator": {
         "title": "对话模拟器",
-        "description": "在安全环境中练习与医护人员讨论性健康话题。"
+        "description": "在安全环境中练习与医护人员讨论性健康话题。",
+        "button": "启动模拟器"
       }
     },
     "final": {
@@ -216,18 +218,21 @@
     },
     "sections": {
       "learning": "学习",
+      "hub": "枢纽",
       "support": "支持",
       "contact": "联系我们"
     },
-      "links": {
-        "stiBasics": "STI 基础",
-        "prevention": "预防",
-        "livingWell": "与 STI 健康相处",
-        "quiz": "互动测验",
-        "privateChat": "私密 AI 聊天",
-        "aboutAi": "关于 Safhira AI",
-        "prevalence": "流行数据"
-      },
+    "links": {
+      "stiBasics": "STI 基础",
+      "prevention": "预防",
+      "livingWell": "与 STI 健康相处",
+      "quiz": "互动测验",
+      "simulator": "模拟器",
+      "findHealthcare": "查找医疗保健",
+      "privateChat": "私密 AI 聊天",
+      "aboutAi": "关于 Safhira AI",
+      "prevalence": "流行数据"
+    },
     "disclaimer": {
       "title": "重要声明",
       "text": "本网站信息仅供教育用途，不可替代专业医疗建议。如需诊断和治疗，请咨询医生。"

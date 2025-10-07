@@ -113,11 +113,13 @@
       },
       "mapper": {
         "title": "Clinic Mapper",
-        "description": "Find nearby sexual health clinics and testing centers with privacy ratings."
+        "description": "Find nearby sexual health clinics and testing centers with privacy ratings.",
+        "button": "Find Clinics"
       },
       "simulator": {
         "title": "Conversation Simulator",
-        "description": "Practice discussing sexual health topics with healthcare providers in a safe environment."
+        "description": "Practice discussing sexual health topics with healthcare providers in a safe environment.",
+        "button": "Launch Simulator"
       }
     },
     "final": {
@@ -214,6 +216,7 @@
     },
     "sections": {
       "learning": "Learning",
+      "hub": "Hub",
       "support": "Support",
       "contact": "Contact Us"
     },
@@ -222,6 +225,8 @@
       "prevention": "Prevention",
       "livingWell": "Living Well with STI",
       "quiz": "Interactive Quiz",
+      "simulator": "Gamify Simulator",
+      "findHealthcare": "Find Healthcare",
       "privateChat": "Private AI Chat",
       "aboutAi": "About Safhira AI",
       "prevalence": "Prevalence Data"

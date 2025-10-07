@@ -113,11 +113,13 @@
       },
       "mapper": {
         "title": "Pemetaan Klinik",
-        "description": "Cari klinik dan pusat ujian kesihatan seksual berdekatan beserta penilaian privasi."
+        "description": "Cari klinik dan pusat ujian kesihatan seksual berdekatan beserta penilaian privasi.",
+        "button": "Cari Klinik"
       },
       "simulator": {
         "title": "Simulator Perbualan",
-        "description": "Berlatih membincangkan topik kesihatan seksual dengan penyedia perkhidmatan kesihatan dalam persekitaran yang selamat."
+        "description": "Berlatih membincangkan topik kesihatan seksual dengan penyedia perkhidmatan kesihatan dalam persekitaran yang selamat.",
+        "button": "Mulakan Simulator"
       }
     },
     "final": {
@@ -214,6 +216,7 @@
     },
     "sections": {
       "learning": "Pembelajaran",
+      "hub": "Hab",
       "support": "Sokongan",
       "contact": "Hubungi Kami"
     },
@@ -222,6 +225,8 @@
       "prevention": "Pencegahan",
       "livingWell": "Hidup Sihat dengan STI",
       "quiz": "Kuiz Interaktif",
+      "simulator": "Simulator",
+      "findHealthcare": "Cari Penjagaan Kesihatan",
       "privateChat": "Sembang AI Peribadi",
       "aboutAi": "Tentang Safhira AI",
       "prevalence": "Data Prevalens"
