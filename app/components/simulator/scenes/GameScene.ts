@@ -4,11 +4,12 @@
  * The scene supports both keyboard and touch input, including a virtual joystick for mobile devices.
  */
 import * as Phaser from 'phaser';
-import type { PlayerGender, Direction } from '../../../../types/game';
+import type { PlayerGender, Direction, NPCData, NPCInteractionZone } from '../../../../types/game';
 import { Minimap } from '../utils/Minimap';
 import { VirtualJoystick } from '../utils/VirtualJoystick';
 import { CollisionManager } from '../manager/CollisionManager';
 import { PlayerHitbox } from '../utils/PlayerHitbox';
+import { SCENARIO_TEMPLATES } from '../../../../lib/simulator/scenarios';
 
 export class GameScene extends Phaser.Scene {
   private player!: Phaser.GameObjects.Sprite;
@@ -32,6 +33,9 @@ export class GameScene extends Phaser.Scene {
   private lastSafePosition: { x: number; y: number } = { x: 0, y: 0 };
   private collisionDebugGraphics?: Phaser.GameObjects.Graphics;
   private playerHitboxDebugGraphics?: Phaser.GameObjects.Graphics;
+  private npcs: NPCInteractionZone[] = [];
+  private interactionKey!: Phaser.Input.Keyboard.Key;
+  private nearbyNPC: NPCInteractionZone | null = null;
 
   constructor() {
     super({ key: 'GameScene' });
@@ -59,6 +63,8 @@ export class GameScene extends Phaser.Scene {
 
     // Create animations BEFORE creating the player sprite
     this.createPlayerAnimations();
+    this.createNPCAnimations();
+    this.createInteractionIndicatorAnimation();
 
     // Create player sprite at starting position (center of map or preserved position)
     const startX = this.preservedPosition?.x || map.width / 2;
@@ -131,6 +137,12 @@ export class GameScene extends Phaser.Scene {
 
     // Update minimap to ignore menu button
     this.minimap.ignoreMenuButton(this.menuButton);
+
+    // Setup interaction key
+    this.interactionKey = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+
+    // Create NPCs based on player gender
+    this.createNPCs();
   }
 
   private createMenuButton(): void {
@@ -248,6 +260,34 @@ export class GameScene extends Phaser.Scene {
     });
   }
 
+  private createNPCAnimations() {
+    const genders: PlayerGender[] = ['boy', 'girl'];
+
+    // Create idle animations for NPCs
+    genders.forEach((gender) => {
+      const textureKey = `simulator-${gender}-bar-npc`;
+      const animationKey = `npc-${gender}-idle`;
+
+      // NPC idle animation using all 6 frames
+      this.anims.create({
+        key: animationKey,
+        frames: this.anims.generateFrameNumbers(textureKey, { start: 0, end: 5 }),
+        frameRate: 4, // Slower frame rate for idle animation
+        repeat: -1, // Loop indefinitely
+      });
+    });
+  }
+
+  private createInteractionIndicatorAnimation() {
+    // Create interaction indicator animation using all 6 frames
+    this.anims.create({
+      key: 'interaction-indicator-anim',
+      frames: this.anims.generateFrameNumbers('interaction-indicator', { start: 0, end: 5 }),
+      frameRate: 6, // Medium frame rate for indicator animation
+      repeat: 1, // Loop indefinitely
+    });
+  }
+
 
   update() {
     const playerBody = this.player.body as Phaser.Physics.Arcade.Body;
@@ -337,6 +377,14 @@ export class GameScene extends Phaser.Scene {
 
     // Update minimap
     this.minimap.update();
+
+    // Update NPC interactions
+    this.updateNPCInteractions();
+
+    // Handle interaction input
+    if (Phaser.Input.Keyboard.JustDown(this.interactionKey)) {
+      this.handleInteraction();
+    }
   }
 
   private updatePlayerHitboxDebug(): void {
@@ -377,5 +425,125 @@ export class GameScene extends Phaser.Scene {
 
     // If any check point is in a collision, consider the player colliding
     return checkPoints.some(point => this.collisionManager.isColliding(point.x, point.y));
+  }
+
+  private createNPCs(): void {
+    // Find the appropriate scenario for the current gender
+    const scenario = SCENARIO_TEMPLATES.find(template => {
+      if (this.playerGender === 'girl') {
+        return template.id === 'outside-bar-girl';
+      } else {
+        return template.id === 'outside-bar-boy';
+      }
+    });
+
+    if (!scenario) return;
+
+    // Position NPC next to the player
+    const playerX = this.player.x;
+    const playerY = this.player.y;
+
+    // Place NPC to the right of the player, with some spacing
+    const npcX = playerX + 100; // 100 pixels to the right
+    const npcY = playerY; // Same Y position as player
+
+    const npcData: NPCData = {
+      id: scenario.npc.id,
+      name: scenario.npc.name,
+      scenarioId: scenario.id,
+      x: npcX,
+      y: npcY,
+      sprite: `simulator-${this.playerGender}-bar-npc`,
+      interactionRadius: 80,
+      isInteractive: true
+    };
+
+    this.createNPC(npcData);
+  }
+
+  private createNPC(data: NPCData): void {
+    // Create NPC sprite
+    const sprite = this.add.sprite(data.x, data.y, data.sprite || 'default-npc');
+    sprite.setScale(1.5);
+    sprite.setDepth(10); // Same depth as player
+
+    // Start the NPC idle animation
+    const animationKey = `npc-${this.playerGender}-idle`;
+    sprite.play(animationKey);
+
+    // Create interaction indicator (initially hidden)
+    const indicator = this.add.sprite(data.x, data.y - 50, 'interaction-indicator');
+    indicator.setVisible(false);
+    indicator.setDepth(20);
+
+    // Start the interaction indicator animation
+    indicator.play('interaction-indicator-anim');
+
+    // Add floating animation to indicator
+    this.tweens.add({
+      targets: indicator,
+      y: indicator.y - 10,
+      duration: 1000,
+      ease: 'Sine.easeInOut',
+      yoyo: true,
+      repeat: -1
+    });
+
+    const npcZone: NPCInteractionZone = {
+      npc: data,
+      sprite,
+      interactionIndicator: indicator,
+      isPlayerNear: false
+    };
+
+    this.npcs.push(npcZone);
+  }
+
+  private updateNPCInteractions(): void {
+    const playerX = this.player.x;
+    const playerY = this.player.y;
+
+    this.nearbyNPC = null;
+
+    this.npcs.forEach(npcZone => {
+      const distance = Phaser.Math.Distance.Between(
+        playerX, playerY,
+        npcZone.npc.x, npcZone.npc.y
+      );
+
+      const wasNear = npcZone.isPlayerNear;
+      const isNear = distance <= (npcZone.npc.interactionRadius || 80);
+
+      npcZone.isPlayerNear = isNear;
+
+      if (isNear) {
+        this.nearbyNPC = npcZone;
+        if (!wasNear && npcZone.interactionIndicator) {
+          npcZone.interactionIndicator.setVisible(true);
+        }
+      } else {
+        if (wasNear && npcZone.interactionIndicator) {
+          npcZone.interactionIndicator.setVisible(false);
+        }
+      }
+    });
+  }
+
+  private handleInteraction(): void {
+    if (!this.nearbyNPC || !this.nearbyNPC.npc.isInteractive) return;
+
+    // Get the scenario template for this NPC
+    const scenario = SCENARIO_TEMPLATES.find(template =>
+      template.id === this.nearbyNPC!.npc.scenarioId
+    );
+
+    if (!scenario) return;
+
+    // Start the NPC preview scene
+    this.scene.start('NPCPreviewScene', {
+      scenario,
+      playerGender: this.playerGender,
+      playerPosition: { x: this.player.x, y: this.player.y }
+    });
   }
 }
