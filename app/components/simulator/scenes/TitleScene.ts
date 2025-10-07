@@ -150,6 +150,12 @@ export class TitleScene extends Phaser.Scene {
       this.confirmSelection();
     });
 
+    // Space key to confirm selection
+    this.input.keyboard!.on('keydown-SPACE', (event: KeyboardEvent) => {
+      event.preventDefault();
+      this.confirmSelection();
+    });
+
     // Touch/mouse support for menu items
     this.menuItems.forEach((item, index) => {
       item.setInteractive({ useHandCursor: true });
