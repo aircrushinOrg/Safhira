@@ -5,9 +5,10 @@
  */
 import * as Phaser from 'phaser';
 import type { PlayerGender, Direction } from '../../../../types/game';
-import { Minimap } from '../nav/Minimap';
-import { VirtualJoystick } from '../nav/VirtualJoystick';
-import { CollisionManager } from '../utils/CollisionManager';
+import { Minimap } from '../utils/Minimap';
+import { VirtualJoystick } from '../utils/VirtualJoystick';
+import { CollisionManager } from '../manager/CollisionManager';
+import { PlayerHitbox } from '../utils/PlayerHitbox';
 
 export class GameScene extends Phaser.Scene {
   private player!: Phaser.GameObjects.Sprite;
@@ -30,6 +31,7 @@ export class GameScene extends Phaser.Scene {
   private collisionManager: CollisionManager;
   private lastSafePosition: { x: number; y: number } = { x: 0, y: 0 };
   private collisionDebugGraphics?: Phaser.GameObjects.Graphics;
+  private playerHitboxDebugGraphics?: Phaser.GameObjects.Graphics;
 
   constructor() {
     super({ key: 'GameScene' });
@@ -121,8 +123,11 @@ export class GameScene extends Phaser.Scene {
     // Create menu button
     this.createMenuButton();
 
-    // Create collision debug visualization
+    // Create collision debug visualization (Debugging purposes)
     // this.createCollisionDebug();
+
+    // Create player hitbox debug visualization (Debugging purposes)
+    // this.createPlayerHitboxDebug();
 
     // Update minimap to ignore menu button
     this.minimap.ignoreMenuButton(this.menuButton);
@@ -206,6 +211,12 @@ export class GameScene extends Phaser.Scene {
         }
       }
     }
+  }
+
+  private createPlayerHitboxDebug(): void {
+    // Create graphics object for player hitbox debug visualization
+    this.playerHitboxDebugGraphics = this.add.graphics();
+    this.playerHitboxDebugGraphics.setDepth(20); // Above player (depth 10) and foreground (depth 15)
   }
 
   private createPlayerAnimations() {
@@ -321,24 +332,48 @@ export class GameScene extends Phaser.Scene {
       this.lastSafePosition = { x: this.player.x, y: this.player.y };
     }
 
+    // Update player hitbox debug visualization
+    this.updatePlayerHitboxDebug();
+
     // Update minimap
     this.minimap.update();
   }
 
-  private isPlayerInCollision(): boolean {
-    // Create an expanded hitbox around the player
-    const hitboxExpansion = 14; // Pixels to expand the hitbox
+  private updatePlayerHitboxDebug(): void {
+    if (!this.playerHitboxDebugGraphics) return;
+
+    // Clear previous debug graphics
+    this.playerHitboxDebugGraphics.clear();
+
+    // Set yellow color with transparency for the hitbox outline
+    this.playerHitboxDebugGraphics.lineStyle(2, 0xffff00, 1); // Yellow, 2px thick, full opacity
+
+    // Get player position
     const playerX = this.player.x;
     const playerY = this.player.y;
 
-    // Check multiple points around the player to create a larger collision area
-    const checkPoints = [
-      { x: playerX, y: playerY }, // Center
-      { x: playerX - 8 - hitboxExpansion, y: playerY }, // Left
-      { x: playerX + 8 + hitboxExpansion, y: playerY }, // Right
-      { x: playerX, y: playerY - hitboxExpansion }, // Top
-      { x: playerX, y: playerY + 32 + hitboxExpansion }, // Bottom
-    ];
+    // Calculate hitbox bounds using the PlayerHitbox utility
+    const bounds = PlayerHitbox.calculateBounds(playerX, playerY);
+
+    // Draw yellow rectangle around the player hitbox
+    this.playerHitboxDebugGraphics.strokeRect(bounds.left, bounds.top, bounds.width, bounds.height);
+
+    // Also draw small circles at the collision check points for reference
+    this.playerHitboxDebugGraphics.fillStyle(0xffff00, 0.8); // Yellow with some transparency
+    const checkPoints = PlayerHitbox.getCollisionCheckPoints(playerX, playerY);
+
+    checkPoints.forEach(point => {
+      this.playerHitboxDebugGraphics!.fillCircle(point.x, point.y, 3);
+    });
+  }
+
+  private isPlayerInCollision(): boolean {
+    // Get player position
+    const playerX = this.player.x;
+    const playerY = this.player.y;
+
+    // Get collision check points using the PlayerHitbox utility
+    const checkPoints = PlayerHitbox.getCollisionCheckPoints(playerX, playerY);
 
     // If any check point is in a collision, consider the player colliding
     return checkPoints.some(point => this.collisionManager.isColliding(point.x, point.y));
