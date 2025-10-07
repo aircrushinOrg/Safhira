@@ -30,6 +30,7 @@ export class GameScene extends Phaser.Scene {
   private collisionManager: CollisionManager;
   private lastSafePosition: { x: number; y: number } = { x: 0, y: 0 };
   private collisionDebugGraphics?: Phaser.GameObjects.Graphics;
+  private playerHitboxDebugGraphics?: Phaser.GameObjects.Graphics;
 
   constructor() {
     super({ key: 'GameScene' });
@@ -122,7 +123,10 @@ export class GameScene extends Phaser.Scene {
     this.createMenuButton();
 
     // Create collision debug visualization
-    // this.createCollisionDebug();
+    this.createCollisionDebug();
+
+    // Create player hitbox debug visualization
+    this.createPlayerHitboxDebug();
 
     // Update minimap to ignore menu button
     this.minimap.ignoreMenuButton(this.menuButton);
@@ -206,6 +210,12 @@ export class GameScene extends Phaser.Scene {
         }
       }
     }
+  }
+
+  private createPlayerHitboxDebug(): void {
+    // Create graphics object for player hitbox debug visualization
+    this.playerHitboxDebugGraphics = this.add.graphics();
+    this.playerHitboxDebugGraphics.setDepth(20); // Above player (depth 10) and foreground (depth 15)
   }
 
   private createPlayerAnimations() {
@@ -321,23 +331,76 @@ export class GameScene extends Phaser.Scene {
       this.lastSafePosition = { x: this.player.x, y: this.player.y };
     }
 
+    // Update player hitbox debug visualization
+    this.updatePlayerHitboxDebug();
+
     // Update minimap
     this.minimap.update();
   }
 
+  private updatePlayerHitboxDebug(): void {
+    if (!this.playerHitboxDebugGraphics) return;
+
+    // Clear previous debug graphics
+    this.playerHitboxDebugGraphics.clear();
+
+    // Set yellow color with transparency for the hitbox outline
+    this.playerHitboxDebugGraphics.lineStyle(2, 0xffff00, 1); // Yellow, 2px thick, full opacity
+
+    // Get player position
+    const playerX = this.player.x;
+    const playerY = this.player.y;
+
+    // Define the same hitbox dimensions as used in collision detection
+    const hitboxExpansion = 20;
+
+    // Calculate hitbox bounds based on the collision detection logic
+    const hitboxLeft = playerX - hitboxExpansion;
+    const hitboxRight = playerX + hitboxExpansion;
+    const hitboxTop = playerY + 12 - hitboxExpansion;
+    const hitboxBottom = playerY + 28 + hitboxExpansion;
+
+    // Draw yellow rectangle around the player hitbox
+    const hitboxWidth = hitboxRight - hitboxLeft;
+    const hitboxHeight = hitboxBottom - hitboxTop;
+    this.playerHitboxDebugGraphics.strokeRect(hitboxLeft, hitboxTop, hitboxWidth, hitboxHeight);
+
+    // Also draw small circles at the collision check points for reference
+    this.playerHitboxDebugGraphics.fillStyle(0xffff00, 0.8); // Yellow with some transparency
+    const checkPoints = [
+      { x: playerX, y: playerY + 20}, // Center
+      { x: playerX - hitboxExpansion, y: playerY + 20}, // Left
+      { x: playerX + hitboxExpansion, y: playerY + 20}, // Right
+      { x: playerX, y: playerY + 12 - hitboxExpansion }, // Top
+      { x: playerX, y: playerY + 28 + hitboxExpansion }, // Bottom
+      { x: playerX - hitboxExpansion, y: playerY + 12 - hitboxExpansion }, // Top-Left
+      { x: playerX + hitboxExpansion, y: playerY + 12 - hitboxExpansion }, // Top-Right
+      { x: playerX - hitboxExpansion, y: playerY + 28 + hitboxExpansion }, // Bottom-Left
+      { x: playerX + hitboxExpansion, y: playerY + 28 + hitboxExpansion }, // Bottom-Right
+    ];
+
+    checkPoints.forEach(point => {
+      this.playerHitboxDebugGraphics!.fillCircle(point.x, point.y, 3);
+    });
+  }
+
   private isPlayerInCollision(): boolean {
     // Create an expanded hitbox around the player
-    const hitboxExpansion = 14; // Pixels to expand the hitbox
+    const hitboxExpansion = 20; // Pixels to expand the hitbox
     const playerX = this.player.x;
     const playerY = this.player.y;
 
     // Check multiple points around the player to create a larger collision area
     const checkPoints = [
-      { x: playerX, y: playerY }, // Center
-      { x: playerX - 8 - hitboxExpansion, y: playerY }, // Left
-      { x: playerX + 8 + hitboxExpansion, y: playerY }, // Right
-      { x: playerX, y: playerY - hitboxExpansion }, // Top
-      { x: playerX, y: playerY + 32 + hitboxExpansion }, // Bottom
+      { x: playerX, y: playerY + 20}, // Center
+      { x: playerX - hitboxExpansion, y: playerY + 20}, // Left
+      { x: playerX + hitboxExpansion, y: playerY + 20}, // Right
+      { x: playerX, y: playerY + 12 - hitboxExpansion }, // Top
+      { x: playerX, y: playerY + 28 + hitboxExpansion }, // Bottom
+      { x: playerX - hitboxExpansion, y: playerY + 12 - hitboxExpansion }, // Top-Left
+      { x: playerX + hitboxExpansion, y: playerY + 12 - hitboxExpansion }, // Top-Right
+      { x: playerX - hitboxExpansion, y: playerY + 28 + hitboxExpansion }, // Bottom-Left
+      { x: playerX + hitboxExpansion, y: playerY + 28 + hitboxExpansion }, // Bottom-Right
     ];
 
     // If any check point is in a collision, consider the player colliding
