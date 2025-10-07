@@ -140,6 +140,12 @@ export class GenderSelectionScene extends Phaser.Scene {
       this.confirmSelection();
     });
 
+    // Space key to confirm selection
+    this.input.keyboard!.on('keydown-SPACE', (event: KeyboardEvent) => {
+      event.preventDefault();
+      this.confirmSelection();
+    });
+
     // ESC key to go back
     this.input.keyboard!.on('keydown-ESC', (event: KeyboardEvent) => {
       event.preventDefault();
