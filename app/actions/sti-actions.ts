@@ -19,6 +19,24 @@ import {
 } from "../../db/schema";
 import { eq, sql } from "drizzle-orm";
 
+function slugify(value: string): string {
+  return value
+    .toLowerCase()
+    .replace(/[()]/g, '')
+    .replace(/&/g, 'and')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+function candidatesFromName(name: string): string[] {
+  const base = name.replace(/\s*\([^)]*\)\s*/g, ' ').trim();
+  const paren = name.match(/\(([^)]+)\)/)?.[1] ?? '';
+  const slugs = new Set<string>();
+  slugs.add(slugify(name));
+  if (base.length > 0) slugs.add(slugify(base));
+  if (paren.length > 0) slugs.add(slugify(paren));
+  return Array.from(slugs).filter(Boolean);
+}
 export interface STIInfo {
   name: string;
   type: 'Bacterial' | 'Viral' | 'Parasitic';
@@ -139,6 +157,33 @@ export async function getAllSTIs(): Promise<STIInfo[]> {
   } catch (error) {
     console.error("Error fetching all STIs:", error);
     throw new Error("Failed to fetch STI information");
+  }
+}
+
+
+export async function getSTIBySlug(slug: string): Promise<STIInfo | null> {
+  try {
+    const targetSlug = slugify(slug);
+    const results = await db
+      .select({
+        stiId: sti.stiId,
+        name: sti.name,
+      })
+      .from(sti);
+
+    const match = results.find((record) => {
+      const candidates = candidatesFromName(record.name);
+      return candidates.includes(targetSlug);
+    });
+
+    if (!match) {
+      return null;
+    }
+
+    return await getSTIWithRelatedData(match.stiId);
+  } catch (error) {
+    console.error(`Error fetching STI with slug ${slug}:`, error);
+    throw new Error(`Failed to fetch STI information for ${slug}`);
   }
 }
 

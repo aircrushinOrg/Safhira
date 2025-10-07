@@ -57,6 +57,12 @@ export default function STIClient({ stiInfo }: { stiInfo: STIInfo }) {
   const tPage = useTranslations('STIsPage');
   const tBreadcrumbs = useTranslations('Common.breadcrumbs');
 
+  const hasCommonSymptoms = stiInfo.symptoms.common.length > 0;
+  const hasWomenSymptoms = stiInfo.symptoms.women.length > 0;
+  const hasMenSymptoms = stiInfo.symptoms.men.length > 0;
+  const hasGeneralSymptoms = stiInfo.symptoms.general.length > 0;
+  const showSexSpecificColumns = hasWomenSymptoms || hasMenSymptoms;
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <section className="py-8 sm:py-12 md:py-16 px-4 ">
@@ -129,52 +135,60 @@ export default function STIClient({ stiInfo }: { stiInfo: STIInfo }) {
 
                 <TabsContent value="symptoms" className="mt-6 sm:mt-8 space-y-6 sm:space-y-8">
                   <div className="space-y-4 sm:space-y-6">
-                    <div>
-                      <h3 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4 flex items-center">
-                        <AlertTriangle size={18} className="mr-2 sm:mr-3 text-yellow-500 flex-shrink-0" />
-                        General Symptoms
-                      </h3>
-                      <ul className="space-y-2 sm:space-y-3">
-                        {stiInfo.symptoms.common.slice(0, 5).map((symptom, index) => (
-                          <li key={index} className="flex items-start space-x-2 sm:space-x-3">
-                            <CheckCircle size={16} className="text-teal-500 mt-1 flex-shrink-0" />
-                            <span className="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed">{symptom}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div className="grid gap-6 sm:gap-8 md:grid-cols-2">
+                    {hasCommonSymptoms && (
                       <div>
-                        <h3 className="text-base sm:text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">
-                          {t('symptoms.women')}
+                        <h3 className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4 flex items-center">
+                          <AlertTriangle size={18} className="mr-2 sm:mr-3 text-yellow-500 flex-shrink-0" />
+                          General Symptoms
                         </h3>
                         <ul className="space-y-2 sm:space-y-3">
-                          {stiInfo.symptoms.women.slice(0, 5).map((symptom, index) => (
+                          {stiInfo.symptoms.common.slice(0, 5).map((symptom, index) => (
                             <li key={index} className="flex items-start space-x-2 sm:space-x-3">
-                              <CheckCircle size={14} className="text-pink-500 mt-1 flex-shrink-0" />
+                              <CheckCircle size={16} className="text-teal-500 mt-1 flex-shrink-0" />
                               <span className="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed">{symptom}</span>
                             </li>
                           ))}
                         </ul>
                       </div>
+                    )}
 
-                      <div>
-                        <h3 className="text-base sm:text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">
-                          {t('symptoms.men')}
-                        </h3>
-                        <ul className="space-y-2 sm:space-y-3">
-                          {stiInfo.symptoms.men.slice(0, 5).map((symptom, index) => (
-                            <li key={index} className="flex items-start space-x-2 sm:space-x-3">
-                              <CheckCircle size={14} className="text-blue-500 mt-1 flex-shrink-0" />
-                              <span className="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed">{symptom}</span>
-                            </li>
-                          ))}
-                        </ul>
+                    {showSexSpecificColumns && (
+                      <div className="grid gap-6 sm:gap-8 md:grid-cols-2">
+                        {hasWomenSymptoms && (
+                          <div>
+                            <h3 className="text-base sm:text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">
+                              {t('symptoms.women')}
+                            </h3>
+                            <ul className="space-y-2 sm:space-y-3">
+                              {stiInfo.symptoms.women.slice(0, 5).map((symptom, index) => (
+                                <li key={index} className="flex items-start space-x-2 sm:space-x-3">
+                                  <CheckCircle size={14} className="text-pink-500 mt-1 flex-shrink-0" />
+                                  <span className="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed">{symptom}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+
+                        {hasMenSymptoms && (
+                          <div>
+                            <h3 className="text-base sm:text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">
+                              {t('symptoms.men')}
+                            </h3>
+                            <ul className="space-y-2 sm:space-y-3">
+                              {stiInfo.symptoms.men.slice(0, 5).map((symptom, index) => (
+                                <li key={index} className="flex items-start space-x-2 sm:space-x-3">
+                                  <CheckCircle size={14} className="text-blue-500 mt-1 flex-shrink-0" />
+                                  <span className="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed">{symptom}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
                       </div>
-                    </div>
+                    )}
 
-                    {stiInfo.symptoms.general.length > 0 && (
+                    {hasGeneralSymptoms && (
                       <div>
                         <h3 className="text-base sm:text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">
                           {t('symptoms.other')}
