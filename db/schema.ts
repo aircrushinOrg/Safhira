@@ -1,5 +1,8 @@
-import { pgTable, serial, varchar, timestamp, text, boolean, integer, decimal, primaryKey, index, date, numeric, uniqueIndex, jsonb } from 'drizzle-orm/pg-core';
+import { pgTable, serial, varchar, timestamp, text, boolean, integer, decimal, primaryKey, index, date, numeric, uniqueIndex, jsonb, pgEnum } from 'drizzle-orm/pg-core';
 import { sql } from 'drizzle-orm';
+
+// Locale enum shared by translation tables
+export const localeEnum = pgEnum('locale', ['en', 'ms', 'zh']);
 // Table Creation
 // State dictionary table
 export const state = pgTable('state', {
@@ -7,6 +10,15 @@ export const state = pgTable('state', {
   stateName: varchar('state_name', { length: 255 }).notNull(),
 }, (table) => [
   index('idx_state_name').on(table.stateName),
+]);
+
+export const stateTranslations = pgTable('state_translations', {
+  stateId: integer('state_id').notNull().references(() => state.stateId, { onDelete: 'cascade' }),
+  locale: localeEnum('locale').notNull(),
+  stateName: varchar('state_name', { length: 255 }).notNull(),
+}, (table) => [
+  primaryKey({ columns: [table.stateId, table.locale] }),
+  index('idx_state_translations_locale').on(table.locale),
 ]);
 
 // Prevalence table storing STI data per state and year
@@ -64,6 +76,20 @@ export const sti = pgTable('sti', {
   index('idx_sti_name').on(table.name),
 ]);
 
+export const stiTranslations = pgTable('sti_translations', {
+  stiId: integer('sti_id').notNull().references(() => sti.stiId, { onDelete: 'cascade' }),
+  locale: localeEnum('locale').notNull(),
+  name: varchar('name', { length: 255 }).notNull(),
+  type: varchar('type', { length: 50 }).notNull(),
+  severity: varchar('severity', { length: 20 }).notNull(),
+  treatability: varchar('treatability', { length: 20 }).notNull(),
+  treatment: text('treatment').notNull(),
+  malaysianContext: text('malaysian_context').notNull(),
+}, (table) => [
+  primaryKey({ columns: [table.stiId, table.locale] }),
+  index('idx_sti_translations_locale').on(table.locale),
+]);
+
 // Dictionary tables + join tables for Symptoms, Transmission, Health Effects, Prevention
 
 // SYMPTOM dictionary
@@ -72,6 +98,15 @@ export const symptom = pgTable('symptom', {
   symptomText: text('symptom_text').notNull(),
 }, (table) => [
   index('idx_symptom_text').on(table.symptomText),
+]);
+
+export const symptomTranslations = pgTable('symptom_translations', {
+  symptomId: integer('symptom_id').notNull().references(() => symptom.symptomId, { onDelete: 'cascade' }),
+  locale: localeEnum('locale').notNull(),
+  symptomText: text('symptom_text').notNull(),
+}, (table) => [
+  primaryKey({ columns: [table.symptomId, table.locale] }),
+  index('idx_symptom_translations_locale').on(table.locale),
 ]);
 
 // STI_SYMPTOM junction
@@ -94,6 +129,15 @@ export const transmission = pgTable('transmission', {
   index('idx_transmission_text').on(table.transmissionText),
 ]);
 
+export const transmissionTranslations = pgTable('transmission_translations', {
+  transmissionId: integer('transmission_id').notNull().references(() => transmission.transmissionId, { onDelete: 'cascade' }),
+  locale: localeEnum('locale').notNull(),
+  transmissionText: text('transmission_text').notNull(),
+}, (table) => [
+  primaryKey({ columns: [table.transmissionId, table.locale] }),
+  index('idx_transmission_translations_locale').on(table.locale),
+]);
+
 // STI_TRANSMISSION junction
 export const stiTransmission = pgTable('sti_transmission', {
   stiId: integer('sti_id').notNull().references(() => sti.stiId, { onDelete: 'cascade' }),
@@ -112,6 +156,15 @@ export const healthEffect = pgTable('health_effect', {
   index('idx_health_effect_text').on(table.healthEffectText),
 ]);
 
+export const healthEffectTranslations = pgTable('health_effect_translations', {
+  healthEffectId: integer('health_effect_id').notNull().references(() => healthEffect.healthEffectId, { onDelete: 'cascade' }),
+  locale: localeEnum('locale').notNull(),
+  healthEffectText: text('health_effect_text').notNull(),
+}, (table) => [
+  primaryKey({ columns: [table.healthEffectId, table.locale] }),
+  index('idx_health_effect_translations_locale').on(table.locale),
+]);
+
 // STI_HEALTH_EFFECT junction
 export const stiHealthEffect = pgTable('sti_health_effect', {
   stiId: integer('sti_id').notNull().references(() => sti.stiId, { onDelete: 'cascade' }),
@@ -128,6 +181,15 @@ export const prevention = pgTable('prevention', {
   preventionText: text('prevention_text').notNull(),
 }, (table) => [
   index('idx_prevention_text').on(table.preventionText),
+]);
+
+export const preventionTranslations = pgTable('prevention_translations', {
+  preventionId: integer('prevention_id').notNull().references(() => prevention.preventionId, { onDelete: 'cascade' }),
+  locale: localeEnum('locale').notNull(),
+  preventionText: text('prevention_text').notNull(),
+}, (table) => [
+  primaryKey({ columns: [table.preventionId, table.locale] }),
+  index('idx_prevention_translations_locale').on(table.locale),
 ]);
 
 // STI_PREVENTION junction
@@ -168,6 +230,16 @@ export const quizQuestions = pgTable('quiz_questions', {
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 }, (table) => [
   index('idx_quiz_questions_category').on(table.category),
+]);
+
+export const quizQuestionTranslations = pgTable('quiz_question_translations', {
+  questionId: integer('question_id').notNull().references(() => quizQuestions.id, { onDelete: 'cascade' }),
+  locale: localeEnum('locale').notNull(),
+  statement: text('statement').notNull(),
+  explanation: text('explanation').notNull(),
+}, (table) => [
+  primaryKey({ columns: [table.questionId, table.locale] }),
+  index('idx_quiz_question_translations_locale').on(table.locale),
 ]);
 
 // Quiz Leaderboard Stats Table - Aggregated stats per nickname
