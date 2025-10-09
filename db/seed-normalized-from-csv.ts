@@ -14,6 +14,24 @@ type CacheMap = Map<string, number>;
 type SymptomKey = 'symptoms_common' | 'symptoms_women' | 'symptoms_men' | 'symptoms_general';
 type SymptomCategory = 'common' | 'women' | 'men' | 'general';
 
+type ColumnKey =
+  | 'name'
+  | 'type'
+  | 'severity'
+  | 'treatability'
+  | 'symptoms_common'
+  | 'symptoms_women'
+  | 'symptoms_men'
+  | 'symptoms_general'
+  | 'transmission'
+  | 'health_effects'
+  | 'prevention'
+  | 'treatment'
+  | 'malaysian_context';
+
+type TranslationColumnMap = Record<ColumnKey, string>;
+type LocaleKey = 'ms' | 'zh';
+
 type SqlClient = ReturnType<typeof postgres>;
 
 const csvParseLine = (line: string): string[] => {
@@ -179,6 +197,7 @@ const main = async (): Promise<void> => {
       prevention: columnIndex('prevention'),
     } satisfies Record<string, number>;
 
+    const englishRowData: { stiId: number; row: string[] }[] = [];
     const caches: Record<'symptom' | 'transmission' | 'health_effect' | 'prevention', CacheMap> = {
       symptom: new Map(),
       transmission: new Map(),
@@ -221,6 +240,8 @@ const main = async (): Promise<void> => {
         stiId = inserted[0].sti_id;
         stiInserted += 1;
       }
+
+      englishRowData.push({ stiId, row });
 
       const linkSymptoms = async (key: SymptomKey, category: SymptomCategory) => {
         const columnValue = row[idxs[key]] ?? '';
@@ -280,6 +301,233 @@ const main = async (): Promise<void> => {
     }
 
     console.log(`STI rows inserted/updated: ${stiInserted} new, ${stiRows.length - stiInserted} existing`);
+
+    const translationConfigs: { locale: LocaleKey; fileName: string; columns: TranslationColumnMap }[] = [
+      {
+        locale: 'ms',
+        fileName: 'sti_data_ms.csv',
+        columns: {
+          name: 'nama',
+          type: 'jenis',
+          severity: 'keparahan',
+          treatability: 'kebolehrawatan',
+          symptoms_common: 'gejala_umum',
+          symptoms_women: 'gejala_wanita',
+          symptoms_men: 'gejala_lelaki',
+          symptoms_general: 'gejala_umum_lain',
+          transmission: 'cara_jangkitan',
+          health_effects: 'kesan_kesihatan',
+          prevention: 'pencegahan',
+          treatment: 'rawatan',
+          malaysian_context: 'konteks_malaysia',
+        },
+      },
+      {
+        locale: 'zh',
+        fileName: 'sti_data_zh.csv',
+        columns: {
+          name: '名称',
+          type: '类型',
+          severity: '严重程度',
+          treatability: '可治疗性',
+          symptoms_common: '常见症状',
+          symptoms_women: '女性症状',
+          symptoms_men: '男性症状',
+          symptoms_general: '全身症状',
+          transmission: '传播方式',
+          health_effects: '健康影响',
+          prevention: '预防',
+          treatment: '治疗',
+          malaysian_context: '马来西亚背景',
+        },
+      },
+    ];
+
+    for (const config of translationConfigs) {
+      const translationPath = path.resolve('db', 'data', config.fileName);
+      if (!fs.existsSync(translationPath)) {
+        console.warn(`[${config.locale}] Translation file not found at ${translationPath}, skipping.`);
+        continue;
+      }
+
+      const { headers: translationHeaders, rows: translationRows } = parseCSV(translationPath);
+      if (translationRows.length === 0) {
+        console.warn(`[${config.locale}] No rows found in ${config.fileName}, skipping.`);
+        continue;
+      }
+
+      const translationIdx = {} as Record<ColumnKey, number>;
+      for (const key of Object.keys(config.columns) as ColumnKey[]) {
+        const headerName = config.columns[key];
+        const index = translationHeaders.indexOf(headerName);
+        if (index === -1) {
+          throw new Error(`[${config.locale}] Column not found in ${config.fileName}: ${headerName}`);
+        }
+        translationIdx[key] = index;
+      }
+
+      if (translationRows.length !== englishRowData.length) {
+        console.warn(
+          `[${config.locale}] Row count mismatch between English and ${config.fileName}: en=${englishRowData.length}, locale=${translationRows.length}. Proceeding with minimum.`,
+        );
+      }
+
+      const rowLimit = Math.min(englishRowData.length, translationRows.length);
+      let stiTranslationsProcessed = 0;
+
+      const upsertDictionaryTranslations = async (
+        englishValues: string[],
+        translationValues: string[],
+        cache: CacheMap,
+        table: string,
+        idColumn: string,
+        textColumn: string,
+        stiId: number,
+      ) => {
+        const englishCount = englishValues.length;
+        const translationCount = translationValues.length;
+        if (englishCount !== translationCount && (englishCount > 0 || translationCount > 0)) {
+          console.warn(
+            `[${config.locale}] ${table} entry count mismatch for STI ID ${stiId}: en=${englishCount}, locale=${translationCount}`,
+          );
+        }
+
+        const count = Math.min(englishCount, translationCount);
+        for (let idx = 0; idx < count; idx++) {
+          const englishValue = englishValues[idx];
+          const translationValue = translationValues[idx];
+          if (!englishValue || !translationValue) {
+            continue;
+          }
+          const cacheKey = normKey(englishValue);
+          const dictionaryId = cache.get(cacheKey);
+          if (dictionaryId === undefined) {
+            console.warn(
+              `[${config.locale}] Missing dictionary id for ${table} value "${englishValue}" (STI ID ${stiId})`,
+            );
+            continue;
+          }
+
+          await sql`
+            insert into ${sql(table)} (${sql(idColumn)}, locale, ${sql(textColumn)})
+            values (${dictionaryId}, ${config.locale}, ${translationValue})
+            on conflict (${sql(idColumn)}, locale) do update
+            set ${sql(textColumn)} = excluded.${sql(textColumn)}
+          `;
+        }
+      };
+
+      for (let rowIndex = 0; rowIndex < rowLimit; rowIndex++) {
+        const englishRecord = englishRowData[rowIndex];
+        const translationRow = translationRows[rowIndex];
+
+        const name = translationRow[translationIdx.name] ?? '';
+        const type = translationRow[translationIdx.type] ?? '';
+        const severity = translationRow[translationIdx.severity] ?? '';
+        const treatability = translationRow[translationIdx.treatability] ?? '';
+        const treatment = translationRow[translationIdx.treatment] ?? '';
+        const malaysianContext = translationRow[translationIdx.malaysian_context] ?? '';
+
+        await sql`
+          insert into sti_translations (sti_id, locale, name, type, severity, treatability, treatment, malaysian_context)
+          values (${englishRecord.stiId}, ${config.locale}, ${name}, ${type}, ${severity}, ${treatability}, ${treatment}, ${malaysianContext})
+          on conflict (sti_id, locale) do update
+          set name = excluded.name,
+              type = excluded.type,
+              severity = excluded.severity,
+              treatability = excluded.treatability,
+              treatment = excluded.treatment,
+              malaysian_context = excluded.malaysian_context
+        `;
+
+        const englishCommon = parseList(englishRecord.row[idxs.symptoms_common]);
+        const englishWomen = parseList(englishRecord.row[idxs.symptoms_women]);
+        const englishMen = parseList(englishRecord.row[idxs.symptoms_men]);
+        const englishGeneral = parseList(englishRecord.row[idxs.symptoms_general]);
+
+        const translationCommon = parseList(translationRow[translationIdx.symptoms_common]);
+        const translationWomen = parseList(translationRow[translationIdx.symptoms_women]);
+        const translationMen = parseList(translationRow[translationIdx.symptoms_men]);
+        const translationGeneral = parseList(translationRow[translationIdx.symptoms_general]);
+
+        await upsertDictionaryTranslations(
+          englishCommon,
+          translationCommon,
+          caches.symptom,
+          'symptom_translations',
+          'symptom_id',
+          'symptom_text',
+          englishRecord.stiId,
+        );
+        await upsertDictionaryTranslations(
+          englishWomen,
+          translationWomen,
+          caches.symptom,
+          'symptom_translations',
+          'symptom_id',
+          'symptom_text',
+          englishRecord.stiId,
+        );
+        await upsertDictionaryTranslations(
+          englishMen,
+          translationMen,
+          caches.symptom,
+          'symptom_translations',
+          'symptom_id',
+          'symptom_text',
+          englishRecord.stiId,
+        );
+        await upsertDictionaryTranslations(
+          englishGeneral,
+          translationGeneral,
+          caches.symptom,
+          'symptom_translations',
+          'symptom_id',
+          'symptom_text',
+          englishRecord.stiId,
+        );
+
+        const englishTransmission = parseList(englishRecord.row[idxs.transmission]);
+        const translationTransmission = parseList(translationRow[translationIdx.transmission]);
+        await upsertDictionaryTranslations(
+          englishTransmission,
+          translationTransmission,
+          caches.transmission,
+          'transmission_translations',
+          'transmission_id',
+          'transmission_text',
+          englishRecord.stiId,
+        );
+
+        const englishHealthEffects = parseList(englishRecord.row[idxs.health_effects]);
+        const translationHealthEffects = parseList(translationRow[translationIdx.health_effects]);
+        await upsertDictionaryTranslations(
+          englishHealthEffects,
+          translationHealthEffects,
+          caches.health_effect,
+          'health_effect_translations',
+          'health_effect_id',
+          'health_effect_text',
+          englishRecord.stiId,
+        );
+
+        const englishPrevention = parseList(englishRecord.row[idxs.prevention]);
+        const translationPrevention = parseList(translationRow[translationIdx.prevention]);
+        await upsertDictionaryTranslations(
+          englishPrevention,
+          translationPrevention,
+          caches.prevention,
+          'prevention_translations',
+          'prevention_id',
+          'prevention_text',
+          englishRecord.stiId,
+        );
+
+        stiTranslationsProcessed += 1;
+      }
+
+      console.log(`[${config.locale}] STI translations processed: ${stiTranslationsProcessed}/${rowLimit}`);
+    }
 
     const stiRowsDb = await sql<{ sti_id: number; name: string }[]>`
       select sti_id, name from sti
