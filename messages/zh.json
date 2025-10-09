@@ -114,11 +114,13 @@
       },
       "mapper": {
         "title": "诊所地图",
-        "description": "查找附近的性健康诊所与检测中心，并查看隐私评分。"
+        "description": "查找附近的性健康诊所与检测中心，并查看隐私评分。",
+        "button": "查找诊所"
       },
       "simulator": {
         "title": "对话模拟器",
-        "description": "在安全环境中练习与医护人员讨论性健康话题。"
+        "description": "在安全环境中练习与医护人员讨论性健康话题。",
+        "button": "启动模拟器"
       }
     },
     "final": {
@@ -216,24 +218,176 @@
     },
     "sections": {
       "learning": "学习",
+      "hub": "枢纽",
       "support": "支持",
       "contact": "联系我们"
     },
-      "links": {
-        "stiBasics": "STI 基础",
-        "prevention": "预防",
-        "livingWell": "与 STI 健康相处",
-        "quiz": "互动测验",
-        "privateChat": "私密 AI 聊天",
-        "aboutAi": "关于 Safhira AI",
-        "prevalence": "流行数据"
-      },
+    "links": {
+      "stiBasics": "STI 基础",
+      "prevention": "预防",
+      "livingWell": "与 STI 健康相处",
+      "quiz": "互动测验",
+      "simulator": "模拟器",
+      "findHealthcare": "查找医疗保健",
+      "privateChat": "私密 AI 聊天",
+      "aboutAi": "关于 Safhira AI",
+      "prevalence": "流行数据"
+    },
     "disclaimer": {
       "title": "重要声明",
       "text": "本网站信息仅供教育用途，不可替代专业医疗建议。如需诊断和治疗，请咨询医生。"
     }
   }
   ,
+  "PrivacyPolicy": {
+    "meta": {
+      "updated": "最后更新：{date}"
+    },
+    "intro": {
+      "title": "我们的隐私承诺",
+      "paragraphs": [
+        "Safhira（“我们”或“本平台”）致力于保护寻求精准、无污名性与生殖健康资讯的青少年隐私。",
+        "本隐私政策说明我们在你访问网站、使用工具或与 Safhira AI 互动时如何收集、使用、披露与保护信息。请仔细阅读，以了解你的权利与我们的责任。"
+      ]
+    },
+    "toc": {
+      "title": "本政策内容",
+      "description": "快速跳转到你最关心的部分。",
+      "items": [
+        {"id": "info-we-collect", "label": "我们收集的信息"},
+        {"id": "use-of-information", "label": "我们如何使用信息"},
+        {"id": "cookies", "label": "Cookie 与本地存储"},
+        {"id": "ai-conversations", "label": "Safhira AI 对话"},
+        {"id": "data-storage", "label": "数据存储与跨境传输"},
+        {"id": "information-sharing", "label": "信息共享"},
+        {"id": "your-rights", "label": "你的权利与选择"},
+        {"id": "data-retention", "label": "数据保留"},
+        {"id": "security", "label": "安全"},
+        {"id": "third-party", "label": "第三方资源"},
+        {"id": "young-people", "label": "儿童与青少年"},
+        {"id": "changes", "label": "政策变更"},
+        {"id": "contact", "label": "联系我们"}
+      ]
+    },
+    "sections": {
+      "infoWeCollect": {
+        "title": "1. 我们收集的信息",
+        "summary": "Safhira 仅收集提供服务所需的最低限度个人数据。",
+        "groups": [
+          {
+            "title": "a. 你主动提供的信息",
+            "items": [
+              {
+                "name": "消息与提问",
+                "description": "当你与 Safhira AI 聊天或提交表单时，我们会接收你输入的文字，以便回应你的需求。"
+              },
+              {
+                "name": "反馈与问卷回复",
+                "description": "当你提供反馈、报告问题，或登记参与用户研究时，我们会收集你提交的内容，包括自愿提供的联系方式。"
+              }
+            ]
+          },
+          {
+            "title": "b. 自动收集的信息",
+            "items": [
+              {
+                "name": "使用数据",
+                "description": "我们收集有限且汇总的分析数据（例如页面浏览量或功能使用次数），以了解平台使用情况并优化体验。这些数据不会直接识别个人。"
+              },
+              {
+                "name": "技术数据",
+                "description": "我们可能记录浏览器或设备发送的标准技术信息，如 IP 地址、设备类型、浏览器版本和操作系统。若收集到 IP 地址，我们会尽快截短或进行假名化处理。"
+              }
+            ]
+          },
+          {
+            "title": "c. 推断或上下文信息",
+            "description": "为确保对话安全且贴近需求，Safhira AI 可能生成会话标签或安全监测信号等元数据，帮助我们发现滥用行为、执行安全政策，并改进内容品质。"
+          }
+        ]
+      },
+      "useOfInformation": {
+        "title": "2. 我们如何使用信息",
+        "items": [
+          "提供核心功能，包括学习枢纽、STI 资源与 AI 聊天。",
+          "在同一会话内提供个性化且符合语境的回应。",
+          "监控安全、执行使用规范并防止滥用。",
+          "分析汇总使用趋势，以优化性能与可访问性。",
+          "当你联系我们时，传达服务更新、回复咨询或提供支援。"
+        ]
+      },
+      "cookies": {
+        "title": "3. Cookie 与类似技术",
+        "body": "Safhira 目前仅在必要时使用必要型 cookie 与本地存储，以维持会话状态、语言偏好与安全性。我们不使用广告或行为追踪像素。若未来引入额外 cookie，我们会更新本政策并提供相应控件。"
+      },
+      "aiConversations": {
+        "title": "4. Safhira AI 对话",
+        "body": "Safhira AI 的对话可能由受信任的技术提供商处理，仅用于生成回应、应用安全过滤及提升模型表现。我们会自动移除或假名化对话日志中识别到的个人标识，并只在运营、安全或改进服务所需的期限内保留内容。"
+      },
+      "dataStorage": {
+        "title": "5. 数据存储与跨境传输",
+        "body": "Safhira 将数据存放在安全的基础设施上，可能位于你的居住国家之外。无论数据在何处处理，我们都会依循 ISO/IEC 27001、GDPR 及马来西亚 PDPA 原则，采用技术与组织措施，防止未授权的访问、披露或遗失。"
+      },
+      "informationSharing": {
+        "title": "6. 信息共享",
+        "body": "我们不会出售、出租或交换你的个人信息。我们仅可能与以下对象共享有限数据：",
+        "items": [
+          {
+            "name": "服务提供商",
+            "description": "负责托管基础设施、提供分析或支持 AI 处理的供应商。这些合作伙伴受保密义务约束，只会按照我们的指示处理数据。"
+          },
+          {
+            "name": "教育与医疗合作伙伴",
+            "description": "我们可能与合作方分享汇总且匿名化的洞见，以改进性健康教育资源。"
+          },
+          {
+            "name": "法律或安全要求",
+            "description": "若法律要求，或为保护用户及公众的权利、安全与福祉，我们可能披露相关信息。"
+          }
+        ]
+      },
+      "yourRights": {
+        "title": "7. 你的权利与选择",
+        "body": "根据你所处的司法管辖区，你可能享有以下权利：",
+        "items": [
+          "访问、更正或删除你提供的个人信息。",
+          "反对或限制某些处理活动。",
+          "在技术可行的情况下，申请以可携带格式导出数据。",
+          "在处理基于同意时，撤回你的同意。"
+        ],
+        "footer": "若要行使这些权利，请使用下方方式联系我们。我们可能会要求你验证身份后再履行请求。若出于法律、安全或营运理由必须保留数据，部分请求可能无法完全执行。"
+      },
+      "dataRetention": {
+        "title": "8. 数据保留",
+        "body": "我们只会在实现服务、符合法律义务、解决争议与执行协议所需期间保留个人数据。用于安全或质量审查的 AI 对话片段通常不超过 30 天，除非法律或调查需求需要更长时间。"
+      },
+      "security": {
+        "title": "9. 安全",
+        "body": "Safhira 采用传输加密、访问控制与定期安全评估来保护数据。尽管我们努力保障你的信息，但任何传输或存储方式都无法百分之百安全。请妥善保管你的设备，并避免在聊天或表单中分享敏感个人信息。"
+      },
+      "thirdParty": {
+        "title": "10. 第三方链接与资源",
+        "body": "我们的平台可能链接至外部网站、诊所或教育资源。我们无法控制第三方的隐私做法，建议你在通过 Safhira 访问其他服务时查阅其隐私政策。"
+      },
+      "youngPeople": {
+        "title": "11. 儿童与青少年",
+        "body": "Safhira 面向希望学习性健康知识的青少年与年轻人。我们建议 18 岁以下用户在可信任的成年人或监护人陪同下使用平台。我们不会有意收集 13 岁以下儿童的个人信息，若你认为我们收集了此类信息，请立即联系我们以删除。"
+      },
+      "changes": {
+        "title": "12. 政策变更",
+        "body": "我们可能因新增功能、法律要求或安全改进而更新本隐私政策。若有重大变更，我们会更新“最后更新”日期，并在必要时提供额外通知。"
+      },
+      "contact": {
+        "title": "13. 联系我们",
+        "body": "若你对本隐私政策有任何问题、疑虑或请求，请通过以下方式联系：",
+        "contacts": [
+          {"label": "电子邮件", "value": "info@safhira.vercel.app", "href": "mailto:info@safhira.vercel.app"},
+          {"label": "网站", "value": "www.safhira.vercel.app", "href": "https://www.safhira.vercel.app"}
+        ],
+        "footer": "我们会尽力在 14 天内回复隐私相关咨询。感谢你信任 Safhira，陪伴你进行安全、以证据为本的性健康学习。"
+      }
+    }
+  },
   "QuizPage": {
     "hero": {
       "badge": "互动且具教育性",

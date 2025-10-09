@@ -97,7 +97,7 @@ export function FeaturesSection() {
       textColor: 'text-orange-700 dark:text-orange-300',
       iconColor: 'text-orange-500',
       action: () => router.push('/find-healthcare'),
-      buttonText: t('features.learnMore')
+      buttonText: t('features.mapper.button')
     },
     {
       id: 'education',
@@ -124,23 +124,23 @@ export function FeaturesSection() {
       iconColor: 'text-pink-500',
       action: () => router.push('/quiz'),
       buttonText: t('features.quiz.button')
-    }
-  ];
-
-  const upcomingFeatures: UpcomingFeature[] = [
+    },
     {
       id: 'simulator',
       title: t('features.simulator.title'),
       description: t('features.simulator.description'),
       icon: Monitor,
       color: 'from-indigo-500 to-indigo-600 dark:from-indigo-400 dark:to-indigo-500',
-      bgColor: 'bg-gray-100 dark:bg-gray-700/50',
-      borderColor: 'border-gray-300 dark:border-gray-600',
-      textColor: 'text-gray-600 dark:text-gray-300',
-      iconColor: 'text-gray-500',
-      comingSoon: true
+      bgColor: 'bg-indigo-50 dark:bg-indigo-900/20',
+      borderColor: 'border-indigo-200 dark:border-indigo-800',
+      textColor: 'text-indigo-700 dark:text-indigo-300',
+      iconColor: 'text-indigo-500',
+      action: () => router.push('/simulator'),
+      buttonText: t('features.simulator.button')
     }
   ];
+
+  const upcomingFeatures: UpcomingFeature[] = [];
 
   const allFeatures: Feature[] = [...availableFeatures, ...upcomingFeatures];
 
