@@ -64,6 +64,32 @@ export function createGameConfig(): Phaser.Types.Core.GameConfig {
     dom: {
       createContainer: true,
     },
+    callbacks: {
+      postBoot: function (game: Phaser.Game) {
+        // Prevent page scrolling when touching the game canvas
+        const canvas = game.canvas;
+        if (canvas) {
+          canvas.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+          }, { passive: false });
+
+          canvas.addEventListener('touchmove', function(e) {
+            e.preventDefault();
+          }, { passive: false });
+
+          canvas.addEventListener('touchend', function(e) {
+            e.preventDefault();
+          }, { passive: false });
+        }
+
+        // Also prevent scrolling on the game container
+        const container = document.getElementById('phaser-simulator-container');
+        if (container) {
+          container.style.touchAction = 'none';
+          container.style.overflowY = 'hidden';
+        }
+      }
+    },
   };
 }
 

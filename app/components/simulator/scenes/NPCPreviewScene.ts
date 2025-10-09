@@ -34,14 +34,54 @@ export class NPCPreviewScene extends Phaser.Scene {
   create() {
     const { width, height } = this.cameras.main;
 
-    // Add dark overlay
-    const overlay = this.add.rectangle(width / 2, height / 2, width, height, 0x000000, 0.8);
-    overlay.setDepth(0);
+    // Add background image with smart scaling (same as InstructionScene)
+    const background = this.add.image(width / 2, height / 2, 'simulator-background');
+    const imageWidth = background.width;
+    const imageHeight = background.height;
+
+    // Calculate scale ratios
+    const scaleX = width / imageWidth;
+    const scaleY = height / imageHeight;
+
+    // Smart scaling logic
+    if (width < imageWidth || height < imageHeight) {
+      background.setScale(1.0);
+
+      // Ensure the image covers the screen by using the larger scale if needed
+      const minScale = Math.max(scaleX, scaleY);
+      if (minScale > 1.0) {
+        background.setScale(minScale);
+      }
+
+      // Focus towards bottom center of image
+      const scaledImageHeight = background.height * background.scaleY;
+      const excessHeight = scaledImageHeight - height;
+      if (excessHeight > 0) {
+        background.y = (height / 2) - (excessHeight * 0.3);
+      }
+    } else {
+      // Screen is bigger than image - resize to fill
+      const fillScale = Math.max(scaleX, scaleY);
+      background.setScale(fillScale);
+
+      const scaledImageHeight = background.height * fillScale;
+      const excessHeight = scaledImageHeight - height;
+      if (excessHeight > 0) {
+        background.y = (height / 2) - (excessHeight * 0.3);
+      }
+    }
+
+    // Add semi-transparent overlay for better text readability
+    const overlay = this.add.rectangle(width / 2, height / 2, width, height, 0x000000, 0.6);
+    overlay.setDepth(1);
 
     // Create responsive font sizes
-    const titleFontSize = width < 600 ? '24px' : width < 800 ? '28px' : '32px';
-    const bodyFontSize = width < 600 ? '16px' : width < 800 ? '18px' : '20px';
-    const buttonFontSize = width < 600 ? '16px' : '20px';
+    const isSmallScreen = width < 600;
+    const isMediumScreen = width >= 600 && width < 800;
+    const titleFontSize = isSmallScreen ? '24px' : isMediumScreen  ? '28px' : '32px';
+    const subtitleFontSize = isSmallScreen ? '14px' : isMediumScreen ? '16px' : '20px';
+    const bodyFontSize = isSmallScreen ? '20px' : '28px';
+    const buttonFontSize = isSmallScreen ? '16px' : '20px';
 
     // Create main container
     const containerWidth = Math.min(width * 0.9, 600);
@@ -55,42 +95,43 @@ export class NPCPreviewScene extends Phaser.Scene {
       containerY,
       containerWidth,
       containerHeight,
-      0x2c3e50
+      0xffffff,
+      0
     );
-    container.setStrokeStyle(4, 0x7f2be6);
-    container.setDepth(1);
+    container.setStrokeStyle(4, 0xAD6BFF);
+    container.setDepth(2);
 
     // Title
-    const title = this.add.text(containerX, containerY - containerHeight/2 + 60, 'CONVERSATION PREVIEW', {
+    const title = this.add.text(containerX, containerY - containerHeight/2 + 60, 'NPC PREVIEW', {
       fontSize: titleFontSize,
-      color: '#7f2be6',
+      color: '#ffffff',
       fontFamily: '"Press Start 2P", monospace'
     });
     title.setOrigin(0.5);
-    title.setDepth(2);
+    title.setDepth(3);
 
     // NPC Portrait (if available)
-    const npcSprite = this.add.sprite(containerX, containerY - 80, `simulator-${this.playerGender}-npc-bar`);
+    const npcSprite = this.add.sprite(containerX, containerY - 100, `simulator-${this.playerGender}-npc-bar`);
     npcSprite.setScale(2);
-    npcSprite.setDepth(2);
+    npcSprite.setDepth(3);
 
     // NPC Name
-    const npcName = this.add.text(containerX, containerY - 20, this.scenario.npc.name, {
-      fontSize: '28px',
+    const npcName = this.add.text(containerX, containerY - 40, this.scenario.npc.name, {
+      fontSize: titleFontSize,
       color: '#ffffff',
       fontFamily: '"Press Start 2P", monospace'
     });
     npcName.setOrigin(0.5);
-    npcName.setDepth(2);
+    npcName.setDepth(3);
 
     // NPC Role
-    const npcRole = this.add.text(containerX, containerY + 10, this.scenario.npc.role, {
-      fontSize: '16px',
-      color: '#bdc3c7',
+    const npcRole = this.add.text(containerX, containerY - 10, this.scenario.npc.role, {
+      fontSize: subtitleFontSize,
+      color: '#AD6BFF',
       fontFamily: '"Press Start 2P", monospace'
     });
     npcRole.setOrigin(0.5);
-    npcRole.setDepth(2);
+    npcRole.setDepth(3);
 
     // Scenario Description
     const description = this.add.text(
@@ -98,21 +139,21 @@ export class NPCPreviewScene extends Phaser.Scene {
       containerY + 50,
       this.scenario.description,
       {
-        fontSize: '14px',
+        fontSize: bodyFontSize,
         color: '#ecf0f1',
-        fontFamily: 'Arial, sans-serif',
+        fontFamily: '"VT323", sans-serif',
         align: 'center',
         wordWrap: { width: containerWidth - 60 }
       }
     );
     description.setOrigin(0.5);
-    description.setDepth(2);
+    description.setDepth(3);
 
     // Buttons
     const startButton = this.add.text(
-      containerX - 80,
-      containerY + containerHeight/2 - 60,
-      'START CONVERSATION',
+      containerX,
+      containerY + 130,
+      'START CHAT',
       {
         fontSize: buttonFontSize,
         color: '#ffffff',
@@ -120,11 +161,11 @@ export class NPCPreviewScene extends Phaser.Scene {
       }
     );
     startButton.setOrigin(0.5);
-    startButton.setDepth(2);
+    startButton.setDepth(3);
 
     const cancelButton = this.add.text(
-      containerX + 80,
-      containerY + containerHeight/2 - 60,
+      containerX,
+      containerY + 180,
       'CANCEL',
       {
         fontSize: buttonFontSize,
@@ -133,19 +174,19 @@ export class NPCPreviewScene extends Phaser.Scene {
       }
     );
     cancelButton.setOrigin(0.5);
-    cancelButton.setDepth(2);
+    cancelButton.setDepth(3);
 
     // Store menu items
     this.menuItems = [startButton, cancelButton];
 
     // Create selector arrow
     this.selector = this.add.text(0, 0, '>', {
-      fontSize: '24px',
-      color: '#7f2be6',
+      fontSize: titleFontSize,
+      color: '#AD6BFF',
       fontFamily: '"Press Start 2P", monospace'
     });
     this.selector.setOrigin(0.5);
-    this.selector.setDepth(10);
+    this.selector.setDepth(4);
 
     // Setup navigation
     this.setupNavigation();
@@ -206,12 +247,12 @@ export class NPCPreviewScene extends Phaser.Scene {
     const selectedItem = this.menuItems[this.selectedIndex];
     // Position selector to the left of the text
     const textBounds = selectedItem.getBounds();
-    this.selector.setPosition(textBounds.left - 30, selectedItem.y);
+    this.selector.setPosition(textBounds.left - 20, selectedItem.y);
 
     // Update text colors to show selection
     this.menuItems.forEach((item, index) => {
       if (index === this.selectedIndex) {
-        item.setStyle({ color: '#7f2be6' });
+        item.setStyle({ color: '#AD6BFF' });
       } else {
         item.setStyle({ color: '#ffffff' });
       }

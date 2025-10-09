@@ -59,8 +59,9 @@ export class TitleScene extends Phaser.Scene {
     }
 
     // Create responsive font sizes based on screen width
-    const titleFontSize = width < 600 ? '48px' : '64px';
+    const titleFontSize = width < 600 ? '42px' : '64px';
     const subtitleFontSize = width < 600 ? '20px' : '24px';
+    const buttonFontSize = width < 600 ? '16px' : '20px';
     const shadowOffset = width < 600 ? 6 : 8;
     const strokeThickness = width < 600 ? 4 : 6;
     const subtitleYOffset = width < 600 ? 0.33 : 0.35;
@@ -96,14 +97,14 @@ export class TitleScene extends Phaser.Scene {
 
     // Create menu items
     this.startButton = this.add.text(width / 2, height * 0.5, 'START GAME', {
-      fontSize: '20px',
+      fontSize: buttonFontSize,
       color: '#ffffff',
       fontFamily: '"Press Start 2P", monospace'
     });
     this.startButton.setOrigin(0.5);
 
     this.instructionButton = this.add.text(width / 2, height * 0.58, 'INSTRUCTIONS', {
-      fontSize: '20px',
+      fontSize: buttonFontSize,
       color: '#ffffff',
       fontFamily: '"Press Start 2P", monospace'
     });

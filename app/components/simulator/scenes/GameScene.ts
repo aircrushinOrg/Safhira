@@ -436,6 +436,12 @@ export class GameScene extends Phaser.Scene {
     // Set up collision between player and NPC
     this.physics.add.collider(this.player, sprite);
 
+    // Initially disable interactivity - will be enabled when player is near
+    // Add click/touch event to open NPCPreviewScene
+    sprite.on('pointerdown', () => {
+      this.openNPCPreview(data);
+    });
+
     // Start the NPC idle animation
     const animationKey = `npc-${this.playerGender}-idle`;
     sprite.play(animationKey);
@@ -483,6 +489,11 @@ export class GameScene extends Phaser.Scene {
     this.nearbyNPC = null;
 
     this.npcs.forEach(npcZone => {
+      // Safety check: ensure sprite is valid and active
+      if (!npcZone.sprite || !npcZone.sprite.active || !npcZone.sprite.scene) {
+        return;
+      }
+
       // Use the sprite's actual position instead of stored NPC data coordinates
       const distance = Phaser.Math.Distance.Between(
         playerX, playerY,
@@ -496,6 +507,13 @@ export class GameScene extends Phaser.Scene {
 
       if (isNear) {
         this.nearbyNPC = npcZone;
+        // Enable NPC interactivity when player is near (with safety check)
+        if (npcZone.sprite.input) {
+          npcZone.sprite.setInteractive({ useHandCursor: true });
+        } else {
+          // Re-enable interactivity if it was disabled
+          npcZone.sprite.setInteractive({ useHandCursor: true });
+        }
         if (!wasNear && npcZone.interactionIndicator) {
           npcZone.interactionIndicator.setVisible(true);
           // Restart the animation each time the player approaches
@@ -505,6 +523,10 @@ export class GameScene extends Phaser.Scene {
           }
         }
       } else {
+        // Disable NPC interactivity when player is not near (with safety check)
+        if (npcZone.sprite.input) {
+          npcZone.sprite.disableInteractive();
+        }
         if (wasNear && npcZone.interactionIndicator) {
           npcZone.interactionIndicator.setVisible(false);
         }
@@ -516,9 +538,13 @@ export class GameScene extends Phaser.Scene {
   private handleInteraction(): void {
     if (!this.nearbyNPC || !this.nearbyNPC.npc.isInteractive) return;
 
+    this.openNPCPreview(this.nearbyNPC.npc);
+  }
+
+  private openNPCPreview(npcData: NPCData): void {
     // Get the scenario template for this NPC
     const scenario = SCENARIO_TEMPLATES.find(template =>
-      template.id === this.nearbyNPC!.npc.scenarioId
+      template.id === npcData.scenarioId
     );
 
     if (!scenario) return;

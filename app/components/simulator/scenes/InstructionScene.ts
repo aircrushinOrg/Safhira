@@ -83,9 +83,6 @@ export class InstructionScene extends Phaser.Scene {
     this.selector.setOrigin(0.5);
     this.selector.setDepth(10); // Ensure selector appears on top
 
-    const selectorX = isSmallScreen ? width / 2 - 115 : width / 2 - 155;
-    this.selector.setPosition(selectorX, height * 0.88);
-
     titleText.setOrigin(0.5);
     titleText.setDepth(2);
 
@@ -94,6 +91,8 @@ export class InstructionScene extends Phaser.Scene {
     this.createMinimapSection(width, height, isSmallScreen, isMediumScreen);
 
     this.createNavigationButtons(width, height, isSmallScreen);
+    const selectorX = this.backButton.getBounds().left - 20;
+    this.selector.setPosition(selectorX, height * 0.88);
 
     this.setupKeyboardControls(isSmallScreen);
 
@@ -141,7 +140,12 @@ export class InstructionScene extends Phaser.Scene {
     });
     interactionTitle.setDepth(2);
 
-    const interactionText = '* Walk up to NPCs and press SPACE / ENTER to interact \n* Different NPCs have different scenarios';
+    let interactionText: string;
+    if (this.isTouchDevice) {
+      interactionText = '* Walk up to NPCs and tap on them to interact \n* Different NPCs have different scenarios';
+    } else {
+      interactionText = '* Walk up to NPCs and press SPACE / ENTER to interact \n* Different NPCs have different scenarios';
+    }
 
     const interactionInstructions = this.add.text(width * 0.1, height * 0.46, interactionText, {
       fontSize: textFontSize,
@@ -160,7 +164,7 @@ export class InstructionScene extends Phaser.Scene {
 
     const minimapTitle = this.add.text(width * 0.1, height * 0.62, 'MINIMAP', {
       fontSize: headerFontSize,
-      color: '#9b59b6',
+      color: '#AD6BFF',
       fontFamily: '"Press Start 2P", monospace'
     });
     minimapTitle.setDepth(2);
@@ -179,12 +183,11 @@ export class InstructionScene extends Phaser.Scene {
 
   private createNavigationButtons(width: number, height: number, isSmallScreen: boolean): void {
     // Back to Title button
-    const buttonFontSize = isSmallScreen ? '14px' : '20px';
+    const buttonFontSize = isSmallScreen ? '16px' : '20px';
 
     this.backButton = this.add.text(width / 2, height * 0.88, 'BACK TO TITLE', {
       fontSize: buttonFontSize,
       color: '#ffffff',
-      padding: { x: isSmallScreen ? 10 : 15, y: isSmallScreen ? 6 : 8 },
       fontFamily: '"Press Start 2P", monospace'
     });
     this.backButton.setOrigin(0.5);

@@ -29,7 +29,7 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
     id: "outside-bar-girl",
     label: "Party Pressure (Maya)",
     description:
-      "Resist peer pressure and practise assertive refusal skills when a friend encourages risky behaviour at a party that is happening later tonight",
+      "Resist peer pressure and practise assertive refusal skills when a friend encourages risky behaviour at a party",
     scenario: {
       id: "outside-bar-girl",
       title: "Party Pressure (Maya)",
@@ -49,7 +49,7 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
       goals:
         "Convince the player to act impulsively at the party\nReinforce that “everyone is doing it”\nFrame risk-taking as part of friendship and fun",
       tactics:
-        "Flattery and emotional appeal (“You’re too fun to sit this one out!”)\nFOMO pressure (“Come on! You'll be missing out!”)\nNormalisation of behaviour through social comparison",
+        "Flattery and emotional appeal (“You’re too fun to sit this one out!”)\nFOMO pressure (“Come on! You'll be missing out!”)\nNormalisation of behaviour through social comparison\nUse simple, relatable language to young adults ages (18-25) and avoid overly long sentences.",
       boundaries:
         "No explicit sexual descriptions\nNo illegal or non-consensual content\nRespect firm refusals after multiple attempts\nAvoid gender stereotyping or shaming",
     },
@@ -78,7 +78,7 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
       goals:
         "Encourage the player to pursue impulsive sexual behaviour\nConvince the player that taking risks builds confidence",
       tactics:
-        "Ego-stroking (“You’ve got this, don’t overthink it”)\nPeer comparison (“Everyone’s already paired up”)\nNormalisation (“It’s no big deal, just fun”)",
+        "Ego-stroking (“You’ve got this, don’t overthink it”)\nPeer comparison (“Everyone’s already paired up”)\nNormalisation (“It’s no big deal, just fun”)\nUse simple, relatable language to young adults ages (18-25) and avoid overly long sentences.",
       boundaries:
         "No explicit or coercive language\nNo gender stereotyping of masculinity\nRespects clear player refusal after repeated persuasion",
     },
@@ -107,7 +107,7 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
       goals:
         "Educate the player on female reproductive and sexual health\nClarify misconceptions about birth control, testing, and symptoms\nEncourage regular check-ups and open communication",
       tactics:
-        "Normalises conversation (“Many women come in with the same concerns.”)\nExplains female-specific testing (“We’ll take a simple swab — it’s quick and routine.”)\nDiscusses contraception options (“Are you currently on any birth control? We can review what suits you best.”)\nReassures about confidentiality and privacy (“Everything we talk about stays between us.”)",
+        "Normalises conversation (“Many women come in with the same concerns.”)\nExplains female-specific testing (“We’ll take a simple swab — it’s quick and routine.”)\nDiscusses contraception options (“Are you currently on any birth control? We can review what suits you best.”)\nReassures about confidentiality and privacy (“Everything we talk about stays between us.”)\nUse simple, relatable language to young adults ages (18-25) and avoid overly long sentences.",
       boundaries:
         "Professional, medically accurate tone\nNo explicit sexual or procedural detail\nAvoid moral judgment or stereotyping\nFocus on empowerment and informed choice",
     },
@@ -136,7 +136,7 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
       goals:
         "Demystify STI testing for men and reduce embarrassment\nReinforce preventive behaviours such as condom use and partner testing\nAddress myths around masculinity and sexual health",
       tactics:
-        "Direct reassurance (“Plenty of guys come in for this — it’s smart to get checked.”)\nExplains male-specific procedures (“We’ll just need a urine sample — no swabs today.”)\nAddresses performance stigma (“Testing doesn’t mean anything’s wrong; it means you care about your health.”)\nPromotes partner responsibility (“It’s good to remind your partner to test too — keeps both of you safe.”)",
+        "Direct reassurance (“Plenty of guys come in for this — it’s smart to get checked.”)\nExplains male-specific procedures (“We’ll just need a urine sample — no swabs today.”)\nAddresses performance stigma (“Testing doesn’t mean anything’s wrong; it means you care about your health.”)\nPromotes partner responsibility (“It’s good to remind your partner to test too — keeps both of you safe.”)\nUse simple, relatable language to young adults ages (18-25) and avoid overly long sentences.",
       boundaries:
         "Maintain clinical tone and respect\nNo explicit anatomical language\nAvoid humour that trivialises male sexual health\nAffirm that seeking care is responsible and mature",
     },
@@ -158,13 +158,13 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
     npc: {
       id: "partner-both-01",
       name: "Amir",
-      role: "Misguided romantic partner / classmate",
+      role: "Misguided Classmate",
       persona:
         "Friendly, confident, slightly over-assured; well-meaning but misinformed",
       goals:
         "Convince the player that risky practices are safe\nReinforce common sexual health myths (e.g., “pulling out works fine”)",
       tactics:
-        "Use of personal anecdotes (“My friends do it all the time”)\nOverconfidence to discourage questioning\nSeeks reassurance that his views are valid",
+        "Use of personal anecdotes (“My friends do it all the time”)\nOverconfidence to discourage questioning\nSeeks reassurance that his views are valid\nUse simple, relatable language to young adults ages (18-25) and avoid overly long sentences.",
       boundaries:
         "No explicit sexual descriptions\nAvoids promoting or depicting unsafe acts beyond discussion\nRespects educational correction and de-escalates once corrected",
     },
