@@ -302,6 +302,33 @@ const main = async (): Promise<void> => {
 
     console.log(`STI rows inserted/updated: ${stiInserted} new, ${stiRows.length - stiInserted} existing`);
 
+    const stateCsvPath = path.resolve('db', 'data', 'state.csv');
+    let englishStateNames: string[] = [];
+    const stateCache: CacheMap = new Map();
+    const stateIdByEnglish = new Map<string, number>();
+
+    if (fs.existsSync(stateCsvPath)) {
+      const { headers: stateHeaders, rows: stateRows } = parseCSV(stateCsvPath);
+      if (stateRows.length === 0) {
+        console.warn('No rows found in state.csv');
+      } else {
+        const stateNameIdx = stateHeaders.indexOf('state_name');
+        if (stateNameIdx === -1) {
+          throw new Error('Column not found in state.csv: state_name');
+        }
+        englishStateNames = stateRows.map((row) => row[stateNameIdx]).filter((name) => name && name.length > 0);
+
+        for (const name of englishStateNames) {
+          const stateId = await ensureId(sql, 'state', 'state_id', 'state_name', name, stateCache);
+          if (stateId !== null) {
+            stateIdByEnglish.set(normKey(name), stateId);
+          }
+        }
+      }
+    } else {
+      console.warn(`state.csv not found at ${stateCsvPath}. Skipping base state seeding.`);
+    }
+
     const translationConfigs: { locale: LocaleKey; fileName: string; columns: TranslationColumnMap }[] = [
       {
         locale: 'ms',
@@ -527,6 +554,71 @@ const main = async (): Promise<void> => {
       }
 
       console.log(`[${config.locale}] STI translations processed: ${stiTranslationsProcessed}/${rowLimit}`);
+    }
+
+    const stateTranslationConfigs: { locale: LocaleKey; fileName: string }[] = [
+      { locale: 'ms', fileName: 'state_ms.csv' },
+      { locale: 'zh', fileName: 'state_zh.csv' },
+    ];
+
+    for (const config of stateTranslationConfigs) {
+      const translationPath = path.resolve('db', 'data', config.fileName);
+      if (!fs.existsSync(translationPath)) {
+        console.warn(`[${config.locale}] State translation file not found at ${translationPath}, skipping.`);
+        continue;
+      }
+
+      const { headers: translationHeaders, rows: translationRows } = parseCSV(translationPath);
+      if (translationRows.length === 0) {
+        console.warn(`[${config.locale}] No rows found in ${config.fileName}, skipping.`);
+        continue;
+      }
+
+      const nameIdx = translationHeaders.indexOf('state_name');
+      if (nameIdx === -1) {
+        throw new Error(`[${config.locale}] Column not found in ${config.fileName}: state_name`);
+      }
+
+      if (englishStateNames.length === 0) {
+        console.warn(`[${config.locale}] English state names not available. Skipping state translations.`);
+        continue;
+      }
+
+      if (translationRows.length !== englishStateNames.length) {
+        console.warn(
+          `[${config.locale}] State row count mismatch: en=${englishStateNames.length}, locale=${translationRows.length}. Proceeding with minimum.`,
+        );
+      }
+
+      const rowCount = Math.min(englishStateNames.length, translationRows.length);
+      let processed = 0;
+
+      for (let idx = 0; idx < rowCount; idx++) {
+        const englishName = englishStateNames[idx];
+        const translationName = translationRows[idx][nameIdx];
+        if (!englishName || !translationName) {
+          continue;
+        }
+
+        const stateId = stateIdByEnglish.get(normKey(englishName));
+        if (!stateId) {
+          console.warn(
+            `[${config.locale}] Could not locate state id for English state "${englishName}". Skipping translation entry.`,
+          );
+          continue;
+        }
+
+        await sql`
+          insert into state_translations (state_id, locale, state_name)
+          values (${stateId}, ${config.locale}, ${translationName})
+          on conflict (state_id, locale) do update
+          set state_name = excluded.state_name
+        `;
+
+        processed += 1;
+      }
+
+      console.log(`[${config.locale}] State translations processed: ${processed}/${rowCount}`);
     }
 
     const stiRowsDb = await sql<{ sti_id: number; name: string }[]>`
