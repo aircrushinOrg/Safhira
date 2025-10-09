@@ -17,6 +17,7 @@ export const pathnames = {
   '/quiz': '/quiz',
   '/find-healthcare': '/find-healthcare',
   '/find-healthcare/[id]': '/find-healthcare/[id]',
+  '/simulator': '/simulator',
   '/living-well-with-sti': '/living-well-with-sti',
   '/living-well-with-sti/lifestyle': '/living-well-with-sti/lifestyle',
   '/living-well-with-sti/relationships': '/living-well-with-sti/relationships',

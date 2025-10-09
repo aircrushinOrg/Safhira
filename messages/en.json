@@ -113,11 +113,13 @@
       },
       "mapper": {
         "title": "Clinic Mapper",
-        "description": "Find nearby sexual health clinics and testing centers with privacy ratings."
+        "description": "Find nearby sexual health clinics and testing centers with privacy ratings.",
+        "button": "Find Clinics"
       },
       "simulator": {
         "title": "Conversation Simulator",
-        "description": "Practice discussing sexual health topics with healthcare providers in a safe environment."
+        "description": "Practice discussing sexual health topics with healthcare providers in a safe environment.",
+        "button": "Launch Simulator"
       }
     },
     "final": {
@@ -214,6 +216,7 @@
     },
     "sections": {
       "learning": "Learning",
+      "hub": "Hub",
       "support": "Support",
       "contact": "Contact Us"
     },
@@ -222,6 +225,8 @@
       "prevention": "Prevention",
       "livingWell": "Living Well with STI",
       "quiz": "Interactive Quiz",
+      "simulator": "Gamify Simulator",
+      "findHealthcare": "Find Healthcare",
       "privateChat": "Private AI Chat",
       "aboutAi": "About Safhira AI",
       "prevalence": "Prevalence Data"
@@ -229,6 +234,155 @@
     "disclaimer": {
       "title": "Important Disclaimer",
       "text": "Information on this website is for educational purposes only and is not a substitute for professional medical advice. Please consult a doctor for proper diagnosis and treatment."
+    }
+  },
+  "PrivacyPolicy": {
+    "meta": {
+      "updated": "Last updated: {date}"
+    },
+    "intro": {
+      "title": "Our Privacy Commitment",
+      "paragraphs": [
+        "Safhira (\"we\", \"us\", or \"our\") is committed to protecting the privacy of young people seeking accurate, stigma-free information about sexual and reproductive health.",
+        "This Privacy Policy explains how we collect, use, disclose, and safeguard information when you visit our website, use our tools, or interact with Safhira AI. Please read this policy carefully to understand your rights and our obligations."
+      ]
+    },
+    "toc": {
+      "title": "In This Policy",
+      "description": "Jump to the section that matters most to you.",
+      "items": [
+        {"id": "info-we-collect", "label": "Information We Collect"},
+        {"id": "use-of-information", "label": "How We Use Information"},
+        {"id": "cookies", "label": "Cookies & Local Storage"},
+        {"id": "ai-conversations", "label": "Safhira AI Conversations"},
+        {"id": "data-storage", "label": "Data Storage & Transfers"},
+        {"id": "information-sharing", "label": "Information Sharing"},
+        {"id": "your-rights", "label": "Your Rights & Choices"},
+        {"id": "data-retention", "label": "Data Retention"},
+        {"id": "security", "label": "Security"},
+        {"id": "third-party", "label": "Third-Party Resources"},
+        {"id": "young-people", "label": "Children & Young People"},
+        {"id": "changes", "label": "Changes to This Policy"},
+        {"id": "contact", "label": "Contact Us"}
+      ]
+    },
+    "sections": {
+      "infoWeCollect": {
+        "title": "1. Information We Collect",
+        "summary": "Safhira is designed to collect the minimum amount of personal data necessary to deliver the service.",
+        "groups": [
+          {
+            "title": "a. Information you choose to provide",
+            "items": [
+              {
+                "name": "Messages and prompts",
+                "description": "When you chat with Safhira AI or submit forms, we receive the text you provide so the service can respond to your request."
+              },
+              {
+                "name": "Feedback and survey responses",
+                "description": "If you share feedback, report an issue, or sign up to participate in user research, we collect the information you submit, including contact details when provided."
+              }
+            ]
+          },
+          {
+            "title": "b. Information collected automatically",
+            "items": [
+              {
+                "name": "Usage data",
+                "description": "We gather limited, aggregated analytics (for example, page views or feature usage counts) to understand how the platform is used and improve user experience. This data is processed without directly identifying individual users."
+              },
+              {
+                "name": "Technical data",
+                "description": "We may log standard technical details sent by your browser or device, such as IP address, device type, browser version, and operating system. When collected, IP addresses are truncated or pseudonymised as quickly as possible."
+              }
+            ]
+          },
+          {
+            "title": "c. Derived or contextual information",
+            "description": "To keep conversations safe and relevant, Safhira AI may generate metadata about your session, such as conversation tags or safety moderation signals. These signals help us detect misuse, enforce safety policies, and improve content quality."
+          }
+        ]
+      },
+      "useOfInformation": {
+        "title": "2. How We Use Information",
+        "items": [
+          "Provide core features, including the learning hub, STI resources, and AI chat.",
+          "Deliver personalised, context-aware responses within the same session.",
+          "Monitor safety, enforce acceptable use policies, and prevent abuse.",
+          "Analyse aggregated usage trends to enhance performance and accessibility.",
+          "Communicate service updates, respond to inquiries, or provide support when you contact us."
+        ]
+      },
+      "cookies": {
+        "title": "3. Cookies and Similar Technologies",
+        "body": "Safhira currently uses essential cookies and local storage only where needed to maintain session state, language preferences, and security. We do not run advertising or behavioural tracking pixels. If we introduce additional cookies in the future, we will update this policy and provide appropriate controls."
+      },
+      "aiConversations": {
+        "title": "4. Safhira AI Conversations",
+        "body": "Conversations with Safhira AI may be processed by trusted technology providers solely to generate responses, apply safety filters, and improve model performance. We automatically remove or pseudonymise any personal identifiers detected in conversation logs, and retain the content only for as long as required to operate, secure, and improve the service."
+      },
+      "dataStorage": {
+        "title": "5. Data Storage and International Transfers",
+        "body": "Safhira stores data on secure infrastructure located in regions that may be outside of your home country. Regardless of where data is processed, we implement technical and organisational measures aligned with ISO/IEC 27001, GDPR, and Malaysian PDPA principles to protect your information against unauthorised access, disclosure, or loss."
+      },
+      "informationSharing": {
+        "title": "6. Information Sharing",
+        "body": "We do not sell, rent, or trade your personal information. We may share limited data with:",
+        "items": [
+          {
+            "name": "Service providers",
+            "description": "Vendors that host infrastructure, provide analytics, or enable AI processing. These partners are bound by confidentiality obligations and only process data on our instructions."
+          },
+          {
+            "name": "Educational and health partners",
+            "description": "Aggregated, anonymised insights may be shared with collaborators to improve sexual health education resources."
+          },
+          {
+            "name": "Legal or safety requirements",
+            "description": "We may disclose information if required by law or when necessary to protect the rights, safety, or wellbeing of users and the public."
+          }
+        ]
+      },
+      "yourRights": {
+        "title": "7. Your Rights and Choices",
+        "body": "You may have the following rights depending on your jurisdiction:",
+        "items": [
+          "Access, correct, or delete personal information you have provided.",
+          "Object to or restrict certain processing activities.",
+          "Request a copy of data in a portable format where technically feasible.",
+          "Withdraw consent when processing is based on consent."
+        ],
+        "footer": "To exercise these rights, contact us using the details below. We may ask you to verify your identity before fulfilling a request. Certain requests may be limited where we must retain data for legal, security, or operational reasons."
+      },
+      "dataRetention": {
+        "title": "8. Data Retention",
+        "body": "We keep personal data only for as long as necessary to deliver the service, comply with legal obligations, resolve disputes, and enforce our agreements. AI conversation snippets used for safety or quality review are typically retained for no more than 30 days, unless a longer period is required for legal or investigatory purposes."
+      },
+      "security": {
+        "title": "9. Security",
+        "body": "Safhira employs encryption in transit, access controls, and regular security assessments to protect data. While we strive to safeguard your information, no method of transmission or storage is completely secure. Users should take care to keep their devices secure and avoid sharing sensitive personal information in chats or forms."
+      },
+      "thirdParty": {
+        "title": "10. Third-Party Links and Resources",
+        "body": "Our platform may link to external websites, clinics, or educational resources. We are not responsible for the privacy practices of third parties. We encourage you to review the privacy policies of any services you visit through Safhira."
+      },
+      "youngPeople": {
+        "title": "11. Children and Young People",
+        "body": "Safhira is intended for teens and young adults seeking sexual health education. We encourage users under the age of 18 to explore the platform with guidance from a trusted adult or guardian. We do not knowingly collect personal information from children under 13. If you believe we have collected such information, please contact us so we can delete it."
+      },
+      "changes": {
+        "title": "12. Changes to This Policy",
+        "body": "We may update this Privacy Policy to reflect new features, legal requirements, or security improvements. When we make material changes, we will update the \"Last updated\" date and provide additional notice when required."
+      },
+      "contact": {
+        "title": "13. Contact Us",
+        "body": "If you have questions, concerns, or requests related to this Privacy Policy, please contact us at:",
+        "contacts": [
+          {"label": "Email", "value": "info@safhira.vercel.app", "href": "mailto:info@safhira.vercel.app"},
+          {"label": "Website", "value": "www.safhira.vercel.app", "href": "https://www.safhira.vercel.app"}
+        ],
+        "footer": "We aim to respond to privacy inquiries within 14 days. Thank you for trusting Safhira as your companion for safe, evidence-based sexual health learning."
+      }
     }
   },
   "QuizPage": {

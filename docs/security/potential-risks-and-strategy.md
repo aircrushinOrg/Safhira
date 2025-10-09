@@ -2,45 +2,48 @@
 
 ## Potential Risks
 
-- **Sensitive health context**: Anonymous chat, AI tone assistant, and location sharing expose the risk of collecting or revealing personally identifiable health information.
-- **Information accuracy drift**: STI explainers, clinic directories, and safety checklists can go stale without structured reviews.
-- **AI misuse or hallucination**: `/api/tone-tune` could generate unsafe guidance or leak prompt context if unguarded.
-- **Abuse and stigma in community features**: Chat and feedback flows may be used for harassment, misinformation, or spam.
-- **Operational resilience**: Limited automation and observability increase the chance of regressions or downtime during releases.
+- **AI coaching transcripts and tone rewrites**: `/api/ai-scenarios/session`, `/api/ai-scenarios/session/[sessionId]/turns`, `/api/ai-scenarios/session/[sessionId]/final-report`, and `/api/tone-tune` ingest free-form narratives that can contain personal health details, persist raw conversation history in `aiScenarioTurns`/`aiScenarioResponses`, and depend on OpenAI credentials.
+- **Embedded chat assistant traffic**: `app/chat/page.tsx` embeds a Dify chatbot that collects sexual-health questions, limiting our visibility into logging, consent capture, or moderation controls.
+- **Location and provider lookup APIs**: `/api/geocode`, `/api/calculate-distances`, and provider search actions process user coordinates and forward requests to OpenStreetMap and Google Maps, creating over-collection and API key abuse risks.
+- **Gamified learning and newsletter data**: `/api/leaderboard`, `/api/leaderboard/submit`, server actions in `app/actions/leaderboard-actions.ts`, and `subscribeToNewsletter` in `app/living-well-with-sti/actions.ts` store nicknames, scores, and email addresses that can be enumerated or spammed.
+- **Information accuracy drift**: STI explainers in `app/stis`, prevalence content, and clinic records can become outdated without curated refresh cycles.
+- **Operational resilience**: Limited automated coverage across pages (`/`, `/stis`, `/quiz`, `/chat`, `/living-well-with-sti`) and APIs increases the likelihood of unnoticed regressions during deploys.
 
 ## Strategy
 
-### 1. Protect Sensitive Context and Privacy
+### 1. Lock Down AI Coaching and Tone Features
 
-- Minimize data collection: keep chat anonymous by default, store only coarse location when users opt in, and expire tone‑tuning prompts once responses are generated.
-- Apply redaction before persistence: strip phone numbers, emails, and explicit identifiers from chat transcripts and analytics logs.
-- Enforce secure storage: require `DATABASE_URL` secrets in environment variables, enable TLS, and restrict access to production replicas.
-- Publish clear user‑facing disclaimers about educational scope, data retention limits, and opt‑out controls.
+- Gate `/tools` behind authentication or role checks before exposing `/api/ai-scenarios/*`; disable the tooling route entirely in production if it is not part of the user journey.
+- Minimise persistence: redact phone numbers, emails, and explicit identifiers before saving to `aiScenarioTurns` and `aiScenarioResponses.rawResponse`; rotate `sessionId` values and expire records after short inactivity windows.
+- Add server-side rate limiting per `sessionId` and IP on `/api/ai-scenarios/...` and `/api/tone-tune`; enforce maximum turn length and reject unsafe topics before relaying to OpenAI.
+- Store OpenAI credentials with least privilege, proxy outbound calls for observability, and watermark AI output with non-medical disclaimers across consuming UI components.
 
-### 2. Maintain Accurate STI and Clinic Data
+### 2. Control Embedded Chat and External AI Tools
 
-- Establish review cadences: assign monthly domain experts to audit `/stis` content, legal notes, and regional resources.
-- Track provenance in Drizzle: add fields for source URL, verification date, and reviewer; surface stale records in moderation dashboards.
-- Activate feedback loops: provide “Report an issue” controls on maps and resource lists, routing submissions to moderators.
-- Partner with trusted sources: schedule pull jobs from Ministry of Health or NGO datasets, and verify changes before publishing.
+- Present explicit consent and safety notices before loading the Dify iframe on `/chat`; feature-flag the embed so sensitive locales can fall back to static guidance.
+- Negotiate transcript retention SLAs with Dify, ensure deletion routines are auditable, and monitor iframe `postMessage` events for scripted misuse.
+- Provide a fallback explanation when third-party services are offline or withheld, and reiterate the limits of automated advice in interface copy.
 
-### 3. Guard AI Interactions
+### 3. Protect Location and Provider APIs
 
-- Constrain prompts/responses: filter incoming tone‑tuning requests for disallowed topics, PII, or self‑harm content; truncate output length and profanity.
-- Add system guardrails: include medical disclaimers at the top of AI responses and route high‑risk prompts to a human review queue.
-- Monitor `/api/tone-tune`: log usage metrics (without message bodies) and alert on unusual spikes to detect abuse or scripted probing.
-- Provide a reset path: allow users to revert AI output to vetted templates instantly.
+- Keep `GOOGLE_MAPS_API_KEY` and any Nominatim identifiers in environment variables; proxy requests server-side and strip precise coordinates from request/response logs.
+- Round `userLatitude`/`userLongitude` to coarse grids before invoking `/api/calculate-distances`; cap acceptable radii and provider list sizes to deter bulk scraping.
+- Cache `/api/geocode` results, rate limit by IP, reject non-Malaysian queries early, and surface only verified provider contact details from Drizzle.
 
-### 4. Moderate Community Surfaces
+### 4. Respect User Identifiers in Leaderboard and Newsletter
 
-- Implement layered moderation: combine keyword filtering, rate limiting, and human review for chat messages and resource submissions.
-- Offer in‑product reporting: enable quick “Report” controls with stigmatizing language categories so moderators can triage quickly.
-- Publish community guidelines emphasizing respect, consent, and stigma‑aware language; require acceptance before chat use.
-- Rotate moderators: ensure coverage during campaigns or new feature launches to handle increased volume.
+- Hash or tokenise stored emails in `newsletterSubscriptions`, require double opt-in, and capture unsubscribe events for audit.
+- Protect `/api/leaderboard` and `/api/leaderboard/submit` with origin checks plus CAPTCHA or rate limiting to prevent nickname enumeration and score flooding.
+- Sanitize `nickname` fields on the client and server, scope leaderboard responses to the requested quiz type, and purge quiz history beyond defined retention windows.
 
-### 5. Improve Operational Readiness
+### 5. Maintain Accurate STI and Clinic Content
 
-- Automate smoke checks: add basic end‑to‑end tests for `/`, `/stis`, map rendering, and chat send/receive before deploys.
-- Instrument key paths: capture logs/metrics for tone tuning latency, map tile errors, and chat queue health in Vercel/observability tooling.
-- Define release runbooks: document rollback steps for database migrations and Next.js deployments; practice at least quarterly.
-- Review dependencies weekly: update vulnerable packages, especially chat/markdown sanitizers, Drizzle, and Next.js security patches.
+- Schedule quarterly reviews of STI copy, prevalence stats, and clinic metadata presented in `app/stis` and `app/components/ResourcesSection.tsx`; log source URLs in Drizzle for traceability.
+- Embed “Report an issue” affordances on STI detail and provider pages, routing submissions to moderators with audit trails.
+- Partner with trusted public-health datasets, verify imports before running `pnpm db:push`, and document calibration decisions inside `docs/`.
+
+### 6. Strengthen Operational Resilience
+
+- Extend smoke tests or scripted checks for `/`, `/stis`, provider search, `/quiz`, `/chat`, and `/living-well-with-sti` prior to deploys.
+- Instrument `/api/ai-scenarios/*`, `/api/tone-tune`, `/api/geocode`, `/api/calculate-distances`, and `/api/leaderboard*` with structured logs plus alerts for unusual latency or error spikes.
+- Maintain release runbooks covering Drizzle migrations and third-party outages (OpenAI, Dify, Google, Resend), and review dependency advisories weekly for frameworks and sanitizers.

@@ -113,11 +113,13 @@
       },
       "mapper": {
         "title": "Pemetaan Klinik",
-        "description": "Cari klinik dan pusat ujian kesihatan seksual berdekatan beserta penilaian privasi."
+        "description": "Cari klinik dan pusat ujian kesihatan seksual berdekatan beserta penilaian privasi.",
+        "button": "Cari Klinik"
       },
       "simulator": {
         "title": "Simulator Perbualan",
-        "description": "Berlatih membincangkan topik kesihatan seksual dengan penyedia perkhidmatan kesihatan dalam persekitaran yang selamat."
+        "description": "Berlatih membincangkan topik kesihatan seksual dengan penyedia perkhidmatan kesihatan dalam persekitaran yang selamat.",
+        "button": "Mulakan Simulator"
       }
     },
     "final": {
@@ -214,6 +216,7 @@
     },
     "sections": {
       "learning": "Pembelajaran",
+      "hub": "Hab",
       "support": "Sokongan",
       "contact": "Hubungi Kami"
     },
@@ -222,6 +225,8 @@
       "prevention": "Pencegahan",
       "livingWell": "Hidup Sihat dengan STI",
       "quiz": "Kuiz Interaktif",
+      "simulator": "Simulator",
+      "findHealthcare": "Cari Penjagaan Kesihatan",
       "privateChat": "Sembang AI Peribadi",
       "aboutAi": "Tentang Safhira AI",
       "prevalence": "Data Prevalens"
@@ -229,6 +234,155 @@
     "disclaimer": {
       "title": "Penafian Penting",
       "text": "Maklumat di laman web ini adalah untuk tujuan pendidikan sahaja dan bukan pengganti nasihat perubatan profesional. Sila berjumpa doktor untuk diagnosis dan rawatan yang betul."
+    }
+  },
+  "PrivacyPolicy": {
+    "meta": {
+      "updated": "Kemaskini terakhir: {date}"
+    },
+    "intro": {
+      "title": "Komitmen Privasi Kami",
+      "paragraphs": [
+        "Safhira (\"kami\", \"kita\", atau \"milik kami\") komited untuk melindungi privasi golongan muda yang mencari maklumat kesihatan seksual dan reproduktif yang tepat tanpa stigma.",
+        "Dasar Privasi ini menerangkan cara kami mengumpul, menggunakan, mendedahkan dan melindungi maklumat apabila anda melawat laman web kami, menggunakan alat kami, atau berinteraksi dengan Safhira AI. Sila baca dasar ini dengan teliti untuk memahami hak anda dan tanggungjawab kami."
+      ]
+    },
+    "toc": {
+      "title": "Dalam Dasar Ini",
+      "description": "Terus ke bahagian yang paling penting untuk anda.",
+      "items": [
+        {"id": "info-we-collect", "label": "Maklumat yang Kami Kumpul"},
+        {"id": "use-of-information", "label": "Cara Kami Menggunakan Maklumat"},
+        {"id": "cookies", "label": "Kuki & Storan Tempatan"},
+        {"id": "ai-conversations", "label": "Perbualan Safhira AI"},
+        {"id": "data-storage", "label": "Penyimpanan & Pemindahan Data"},
+        {"id": "information-sharing", "label": "Perkongsian Maklumat"},
+        {"id": "your-rights", "label": "Hak & Pilihan Anda"},
+        {"id": "data-retention", "label": "Pengekalan Data"},
+        {"id": "security", "label": "Keselamatan"},
+        {"id": "third-party", "label": "Sumber Pihak Ketiga"},
+        {"id": "young-people", "label": "Kanak-kanak & Remaja"},
+        {"id": "changes", "label": "Perubahan pada Dasar Ini"},
+        {"id": "contact", "label": "Hubungi Kami"}
+      ]
+    },
+    "sections": {
+      "infoWeCollect": {
+        "title": "1. Maklumat yang Kami Kumpul",
+        "summary": "Safhira direka untuk mengumpul jumlah data peribadi minimum yang diperlukan bagi menyampaikan perkhidmatan.",
+        "groups": [
+          {
+            "title": "a. Maklumat yang anda pilih untuk berikan",
+            "items": [
+              {
+                "name": "Mesej dan arahan",
+                "description": "Apabila anda berbual dengan Safhira AI atau menghantar borang, kami menerima teks yang anda berikan supaya perkhidmatan boleh membalas permintaan anda."
+              },
+              {
+                "name": "Maklum balas dan respons tinjauan",
+                "description": "Jika anda berkongsi maklum balas, melaporkan isu, atau mendaftar untuk penyelidikan pengguna, kami mengumpul maklumat yang anda hantar, termasuk butiran hubungan jika diberikan."
+              }
+            ]
+          },
+          {
+            "title": "b. Maklumat yang dikumpul secara automatik",
+            "items": [
+              {
+                "name": "Data penggunaan",
+                "description": "Kami mengumpul analitik terhad dan agregat (contohnya paparan halaman atau kiraan penggunaan ciri) untuk memahami bagaimana platform digunakan dan menambah baik pengalaman pengguna. Data ini diproses tanpa mengenal pasti pengguna secara langsung."
+              },
+              {
+                "name": "Data teknikal",
+                "description": "Kami mungkin merekod butiran teknikal standard yang dihantar oleh pelayar atau peranti anda seperti alamat IP, jenis peranti, versi pelayar, dan sistem operasi. Apabila dikumpul, alamat IP dipendekkan atau dipseudonimkan secepat mungkin."
+              }
+            ]
+          },
+          {
+            "title": "c. Maklumat terbitan atau kontekstual",
+            "description": "Untuk memastikan perbualan selamat dan relevan, Safhira AI mungkin menjana metadata tentang sesi anda seperti tag perbualan atau isyarat pemantauan keselamatan. Isyarat ini membantu kami mengesan salah guna, menguatkuasakan dasar keselamatan, dan menambah baik kualiti kandungan."
+          }
+        ]
+      },
+      "useOfInformation": {
+        "title": "2. Cara Kami Menggunakan Maklumat",
+        "items": [
+          "Menyediakan ciri teras termasuk hab pembelajaran, sumber STI, dan sembang AI.",
+          "Menyampaikan respons yang diperibadikan dan peka konteks dalam sesi yang sama.",
+          "Memantau keselamatan, menguatkuasakan dasar penggunaan wajar, dan mencegah salah guna.",
+          "Menganalisis corak penggunaan agregat untuk menambah baik prestasi dan kebolehcapaian.",
+          "Berkomunikasi tentang kemas kini perkhidmatan, menjawab pertanyaan, atau memberi sokongan apabila anda menghubungi kami."
+        ]
+      },
+      "cookies": {
+        "title": "3. Kuki dan Teknologi Serupa",
+        "body": "Safhira kini menggunakan kuki penting dan storan tempatan hanya apabila diperlukan untuk mengekalkan keadaan sesi, keutamaan bahasa, dan keselamatan. Kami tidak menggunakan iklan atau piksel penjejakan tingkah laku. Jika kami memperkenalkan kuki tambahan pada masa hadapan, kami akan mengemas kini dasar ini dan menyediakan kawalan yang sesuai."
+      },
+      "aiConversations": {
+        "title": "4. Perbualan Safhira AI",
+        "body": "Perbualan dengan Safhira AI mungkin diproses oleh penyedia teknologi yang dipercayai semata-mata untuk menjana respons, mengenakan penapis keselamatan, dan menambah baik prestasi model. Kami akan menanggalkan atau mempseudonimkan pengecam peribadi yang dikesan dalam log perbualan secara automatik, dan menyimpan kandungan hanya selama mana ia diperlukan untuk mengendalikan, melindungi, dan menambah baik perkhidmatan."
+      },
+      "dataStorage": {
+        "title": "5. Penyimpanan dan Pemindahan Data Antarabangsa",
+        "body": "Safhira menyimpan data pada infrastruktur selamat yang mungkin terletak di luar negara asal anda. Tanpa mengira lokasi pemprosesan, kami melaksanakan langkah teknikal dan organisasi selaras dengan prinsip ISO/IEC 27001, GDPR, dan PDPA Malaysia bagi melindungi maklumat anda daripada akses, pendedahan, atau kehilangan tanpa kebenaran."
+      },
+      "informationSharing": {
+        "title": "6. Perkongsian Maklumat",
+        "body": "Kami tidak menjual, menyewa, atau memperdagangkan maklumat peribadi anda. Kami mungkin berkongsi data terhad dengan:",
+        "items": [
+          {
+            "name": "Penyedia perkhidmatan",
+            "description": "Vendor yang mengehos infrastruktur, menyediakan analitik, atau membolehkan pemprosesan AI. Rakan ini terikat dengan kewajipan kerahsiaan dan hanya memproses data mengikut arahan kami."
+          },
+          {
+            "name": "Rakan pendidikan dan kesihatan",
+            "description": "Wawasan yang digabung dan dianonimkan mungkin dikongsi dengan rakan kolaborasi untuk menambah baik sumber pendidikan kesihatan seksual."
+          },
+          {
+            "name": "Keperluan undang-undang atau keselamatan",
+            "description": "Kami mungkin mendedahkan maklumat jika dikehendaki oleh undang-undang atau apabila perlu untuk melindungi hak, keselamatan, atau kebajikan pengguna dan orang awam."
+          }
+        ]
+      },
+      "yourRights": {
+        "title": "7. Hak dan Pilihan Anda",
+        "body": "Bergantung pada bidang kuasa anda, anda mungkin mempunyai hak berikut:",
+        "items": [
+          "Mengakses, membetulkan, atau memadam maklumat peribadi yang anda berikan.",
+          "Membantah atau mengehadkan aktiviti pemprosesan tertentu.",
+          "Meminta salinan data dalam format mudah alih apabila sesuai secara teknikal.",
+          "Menarik balik persetujuan apabila pemprosesan bergantung pada persetujuan."
+        ],
+        "footer": "Untuk melaksanakan hak ini, hubungi kami menggunakan butiran di bawah. Kami mungkin meminta anda mengesahkan identiti sebelum memenuhi permintaan. Sesetengah permintaan mungkin dihadkan jika kami perlu mengekalkan data atas sebab undang-undang, keselamatan, atau operasi."
+      },
+      "dataRetention": {
+        "title": "8. Pengekalan Data",
+        "body": "Kami menyimpan data peribadi hanya selama mana perlu untuk menyampaikan perkhidmatan, memenuhi kewajipan undang-undang, menyelesaikan pertikaian, dan menguatkuasakan perjanjian kami. Petikan perbualan AI yang digunakan untuk keselamatan atau semakan kualiti biasanya disimpan tidak lebih daripada 30 hari, kecuali tempoh lebih lama diperlukan untuk tujuan undang-undang atau siasatan."
+      },
+      "security": {
+        "title": "9. Keselamatan",
+        "body": "Safhira menggunakan penyulitan semasa penghantaran, kawalan akses, dan penilaian keselamatan berkala untuk melindungi data. Walaupun kami berusaha menjaga maklumat anda, tiada kaedah penghantaran atau penyimpanan yang 100% selamat. Pengguna digalakkan melindungi peranti mereka dan mengelakkan berkongsi maklumat peribadi sensitif dalam sembang atau borang."
+      },
+      "thirdParty": {
+        "title": "10. Pautan dan Sumber Pihak Ketiga",
+        "body": "Platform kami mungkin mempunyai pautan ke laman web, klinik, atau sumber pendidikan luar. Kami tidak bertanggungjawab terhadap amalan privasi pihak ketiga. Kami menggalakkan anda menyemak dasar privasi mana-mana perkhidmatan yang anda lawati melalui Safhira."
+      },
+      "youngPeople": {
+        "title": "11. Kanak-kanak dan Remaja",
+        "body": "Safhira disasarkan kepada remaja dan belia yang mencari pendidikan kesihatan seksual. Kami menggalakkan pengguna di bawah umur 18 tahun meneroka platform bersama penjaga atau orang dewasa yang dipercayai. Kami tidak dengan sengaja mengumpul maklumat peribadi daripada kanak-kanak di bawah 13 tahun. Jika anda percaya maklumat sebegitu telah dikumpul, sila hubungi kami untuk memadamkannya."
+      },
+      "changes": {
+        "title": "12. Perubahan pada Dasar Ini",
+        "body": "Kami mungkin mengemas kini Dasar Privasi ini untuk mencerminkan ciri baharu, keperluan undang-undang, atau penambahbaikan keselamatan. Apabila perubahan material dibuat, kami akan mengemas kini tarikh \"Kemaskini terakhir\" dan memberikan notis tambahan jika perlu."
+      },
+      "contact": {
+        "title": "13. Hubungi Kami",
+        "body": "Jika anda mempunyai soalan, kebimbangan, atau permintaan berkaitan Dasar Privasi ini, sila hubungi kami:",
+        "contacts": [
+          {"label": "E-mel", "value": "info@safhira.vercel.app", "href": "mailto:info@safhira.vercel.app"},
+          {"label": "Laman web", "value": "www.safhira.vercel.app", "href": "https://www.safhira.vercel.app"}
+        ],
+        "footer": "Kami menyasarkan untuk membalas pertanyaan privasi dalam tempoh 14 hari. Terima kasih kerana mempercayai Safhira sebagai teman anda untuk pembelajaran kesihatan seksual yang selamat dan berlandaskan bukti."
+      }
     }
   },
   "QuizPage": {
