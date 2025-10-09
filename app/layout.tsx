@@ -5,8 +5,7 @@
  */
 import './globals.css';
 
-import {Poppins, Press_Start_2P} from 'next/font/google';
-import {Suspense} from 'react';
+import {Poppins, Press_Start_2P, VT323} from 'next/font/google';
 import {ThemeProvider} from './providers/theme-provider';
 import {getLocale} from 'next-intl/server';
 import DifyChatbotEmbed from '@/app/components/DifyChatbotEmbed';
@@ -23,6 +22,12 @@ const pressStart2P = Press_Start_2P({
   subsets: ['latin'],
   weight: ['400'],
   variable: '--font-press-start-2p',
+});
+
+const vt323 = VT323({
+  subsets: ['latin'],
+  weight: ['400'],
+  variable: '--font-vt',
 });
 
 let title = 'Safhira - Safe Sexual Health for Malaysian Youth';
@@ -58,7 +63,7 @@ export default async function RootLayout({
   const locale = await getLocale();
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body className={`${poppins.variable} ${pressStart2P.variable}`}>
+      <body className={`${poppins.variable} ${pressStart2P.variable} ${vt323.variable}`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"

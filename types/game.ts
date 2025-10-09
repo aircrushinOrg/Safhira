@@ -9,6 +9,9 @@ export interface NPCData {
   x: number;
   y: number;
   sprite?: string;
+  interactionRadius?: number;
+  isInteractive?: boolean;
+  conversationSessionId?: string;
 }
 
 export interface GameState {
@@ -30,4 +33,22 @@ export interface JoystickConfig {
   y: number;
   radius: number;
   forceMin: number;
+}
+
+export type ConversationState = 'idle' | 'approaching' | 'active' | 'ending';
+
+export interface ConversationContext {
+  npcId: string;
+  sessionId: string;
+  state: ConversationState;
+  turnCount: number;
+  lastResponse?: string;
+}
+
+export interface NPCInteractionZone {
+  npc: NPCData;
+  sprite: Phaser.GameObjects.Sprite;
+  interactionIndicator?: Phaser.GameObjects.Sprite;
+  isPlayerNear: boolean;
+  conversationContext?: ConversationContext;
 }

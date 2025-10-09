@@ -105,6 +105,22 @@ export class PreloadScene extends Phaser.Scene {
       frameWidth: 32,
       frameHeight: 64,
     });
+
+    // Load NPC sprites as sprite sheets (6 frames for idle animation)
+    this.load.spritesheet('simulator-boy-npc-bar', '/simulator-boy-npc-bar.png', {
+      frameWidth: 32,
+      frameHeight: 64,
+    });
+    this.load.spritesheet('simulator-girl-npc-bar', '/simulator-girl-npc-bar.png', {
+      frameWidth: 32,
+      frameHeight: 64,
+    });
+
+    // Load interaction indicator spritesheet (6 frames for animation)
+    this.load.spritesheet('interaction-indicator', '/simulator-interaction-indicator.png', {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
   }
 
   create() {

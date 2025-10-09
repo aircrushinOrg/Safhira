@@ -61,7 +61,10 @@ export class GenderSelectionScene extends Phaser.Scene {
     }
 
     // Create responsive font sizes based on screen width
-    const titleFontSize = width < 600 ? '24px' : width < 800 ? '28px' : '32px';
+    const isSmallScreen = width < 600;
+    const isMediumScreen = width >= 600 && width < 800;
+    const titleFontSize = isSmallScreen ? '24px' : isMediumScreen ? '28px' : '32px';
+    const buttonFontSize = isSmallScreen ? '16px' : '20px';
 
     // Create title
     const titleText = this.add.text(width / 2, height * 0.2, 'SELECT GENDER', {
@@ -77,7 +80,7 @@ export class GenderSelectionScene extends Phaser.Scene {
 
     // Create menu items vertically (shifted down for character preview)
     this.boyButton = this.add.text(width / 2, height * 0.6, 'BOY', {
-      fontSize: '20px',
+      fontSize: buttonFontSize,
       color: '#ffffff',
       fontFamily: '"Press Start 2P", monospace'
     });
@@ -85,7 +88,7 @@ export class GenderSelectionScene extends Phaser.Scene {
     this.boyButton.setDepth(2);
 
     this.girlButton = this.add.text(width / 2, height * 0.68, 'GIRL', {
-      fontSize: '20px',
+      fontSize: buttonFontSize,
       color: '#ffffff',
       fontFamily: '"Press Start 2P", monospace'
     });
@@ -93,7 +96,7 @@ export class GenderSelectionScene extends Phaser.Scene {
     this.girlButton.setDepth(2);
 
     this.backButton = this.add.text(width / 2, height * 0.76, 'BACK TO TITLE', {
-      fontSize: '20px',
+      fontSize: buttonFontSize,
       color: '#ffffff',
       fontFamily: '"Press Start 2P", monospace'
     });
@@ -105,7 +108,7 @@ export class GenderSelectionScene extends Phaser.Scene {
 
     // Create selector arrow
     this.selector = this.add.text(0, 0, '>', {
-      fontSize: '32px',
+      fontSize: titleFontSize,
       color: '#7f2be6',
       fontFamily: '"Press Start 2P", monospace'
     });
@@ -136,6 +139,12 @@ export class GenderSelectionScene extends Phaser.Scene {
 
     // Enter key to confirm selection
     this.input.keyboard!.on('keydown-ENTER', (event: KeyboardEvent) => {
+      event.preventDefault();
+      this.confirmSelection();
+    });
+
+    // Space key to confirm selection
+    this.input.keyboard!.on('keydown-SPACE', (event: KeyboardEvent) => {
       event.preventDefault();
       this.confirmSelection();
     });

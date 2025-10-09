@@ -5,7 +5,7 @@
  * It also handles updating the minimap elements based on player movement and camera changes.
  */
 import * as Phaser from 'phaser';
-import { MinimapConfig } from '@/types/game';
+import { MinimapConfig, NPCInteractionZone } from '@/types/game';
 
 export class Minimap {
   private scene: Phaser.Scene;
@@ -17,6 +17,8 @@ export class Minimap {
   private viewportRect!: Phaser.GameObjects.Graphics;
   private player: Phaser.GameObjects.Sprite;
   private joystick?: any;
+  private npcDots: Phaser.GameObjects.Text[] = [];
+  private trackedNPCs: NPCInteractionZone[] = [];
 
   constructor(scene: Phaser.Scene, player: Phaser.GameObjects.Sprite, config: MinimapConfig, joystick?: any) {
     this.scene = scene;
@@ -100,7 +102,7 @@ export class Minimap {
       }
     );
     this.playerDot.setOrigin(0.5, 0.5); // Center the player indicator to match player
-    this.playerDot.setDepth(1000); // Above other layers in minimap
+    this.playerDot.setDepth(1001); // Above other layers in minimap
   }
 
   private setupCameraIgnoreRules(): void {
@@ -116,18 +118,30 @@ export class Minimap {
       ignoreList.push(this.joystick.base, this.joystick.thumb);
     }
 
+    // Add NPC sprites to ignore list (we don't want them visible on minimap, only dots)
+    this.trackedNPCs.forEach(npcZone => {
+      ignoreList.push(npcZone.sprite);
+      if (npcZone.interactionIndicator) {
+        ignoreList.push(npcZone.interactionIndicator);
+      }
+    });
+
     // Ignore UI elements in minimap camera
     this.camera.ignore(ignoreList);
 
     // Make the main camera ignore minimap-only objects
-    this.scene.cameras.main.ignore([
+    const mainCameraIgnoreList = [
       this.playerDot,
       this.viewportRect,
-    ]);
+      ...this.npcDots
+    ];
+
+    this.scene.cameras.main.ignore(mainCameraIgnoreList);
   }
 
   update(): void {
     this.updatePlayerDot();
+    this.updateNPCDots();
     this.updateViewportRect();
   }
 
@@ -174,5 +188,68 @@ export class Minimap {
     if (this.camera && menuButton) {
       this.camera.ignore(menuButton);
     }
+  }
+
+  // NPC tracking methods
+  addNPC(npcZone: NPCInteractionZone): void {
+    // Add NPC to tracking list
+    this.trackedNPCs.push(npcZone);
+
+    // Create yellow dot for this NPC
+    const npcDot = this.scene.add.text(
+      npcZone.npc.x,
+      npcZone.npc.y,
+      '●',
+      {
+        fontSize: '128px',
+        color: '#ffdd00ff', // Yellow color
+        stroke: '#ffffffff', // White outline
+        strokeThickness: 24,
+      }
+    );
+    npcDot.setOrigin(0.5, 0.5);
+    npcDot.setDepth(1000); // Same depth as player dot
+
+    this.npcDots.push(npcDot);
+
+    // Update camera ignore rules to hide the actual NPC sprite but show the dot
+    if (this.camera) {
+      this.camera.ignore([npcZone.sprite]);
+      if (npcZone.interactionIndicator) {
+        this.camera.ignore([npcZone.interactionIndicator]);
+      }
+
+      // Make main camera ignore the NPC dot
+      this.scene.cameras.main.ignore([npcDot]);
+    }
+  }
+
+  private updateNPCDots(): void {
+    // Update positions of all NPC dots to match their NPCs
+    this.npcDots.forEach((dot, index) => {
+      if (index < this.trackedNPCs.length) {
+        const npc = this.trackedNPCs[index];
+        dot.setPosition(npc.npc.x, npc.npc.y);
+      }
+    });
+  }
+
+  removeNPC(npcZone: NPCInteractionZone): void {
+    const index = this.trackedNPCs.findIndex(tracked => tracked === npcZone);
+    if (index >= 0) {
+      // Remove from tracking list
+      this.trackedNPCs.splice(index, 1);
+
+      // Remove and destroy the corresponding dot
+      if (this.npcDots[index]) {
+        this.npcDots[index].destroy();
+        this.npcDots.splice(index, 1);
+      }
+    }
+  }
+
+  // Get all tracked NPCs
+  getTrackedNPCs(): NPCInteractionZone[] {
+    return [...this.trackedNPCs];
   }
 }

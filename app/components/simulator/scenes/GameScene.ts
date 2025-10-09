@@ -4,11 +4,15 @@
  * The scene supports both keyboard and touch input, including a virtual joystick for mobile devices.
  */
 import * as Phaser from 'phaser';
-import type { PlayerGender, Direction } from '../../../../types/game';
+import type { PlayerGender, Direction, NPCData, NPCInteractionZone } from '../../../../types/game';
 import { Minimap } from '../utils/Minimap';
 import { VirtualJoystick } from '../utils/VirtualJoystick';
-import { CollisionManager } from '../manager/CollisionManager';
+import { CollisionManager } from '../utils/CollisionManager';
 import { PlayerHitbox } from '../utils/PlayerHitbox';
+import { NPCHitboxDebugger } from '../debugger/NPCHitboxDebugger';
+import { CollisionDebugger } from '../debugger/CollisionDebugger';
+import { PlayerHitboxDebugger } from '../debugger/PlayerHitboxDebugger';
+import { SCENARIO_TEMPLATES } from '../../../../lib/simulator/scenarios';
 
 export class GameScene extends Phaser.Scene {
   private player!: Phaser.GameObjects.Sprite;
@@ -21,7 +25,7 @@ export class GameScene extends Phaser.Scene {
   };
   private playerGender: PlayerGender = 'boy';
   private currentDirection: Direction = 'down';
-  private playerSpeed = 160;
+  private playerSpeed = 200;
   private isMoving = false;
   private virtualJoystick?: VirtualJoystick;
   private isTouchDevice = false;
@@ -30,8 +34,13 @@ export class GameScene extends Phaser.Scene {
   private preservedPosition?: { x: number; y: number };
   private collisionManager: CollisionManager;
   private lastSafePosition: { x: number; y: number } = { x: 0, y: 0 };
-  private collisionDebugGraphics?: Phaser.GameObjects.Graphics;
-  private playerHitboxDebugGraphics?: Phaser.GameObjects.Graphics;
+  private collisionDebugger!: CollisionDebugger;
+  private playerHitboxDebugger!: PlayerHitboxDebugger;
+  private npcHitboxDebugger!: NPCHitboxDebugger;
+  private npcs: NPCInteractionZone[] = [];
+  private spaceKey!: Phaser.Input.Keyboard.Key;
+  private enterKey!: Phaser.Input.Keyboard.Key;
+  private nearbyNPC: NPCInteractionZone | null = null;
 
   constructor() {
     super({ key: 'GameScene' });
@@ -59,6 +68,8 @@ export class GameScene extends Phaser.Scene {
 
     // Create animations BEFORE creating the player sprite
     this.createPlayerAnimations();
+    this.createNPCAnimations();
+    this.createInteractionIndicatorAnimation();
 
     // Create player sprite at starting position (center of map or preserved position)
     const startX = this.preservedPosition?.x || map.width / 2;
@@ -123,14 +134,25 @@ export class GameScene extends Phaser.Scene {
     // Create menu button
     this.createMenuButton();
 
-    // Create collision debug visualization (Debugging purposes)
-    // this.createCollisionDebug();
+    // Create debug visualizations (Debugging purposes)
+    this.collisionDebugger = new CollisionDebugger(this, this.collisionManager);
+    this.playerHitboxDebugger = new PlayerHitboxDebugger(this, this.player);
+    this.npcHitboxDebugger = new NPCHitboxDebugger(this);
 
-    // Create player hitbox debug visualization (Debugging purposes)
-    // this.createPlayerHitboxDebug();
+    // Enable/disable debuggers (set to true to enable debugging)
+    // this.collisionDebugger.setEnabled(true);
+    // this.playerHitboxDebugger.setEnabled(true);
+    // this.npcHitboxDebugger.setEnabled(true);
 
     // Update minimap to ignore menu button
     this.minimap.ignoreMenuButton(this.menuButton);
+
+    // Setup interaction keys (space and enter)
+    this.spaceKey = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+    this.enterKey = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
+
+    // Create NPCs based on player gender
+    this.createNPCs();
   }
 
   private createMenuButton(): void {
@@ -185,39 +207,6 @@ export class GameScene extends Phaser.Scene {
     });
   }
 
-  private createCollisionDebug(): void {
-    // Create graphics object for collision debug visualization
-    this.collisionDebugGraphics = this.add.graphics();
-    this.collisionDebugGraphics.setDepth(5); // Above map but below player
-
-    // Get collision map dimensions and tile size
-    const mapDimensions = this.collisionManager.getMapDimensions();
-    const tileSize = this.collisionManager.getTileSize();
-
-    // Set red color with some transparency
-    this.collisionDebugGraphics.fillStyle(0xff0000, 0.5);
-
-    // Loop through all tiles and draw red squares for collision tiles
-    for (let y = 0; y < mapDimensions.height; y++) {
-      for (let x = 0; x < mapDimensions.width; x++) {
-        const collisionValue = this.collisionManager.getCollisionAt(x, y);
-        if (collisionValue === 246) { // Collision tile
-          // Convert tile coordinates to world coordinates
-          const worldX = x * tileSize;
-          const worldY = y * tileSize;
-
-          // Draw red square
-          this.collisionDebugGraphics.fillRect(worldX, worldY, tileSize, tileSize);
-        }
-      }
-    }
-  }
-
-  private createPlayerHitboxDebug(): void {
-    // Create graphics object for player hitbox debug visualization
-    this.playerHitboxDebugGraphics = this.add.graphics();
-    this.playerHitboxDebugGraphics.setDepth(20); // Above player (depth 10) and foreground (depth 15)
-  }
 
   private createPlayerAnimations() {
     const directions: Direction[] = ['up', 'down', 'left', 'right'];
@@ -245,6 +234,34 @@ export class GameScene extends Phaser.Scene {
           frameRate: 1,
         });
       });
+    });
+  }
+
+  private createNPCAnimations() {
+    const genders: PlayerGender[] = ['boy', 'girl'];
+
+    // Create idle animations for NPCs
+    genders.forEach((gender) => {
+      const textureKey = `simulator-${gender}-npc-bar`;
+      const animationKey = `npc-${gender}-idle`;
+
+      // NPC idle animation using all 6 frames
+      this.anims.create({
+        key: animationKey,
+        frames: this.anims.generateFrameNumbers(textureKey, { start: 0, end: 5 }),
+        frameRate: 4, // Slower frame rate for idle animation
+        repeat: -1, // Loop indefinitely
+      });
+    });
+  }
+
+  private createInteractionIndicatorAnimation() {
+    // Create interaction indicator animation using all 6 frames
+    this.anims.create({
+      key: 'interaction-indicator-anim',
+      frames: this.anims.generateFrameNumbers('interaction-indicator', { start: 0, end: 5 }),
+      frameRate: 6, // Medium frame rate for indicator animation
+      repeat: 0, // Play only once
     });
   }
 
@@ -332,40 +349,23 @@ export class GameScene extends Phaser.Scene {
       this.lastSafePosition = { x: this.player.x, y: this.player.y };
     }
 
-    // Update player hitbox debug visualization
-    this.updatePlayerHitboxDebug();
+    // Update debug visualizations (if enabled)
+    // this.playerHitboxDebugger.update();
+    // this.collisionDebugger.update();
+    // this.npcHitboxDebugger.update();
 
     // Update minimap
     this.minimap.update();
+
+    // Update NPC interactions
+    this.updateNPCInteractions();
+
+    // Handle interaction input
+    if (Phaser.Input.Keyboard.JustDown(this.spaceKey) || Phaser.Input.Keyboard.JustDown(this.enterKey)) {
+      this.handleInteraction();
+    }
   }
 
-  private updatePlayerHitboxDebug(): void {
-    if (!this.playerHitboxDebugGraphics) return;
-
-    // Clear previous debug graphics
-    this.playerHitboxDebugGraphics.clear();
-
-    // Set yellow color with transparency for the hitbox outline
-    this.playerHitboxDebugGraphics.lineStyle(2, 0xffff00, 1); // Yellow, 2px thick, full opacity
-
-    // Get player position
-    const playerX = this.player.x;
-    const playerY = this.player.y;
-
-    // Calculate hitbox bounds using the PlayerHitbox utility
-    const bounds = PlayerHitbox.calculateBounds(playerX, playerY);
-
-    // Draw yellow rectangle around the player hitbox
-    this.playerHitboxDebugGraphics.strokeRect(bounds.left, bounds.top, bounds.width, bounds.height);
-
-    // Also draw small circles at the collision check points for reference
-    this.playerHitboxDebugGraphics.fillStyle(0xffff00, 0.8); // Yellow with some transparency
-    const checkPoints = PlayerHitbox.getCollisionCheckPoints(playerX, playerY);
-
-    checkPoints.forEach(point => {
-      this.playerHitboxDebugGraphics!.fillCircle(point.x, point.y, 3);
-    });
-  }
 
   private isPlayerInCollision(): boolean {
     // Get player position
@@ -377,5 +377,183 @@ export class GameScene extends Phaser.Scene {
 
     // If any check point is in a collision, consider the player colliding
     return checkPoints.some(point => this.collisionManager.isColliding(point.x, point.y));
+  }
+
+  private createNPCs(): void {
+    // Find the appropriate scenario for the current gender
+    const scenario = SCENARIO_TEMPLATES.find(template => {
+      if (this.playerGender === 'girl') {
+        return template.id === 'outside-bar-girl';
+      } else {
+        return template.id === 'outside-bar-boy';
+      }
+    });
+
+    if (!scenario) return;
+
+    // Position NPCs at fixed locations on the map instead of relative to player
+    // This way they stay in one place regardless of where the player is
+    const mapWidth = this.physics.world.bounds.width;
+    const mapHeight = this.physics.world.bounds.height;
+
+    // Place NPC at a fixed location (adjust these coordinates as needed for your map)
+    const npcX = mapWidth / 2 + 100;
+    const npcY = mapHeight / 3;
+
+    const npcData: NPCData = {
+      id: scenario.npc.id,
+      name: scenario.npc.name,
+      scenarioId: scenario.id,
+      x: npcX,
+      y: npcY,
+      sprite: `simulator-${this.playerGender}-npc-bar`,
+      interactionRadius: 80,
+      isInteractive: true
+    };
+
+    this.createNPC(npcData);
+  }
+
+  private createNPC(data: NPCData): void {
+    // Create NPC sprite with collision
+    const sprite = this.add.sprite(data.x, data.y, data.sprite || 'default-npc');
+    sprite.setScale(1.5);
+    sprite.setDepth(5);
+
+    // Enable physics for NPC to create collision
+    this.physics.add.existing(sprite);
+    const npcBody = sprite.body as Phaser.Physics.Arcade.Body;
+
+    // Set smaller hitbox to match the character's body (not the full sprite)
+    // Original sprite frame is 32x64, scaled by 1.5 = 48x96
+    // Reduce to a much smaller, more realistic collision area
+    npcBody.setSize(32, 32); // Much smaller width and height
+    npcBody.setOffset(0, 0); // Center the hitbox on the character's lower body/feet
+
+    // Make NPC immovable so player bounces off instead of pushing NPC
+    npcBody.setImmovable(true);
+
+    // Set up collision between player and NPC
+    this.physics.add.collider(this.player, sprite);
+
+    // Initially disable interactivity - will be enabled when player is near
+    // Add click/touch event to open NPCPreviewScene
+    sprite.on('pointerdown', () => {
+      this.openNPCPreview(data);
+    });
+
+    // Start the NPC idle animation
+    const animationKey = `npc-${this.playerGender}-idle`;
+    sprite.play(animationKey);
+
+    // Create interaction indicator (initially hidden)
+    const indicator = this.add.sprite(data.x, data.y - 50, 'interaction-indicator');
+    indicator.setVisible(false);
+    indicator.setDepth(20);
+
+    // Start the interaction indicator animation with safety check
+    if (indicator.anims && this.anims.exists('interaction-indicator-anim')) {
+      indicator.play('interaction-indicator-anim');
+    }
+
+    // Add floating animation to indicator
+    this.tweens.add({
+      targets: indicator,
+      y: indicator.y - 10,
+      duration: 1000,
+      ease: 'Sine.easeInOut',
+      yoyo: true,
+      repeat: -1
+    });
+
+    const npcZone: NPCInteractionZone = {
+      npc: data,
+      sprite,
+      interactionIndicator: indicator,
+      isPlayerNear: false
+    };
+
+    this.npcs.push(npcZone);
+
+    // Add NPC to minimap tracking
+    this.minimap.addNPC(npcZone);
+
+    // Add NPC to hitbox debugger
+    this.npcHitboxDebugger.addNPC(npcZone);
+  }
+
+  private updateNPCInteractions(): void {
+    const playerX = this.player.x;
+    const playerY = this.player.y;
+
+    this.nearbyNPC = null;
+
+    this.npcs.forEach(npcZone => {
+      // Safety check: ensure sprite is valid and active
+      if (!npcZone.sprite || !npcZone.sprite.active || !npcZone.sprite.scene) {
+        return;
+      }
+
+      // Use the sprite's actual position instead of stored NPC data coordinates
+      const distance = Phaser.Math.Distance.Between(
+        playerX, playerY,
+        npcZone.sprite.x, npcZone.sprite.y
+      );
+
+      const wasNear = npcZone.isPlayerNear;
+      const isNear = distance <= (npcZone.npc.interactionRadius || 80);
+
+      npcZone.isPlayerNear = isNear;
+
+      if (isNear) {
+        this.nearbyNPC = npcZone;
+        // Enable NPC interactivity when player is near (with safety check)
+        if (npcZone.sprite.input) {
+          npcZone.sprite.setInteractive({ useHandCursor: true });
+        } else {
+          // Re-enable interactivity if it was disabled
+          npcZone.sprite.setInteractive({ useHandCursor: true });
+        }
+        if (!wasNear && npcZone.interactionIndicator) {
+          npcZone.interactionIndicator.setVisible(true);
+          // Restart the animation each time the player approaches
+          // Safety check to ensure the animation exists before playing
+          if (npcZone.interactionIndicator.anims && this.anims.exists('interaction-indicator-anim')) {
+            npcZone.interactionIndicator.play('interaction-indicator-anim');
+          }
+        }
+      } else {
+        // Disable NPC interactivity when player is not near (with safety check)
+        if (npcZone.sprite.input) {
+          npcZone.sprite.disableInteractive();
+        }
+        if (wasNear && npcZone.interactionIndicator) {
+          npcZone.interactionIndicator.setVisible(false);
+        }
+      }
+    });
+  }
+
+
+  private handleInteraction(): void {
+    if (!this.nearbyNPC || !this.nearbyNPC.npc.isInteractive) return;
+
+    this.openNPCPreview(this.nearbyNPC.npc);
+  }
+
+  private openNPCPreview(npcData: NPCData): void {
+    // Get the scenario template for this NPC
+    const scenario = SCENARIO_TEMPLATES.find(template =>
+      template.id === npcData.scenarioId
+    );
+
+    if (!scenario) return;
+
+    // Start the NPC preview scene with current player position
+    this.scene.start('NPCPreviewScene', {
+      scenario,
+      playerGender: this.playerGender,
+      playerPosition: { x: this.player.x, y: this.player.y }
+    });
   }
 }

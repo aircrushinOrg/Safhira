@@ -293,7 +293,7 @@ export default function GameEmbed() {
       />
 
       {/* Error loading button - Remove later */}
-      {!hasLoadError && !isLoading && (
+      {/* {!hasLoadError && !isLoading && (
         <button
           onClick={simulateError}
           className="absolute bottom-12 left-8 bg-red-600 hover:bg-red-700 text-white text-sm px-3 py-2 rounded z-20"
@@ -301,7 +301,7 @@ export default function GameEmbed() {
         >
           Test Load Error
         </button>
-      )}
+      )} */}
     </div>
   );
 }
