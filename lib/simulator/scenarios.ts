@@ -27,12 +27,12 @@ export type ScenarioTemplate = {
 export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
   {
     id: "outside-bar-girl",
-    label: "Party Pressure (Maya)",
+    label: "Party Pressure",
     description:
       "Resist peer pressure and practise assertive refusal skills when a friend encourages risky behaviour at a party",
     scenario: {
       id: "outside-bar-girl",
-      title: "Party Pressure (Maya)",
+      title: "Party Pressure",
       setting:
         "Outside a bar in the morning; friends are planning to go to a party later on with other seniors",
       learningObjectives:
@@ -56,12 +56,12 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
   },
   {
     id: "outside-bar-boy",
-    label: "Party Pressure (Jordan)",
+    label: "Party Pressure",
     description:
       "Learn to resist ego-based peer pressure and stay confident in your own boundaries when a friend challenges your decisions.",
     scenario: {
       id: "outside-bar-boy",
-      title: "Party Pressure (Jordan)",
+      title: "Party Pressure",
       setting:
         "Outside a bar in the morning; friends are planning to go to a party later on to hook up with girls",
       learningObjectives:
@@ -85,12 +85,12 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
   },
   {
     id: "health-clinic-visit-girl",
-    label: "The STI Check (Dr. Wong)",
+    label: "The STI Check",
     description:
       "Learn what happens during an STI check-up and how to talk openly with a healthcare professional about female sexual and reproductive health.",
     scenario: {
       id: "health-clinic-visit-girl",
-      title: "The STI Check (Dr. Wong)",
+      title: "The STI Check",
       setting:
         "Community health clinic consultation room. The player has come in after noticing unusual discharge or wanting peace of mind after unprotected sex.",
       learningObjectives:
@@ -114,12 +114,12 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
   },
   {
     id: "health-clinic-visit-boy",
-    label: "The STI Check (Dr. Tan)",
+    label: "The STI Check",
     description:
       "Understand what to expect during an STI check-up and learn how to discuss male sexual health and prevention confidently with a doctor.",
     scenario: {
       id: "health-clinic-visit-boy",
-      title: "The STI Check (Dr. Tan)",
+      title: "The STI Check",
       setting:
         "Men’s health clinic or general practice. The player visits for an STI screening after a recent unprotected encounter or a partner’s suggestion.",
       learningObjectives:
@@ -143,7 +143,7 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
   },
   {
     id: "university-misinformation-both",
-    label: "University Misinformation (Amir)",
+    label: "Misinformation",
     description:
       "Practise correcting common sexual health myths and encouraging shared responsibility in a calm, respectful way.",
     scenario: {

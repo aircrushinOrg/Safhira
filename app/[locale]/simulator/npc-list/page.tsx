@@ -69,10 +69,7 @@ export default function SimulatorNpcListPage() {
                   </div>
                 </div>
 
-                <div className="flex flex-wrap items-center justify-between gap-3">
-                  <span className="text-xs uppercase tracking-[0.28em] text-slate-500 dark:text-slate-400">
-                    NPC ID · {npc.id}
-                  </span>
+                <div className="flex flex-wrap items-center justify-end gap-3">
                   <Button
                     asChild
                     size="lg"

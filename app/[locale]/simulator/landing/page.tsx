@@ -28,27 +28,6 @@ const highlights = [
   },
 ];
 
-const experiencePillars = [
-  {
-    title: 'Choose your scenario',
-    description:
-      'Drop into conversations with friends, romantic interests, or healthcare professionals and tailor NPC personalities to your learning goals.',
-    icon: Compass,
-  },
-  {
-    title: 'Build confident responses',
-    description:
-      'Practise saying "no", asking for support, or requesting care in a low-pressure space designed for experimentation.',
-    icon: Lightbulb,
-  },
-  {
-    title: 'Review and iterate fast',
-    description:
-      'Use the quick access tools to tweak prompts, test new strategies, and bring successful lines back into the full simulation.',
-    icon: Gamepad2,
-  },
-];
-
 export default function SimulatorLandingPage() {
   return (
     <div className="relative isolate overflow-hidden bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50">
@@ -73,7 +52,7 @@ export default function SimulatorLandingPage() {
               Safhira Simulator
             </span>
             <h1 className="text-balance text-4xl font-semibold leading-tight text-slate-900 dark:text-slate-50 md:text-5xl">
-              Practise tough conversations in a safe, story-driven world.
+              Practise tough conversations in a safe world.
             </h1>
             <p className="max-w-2xl text-pretty text-lg text-slate-600 dark:text-slate-200 md:text-xl">
               Navigate realistic nightlife, clinic, and campus scenarios, experiment with dialogue, and collect actionable feedback that strengthens your confidence beyond the screen.
@@ -141,23 +120,6 @@ export default function SimulatorLandingPage() {
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      <section className="border-t border-slate-200/70 bg-slate-100/70 dark:border-white/5 dark:bg-slate-950/75">
-        <div className="mx-auto grid max-w-6xl gap-6 px-4 py-16 md:grid-cols-3 md:px-6">
-          {experiencePillars.map(({ title, description, icon: Icon }) => (
-            <div
-              key={title}
-              className="group relative flex h-full flex-col gap-4 rounded-3xl border border-slate-200/70 bg-white/80 p-6 shadow-lg shadow-slate-900/10 transition hover:border-teal-400/40 hover:bg-white dark:border-white/5 dark:bg-slate-900/60 dark:shadow-slate-950/40 dark:hover:bg-slate-900/80"
-            >
-              <span className="flex size-12 items-center justify-center rounded-2xl bg-teal-500/15 text-teal-600 transition group-hover:bg-teal-500/25 dark:text-teal-200">
-                <Icon className="size-6" />
-              </span>
-              <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-50">{title}</h3>
-              <p className="text-sm text-slate-600 dark:text-slate-300">{description}</p>
-            </div>
-          ))}
         </div>
       </section>
     </div>
