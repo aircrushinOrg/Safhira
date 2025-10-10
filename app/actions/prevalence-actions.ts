@@ -47,7 +47,7 @@ export async function getAllUniqueDiseases(locale?: string): Promise<string[]> {
         stiTranslations,
         sql`${stiTranslations.stiId} = ${sti.stiId} AND ${stiTranslations.locale} = ${resolved}`,
       )
-      .orderBy(sti.name);
+      .orderBy(sql`COALESCE(${stiTranslations.name}, ${sti.name})`);
 
     if (results.length === 0) {
       return [];
@@ -74,7 +74,7 @@ export async function getAllUniqueStates(locale?: string): Promise<string[]> {
         sql`${stateTranslations.stateId} = ${state.stateId} AND ${stateTranslations.locale} = ${resolved}`,
       )
       .where(ne(state.stateName, "Malaysia"))
-      .orderBy(state.stateName);
+      .orderBy(sql`COALESCE(${stateTranslations.stateName}, ${state.stateName})`);
 
     if (results.length === 0) {
       return [];
