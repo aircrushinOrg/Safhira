@@ -2,6 +2,15 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Button } from '@/app/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/app/components/ui/dialog';
+import { Progress } from '@/app/components/ui/progress';
 import { cn } from '@/app/components/ui/utils';
 import { Loader2, Send, Sparkles } from 'lucide-react';
 
@@ -121,7 +130,7 @@ export default function ChatPractice({ template }: ChatPracticeProps) {
   const [loading, setLoading] = useState(false);
   const [finalizing, setFinalizing] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [summary, setSummary] = useState<ApiSummary>(null);
+  const [, setSummary] = useState<ApiSummary>(null);
   const [score, setScore] = useState<ApiScore>(null);
   const [finalReport, setFinalReport] = useState<ApiFinalReport>(null);
   const [safetyAlerts, setSafetyAlerts] = useState<string[]>([]);
@@ -132,6 +141,7 @@ export default function ChatPractice({ template }: ChatPracticeProps) {
   const [lastRawError, setLastRawError] = useState<string | null>(null);
   const [typingNpcMessage, setTypingNpcMessage] = useState<string | null>(null);
   const [isStreamingReply, setIsStreamingReply] = useState(false);
+  const [isFinalReportOpen, setIsFinalReportOpen] = useState(false);
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const typingTimeoutRef = useRef<number | null>(null);
@@ -173,6 +183,177 @@ export default function ChatPractice({ template }: ChatPracticeProps) {
     : finalizing
       ? 'Generating final report…'
       : null;
+
+  const hasScore = Boolean(score);
+  const displayedScore = {
+    refusalEffectiveness: Math.max(0, Math.min(100, Math.round(score?.refusalEffectiveness ?? 0))),
+    confidence: Math.max(0, Math.min(100, Math.round(score?.confidence ?? 0))),
+  };
+
+  async function handleDownloadFinalReportPdf() {
+    if (!finalReport) return;
+
+    try {
+      // Import pdf-lib directly
+      const { PDFDocument, StandardFonts, rgb } = await import('pdf-lib');
+
+      const pdfDoc = await PDFDocument.create();
+      const createPage = () => pdfDoc.addPage([595.28, 841.89]);
+      let page = createPage();
+      let { width, height } = page.getSize();
+      const margin = 48;
+      const maxWidth = width - margin * 2;
+      let cursorY = height - margin;
+
+      // Use standard fonts
+      const regularFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
+      const boldFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+      type PdfFont = typeof regularFont;
+
+      const headingColor = rgb(0.1, 0.1, 0.18);
+      const bodyColor = rgb(0.2, 0.2, 0.24);
+      const bulletColor = rgb(0.2, 0.5, 0.45);
+
+      const lineGap = 6;
+
+      const ensureSpace = (lineHeight: number) => {
+        if (cursorY - lineHeight < margin) {
+          page = createPage();
+          ({ width, height } = page.getSize());
+          cursorY = height - margin;
+        }
+      };
+
+      const wrapText = (text: string, font: PdfFont, size: number) => {
+        // Filter out non-Latin characters that standard fonts can't encode
+        const safeText = text.replace(/[\u4E00-\u9FFF\u3040-\u30FF\u3400-\u4DBF]/g, '');
+        
+        const words = safeText.split(/\s+/);
+        const lines: string[] = [];
+        let currentLine = '';
+
+        for (const word of words) {
+          if (!word) continue; // Skip empty words
+          
+          try {
+            const testLine = currentLine ? `${currentLine} ${word}` : word;
+            const testWidth = font.widthOfTextAtSize(testLine, size);
+            if (testWidth > maxWidth && currentLine) {
+              lines.push(currentLine);
+              currentLine = word;
+            } else {
+              currentLine = testLine;
+            }
+          } catch (error) {
+            // If there's an encoding error with this word, skip it
+            console.warn(`Skipping word due to encoding error: ${word}`);
+            if (currentLine) {
+              lines.push(currentLine);
+            }
+            currentLine = '';
+          }
+        }
+
+        if (currentLine) {
+          lines.push(currentLine);
+        }
+        
+        // If no valid lines were created, return a default message
+        if (lines.length === 0) {
+          lines.push("[Text contains unsupported characters]");
+        }
+        
+        return lines;
+      };
+
+      const drawLines = (lines: string[], size: number, font: PdfFont, color = bodyColor) => {
+        for (const line of lines) {
+          ensureSpace(size + lineGap);
+          page.drawText(line, {
+            x: margin,
+            y: cursorY,
+            size,
+            font,
+            color,
+          });
+          cursorY -= size + lineGap;
+        }
+      };
+
+      const drawHeading = (text: string, size: number) => {
+        ensureSpace(size + lineGap * 2);
+        page.drawText(text, {
+          x: margin,
+          y: cursorY,
+          size,
+          font: boldFont,
+          color: headingColor,
+        });
+        cursorY -= size + lineGap * 1.5;
+      };
+
+      const drawSubheading = (text: string) => {
+        drawLines([text.toUpperCase()], 10, boldFont, bulletColor);
+        cursorY -= 2;
+      };
+
+      const drawParagraph = (text: string) => {
+        if (!text) return;
+        const lines = wrapText(text, regularFont, 11);
+        drawLines(lines, 11, regularFont, bodyColor);
+        cursorY -= 4;
+      };
+
+      const drawList = (title: string, items: string[]) => {
+        if (!items.length) return;
+        drawSubheading(title);
+        for (const item of items) {
+          const bulletLines = wrapText(`• ${item}`, regularFont, 11);
+          drawLines(bulletLines, 11, regularFont, bulletColor);
+        }
+        cursorY -= 4;
+      };
+
+      const now = new Date();
+      const reportTitle = 'Simulation Final Report';
+      const metaLine = `Chat with ${template.npcName} · ${template.scenarioLabel}`;
+      const dateLine = now.toLocaleString(undefined, {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+      });
+
+      drawHeading(reportTitle, 20);
+      drawParagraph(metaLine);
+      drawParagraph(`Generated ${dateLine}`);
+      cursorY -= 8;
+
+      drawHeading('Overall Assessment', 14);
+      drawParagraph(finalReport.overallAssessment);
+
+      drawHeading('Highlights', 14);
+      drawList('Strengths', finalReport.strengths);
+      drawList('Areas for Growth', finalReport.areasForGrowth);
+      drawList('Recommended Practice', finalReport.recommendedPractice);
+
+      const pdfBytes = await pdfDoc.save();
+      const blob = new Blob([new Uint8Array(pdfBytes)], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement('a');
+      anchor.href = url;
+      anchor.download = `final-report-${sessionId ?? 'session'}.pdf`;
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Failed to generate report PDF';
+      setError(message);
+      console.error('Final report PDF generation failed', err);
+    }
+  }
 
   async function ensureSession() {
     if (sessionId) return sessionId;
@@ -520,6 +701,7 @@ export default function ChatPractice({ template }: ChatPracticeProps) {
     setLastRawError(null);
     setTypingNpcMessage(null);
     setIsStreamingReply(false);
+    setIsFinalReportOpen(false);
   }
 
   return (
@@ -531,8 +713,7 @@ export default function ChatPractice({ template }: ChatPracticeProps) {
           <p className="text-sm text-slate-600 dark:text-slate-300">{template.npcRole}</p>
         </div>
         <div className="flex flex-col items-end text-right text-xs text-slate-500 dark:text-slate-400">
-          <span>Scenario · {template.scenarioLabel}</span>
-          <span>ID · {template.npcId}</span>
+          <span>Scenario: {template.scenarioLabel}</span>
         </div>
       </header>
 
@@ -541,17 +722,21 @@ export default function ChatPractice({ template }: ChatPracticeProps) {
           <span className={cn('rounded-full px-3 py-1 font-semibold', sessionStatusClass)}>
             Status: {sessionStatusLabel}
           </span>
+          {hasScore && (
+            <>
+              <span className="rounded-full bg-blue-50 px-3 py-1 font-medium text-blue-700 dark:bg-blue-900/40 dark:text-blue-200">
+                Refusal: {displayedScore.refusalEffectiveness}%
+              </span>
+              <span className="rounded-full bg-purple-50 px-3 py-1 font-medium text-purple-700 dark:bg-purple-900/40 dark:text-purple-200">
+                Confidence: {displayedScore.confidence}%
+              </span>
+            </>
+          )}
           {processingText && (
             <span className="rounded-full bg-slate-100 px-3 py-1 font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-200">
               {processingText}
             </span>
           )}
-          <span className="rounded-full bg-slate-100 px-3 py-1 text-slate-600 dark:bg-slate-800 dark:text-slate-200">
-            Session ID: <code className="text-[11px]">{sessionId ?? '—'}</code>
-          </span>
-          <span>
-            Turns: {checkpoints.totalPlayerTurns} · Summary due: {checkpoints.summaryDue ? 'yes' : 'no'} · Assessment due: {checkpoints.assessmentDue ? 'yes' : 'no'}
-          </span>
           {conversationComplete && (
             <span className="rounded-full bg-emerald-50 px-3 py-1 font-medium text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-200">
               Conversation complete{completeReason ? ` · ${completeReason}` : ''}
@@ -574,6 +759,28 @@ export default function ChatPractice({ template }: ChatPracticeProps) {
             >
               {finalizing ? <Loader2 className="size-4 animate-spin" /> : <Sparkles className="size-4" />}
               {finalizing ? 'Finishing…' : 'Get final scores'}
+            </Button>
+          </div>
+        </div>
+
+        <div className="rounded-2xl border border-slate-200/70 bg-white/85 p-4 text-sm text-slate-700 shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-slate-900/70 dark:text-slate-200">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <p className="text-xs text-slate-500 dark:text-slate-400">
+              {finalReport ? 'Final report ready with tailored coaching.' : 'Finish the session to unlock the final report.'}
+            </p>
+            <Button
+              type="button"
+              variant={finalReport ? 'default' : 'outline'}
+              disabled={!finalReport}
+              onClick={() => setIsFinalReportOpen(true)}
+              className={cn(
+                'h-8 px-3 text-xs font-semibold uppercase tracking-[0.18em]',
+                finalReport
+                  ? 'bg-teal-500 text-slate-900 hover:bg-teal-400'
+                  : 'border-slate-300 text-slate-400 hover:bg-transparent dark:border-slate-700 dark:text-slate-600',
+              )}
+            >
+              View final report
             </Button>
           </div>
         </div>
@@ -669,119 +876,6 @@ export default function ChatPractice({ template }: ChatPracticeProps) {
       </div>
 
       <section className="space-y-4">
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          <div className="rounded-2xl border border-slate-200/70 bg-white/85 p-4 text-sm text-slate-700 shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-slate-900/70 dark:text-slate-200">
-            <p className="text-xs uppercase tracking-[0.28em] text-slate-500 dark:text-slate-400">Checkpoint summary</p>
-            {summary ? (
-              <div className="mt-3 space-y-3">
-                <span className={cn(
-                  'inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em]',
-                  summary.riskLevel === 'high'
-                    ? 'border-rose-400/60 bg-rose-500/15 text-rose-600 dark:border-rose-400/30 dark:bg-rose-500/10 dark:text-rose-200'
-                    : summary.riskLevel === 'medium'
-                      ? 'border-amber-400/60 bg-amber-500/15 text-amber-600 dark:border-amber-400/30 dark:bg-amber-500/10 dark:text-amber-200'
-                      : 'border-emerald-400/60 bg-emerald-500/15 text-emerald-600 dark:border-emerald-400/30 dark:bg-emerald-500/10 dark:text-emerald-200',
-                )}>
-                  Risk · {summary.riskLevel}
-                </span>
-                {summary.keyRisks.length > 0 && (
-                  <div>
-                    <p className="font-semibold">Key risks</p>
-                    <ul className="mt-1 space-y-1 text-xs">
-                      {summary.keyRisks.map((item) => (
-                        <li key={item}>• {item}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-                {summary.effectiveResponses.length > 0 && (
-                  <div>
-                    <p className="font-semibold">What worked</p>
-                    <ul className="mt-1 space-y-1 text-xs">
-                      {summary.effectiveResponses.map((item) => (
-                        <li key={item}>• {item}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-                {summary.coaching && (
-                  <p className="text-xs text-slate-600 dark:text-slate-300">{summary.coaching}</p>
-                )}
-              </div>
-            ) : (
-              <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">
-                Send a message to unlock live risk insights and coaching notes.
-              </p>
-            )}
-          </div>
-
-          <div className="rounded-2xl border border-slate-200/70 bg-white/85 p-4 text-sm text-slate-700 shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-slate-900/70 dark:text-slate-200">
-            <p className="text-xs uppercase tracking-[0.28em] text-slate-500 dark:text-slate-400">Scorecard</p>
-            {score ? (
-              <div className="mt-3 space-y-3">
-                <div className="flex items-center justify-between rounded-2xl border border-slate-200/70 bg-slate-100/80 px-3 py-2 text-xs font-semibold text-slate-700 dark:border-white/10 dark:bg-slate-800/60 dark:text-slate-200">
-                  <span>Refusal effectiveness</span>
-                  <span>{Math.round(score.refusalEffectiveness)}%</span>
-                </div>
-                <div className="flex items-center justify-between rounded-2xl border border-slate-200/70 bg-slate-100/80 px-3 py-2 text-xs font-semibold text-slate-700 dark:border-white/10 dark:bg-slate-800/60 dark:text-slate-200">
-                  <span>Confidence</span>
-                  <span>{Math.round(score.confidence)}%</span>
-                </div>
-                {score.notes && (
-                  <p className="text-xs text-slate-600 dark:text-slate-300">{score.notes}</p>
-                )}
-              </div>
-            ) : (
-              <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">
-                Scores appear once the AI evaluates your latest response.
-              </p>
-            )}
-          </div>
-
-          <div className="rounded-2xl border border-slate-200/70 bg-white/85 p-4 text-sm text-slate-700 shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-slate-900/70 dark:text-slate-200">
-            <p className="text-xs uppercase tracking-[0.28em] text-slate-500 dark:text-slate-400">Final report</p>
-            {finalReport ? (
-              <div className="mt-3 space-y-3 text-xs">
-                <p className="font-semibold text-slate-700 dark:text-slate-200">{finalReport.overallAssessment}</p>
-                {finalReport.strengths.length > 0 && (
-                  <div>
-                    <p className="font-semibold">Strengths</p>
-                    <ul className="mt-1 space-y-1">
-                      {finalReport.strengths.map((item) => (
-                        <li key={item}>• {item}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-                {finalReport.areasForGrowth.length > 0 && (
-                  <div>
-                    <p className="font-semibold">Areas for growth</p>
-                    <ul className="mt-1 space-y-1">
-                      {finalReport.areasForGrowth.map((item) => (
-                        <li key={item}>• {item}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-                {finalReport.recommendedPractice.length > 0 && (
-                  <div>
-                    <p className="font-semibold">Recommended practice</p>
-                    <ul className="mt-1 space-y-1">
-                      {finalReport.recommendedPractice.map((item) => (
-                        <li key={item}>• {item}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">
-                Finish the session to generate a full assessment and next steps.
-              </p>
-            )}
-          </div>
-        </div>
-
         {safetyAlerts.length > 0 && (
           <div className="rounded-2xl border border-rose-200/70 bg-rose-50/70 p-4 text-xs text-rose-700 shadow-sm shadow-rose-200/40 dark:border-rose-500/40 dark:bg-rose-500/10 dark:text-rose-100">
             <p className="mb-2 font-semibold uppercase tracking-[0.28em]">Safety alerts</p>
@@ -805,6 +899,62 @@ export default function ChatPractice({ template }: ChatPracticeProps) {
           </details>
         )}
       </section>
+
+      <Dialog open={isFinalReportOpen && Boolean(finalReport)} onOpenChange={setIsFinalReportOpen}>
+        <DialogContent className="max-h-[80vh] overflow-y-auto bg-white text-slate-800 dark:bg-slate-900 dark:text-slate-50">
+          <DialogHeader>
+            <DialogTitle>Final report</DialogTitle>
+            <DialogDescription>
+              Deep dive into your performance and personalised next steps.
+            </DialogDescription>
+          </DialogHeader>
+
+          {finalReport ? (
+            <div className="space-y-4 text-sm text-slate-700 dark:text-slate-200">
+              <p className="font-semibold text-slate-900 dark:text-slate-50">{finalReport.overallAssessment}</p>
+              {finalReport.strengths.length > 0 && (
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Strengths</p>
+                  <ul className="mt-2 space-y-1 text-sm">
+                    {finalReport.strengths.map((item) => (
+                      <li key={item}>• {item}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {finalReport.areasForGrowth.length > 0 && (
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Areas for growth</p>
+                  <ul className="mt-2 space-y-1 text-sm">
+                    {finalReport.areasForGrowth.map((item) => (
+                      <li key={item}>• {item}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {finalReport.recommendedPractice.length > 0 && (
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Recommended practice</p>
+                  <ul className="mt-2 space-y-1 text-sm">
+                    {finalReport.recommendedPractice.map((item) => (
+                      <li key={item}>• {item}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          ) : null}
+
+          <DialogFooter>
+            <Button variant="secondary" onClick={() => setIsFinalReportOpen(false)}>
+              Close
+            </Button>
+            <Button disabled={!finalReport} onClick={handleDownloadFinalReportPdf}>
+              Download report PDF
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
