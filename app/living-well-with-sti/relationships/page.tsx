@@ -238,29 +238,15 @@ export default function RelationshipsPage() {
                       <div className="rounded-xl p-4 border border-amber-200/60 dark:border-amber-600/30 bg-gradient-to-br from-amber-50 to-rose-50 dark:from-amber-900/20 dark:to-rose-900/10 shadow-sm">
                         <div className="flex items-center gap-2 mb-3">
                           <Lightbulb className="text-amber-500" size={16} />
-                          <h4 className="font-semibold text-sm text-gray-900 dark:text-gray-100">Best Practices</h4>
+                          <h4 className="font-semibold text-sm text-gray-900 dark:text-gray-100">{t("partner.templates.best.title")}</h4>
                         </div>
                         <ul className="text-xs text-gray-700 dark:text-gray-300 space-y-2">
-                          <li className="flex items-start gap-2">
-                            <CheckCircle2 className="text-teal-500 mt-0.5" size={14} />
-                            <span>Choose a comfortable, private setting</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <CheckCircle2 className="text-teal-500 mt-0.5" size={14} />
-                            <span>Be honest and direct, but respectful</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <CheckCircle2 className="text-teal-500 mt-0.5" size={14} />
-                            <span>Allow time for questions and discussion</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <CheckCircle2 className="text-teal-500 mt-0.5" size={14} />
-                            <span>Provide resources for more information</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <CheckCircle2 className="text-teal-500 mt-0.5" size={14} />
-                            <span>Remember: disclosure is often legally required</span>
-                          </li>
+                          {t.raw("partner.templates.best.items").map((item: string, idx: number) => (
+                            <li key={idx} className="flex items-start gap-2">
+                              <CheckCircle2 className="text-teal-500 mt-0.5" size={14} />
+                              <span>{item}</span>
+                            </li>
+                          ))}
                         </ul>
                       </div>
                     </div>

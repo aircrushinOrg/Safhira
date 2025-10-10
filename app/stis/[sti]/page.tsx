@@ -6,12 +6,14 @@
 import Client from './Client';
 import { notFound } from 'next/navigation';
 import { getSTIBySlug } from '../../actions/sti-actions';
+import { getLocale } from 'next-intl/server';
 
 export default async function Page({ params }: { params: Promise<{ sti: string }> }) {
   const { sti } = await params;
   const slug = sti.toLowerCase();
 
-  const stiInfo = await getSTIBySlug(slug);
+  const locale = await getLocale();
+  const stiInfo = await getSTIBySlug(slug, locale);
 
   if (!stiInfo) {
     notFound();

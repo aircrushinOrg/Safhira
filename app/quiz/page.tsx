@@ -5,7 +5,7 @@
  */
 import { TiltedScrollDemo } from '@/app/components/quiz/TiltedScrollDemo'
 import { getRandomQuizQuestions, getAllQuizQuestions, type QuizQuestionRecord } from '@/app/actions/quiz-question-actions'
-import { getTranslations } from 'next-intl/server'
+import { getTranslations, getLocale } from 'next-intl/server'
 import BreadcrumbTrail from '@/app/components/BreadcrumbTrail'
 
 type QuizListItem = {
@@ -17,10 +17,11 @@ type QuizListItem = {
 export default async function QuizPage() {
   const t = await getTranslations('QuizPage')
   const tBreadcrumbs = await getTranslations('Common.breadcrumbs')
+  const locale = await getLocale()
 
   const [randomQuestions, allQuestions] = await Promise.all([
-    getRandomQuizQuestions('myths', 8),
-    getAllQuizQuestions(),
+    getRandomQuizQuestions('myths', 8, locale),
+    getAllQuizQuestions(locale),
   ])
 
   const mapToQuizListItem = (question: QuizQuestionRecord): QuizListItem => {
