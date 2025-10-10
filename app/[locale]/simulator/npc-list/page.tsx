@@ -29,7 +29,7 @@ export default function SimulatorNpcListPage() {
           <h1 className="text-balance text-3xl font-semibold md:text-4xl">
             Meet every coach, confidant, and challenger before you jump in.
           </h1>
-          <p className="mx-auto max-w-3xl text-pretty text-base text-slate-600 dark:text-slate-300">
+          <p className="mx-auto text-pretty text-base text-slate-600 dark:text-slate-300">
             Review the personalities guiding each scenario, then launch straight into conversation practice.
             Choose an NPC to step into their story or head to the quick tools to customise prompts on the fly.
           </p>
