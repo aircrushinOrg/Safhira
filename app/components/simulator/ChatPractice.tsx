@@ -13,6 +13,7 @@ import {
 import { Progress } from '@/app/components/ui/progress';
 import { cn } from '@/app/components/ui/utils';
 import { Loader2, Send, Sparkles } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export type ChatTemplate = {
   scenarioId: string;
@@ -97,6 +98,7 @@ const ALLOW_AUTO_END = true;
 
 type ChatPracticeProps = {
   template: ChatTemplate;
+  aiTemplate?: ChatTemplate;
 };
 
 function splitLines(value: string) {
@@ -110,18 +112,34 @@ function sanitizeList(values: string[]) {
   return values.map((item) => item.trim()).filter(Boolean);
 }
 
-function createInitialMessage(template: ChatTemplate, personaLines: string[]) {
-  const personaIntro = personaLines[0] || `I'm ${template.npcName}.`;
-  return `Hey, I'm ${template.npcName}. ${personaIntro} Ready to practise ${template.scenarioDescription.toLowerCase()}?`;
+type Translator = ReturnType<typeof useTranslations>;
+
+function createInitialMessage(
+  template: ChatTemplate,
+  personaLines: string[],
+  translate: Translator,
+) {
+  const fallbackPersona = translate('intro.fallbackPersona', { name: template.npcName });
+  const personaIntro = personaLines[0] || fallbackPersona;
+  return translate('intro.message', {
+    name: template.npcName,
+    persona: personaIntro,
+    scenario: template.scenarioDescription.toLowerCase(),
+  });
 }
 
-export default function ChatPractice({ template }: ChatPracticeProps) {
-  const personaLines = useMemo(() => splitLines(template.npcPersona), [template.npcPersona]);
+export default function ChatPractice({ template: displayTemplate, aiTemplate }: ChatPracticeProps) {
+  const t = useTranslations('Simulator.chatPractice');
+  const personaLines = useMemo(
+    () => splitLines(displayTemplate.npcPersona),
+    [displayTemplate.npcPersona],
+  );
+  const apiTemplate = aiTemplate ?? displayTemplate;
   const [messages, setMessages] = useState<ConversationTurn[]>(() => [
     {
       id: 'npc-intro',
       role: 'npc',
-      content: createInitialMessage(template, personaLines),
+      content: createInitialMessage(displayTemplate, personaLines, t),
       timestamp: new Date().toISOString(),
     },
   ]);
@@ -165,23 +183,27 @@ export default function ChatPractice({ template }: ChatPracticeProps) {
     trimmedDraft.length > 0 && !loading && !finalizing && !conversationComplete;
   const conversationBusy = loading || finalizing;
 
+  const statusCompleteLabel = t('status.complete');
+  const statusInProgressLabel = t('status.inProgress');
+  const statusNotStartedLabel = t('status.notStarted');
+
   const sessionStatusLabel = conversationComplete
-    ? 'Complete'
+    ? statusCompleteLabel
     : sessionId
-      ? 'In progress'
-      : 'Not started';
+      ? statusInProgressLabel
+      : statusNotStartedLabel;
 
   const sessionStatusClass =
-    sessionStatusLabel === 'Complete'
+    sessionStatusLabel === statusCompleteLabel
       ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-200'
-      : sessionStatusLabel === 'In progress'
+      : sessionStatusLabel === statusInProgressLabel
         ? 'bg-sky-100 text-sky-700 dark:bg-sky-900 dark:text-sky-200'
         : 'bg-slate-200 text-slate-700 dark:bg-slate-800 dark:text-slate-200';
 
   const processingText = loading
-    ? 'Awaiting NPC response…'
+    ? t('processing.awaiting')
     : finalizing
-      ? 'Generating final report…'
+      ? t('processing.finalizing')
       : null;
 
   const hasScore = Boolean(score);
@@ -315,8 +337,11 @@ export default function ChatPractice({ template }: ChatPracticeProps) {
       };
 
       const now = new Date();
-      const reportTitle = 'Simulation Final Report';
-      const metaLine = `Chat with ${template.npcName} · ${template.scenarioLabel}`;
+      const pdfTitle = t('pdf.title');
+      const metaLine = t('pdf.meta', {
+        name: displayTemplate.npcName,
+        label: displayTemplate.scenarioLabel,
+      });
       const dateLine = now.toLocaleString(undefined, {
         year: 'numeric',
         month: 'long',
@@ -324,19 +349,27 @@ export default function ChatPractice({ template }: ChatPracticeProps) {
         hour: '2-digit',
         minute: '2-digit',
       });
+      const generatedLine = t('pdf.generated', { timestamp: dateLine });
+      const pdfSections = {
+        overall: t('pdf.sections.overall'),
+        highlights: t('pdf.sections.highlights'),
+        strengths: t('pdf.sections.strengths'),
+        areas: t('pdf.sections.areas'),
+        recommended: t('pdf.sections.recommended'),
+      };
 
-      drawHeading(reportTitle, 20);
+      drawHeading(pdfTitle, 20);
       drawParagraph(metaLine);
-      drawParagraph(`Generated ${dateLine}`);
+      drawParagraph(generatedLine);
       cursorY -= 8;
 
-      drawHeading('Overall Assessment', 14);
+      drawHeading(pdfSections.overall, 14);
       drawParagraph(finalReport.overallAssessment);
 
-      drawHeading('Highlights', 14);
-      drawList('Strengths', finalReport.strengths);
-      drawList('Areas for Growth', finalReport.areasForGrowth);
-      drawList('Recommended Practice', finalReport.recommendedPractice);
+      drawHeading(pdfSections.highlights, 14);
+      drawList(pdfSections.strengths, finalReport.strengths);
+      drawList(pdfSections.areas, finalReport.areasForGrowth);
+      drawList(pdfSections.recommended, finalReport.recommendedPractice);
 
       const pdfBytes = await pdfDoc.save();
       const blob = new Blob([new Uint8Array(pdfBytes)], { type: 'application/pdf' });
@@ -359,21 +392,21 @@ export default function ChatPractice({ template }: ChatPracticeProps) {
     if (sessionId) return sessionId;
 
     const scenarioPayload = {
-      id: template.scenarioId.trim() || 'scenario-placeholder',
-      title: template.scenarioTitle.trim() || undefined,
-      setting: template.setting.trim() || undefined,
-      learningObjectives: sanitizeList(template.learningObjectives),
-      supportingFacts: sanitizeList(template.supportingFacts),
+      id: apiTemplate.scenarioId.trim() || 'scenario-placeholder',
+      title: apiTemplate.scenarioTitle.trim() || undefined,
+      setting: apiTemplate.setting.trim() || undefined,
+      learningObjectives: sanitizeList(apiTemplate.learningObjectives),
+      supportingFacts: sanitizeList(apiTemplate.supportingFacts),
     };
 
     const npcPayload = {
-      id: template.npcId.trim() || 'npc-placeholder',
-      name: template.npcName.trim() || 'NPC',
-      role: template.npcRole.trim() || 'Peer',
-      persona: template.npcPersona.trim() || undefined,
-      goals: sanitizeList(template.npcGoals),
-      tactics: sanitizeList(template.npcTactics),
-      boundaries: sanitizeList(template.npcBoundaries),
+      id: apiTemplate.npcId.trim() || 'npc-placeholder',
+      name: apiTemplate.npcName.trim() || 'NPC',
+      role: apiTemplate.npcRole.trim() || 'Peer',
+      persona: apiTemplate.npcPersona.trim() || undefined,
+      goals: sanitizeList(apiTemplate.npcGoals),
+      tactics: sanitizeList(apiTemplate.npcTactics),
+      boundaries: sanitizeList(apiTemplate.npcBoundaries),
     };
 
     const response = await fetch('/api/ai-scenarios/session', {
@@ -681,7 +714,7 @@ export default function ChatPractice({ template }: ChatPracticeProps) {
       {
         id: 'npc-intro',
         role: 'npc',
-        content: createInitialMessage(template, personaLines),
+        content: createInitialMessage(displayTemplate, personaLines, t),
         timestamp: new Date().toISOString(),
       },
     ]);
@@ -705,30 +738,30 @@ export default function ChatPractice({ template }: ChatPracticeProps) {
   }
 
   return (
-    <div className="flex h-full min-h-[70vh] flex-col gap-5 rounded-3xl border border-slate-200/70 bg-white/85 p-4 shadow-lg shadow-slate-900/10 backdrop-blur dark:border-white/5 dark:bg-slate-900/70 dark:shadow-slate-950/40">
+    <div className="flex h-full min-h-[70vh] flex-1 flex-col gap-5 rounded-3xl border border-slate-200/70 bg-white/85 p-4 shadow-lg shadow-slate-900/10 backdrop-blur dark:border-white/5 dark:bg-slate-900/70 dark:shadow-slate-950/40">
       <header className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-200/60 bg-slate-50/80 px-4 py-3 dark:border-white/5 dark:bg-slate-950/60">
         <div>
-          <p className="text-xs uppercase tracking-[0.28em] text-slate-500 dark:text-slate-400">Active NPC</p>
-          <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-50">{template.npcName}</h2>
-          <p className="text-sm text-slate-600 dark:text-slate-300">{template.npcRole}</p>
+          <p className="text-xs uppercase tracking-[0.28em] text-slate-500 dark:text-slate-400">{t('activeNpc')}</p>
+          <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-50">{displayTemplate.npcName}</h2>
+          <p className="text-sm text-slate-600 dark:text-slate-300">{displayTemplate.npcRole}</p>
         </div>
         <div className="flex flex-col items-end text-right text-xs text-slate-500 dark:text-slate-400">
-          <span>Scenario: {template.scenarioLabel}</span>
+          <span>{t('labels.scenario')}: {displayTemplate.scenarioLabel}</span>
         </div>
       </header>
 
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-1 min-h-0 flex-col gap-3">
         <div className="flex flex-wrap items-center gap-3 rounded-2xl border border-slate-200/60 bg-white/80 px-4 py-3 text-xs text-slate-600 shadow-sm shadow-slate-900/5 dark:border-white/5 dark:bg-slate-900/60 dark:text-slate-300">
           <span className={cn('rounded-full px-3 py-1 font-semibold', sessionStatusClass)}>
-            Status: {sessionStatusLabel}
+            {t('labels.status')}: {sessionStatusLabel}
           </span>
           {hasScore && (
             <>
               <span className="rounded-full bg-blue-50 px-3 py-1 font-medium text-blue-700 dark:bg-blue-900/40 dark:text-blue-200">
-                Refusal: {displayedScore.refusalEffectiveness}%
+                {t('metrics.refusal', { score: displayedScore.refusalEffectiveness })}
               </span>
               <span className="rounded-full bg-purple-50 px-3 py-1 font-medium text-purple-700 dark:bg-purple-900/40 dark:text-purple-200">
-                Confidence: {displayedScore.confidence}%
+                {t('metrics.confidence', { score: displayedScore.confidence })}
               </span>
             </>
           )}
@@ -739,7 +772,7 @@ export default function ChatPractice({ template }: ChatPracticeProps) {
           )}
           {conversationComplete && (
             <span className="rounded-full bg-emerald-50 px-3 py-1 font-medium text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-200">
-              Conversation complete{completeReason ? ` · ${completeReason}` : ''}
+              {completeReason ? t('conversationCompleteWithReason', { reason: completeReason }) : t('conversationComplete')}
             </span>
           )}
           <div className="ml-auto flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
@@ -749,7 +782,7 @@ export default function ChatPractice({ template }: ChatPracticeProps) {
               onClick={handleReset}
               className="justify-center border-slate-300 text-slate-700 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-800"
             >
-              Reset session
+              {t('buttons.reset')}
             </Button>
             <Button
               type="button"
@@ -758,7 +791,7 @@ export default function ChatPractice({ template }: ChatPracticeProps) {
               className="justify-center bg-teal-500 text-slate-900 hover:bg-teal-400 disabled:cursor-not-allowed disabled:bg-teal-500/60"
             >
               {finalizing ? <Loader2 className="size-4 animate-spin" /> : <Sparkles className="size-4" />}
-              {finalizing ? 'Finishing…' : 'Get final scores'}
+              {finalizing ? t('buttons.finalScoresLoading') : t('buttons.finalScores')}
             </Button>
           </div>
         </div>
@@ -766,7 +799,7 @@ export default function ChatPractice({ template }: ChatPracticeProps) {
         <div className="rounded-2xl border border-slate-200/70 bg-white/85 p-4 text-sm text-slate-700 shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-slate-900/70 dark:text-slate-200">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <p className="text-xs text-slate-500 dark:text-slate-400">
-              {finalReport ? 'Final report ready with tailored coaching.' : 'Finish the session to unlock the final report.'}
+              {finalReport ? t('finalReport.ready') : t('finalReport.locked')}
             </p>
             <Button
               type="button"
@@ -780,7 +813,7 @@ export default function ChatPractice({ template }: ChatPracticeProps) {
                   : 'border-slate-300 text-slate-400 hover:bg-transparent dark:border-slate-700 dark:text-slate-600',
               )}
             >
-              View final report
+              {t('buttons.viewReport')}
             </Button>
           </div>
         </div>
@@ -818,7 +851,7 @@ export default function ChatPractice({ template }: ChatPracticeProps) {
               <div className="flex justify-start">
                 <div className="flex max-w-[85%] flex-col gap-2 rounded-2xl bg-white px-4 py-3 text-sm text-slate-700 shadow-slate-900/10 dark:bg-slate-800 dark:text-slate-200">
                   <span className="text-xs uppercase tracking-[0.22em] text-slate-500 dark:text-slate-400">
-                    {template.npcName}
+                    {displayTemplate.npcName}
                   </span>
                   <p className="min-h-[1.5rem] whitespace-pre-wrap">
                     {typingNpcMessage && typingNpcMessage.length > 0 ? (
@@ -826,7 +859,7 @@ export default function ChatPractice({ template }: ChatPracticeProps) {
                     ) : loading ? (
                       <span className="inline-flex items-center gap-1 text-xs text-teal-500">
                         <Loader2 className="size-4 animate-spin" />
-                        Thinking…
+                        {t('thinking')}
                       </span>
                     ) : (
                       '…'
@@ -855,12 +888,12 @@ export default function ChatPractice({ template }: ChatPracticeProps) {
                   handleSend();
                 }
               }}
-              placeholder={`Write your message to ${template.npcName}…`}
+              placeholder={t('placeholder', { name: displayTemplate.npcName })}
               disabled={conversationBusy || conversationComplete}
               className="min-h-[110px] w-full resize-none rounded-2xl border border-slate-200 bg-transparent px-4 py-3 text-sm text-slate-800 shadow-inner shadow-slate-900/5 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500/30 disabled:cursor-not-allowed dark:border-slate-700 dark:text-slate-100 dark:shadow-none"
             />
             <div className="mt-3 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-              <span>Summaries and scores refresh after every exchange.</span>
+              <span>{t('summaryHint')}</span>
               <Button
                 type="submit"
                 size="lg"
@@ -868,7 +901,7 @@ export default function ChatPractice({ template }: ChatPracticeProps) {
                 className="bg-teal-500 text-slate-900 hover:bg-teal-400 disabled:cursor-not-allowed disabled:bg-teal-500/60"
               >
                 {conversationBusy ? <Loader2 className="size-4 animate-spin" /> : <Send className="size-4" />}
-                {conversationBusy ? 'Sending…' : 'Send'}
+                {conversationBusy ? t('buttons.sending') : t('buttons.send')}
               </Button>
             </div>
           </div>
@@ -878,7 +911,7 @@ export default function ChatPractice({ template }: ChatPracticeProps) {
       <section className="space-y-4">
         {safetyAlerts.length > 0 && (
           <div className="rounded-2xl border border-rose-200/70 bg-rose-50/70 p-4 text-xs text-rose-700 shadow-sm shadow-rose-200/40 dark:border-rose-500/40 dark:bg-rose-500/10 dark:text-rose-100">
-            <p className="mb-2 font-semibold uppercase tracking-[0.28em]">Safety alerts</p>
+            <p className="mb-2 font-semibold uppercase tracking-[0.28em]">{t('safetyAlerts')}</p>
             <ul className="space-y-1">
               {safetyAlerts.map((alert) => (
                 <li key={alert}>• {alert}</li>
@@ -889,7 +922,7 @@ export default function ChatPractice({ template }: ChatPracticeProps) {
 
         {conversationComplete && lastRawResponse && (
           <details className="rounded-2xl border border-slate-200/60 bg-white/80 p-3 text-xs text-slate-600 dark:border-white/5 dark:bg-slate-900/60 dark:text-slate-300">
-            <summary className="cursor-pointer font-semibold text-slate-700 dark:text-slate-200">View raw report JSON</summary>
+            <summary className="cursor-pointer font-semibold text-slate-700 dark:text-slate-200">{t('rawReport')}</summary>
             <pre className="mt-2 max-h-48 overflow-auto whitespace-pre-wrap rounded border border-slate-200/60 bg-slate-100/60 p-2 text-[11px] dark:border-slate-700 dark:bg-slate-950/50">
               {lastRawResponse}
             </pre>
@@ -903,9 +936,9 @@ export default function ChatPractice({ template }: ChatPracticeProps) {
       <Dialog open={isFinalReportOpen && Boolean(finalReport)} onOpenChange={setIsFinalReportOpen}>
         <DialogContent className="max-h-[80vh] overflow-y-auto bg-white text-slate-800 dark:bg-slate-900 dark:text-slate-50">
           <DialogHeader>
-            <DialogTitle>Final report</DialogTitle>
+            <DialogTitle>{t('dialog.title')}</DialogTitle>
             <DialogDescription>
-              Deep dive into your performance and personalised next steps.
+              {t('dialog.description')}
             </DialogDescription>
           </DialogHeader>
 
@@ -914,7 +947,7 @@ export default function ChatPractice({ template }: ChatPracticeProps) {
               <p className="font-semibold text-slate-900 dark:text-slate-50">{finalReport.overallAssessment}</p>
               {finalReport.strengths.length > 0 && (
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Strengths</p>
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">{t('dialog.sections.strengths')}</p>
                   <ul className="mt-2 space-y-1 text-sm">
                     {finalReport.strengths.map((item) => (
                       <li key={item}>• {item}</li>
@@ -924,7 +957,7 @@ export default function ChatPractice({ template }: ChatPracticeProps) {
               )}
               {finalReport.areasForGrowth.length > 0 && (
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Areas for growth</p>
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">{t('dialog.sections.areas')}</p>
                   <ul className="mt-2 space-y-1 text-sm">
                     {finalReport.areasForGrowth.map((item) => (
                       <li key={item}>• {item}</li>
@@ -934,7 +967,7 @@ export default function ChatPractice({ template }: ChatPracticeProps) {
               )}
               {finalReport.recommendedPractice.length > 0 && (
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Recommended practice</p>
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">{t('dialog.sections.recommended')}</p>
                   <ul className="mt-2 space-y-1 text-sm">
                     {finalReport.recommendedPractice.map((item) => (
                       <li key={item}>• {item}</li>
@@ -947,10 +980,10 @@ export default function ChatPractice({ template }: ChatPracticeProps) {
 
           <DialogFooter>
             <Button variant="secondary" onClick={() => setIsFinalReportOpen(false)}>
-              Close
+              {t('dialog.close')}
             </Button>
             <Button disabled={!finalReport} onClick={handleDownloadFinalReportPdf}>
-              Download report PDF
+              {t('dialog.download')}
             </Button>
           </DialogFooter>
         </DialogContent>

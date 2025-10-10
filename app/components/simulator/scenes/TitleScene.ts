@@ -4,6 +4,7 @@
  * The scene includes visual effects and responsive design to adapt to different screen sizes.
  */
 import * as Phaser from 'phaser';
+import { getGameTranslations } from '../utils/gameI18n';
 
 export class TitleScene extends Phaser.Scene {
   private startButton!: Phaser.GameObjects.Text;
@@ -20,6 +21,7 @@ export class TitleScene extends Phaser.Scene {
 
   create() {
     const { width, height } = this.cameras.main;
+    const { title: titleTexts } = getGameTranslations();
 
     // Add background image
     const background = this.add.image(width / 2, height / 2, 'simulator-background');
@@ -88,7 +90,7 @@ export class TitleScene extends Phaser.Scene {
     this.titleText.setDepth(2);
 
     // Create subtitle text
-    const subtitleText = this.add.text(width / 2, height * subtitleYOffset, 'SIMULATION GAME', {
+    const subtitleText = this.add.text(width / 2, height * subtitleYOffset, titleTexts.subtitle, {
       fontSize: subtitleFontSize,
       color: '#7f2be6',
       fontFamily: '"Press Start 2P", monospace'
@@ -96,14 +98,14 @@ export class TitleScene extends Phaser.Scene {
     subtitleText.setOrigin(0.5);
 
     // Create menu items
-    this.startButton = this.add.text(width / 2, height * 0.5, 'START GAME', {
+    this.startButton = this.add.text(width / 2, height * 0.5, titleTexts.start, {
       fontSize: buttonFontSize,
       color: '#ffffff',
       fontFamily: '"Press Start 2P", monospace'
     });
     this.startButton.setOrigin(0.5);
 
-    this.instructionButton = this.add.text(width / 2, height * 0.58, 'INSTRUCTIONS', {
+    this.instructionButton = this.add.text(width / 2, height * 0.58, titleTexts.instructions, {
       fontSize: buttonFontSize,
       color: '#ffffff',
       fontFamily: '"Press Start 2P", monospace'

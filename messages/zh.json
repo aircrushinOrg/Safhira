@@ -71,7 +71,6 @@
         "title": "你并不孤单",
         "text": "对性健康感到不确定或害怕是正常的——很多人都是如此。但你不必独自面对。"
       },
-    
       "card2": {
         "title": "我们一直在这里",
         "text": "Safhira 是一个安全、友善、无评判的空间，你可以放心提问并获得支持。"
@@ -132,8 +131,7 @@
         "supported": "由马来西亚医疗专业人士支持",
         "anonymous": "完全匿名——不存储数据"
       }
-    }
-    ,
+    },
     "faq": {
       "title": "常见问题",
       "subtitle": "关于性健康的常见问题，以及本网站的说明。",
@@ -237,8 +235,7 @@
       "title": "重要声明",
       "text": "本网站信息仅供教育用途，不可替代专业医疗建议。如需诊断和治疗，请咨询医生。"
     }
-  }
-  ,
+  },
   "PrivacyPolicy": {
     "meta": {
       "updated": "最后更新：{date}"
@@ -254,19 +251,58 @@
       "title": "本政策内容",
       "description": "快速跳转到你最关心的部分。",
       "items": [
-        {"id": "info-we-collect", "label": "我们收集的信息"},
-        {"id": "use-of-information", "label": "我们如何使用信息"},
-        {"id": "cookies", "label": "Cookie 与本地存储"},
-        {"id": "ai-conversations", "label": "Safhira AI 对话"},
-        {"id": "data-storage", "label": "数据存储与跨境传输"},
-        {"id": "information-sharing", "label": "信息共享"},
-        {"id": "your-rights", "label": "你的权利与选择"},
-        {"id": "data-retention", "label": "数据保留"},
-        {"id": "security", "label": "安全"},
-        {"id": "third-party", "label": "第三方资源"},
-        {"id": "young-people", "label": "儿童与青少年"},
-        {"id": "changes", "label": "政策变更"},
-        {"id": "contact", "label": "联系我们"}
+        {
+          "id": "info-we-collect",
+          "label": "我们收集的信息"
+        },
+        {
+          "id": "use-of-information",
+          "label": "我们如何使用信息"
+        },
+        {
+          "id": "cookies",
+          "label": "Cookie 与本地存储"
+        },
+        {
+          "id": "ai-conversations",
+          "label": "Safhira AI 对话"
+        },
+        {
+          "id": "data-storage",
+          "label": "数据存储与跨境传输"
+        },
+        {
+          "id": "information-sharing",
+          "label": "信息共享"
+        },
+        {
+          "id": "your-rights",
+          "label": "你的权利与选择"
+        },
+        {
+          "id": "data-retention",
+          "label": "数据保留"
+        },
+        {
+          "id": "security",
+          "label": "安全"
+        },
+        {
+          "id": "third-party",
+          "label": "第三方资源"
+        },
+        {
+          "id": "young-people",
+          "label": "儿童与青少年"
+        },
+        {
+          "id": "changes",
+          "label": "政策变更"
+        },
+        {
+          "id": "contact",
+          "label": "联系我们"
+        }
       ]
     },
     "sections": {
@@ -381,8 +417,16 @@
         "title": "13. 联系我们",
         "body": "若你对本隐私政策有任何问题、疑虑或请求，请通过以下方式联系：",
         "contacts": [
-          {"label": "电子邮件", "value": "info@safhira.vercel.app", "href": "mailto:info@safhira.vercel.app"},
-          {"label": "网站", "value": "www.safhira.vercel.app", "href": "https://www.safhira.vercel.app"}
+          {
+            "label": "电子邮件",
+            "value": "info@safhira.vercel.app",
+            "href": "mailto:info@safhira.vercel.app"
+          },
+          {
+            "label": "网站",
+            "value": "www.safhira.vercel.app",
+            "href": "https://www.safhira.vercel.app"
+          }
         ],
         "footer": "我们会尽力在 14 天内回复隐私相关咨询。感谢你信任 Safhira，陪伴你进行安全、以证据为本的性健康学习。"
       }
@@ -452,10 +496,22 @@
       "tryHint": "点击“再试一次”重新进行测验。"
     },
     "achievements": {
-      "gold": {"label": "金", "desc": "满分！"},
-      "silver": {"label": "银", "desc": "做得很好！"},
-      "bronze": {"label": "铜", "desc": "不错的尝试！"},
-      "keepLearning": {"label": "继续学习", "desc": "再试一次来提升"}
+      "gold": {
+        "label": "金",
+        "desc": "满分！"
+      },
+      "silver": {
+        "label": "银",
+        "desc": "做得很好！"
+      },
+      "bronze": {
+        "label": "铜",
+        "desc": "不错的尝试！"
+      },
+      "keepLearning": {
+        "label": "继续学习",
+        "desc": "再试一次来提升"
+      }
     },
     "tooltips": {
       "clickCard": "💡 点击任意卡片了解谣言背后的真相！",
@@ -503,28 +559,28 @@
       "subtitle": "提供全面、无评判的 STI 信息，帮助你做出明智健康决策。知识让你更有力量。",
       "imageAlt": "与医疗与健康相关的插画"
     },
-  "support": {
-    "title": "你正在迈出积极一步",
-    "text": "学习 STI 是负责任且有益健康的做法。性健康是整体健康的一部分。"
-  },
-  "sections": {
-    "learn": "先掌握核心知识",
-    "learnDescription": "观看一段短视频，了解为何及早筛检重要，以及如何照顾你的性健康。",
-    "guides": "深入学习导览模块",
-    "guidesDescription": "探索聚焦模块，帮助你建立预防习惯并理解本地 STI 趋势。",
-    "exploreDescription": "按严重程度、可治疗性与类型浏览疾病，了解可能需要的支援方式。",
-    "resources": "需要时及时获得协助",
-    "resourcesDescription": "寻找保密的医疗资源与贴心提醒，在预约前先知晓会遇到什么。"
-  },
-  "grid": {
-    "title": "常见性传播感染"
-  },
-  "video": {
-    "title": "为什么 STI 检测很重要",
-    "description": "这段短片说明早期筛查与治疗如何守护你和伴侣的健康。",
-    "caption": "视频来源：STI 全面介绍"
-  },
-  "modules": {
+    "support": {
+      "title": "你正在迈出积极一步",
+      "text": "学习 STI 是负责任且有益健康的做法。性健康是整体健康的一部分。"
+    },
+    "sections": {
+      "learn": "先掌握核心知识",
+      "learnDescription": "观看一段短视频，了解为何及早筛检重要，以及如何照顾你的性健康。",
+      "guides": "深入学习导览模块",
+      "guidesDescription": "探索聚焦模块，帮助你建立预防习惯并理解本地 STI 趋势。",
+      "exploreDescription": "按严重程度、可治疗性与类型浏览疾病，了解可能需要的支援方式。",
+      "resources": "需要时及时获得协助",
+      "resourcesDescription": "寻找保密的医疗资源与贴心提醒，在预约前先知晓会遇到什么。"
+    },
+    "grid": {
+      "title": "常见性传播感染"
+    },
+    "video": {
+      "title": "为什么 STI 检测很重要",
+      "description": "这段短片说明早期筛查与治疗如何守护你和伴侣的健康。",
+      "caption": "视频来源：STI 全面介绍"
+    },
+    "modules": {
       "prevention": {
         "badge": "预防学习模块"
       },
@@ -638,8 +694,7 @@
     "startLearning": "开始学习",
     "review": "复习",
     "continue": "继续"
-  }
-  ,
+  },
   "Chat": {
     "page": {
       "loading": "正在加载聊天…",
@@ -814,8 +869,7 @@
         }
       }
     }
-  }
-  ,
+  },
   "STIDetail": {
     "back": "返回 STI 总览",
     "risk": "风险",
@@ -908,8 +962,7 @@
         "y": "发病率（每10万人）"
       }
     }
-  }
-  ,
+  },
   "Prevention": {
     "hero": {
       "title": "STI 预防与安全性行为",
@@ -961,12 +1014,16 @@
         "who": {
           "title": "世界卫生组织（WHO）",
           "desc": "用于制定本内容的 STI 预防与治疗全球标准与指南。",
-          "links": ["WHO – 性传播感染（STIs）"]
+          "links": [
+            "WHO – 性传播感染（STIs）"
+          ]
         },
         "moh": {
           "title": "马来西亚卫生部",
           "desc": "适配本地语境的马来西亚 STI 预防与治疗临床指南。",
-          "links": ["卫生部（MOH）– 官方门户"]
+          "links": [
+            "卫生部（MOH）– 官方门户"
+          ]
         },
         "cdc": {
           "title": "美国疾控中心（CDC）",
@@ -978,7 +1035,9 @@
         }
       },
       "extra": {
-        "moh": {"link": "马来西亚卫生部（MOH）– 官方门户"},
+        "moh": {
+          "link": "马来西亚卫生部（MOH）– 官方门户"
+        },
         "maf": {
           "title": "马来西亚艾滋病基金会（MAF）",
           "desc": "提供咨询、检测与支持服务，开展具文化敏感度的关怀与教育项目。",
@@ -995,8 +1054,7 @@
       "title": "需要个性化指导？",
       "text": "我们的 AI 助手可在尊重你具体情况与文化背景的前提下，提供个性化、保密的 STI 预防指导。",
       "button": "与我们的 AI 助手聊天"
-    }
-    ,
+    },
     "lists": {
       "methods": [
         {
@@ -1043,27 +1101,36 @@
         }
       ],
       "practices": [
-        {"category": "性行为前", "practices": [
-          "就性健康与界限进行开放沟通",
-          "一起检测并分享结果",
-          "讨论并达成预防方式的共识",
-          "确保双方都感到被尊重与舒适",
-          "准备好并容易取得的防护用品"
-        ]},
-        {"category": "性行为中", "practices": [
-          "持续且正确地使用屏障方法",
-          "尊重既定界限并与伴侣互相关心",
-          "避免增加组织损伤风险的行为",
-          "使用合适润滑以避免撕裂",
-          "更换活动时使用新的屏障"
-        ]},
-        {"category": "性行为后", "practices": [
-          "妥善处理用过的防护用品",
-          "温和清洁，避免刺激性产品",
-          "留意任何异常症状",
-          "保持关于舒适与健康的沟通",
-          "如有担忧及时就医"
-        ]}
+        {
+          "category": "性行为前",
+          "practices": [
+            "就性健康与界限进行开放沟通",
+            "一起检测并分享结果",
+            "讨论并达成预防方式的共识",
+            "确保双方都感到被尊重与舒适",
+            "准备好并容易取得的防护用品"
+          ]
+        },
+        {
+          "category": "性行为中",
+          "practices": [
+            "持续且正确地使用屏障方法",
+            "尊重既定界限并与伴侣互相关心",
+            "避免增加组织损伤风险的行为",
+            "使用合适润滑以避免撕裂",
+            "更换活动时使用新的屏障"
+          ]
+        },
+        {
+          "category": "性行为后",
+          "practices": [
+            "妥善处理用过的防护用品",
+            "温和清洁，避免刺激性产品",
+            "留意任何异常症状",
+            "保持关于舒适与健康的沟通",
+            "如有担忧及时就医"
+          ]
+        }
       ],
       "comm": {
         "tips": [
@@ -1074,9 +1141,18 @@
           "积极倾听并尊重对方回应"
         ],
         "samples": [
-          {"situation": "讨论检测", "example": "我很在意我们双方的健康。你上次做 STI 检测是什么时候？我在【时间】做过，结果一切正常。"},
-          {"situation": "谈论防护", "example": "使用防护让我更安心。你觉得怎么样？"},
-          {"situation": "设定界限", "example": "我对【具体活动】感到舒适，但想暂缓【其他活动】。你的想法呢？"}
+          {
+            "situation": "讨论检测",
+            "example": "我很在意我们双方的健康。你上次做 STI 检测是什么时候？我在【时间】做过，结果一切正常。"
+          },
+          {
+            "situation": "谈论防护",
+            "example": "使用防护让我更安心。你觉得怎么样？"
+          },
+          {
+            "situation": "设定界限",
+            "example": "我对【具体活动】感到舒适，但想暂缓【其他活动】。你的想法呢？"
+          }
         ],
         "styles": [
           "有些文化偏好含蓄表达",
@@ -1123,34 +1199,84 @@
       "subtitle": "坚持按时用药，并有效管理副作用",
       "regimen": {
         "label": "你的用药方案",
-        "options": {"single": "单次用药", "daily": "每日疗程", "multi": "多药方案"}
+        "options": {
+          "single": "单次用药",
+          "daily": "每日疗程",
+          "multi": "多药方案"
+        }
       },
-      "dos": {"title": "建议"},
-      "donts": {"title": "避免"},
+      "dos": {
+        "title": "建议"
+      },
+      "donts": {
+        "title": "避免"
+      },
       "single": {
         "overview": "单次用药在按处方规定时间准确服用时效果最佳。",
-        "dos": ["如有指示，确认是否与食物/水同服","设置提醒以防忘记","记录任何副作用及感受"],
-        "donts": ["不要分服或与他人分享药物","如呕吐不要自行加量，先咨询医生","如被提示需避免，切勿与酒精同用"]
+        "dos": [
+          "如有指示，确认是否与食物/水同服",
+          "设置提醒以防忘记",
+          "记录任何副作用及感受"
+        ],
+        "donts": [
+          "不要分服或与他人分享药物",
+          "如呕吐不要自行加量，先咨询医生",
+          "如被提示需避免，切勿与酒精同用"
+        ]
       },
       "daily": {
         "overview": "每天同一时间服药。保持一致可提高效果并减少漏服。",
-        "dos": ["把服药与固定习惯绑定（如早餐）","使用提醒和可见的药盒","若副作用影响日常生活，联系医生"],
-        "donts": ["不要擅自加倍服用","感觉好转也不要提前停药","不要将药物分享给他人"]
+        "dos": [
+          "把服药与固定习惯绑定（如早餐）",
+          "使用提醒和可见的药盒",
+          "若副作用影响日常生活，联系医生"
+        ],
+        "donts": [
+          "不要擅自加倍服用",
+          "感觉好转也不要提前停药",
+          "不要将药物分享给他人"
+        ]
       },
       "multi": {
         "overview": "多药方案可能有不同时间/用法。保持简明日程并仔细核对每种药说明。",
-        "dos": ["列清每种药物与对应时间","使用颜色标签或周药盒","如指示冲突，咨询医生/药师"],
-        "donts": ["未经指导不要改变服药顺序","未确认不要与酒精/非处方药同用","不要跳过监测或随访"]
+        "dos": [
+          "列清每种药物与对应时间",
+          "使用颜色标签或周药盒",
+          "如指示冲突，咨询医生/药师"
+        ],
+        "donts": [
+          "未经指导不要改变服药顺序",
+          "未确认不要与酒精/非处方药同用",
+          "不要跳过监测或随访"
+        ]
       }
     },
-    "interactions": {"caution": "药物相互作用：某些药物、酒精和补充剂可能影响安全或疗效。","confirm": "请与医生或药师确认。"},
+    "interactions": {
+      "caution": "药物相互作用：某些药物、酒精和补充剂可能影响安全或疗效。",
+      "confirm": "请与医生或药师确认。"
+    },
     "sideEffects": {
       "title": "副作用管理",
       "commonTitle": "常见/可预期",
       "redFlagTitle": "危险信号/需紧急处理",
-      "common": ["轻度恶心——尝试随餐并少量饮水","头痛——休息、补水；若安全可用简易止痛药","头晕——起身放慢；受影响时避免驾驶","乏力——放缓节奏并注意休息"],
-      "redFlags": ["严重皮疹或荨麻疹","呼吸困难或喘鸣","面部、嘴唇或咽喉肿胀","胸痛、意识混乱或昏厥","高热且不见好转"],
-      "urgent": {"title": "紧急就医","text": "若出现上述危险信号，请及时就医。","resources": "寻求帮助与了解权益"}
+      "common": [
+        "轻度恶心——尝试随餐并少量饮水",
+        "头痛——休息、补水；若安全可用简易止痛药",
+        "头晕——起身放慢；受影响时避免驾驶",
+        "乏力——放缓节奏并注意休息"
+      ],
+      "redFlags": [
+        "严重皮疹或荨麻疹",
+        "呼吸困难或喘鸣",
+        "面部、嘴唇或咽喉肿胀",
+        "胸痛、意识混乱或昏厥",
+        "高热且不见好转"
+      ],
+      "urgent": {
+        "title": "紧急就医",
+        "text": "若出现上述危险信号，请及时就医。",
+        "resources": "寻求帮助与了解权益"
+      }
     },
     "reminders": {
       "title": "用药提醒",
@@ -1162,14 +1288,25 @@
       "removeTime": "移除时间",
       "addTime": "添加时间",
       "days": "提醒星期",
-      "week": {"0": "周日","1": "周一","2": "周二","3": "周三","4": "周四","5": "周五","6": "周六"},
+      "week": {
+        "0": "周日",
+        "1": "周一",
+        "2": "周二",
+        "3": "周三",
+        "4": "周四",
+        "5": "周五",
+        "6": "周六"
+      },
       "snooze": "延后分钟数",
       "snoozeHelp": "设定打盹时暂停提醒的时长。",
       "snoozed": "已暂停至",
       "snoozeNow": "立即延后",
       "pauseFrom": "暂停开始",
       "pauseTo": "暂停结束",
-      "toast": {"title": "到服药时间了","desc": "坚持节奏—完成后标记为已服用。"},
+      "toast": {
+        "title": "到服药时间了",
+        "desc": "坚持节奏—完成后标记为已服用。"
+      },
       "tzChanged": "你的时区已变化，未来提醒将随本地时间调整。",
       "tzDismiss": "知道了",
       "calendar": {
@@ -1179,68 +1316,254 @@
         "eventDesc": "到时间服药了。"
       }
     },
-      "tracking": {
-        "title": "用药记录（本地）",
-        "desc": "将每次服药标记为已服用或已错过。数据仅保存在你的设备，除非你导出。",
-        "next": "下一个：",
-        "allDone": "今天都完成啦",
-        "actions": {"taken": "标记已服用", "missed": "标记已错过"},
-        "status": {"pending": "待处理", "taken": "已服用", "missed": "已错过"},
-        "toast": {"missed": "已标记为错过"}
+    "tracking": {
+      "title": "用药记录（本地）",
+      "desc": "将每次服药标记为已服用或已错过。数据仅保存在你的设备，除非你导出。",
+      "next": "下一个：",
+      "allDone": "今天都完成啦",
+      "actions": {
+        "taken": "标记已服用",
+        "missed": "标记已错过"
       },
+      "status": {
+        "pending": "待处理",
+        "taken": "已服用",
+        "missed": "已错过"
+      },
+      "toast": {
+        "missed": "已标记为错过"
+      }
+    },
     "catchup": {
       "title": "漏服补救建议",
       "neverDoubleDose": "切勿为弥补漏服而加倍服药。",
-      "single": {"summary": "单次用药：尽快服用，除非另有医嘱。","details": "若错过单次用药，请在当天想起时尽快服用。如短时间内呕吐，请联系医生获得建议——不要自行重复用药。"},
-      "daily": {"summary": "每日疗程：晚于常规时间不足12小时，立即补服；超过则跳过并按时继续。","details": "若晚于12小时以内，立刻服用并回到常规时间；若超过12小时，跳过该次，按平常时间继续下一次。"},
-      "multi": {"summary": "多药方案：遵循各药物的补服说明，并与医生确认。","details": "多药方案请按每种药物的补救指引执行。如不确定，跳过漏服剂量，调整前先咨询医生。"}
+      "single": {
+        "summary": "单次用药：尽快服用，除非另有医嘱。",
+        "details": "若错过单次用药，请在当天想起时尽快服用。如短时间内呕吐，请联系医生获得建议——不要自行重复用药。"
+      },
+      "daily": {
+        "summary": "每日疗程：晚于常规时间不足12小时，立即补服；超过则跳过并按时继续。",
+        "details": "若晚于12小时以内，立刻服用并回到常规时间；若超过12小时，跳过该次，按平常时间继续下一次。"
+      },
+      "multi": {
+        "summary": "多药方案：遵循各药物的补服说明，并与医生确认。",
+        "details": "多药方案请按每种药物的补救指引执行。如不确定，跳过漏服剂量，调整前先咨询医生。"
+      }
     },
-    "governance": {"title": "内容治理：","reviewed": "已由医学审核；仅供教育用途。","lastReviewed": "最后审核：2025‑01‑01"},
-    "sources": {"title": "来源：","items": ["WHO STI 指南（摘要）","CDC 2021 年 STI 治疗指南"]},
-    "privacy": {"clearLocal": "清除本地数据"},
+    "governance": {
+      "title": "内容治理：",
+      "reviewed": "已由医学审核；仅供教育用途。",
+      "lastReviewed": "最后审核：2025‑01‑01"
+    },
+    "sources": {
+      "title": "来源：",
+      "items": [
+        "WHO STI 指南（摘要）",
+        "CDC 2021 年 STI 治疗指南"
+      ]
+    },
+    "privacy": {
+      "clearLocal": "清除本地数据"
+    },
     "lifestyle": {
       "title": "积极生活方式",
       "subtitle": "经医学审核的故事与贴士，涵盖心理健康、关系、运动、饮食、应对污名等，帮助你与 STI 共处并活得更好。",
-      "tabs": {"all": "全部", "bookmarks": "已收藏"},
+      "tabs": {
+        "all": "全部",
+        "bookmarks": "已收藏"
+      },
       "lastReviewed": "最后审核",
-      "actions": {"view": "查看","bookmark": "收藏","bookmarked": "已收藏","report": "举报","close": "关闭","steps": "可执行步骤"},
-      "toast": {"bookmarked": "已保存用于离线阅读","unbookmarked": "已从收藏移除","reported": "已举报，已在本设备隐藏"},
-      "contentWarning": {"short": "敏感","title": "内容提示","desc": "本故事包含可能令人不适的敏感话题。我们同时提供相关支持资源。","continue": "继续"},
-      "resources": {"title": "支持与资源"},
+      "actions": {
+        "view": "查看",
+        "bookmark": "收藏",
+        "bookmarked": "已收藏",
+        "report": "举报",
+        "close": "关闭",
+        "steps": "可执行步骤"
+      },
+      "toast": {
+        "bookmarked": "已保存用于离线阅读",
+        "unbookmarked": "已从收藏移除",
+        "reported": "已举报，已在本设备隐藏"
+      },
+      "contentWarning": {
+        "short": "敏感",
+        "title": "内容提示",
+        "desc": "本故事包含可能令人不适的敏感话题。我们同时提供相关支持资源。",
+        "continue": "继续"
+      },
+      "resources": {
+        "title": "支持与资源"
+      },
       "emptyBookmarks": "暂时没有收藏",
-      "report": {"title": "要举报此内容吗？","desc": "我们会在你的设备上将其隐藏，并发送不含个人信息的审核信号。","cancel": "取消","confirm": "举报"},
+      "report": {
+        "title": "要举报此内容吗？",
+        "desc": "我们会在你的设备上将其隐藏，并发送不含个人信息的审核信号。",
+        "cancel": "取消",
+        "confirm": "举报"
+      },
       "stories": {
-        "mental": {"badge": "心理健康","title": "治疗期间照顾你的心","summary": "用现实可行的日常安排来管理压力、情绪与睡眠，并坚持治疗。","steps": ["建立温和规律：固定作息、短时散步、晒晒太阳","使用简单心情记录；必要时与医生分享趋势","焦虑时做3–5分钟呼吸或地气练习","减少负面刷屏，选择支持性、积极的空间","感到不堪时联系信任的人或求助热线"],"sources": [{"label": "WHO：心理健康", "url": "https://www.who.int/health-topics/mental-health"},{"label": "马来西亚卫生部（MOH）", "url": "https://www.moh.gov.my/"}]},
-        "relationships": {"badge": "亲密关系","title": "保持连接与获得支持","summary": "与伴侣、朋友、家人沟通需求、界限与支持的实用技巧。","steps": ["选择安静私密的时机交流，营造平和氛围","告诉对方什么方式最能支持你：提醒、关心或安静陪伴","使用‘我’的表达，具体说明界限与需要","邀请对方提问，并附上可信的参考资源","共同庆祝小进步（如按时复诊、完成用药）"],"sources": [{"label": "CDC：健康的亲密关系", "url": "https://www.cdc.gov/violenceprevention/healthyrelationships/index.html"},{"label": "PT Foundation（马来西亚）", "url": "https://www.ptfmalaysia.org/"}]},
-        "stigma": {"badge": "应对污名","title": "以慈悲之心面对污名","summary": "保护自我、反驳谣言并在需要时寻求帮助的方法。","steps": ["请记住：感染 STI 是健康状况，不是道德标签","整理你的信息来源；关注科学、友善的账号","准备温和事实，在你觉得安全时澄清误解","若内容触发不适，先暂停、稳住自己、寻找支持性空间","若情绪困扰，请联系本地热线或医疗提供者"],"sources": [{"label": "UNAIDS：污名与歧视", "url": "https://www.unaids.org/en/topic/stigma"},{"label": "Befrienders KL", "url": "https://www.befrienders.org.my/"}]},
-        "work": {"badge": "工作与学习","title": "在治疗期间平衡工作或学习","summary": "在关注健康的同时，实际地安排时间、精力与隐私。","steps": ["把用药时间安排在休息或用餐前后","设定温和目标；需要时沟通边界","使用提醒，并随身携带小工具包","进行短暂的活动或休息来恢复精力","在安全的情况下向可信的主管或辅导员求助"],"sources": [{"label": "WHO：工作场所与健康", "url": "https://www.who.int/news-room/fact-sheets/detail/mental-disorders"},{"label": "马来西亚社会保险机构（SOCSO）", "url": "https://www.perkeso.gov.my/"}]},
-        "exercise": {"badge": "运动与身心","title": "温和运动与自我照护","summary": "通过简易运动、休息与饮食来支持康复与情绪。","steps": ["从轻度活动开始：步行、拉伸或呼吸练习","补充水分，选择让你感觉良好的均衡饮食","倾听身体信号；需要时休息","循序渐进，重视坚持而非强度","在进行重大改变前先咨询医生"],"sources": [{"label": "CDC：运动基础", "url": "https://www.cdc.gov/physicalactivity/basics/index.htm"},{"label": "MOH：营养指南", "url": "https://www.moh.gov.my/"}]}
+        "mental": {
+          "badge": "心理健康",
+          "title": "治疗期间照顾你的心",
+          "summary": "用现实可行的日常安排来管理压力、情绪与睡眠，并坚持治疗。",
+          "steps": [
+            "建立温和规律：固定作息、短时散步、晒晒太阳",
+            "使用简单心情记录；必要时与医生分享趋势",
+            "焦虑时做3–5分钟呼吸或地气练习",
+            "减少负面刷屏，选择支持性、积极的空间",
+            "感到不堪时联系信任的人或求助热线"
+          ],
+          "sources": [
+            {
+              "label": "WHO：心理健康",
+              "url": "https://www.who.int/health-topics/mental-health"
+            },
+            {
+              "label": "马来西亚卫生部（MOH）",
+              "url": "https://www.moh.gov.my/"
+            }
+          ]
+        },
+        "relationships": {
+          "badge": "亲密关系",
+          "title": "保持连接与获得支持",
+          "summary": "与伴侣、朋友、家人沟通需求、界限与支持的实用技巧。",
+          "steps": [
+            "选择安静私密的时机交流，营造平和氛围",
+            "告诉对方什么方式最能支持你：提醒、关心或安静陪伴",
+            "使用‘我’的表达，具体说明界限与需要",
+            "邀请对方提问，并附上可信的参考资源",
+            "共同庆祝小进步（如按时复诊、完成用药）"
+          ],
+          "sources": [
+            {
+              "label": "CDC：健康的亲密关系",
+              "url": "https://www.cdc.gov/violenceprevention/healthyrelationships/index.html"
+            },
+            {
+              "label": "PT Foundation（马来西亚）",
+              "url": "https://www.ptfmalaysia.org/"
+            }
+          ]
+        },
+        "stigma": {
+          "badge": "应对污名",
+          "title": "以慈悲之心面对污名",
+          "summary": "保护自我、反驳谣言并在需要时寻求帮助的方法。",
+          "steps": [
+            "请记住：感染 STI 是健康状况，不是道德标签",
+            "整理你的信息来源；关注科学、友善的账号",
+            "准备温和事实，在你觉得安全时澄清误解",
+            "若内容触发不适，先暂停、稳住自己、寻找支持性空间",
+            "若情绪困扰，请联系本地热线或医疗提供者"
+          ],
+          "sources": [
+            {
+              "label": "UNAIDS：污名与歧视",
+              "url": "https://www.unaids.org/en/topic/stigma"
+            },
+            {
+              "label": "Befrienders KL",
+              "url": "https://www.befrienders.org.my/"
+            }
+          ]
+        },
+        "work": {
+          "badge": "工作与学习",
+          "title": "在治疗期间平衡工作或学习",
+          "summary": "在关注健康的同时，实际地安排时间、精力与隐私。",
+          "steps": [
+            "把用药时间安排在休息或用餐前后",
+            "设定温和目标；需要时沟通边界",
+            "使用提醒，并随身携带小工具包",
+            "进行短暂的活动或休息来恢复精力",
+            "在安全的情况下向可信的主管或辅导员求助"
+          ],
+          "sources": [
+            {
+              "label": "WHO：工作场所与健康",
+              "url": "https://www.who.int/news-room/fact-sheets/detail/mental-disorders"
+            },
+            {
+              "label": "马来西亚社会保险机构（SOCSO）",
+              "url": "https://www.perkeso.gov.my/"
+            }
+          ]
+        },
+        "exercise": {
+          "badge": "运动与身心",
+          "title": "温和运动与自我照护",
+          "summary": "通过简易运动、休息与饮食来支持康复与情绪。",
+          "steps": [
+            "从轻度活动开始：步行、拉伸或呼吸练习",
+            "补充水分，选择让你感觉良好的均衡饮食",
+            "倾听身体信号；需要时休息",
+            "循序渐进，重视坚持而非强度",
+            "在进行重大改变前先咨询医生"
+          ],
+          "sources": [
+            {
+              "label": "CDC：运动基础",
+              "url": "https://www.cdc.gov/physicalactivity/basics/index.htm"
+            },
+            {
+              "label": "MOH：营养指南",
+              "url": "https://www.moh.gov.my/"
+            }
+          ]
+        }
       }
     },
     "lifestyleSources": {
       "mental": [
-        {"label": "世卫组织：心理健康", "url": "https://www.who.int/health-topics/mental-health"},
-        {"label": "马来西亚卫生部", "url": "https://www.moh.gov.my/"}
+        {
+          "label": "世卫组织：心理健康",
+          "url": "https://www.who.int/health-topics/mental-health"
+        },
+        {
+          "label": "马来西亚卫生部",
+          "url": "https://www.moh.gov.my/"
+        }
       ],
       "work": [
-        {"label": "世卫组织：工作场所健康", "url": "https://www.who.int/news-room/fact-sheets/detail/mental-disorders"},
-        {"label": "马来西亚社会保障机构（SOCSO）", "url": "https://www.perkeso.gov.my/"}
+        {
+          "label": "世卫组织：工作场所健康",
+          "url": "https://www.who.int/news-room/fact-sheets/detail/mental-disorders"
+        },
+        {
+          "label": "马来西亚社会保障机构（SOCSO）",
+          "url": "https://www.perkeso.gov.my/"
+        }
       ],
       "exercise": [
-        {"label": "美国疾控中心：身体活动基础", "url": "https://www.cdc.gov/physicalactivity/basics/index.htm"},
-        {"label": "马来西亚卫生部：营养指南", "url": "https://www.moh.gov.my/"}
+        {
+          "label": "美国疾控中心：身体活动基础",
+          "url": "https://www.cdc.gov/physicalactivity/basics/index.htm"
+        },
+        {
+          "label": "马来西亚卫生部：营养指南",
+          "url": "https://www.moh.gov.my/"
+        }
       ]
     },
     "partner": {
       "title": "与您的伴侣沟通",
       "subtitle": "用尊重的方式沟通并彼此保护，附带按 STI 类型定制的更安全性行为指南。",
-      "tabs": {"templates": "消息模板", "safer": "更安全性行为"},
+      "tabs": {
+        "templates": "消息模板",
+        "safer": "更安全性行为"
+      },
       "templates": {
         "title": "沟通模板",
         "desc": "选择并自定义合适的消息模板，帮助你与伴侣沟通。",
         "label": "消息模板",
         "choose": "选择模板",
-        "kinds": {"gentle": "温和与支持", "direct": "直接与清晰", "text": "简短短信"},
+        "kinds": {
+          "gentle": "温和与支持",
+          "direct": "直接与清晰",
+          "text": "简短短信"
+        },
         "note": "你的消息仅保存在本设备上，不会被保存到服务器。",
         "messageLabel": "自定义你的消息",
         "help": "可以随意修改模板。离开本页后不会保存任何内容。",
@@ -1285,15 +1608,46 @@
         "desc": "根据你的 STI 类型获取更具体的建议，并找到检测资源。",
         "stiLabel": "STI 类型",
         "chooseSti": "选择一种 STI",
-        "types": {"chlamydia": "衣原体感染", "gonorrhea": "淋病", "syphilis": "梅毒", "hiv": "HIV", "herpes": "疱疹（HSV）"},
+        "types": {
+          "chlamydia": "衣原体感染",
+          "gonorrhea": "淋病",
+          "syphilis": "梅毒",
+          "hiv": "HIV",
+          "herpes": "疱疹（HSV）"
+        },
         "checklistTitle": "更安全性行为清单",
         "uuNote": "HIV：当病毒载量不可检测（U=U）时，不会通过性行为传播。请坚持治疗并遵循临床医嘱。",
         "checklists": {
-          "chlamydia": ["所有性行为均正确使用安全套或口腔薄膜","单次给药后满7天或完成疗程前避免性行为","3个月后或按医嘱复检","尊重地告知近期伴侣，并提供检测信息"],
-          "gonorrhea": ["口交、阴道交与肛交均使用安全套/口腔薄膜","治疗完成且症状消失前避免性行为","3个月后或更早按医嘱复检","如症状持续，请就医咨询"],
-          "syphilis": ["使用安全套/口腔薄膜；避免与溃疡任何接触","按医生建议的时间窗再恢复性行为","按分期安排复检；遵循医生计划","以尊重方式告知并支持伴侣检测"],
-          "hiv": ["使用安全套；HIV 阴性伴侣可考虑 PrEP","坚持抗逆转录病毒治疗并监测病毒载量（U=U）","不要共用针具或器械","若近期可能暴露，咨询 PEP"],
-          "herpes": ["爆发期避免性行为；可考虑每日抑制治疗","使用安全套/口腔薄膜；留意皮肤接触传播风险","讨论诱因管理与伴侣保护","了解前驱症状迹象并暂缓性行为"]
+          "chlamydia": [
+            "所有性行为均正确使用安全套或口腔薄膜",
+            "单次给药后满7天或完成疗程前避免性行为",
+            "3个月后或按医嘱复检",
+            "尊重地告知近期伴侣，并提供检测信息"
+          ],
+          "gonorrhea": [
+            "口交、阴道交与肛交均使用安全套/口腔薄膜",
+            "治疗完成且症状消失前避免性行为",
+            "3个月后或更早按医嘱复检",
+            "如症状持续，请就医咨询"
+          ],
+          "syphilis": [
+            "使用安全套/口腔薄膜；避免与溃疡任何接触",
+            "按医生建议的时间窗再恢复性行为",
+            "按分期安排复检；遵循医生计划",
+            "以尊重方式告知并支持伴侣检测"
+          ],
+          "hiv": [
+            "使用安全套；HIV 阴性伴侣可考虑 PrEP",
+            "坚持抗逆转录病毒治疗并监测病毒载量（U=U）",
+            "不要共用针具或器械",
+            "若近期可能暴露，咨询 PEP"
+          ],
+          "herpes": [
+            "爆发期避免性行为；可考虑每日抑制治疗",
+            "使用安全套/口腔薄膜；留意皮肤接触传播风险",
+            "讨论诱因管理与伴侣保护",
+            "了解前驱症状迹象并暂缓性行为"
+          ]
         }
       },
       "resources": {
@@ -1304,17 +1658,69 @@
         "linksTitle": "实用链接",
         "privacyTitle": "隐私说明",
         "privacy": "位置为可选；选择仅保存在你的设备。",
-        "regions": {"kl": "吉隆坡/雪兰莪", "penang": "槟城", "johor": "柔佛", "sabah": "沙巴", "sarawak": "砂拉越"},
-        "generic": [{"label": "MOH Malaysia – Sexual Health info", "url": "https://www.moh.gov.my/"},{"label": "PT Foundation (Testing & Support)", "url": "https://www.ptfmalaysia.org/"},{"label": "WHO Sexual Health", "url": "https://www.who.int/health-topics/sexual-health"}],
+        "regions": {
+          "kl": "吉隆坡/雪兰莪",
+          "penang": "槟城",
+          "johor": "柔佛",
+          "sabah": "沙巴",
+          "sarawak": "砂拉越"
+        },
+        "generic": [
+          {
+            "label": "MOH Malaysia – Sexual Health info",
+            "url": "https://www.moh.gov.my/"
+          },
+          {
+            "label": "PT Foundation (Testing & Support)",
+            "url": "https://www.ptfmalaysia.org/"
+          },
+          {
+            "label": "WHO Sexual Health",
+            "url": "https://www.who.int/health-topics/sexual-health"
+          }
+        ],
         "byRegion": {
-          "kl": [{"label": "Klinik Kesihatan (KL) – Sexual Health", "url": "https://www.moh.gov.my/"},{"label": "PT Foundation Testing (KL)", "url": "https://www.ptfmalaysia.org/"}],
-          "penang": [{"label": "Penang State Health – Clinics", "url": "https://jknpenang.moh.gov.my/"}],
-          "johor": [{"label": "Johor State Health – Clinics", "url": "https://jknjohor.moh.gov.my/"}],
-          "sabah": [{"label": "Sabah State Health – Clinics", "url": "https://jkknsabah.moh.gov.my/"}],
-          "sarawak": [{"label": "Sarawak State Health – Clinics", "url": "https://jknsarawak.moh.gov.my/"}]
+          "kl": [
+            {
+              "label": "Klinik Kesihatan (KL) – Sexual Health",
+              "url": "https://www.moh.gov.my/"
+            },
+            {
+              "label": "PT Foundation Testing (KL)",
+              "url": "https://www.ptfmalaysia.org/"
+            }
+          ],
+          "penang": [
+            {
+              "label": "Penang State Health – Clinics",
+              "url": "https://jknpenang.moh.gov.my/"
+            }
+          ],
+          "johor": [
+            {
+              "label": "Johor State Health – Clinics",
+              "url": "https://jknjohor.moh.gov.my/"
+            }
+          ],
+          "sabah": [
+            {
+              "label": "Sabah State Health – Clinics",
+              "url": "https://jkknsabah.moh.gov.my/"
+            }
+          ],
+          "sarawak": [
+            {
+              "label": "Sarawak State Health – Clinics",
+              "url": "https://jknsarawak.moh.gov.my/"
+            }
+          ]
         }
       },
-      "legal": {"title": "法律注意事项", "note": "各地法律与义务可能不同。本内容为一般性指导，非法律建议。","linkLabel": "了解更多"}
+      "legal": {
+        "title": "法律注意事项",
+        "note": "各地法律与义务可能不同。本内容为一般性指导，非法律建议。",
+        "linkLabel": "了解更多"
+      }
     }
   },
   "ProviderSearch": {
@@ -1428,6 +1834,188 @@
       "viewInGoogleMaps": "在谷歌地图中查看",
       "searchInGoogleMaps": "在谷歌地图中搜索",
       "notAvailable": "地图不可用"
+    }
+  },
+  "Simulator": {
+    "landing": {
+      "badge": "Safhira 模拟器",
+      "title": "在安全、剧情驱动的世界中练习艰难对话。",
+      "subtitle": "探索真实的夜生活、诊所和校园情境，尝试不同对话，并收集可执行的反馈，让自信延伸到现实生活。",
+      "cta": {
+        "primary": "启动游戏",
+        "secondary": "快速进入"
+      },
+      "highlights": {
+        "practice": {
+          "title": "练习真实对话",
+          "description": "探索多线剧情，在真实场景发生前先演练健康界限与自信沟通。"
+        },
+        "coaching": {
+          "title": "循证辅导引导你前进",
+          "description": "每个场景都映射亲密关系、同辈压力和就医挑战，并提供以公共卫生指南为基础的提示。"
+        },
+        "feedback": {
+          "title": "游玩时即时获得反馈",
+          "description": "追踪安全警示、优势与待改进之处，让你清楚下一次要专注在哪些点。"
+        }
+      },
+      "pillars": {
+        "choose": {
+          "title": "选择你的情境",
+          "description": "与朋友、恋人或医疗专业人士展开对话，并根据你的学习目标调整 NPC 的性格。"
+        },
+        "build": {
+          "title": "打造自信回应",
+          "description": "在低压力的实验空间练习说“不要”、寻求支持或提出就医需求。"
+        },
+        "review": {
+          "title": "快速回顾与迭代",
+          "description": "使用快捷工具微调提示、测试新策略，并把有效话术带回完整模拟中。"
+        }
+      },
+      "liveFeedback": {
+        "badge": "实时反馈",
+        "description": "每回合都会更新摘要、评分与安全提醒。"
+      }
+    },
+    "npcList": {
+      "badge": "模拟器 NPC 名单",
+      "title": "在开场前认识所有教练、伙伴与挑战者。",
+      "subtitle": "先了解每个情境背后的角色，再立即进入对话练习。选择一个 NPC 体验他们的故事，或使用快捷工具即时自定义提示。",
+      "startChat": "开始对话"
+    },
+    "chat": {
+      "back": "返回角色列表",
+      "badge": "模拟练习",
+      "title": "与 {npcName} 对话",
+      "scenarioId": "情境编号 · {scenarioId}"
+    },
+    "game": {
+      "loading": "正在加载 Safhira 模拟游戏..."
+    },
+    "gameScenes": {
+      "preload": {
+        "loading": "加载中..."
+      },
+      "title": {
+        "subtitle": "模拟游戏",
+        "start": "开始游戏",
+        "instructions": "操作指南"
+      },
+      "gender": {
+        "title": "选择角色性别",
+        "boy": "男生",
+        "girl": "女生",
+        "back": "返回标题画面"
+      },
+      "instruction": {
+        "title": "玩法说明",
+        "sections": {
+          "movement": {
+            "title": "移动",
+            "keyboard": "* W / 上方向键：向上移动 \n* S / 下方向键：向下移动 \n* A / 左方向键：向左移动 \n* D / 右方向键：向右移动",
+            "touch": "* 拖动摇杆即可移动角色 \n* 可向上、下、左、右四个方向移动 \n* 松开摇杆即可停下"
+          },
+          "interaction": {
+            "title": "互动",
+            "keyboard": "* 走近 NPC 并按下 SPACE / ENTER 键进行互动 \n* 不同 NPC 会触发不同情景",
+            "touch": "* 走近 NPC 并轻触即可互动 \n* 不同 NPC 会触发不同情景"
+          },
+          "minimap": {
+            "title": "小地图",
+            "description": "* 左上角的小地图显示你的周围环境 \n* 红点：你的角色 \n* 黄点：NPC \n* 绿色矩形：当前视野范围"
+          }
+        },
+        "back": "返回标题画面"
+      },
+      "game": {
+        "menu": "菜单"
+      }
+    },
+    "overlay": {
+      "close": "关闭对话窗口",
+      "ready": "准备好练习了吗？",
+      "chatWith": "与 {name} 对话",
+      "setting": "情境",
+      "npc": "NPC",
+      "learningGoals": "学习目标",
+      "start": "开始对话",
+      "notNow": "稍后再说",
+      "howItWorks": {
+        "title": "使用说明",
+        "items": [
+          "在安全空间练习回应，NPC 会根据你的回答做出调整。",
+          "你将即时看到指导、信心与拒绝能力评分。",
+          "完成对话即可解锁完整反馈报告。"
+        ]
+      },
+      "backToPreview": "返回预览"
+    },
+    "chatPractice": {
+      "activeNpc": "当前 NPC",
+      "labels": {
+        "status": "状态",
+        "scenario": "情景"
+      },
+      "status": {
+        "complete": "已完成",
+        "inProgress": "进行中",
+        "notStarted": "未开始"
+      },
+      "metrics": {
+        "refusal": "拒绝能力：{score}%",
+        "confidence": "信心：{score}%"
+      },
+      "processing": {
+        "awaiting": "等待 NPC 回应…",
+        "finalizing": "正在生成最终报告…"
+      },
+      "conversationComplete": "对话已完成",
+      "conversationCompleteWithReason": "对话已完成 · {reason}",
+      "buttons": {
+        "reset": "重置会话",
+        "finalScores": "获取最终评分",
+        "finalScoresLoading": "正在生成…",
+        "viewReport": "查看最终报告",
+        "send": "发送",
+        "sending": "发送中…"
+      },
+      "finalReport": {
+        "ready": "最终报告已准备好，包含个性化指导。",
+        "locked": "完成整个会话即可解锁最终报告。"
+      },
+      "summaryHint": "每次交流后都会刷新摘要与评分。",
+      "placeholder": "写下你给 {name} 的信息…",
+      "thinking": "思考中…",
+      "safetyAlerts": "安全提醒",
+      "rawReport": "查看原始报告 JSON",
+      "dialog": {
+        "title": "最终报告",
+        "description": "深入了解你的表现，并获得个性化的下一步建议。",
+        "sections": {
+          "strengths": "优势",
+          "areas": "待提升之处",
+          "recommended": "建议练习"
+        },
+        "close": "关闭",
+        "download": "下载报告 PDF"
+      },
+      "pdf": {
+        "title": "模拟最终报告",
+        "meta": "与 {name} 对话 · {label}",
+        "generated": "生成时间：{timestamp}",
+        "sections": {
+          "overall": "整体评估",
+          "highlights": "亮点",
+          "strengths": "优势",
+          "areas": "待提升之处",
+          "recommended": "建议练习"
+        }
+      },
+      "intro": {
+        "fallbackPersona": "我是{name}。",
+        "message": "嗨，我是{name}。{persona} 一起练习{scenario}好吗？"
+      }
     }
   }
 }

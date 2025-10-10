@@ -5,6 +5,7 @@
  */
 import * as Phaser from 'phaser';
 import type { PlayerGender } from '../../../../types/game';
+import { getGameTranslations } from '../utils/gameI18n';
 
 export class GenderSelectionScene extends Phaser.Scene {
   private selectedGender: PlayerGender = 'boy';
@@ -22,6 +23,7 @@ export class GenderSelectionScene extends Phaser.Scene {
 
   create() {
     const { width, height } = this.cameras.main;
+    const { gender: genderTexts } = getGameTranslations();
 
     // Add background image with smart scaling
     const background = this.add.image(width / 2, height / 2, 'simulator-background');
@@ -67,7 +69,7 @@ export class GenderSelectionScene extends Phaser.Scene {
     const buttonFontSize = isSmallScreen ? '16px' : '20px';
 
     // Create title
-    const titleText = this.add.text(width / 2, height * 0.2, 'SELECT GENDER', {
+    const titleText = this.add.text(width / 2, height * 0.2, genderTexts.title, {
       fontSize: titleFontSize,
       color: '#7f2be6',
       fontFamily: '"Press Start 2P", monospace'
@@ -79,7 +81,7 @@ export class GenderSelectionScene extends Phaser.Scene {
     this.createCharacterPreview(width, height);
 
     // Create menu items vertically (shifted down for character preview)
-    this.boyButton = this.add.text(width / 2, height * 0.6, 'BOY', {
+    this.boyButton = this.add.text(width / 2, height * 0.6, genderTexts.boy, {
       fontSize: buttonFontSize,
       color: '#ffffff',
       fontFamily: '"Press Start 2P", monospace'
@@ -87,7 +89,7 @@ export class GenderSelectionScene extends Phaser.Scene {
     this.boyButton.setOrigin(0.5);
     this.boyButton.setDepth(2);
 
-    this.girlButton = this.add.text(width / 2, height * 0.68, 'GIRL', {
+    this.girlButton = this.add.text(width / 2, height * 0.68, genderTexts.girl, {
       fontSize: buttonFontSize,
       color: '#ffffff',
       fontFamily: '"Press Start 2P", monospace'
@@ -95,7 +97,7 @@ export class GenderSelectionScene extends Phaser.Scene {
     this.girlButton.setOrigin(0.5);
     this.girlButton.setDepth(2);
 
-    this.backButton = this.add.text(width / 2, height * 0.76, 'BACK TO TITLE', {
+    this.backButton = this.add.text(width / 2, height * 0.76, genderTexts.back, {
       fontSize: buttonFontSize,
       color: '#ffffff',
       fontFamily: '"Press Start 2P", monospace'

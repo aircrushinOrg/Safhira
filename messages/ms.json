@@ -251,19 +251,58 @@
       "title": "Dalam Dasar Ini",
       "description": "Terus ke bahagian yang paling penting untuk anda.",
       "items": [
-        {"id": "info-we-collect", "label": "Maklumat yang Kami Kumpul"},
-        {"id": "use-of-information", "label": "Cara Kami Menggunakan Maklumat"},
-        {"id": "cookies", "label": "Kuki & Storan Tempatan"},
-        {"id": "ai-conversations", "label": "Perbualan Safhira AI"},
-        {"id": "data-storage", "label": "Penyimpanan & Pemindahan Data"},
-        {"id": "information-sharing", "label": "Perkongsian Maklumat"},
-        {"id": "your-rights", "label": "Hak & Pilihan Anda"},
-        {"id": "data-retention", "label": "Pengekalan Data"},
-        {"id": "security", "label": "Keselamatan"},
-        {"id": "third-party", "label": "Sumber Pihak Ketiga"},
-        {"id": "young-people", "label": "Kanak-kanak & Remaja"},
-        {"id": "changes", "label": "Perubahan pada Dasar Ini"},
-        {"id": "contact", "label": "Hubungi Kami"}
+        {
+          "id": "info-we-collect",
+          "label": "Maklumat yang Kami Kumpul"
+        },
+        {
+          "id": "use-of-information",
+          "label": "Cara Kami Menggunakan Maklumat"
+        },
+        {
+          "id": "cookies",
+          "label": "Kuki & Storan Tempatan"
+        },
+        {
+          "id": "ai-conversations",
+          "label": "Perbualan Safhira AI"
+        },
+        {
+          "id": "data-storage",
+          "label": "Penyimpanan & Pemindahan Data"
+        },
+        {
+          "id": "information-sharing",
+          "label": "Perkongsian Maklumat"
+        },
+        {
+          "id": "your-rights",
+          "label": "Hak & Pilihan Anda"
+        },
+        {
+          "id": "data-retention",
+          "label": "Pengekalan Data"
+        },
+        {
+          "id": "security",
+          "label": "Keselamatan"
+        },
+        {
+          "id": "third-party",
+          "label": "Sumber Pihak Ketiga"
+        },
+        {
+          "id": "young-people",
+          "label": "Kanak-kanak & Remaja"
+        },
+        {
+          "id": "changes",
+          "label": "Perubahan pada Dasar Ini"
+        },
+        {
+          "id": "contact",
+          "label": "Hubungi Kami"
+        }
       ]
     },
     "sections": {
@@ -378,8 +417,16 @@
         "title": "13. Hubungi Kami",
         "body": "Jika anda mempunyai soalan, kebimbangan, atau permintaan berkaitan Dasar Privasi ini, sila hubungi kami:",
         "contacts": [
-          {"label": "E-mel", "value": "info@safhira.vercel.app", "href": "mailto:info@safhira.vercel.app"},
-          {"label": "Laman web", "value": "www.safhira.vercel.app", "href": "https://www.safhira.vercel.app"}
+          {
+            "label": "E-mel",
+            "value": "info@safhira.vercel.app",
+            "href": "mailto:info@safhira.vercel.app"
+          },
+          {
+            "label": "Laman web",
+            "value": "www.safhira.vercel.app",
+            "href": "https://www.safhira.vercel.app"
+          }
         ],
         "footer": "Kami menyasarkan untuk membalas pertanyaan privasi dalam tempoh 14 hari. Terima kasih kerana mempercayai Safhira sebagai teman anda untuk pembelajaran kesihatan seksual yang selamat dan berlandaskan bukti."
       }
@@ -512,28 +559,28 @@
       "subtitle": "Maklumat menyeluruh dan bebas penghakiman tentang jangkitan penyakit kelamin (STI). Pengetahuan membantu anda membuat keputusan kesihatan yang bermaklumat.",
       "imageAlt": "Ilustrasi perubatan yang mewakili penjagaan kesihatan"
     },
-  "support": {
-    "title": "Anda Sedang Melangkah dengan Positif",
-    "text": "Mempelajari STI adalah tindakan bertanggungjawab dan baik untuk kesihatan. Kesihatan seksual ialah sebahagian daripada kesejahteraan."
-  },
-  "sections": {
-    "learn": "Kenali perkara asas",
-    "learnDescription": "Tonton gambaran ringkas tentang kepentingan saringan dan cara menjaga kesihatan seksual anda.",
-    "guides": "Dalami modul berpandu",
-    "guidesDescription": "Terokai modul fokus yang membantu membina rutin pencegahan dan memahami trend STI tempatan.",
-    "exploreDescription": "Semak keadaan mengikut tahap keterukan, kebolehan dirawat dan jenis untuk memahami bentuk sokongan yang diperlukan.",
-    "resources": "Dapatkan sokongan apabila diperlukan",
-    "resourcesDescription": "Cari pilihan penjagaan sulit dan peringatan supaya anda tahu apa yang perlu dijangka sebelum membuat temu janji."
-  },
-  "grid": {
-    "title": "Penyakit STI yang Lazim"
-  },
-  "video": {
-    "title": "Mengapa Saringan STI Penting",
-    "description": "Video ringkas ini menerangkan bagaimana saringan dan rawatan awal memastikan anda serta pasangan kekal sihat.",
-    "caption": "Video ihsan penerangan menyeluruh mengenai STI"
-  },
-  "modules": {
+    "support": {
+      "title": "Anda Sedang Melangkah dengan Positif",
+      "text": "Mempelajari STI adalah tindakan bertanggungjawab dan baik untuk kesihatan. Kesihatan seksual ialah sebahagian daripada kesejahteraan."
+    },
+    "sections": {
+      "learn": "Kenali perkara asas",
+      "learnDescription": "Tonton gambaran ringkas tentang kepentingan saringan dan cara menjaga kesihatan seksual anda.",
+      "guides": "Dalami modul berpandu",
+      "guidesDescription": "Terokai modul fokus yang membantu membina rutin pencegahan dan memahami trend STI tempatan.",
+      "exploreDescription": "Semak keadaan mengikut tahap keterukan, kebolehan dirawat dan jenis untuk memahami bentuk sokongan yang diperlukan.",
+      "resources": "Dapatkan sokongan apabila diperlukan",
+      "resourcesDescription": "Cari pilihan penjagaan sulit dan peringatan supaya anda tahu apa yang perlu dijangka sebelum membuat temu janji."
+    },
+    "grid": {
+      "title": "Penyakit STI yang Lazim"
+    },
+    "video": {
+      "title": "Mengapa Saringan STI Penting",
+      "description": "Video ringkas ini menerangkan bagaimana saringan dan rawatan awal memastikan anda serta pasangan kekal sihat.",
+      "caption": "Video ihsan penerangan menyeluruh mengenai STI"
+    },
+    "modules": {
       "prevention": {
         "badge": "Modul Pembelajaran Pencegahan"
       },
@@ -1790,6 +1837,188 @@
       "viewInGoogleMaps": "Lihat di Google Maps",
       "searchInGoogleMaps": "Cari di Google Maps",
       "notAvailable": "Peta tidak tersedia"
+    }
+  },
+  "Simulator": {
+    "landing": {
+      "badge": "Simulator Safhira",
+      "title": "Berlatih perbualan sukar dalam dunia berasaskan cerita yang selamat.",
+      "subtitle": "Jelajahi senario kehidupan malam, klinik dan kampus yang realistik, cuba pelbagai dialog, dan kumpul maklum balas yang boleh diambil tindakan untuk menambah keyakinan di luar skrin.",
+      "cta": {
+        "primary": "Mulakan permainan",
+        "secondary": "Akses pantas"
+      },
+      "highlights": {
+        "practice": {
+          "title": "Berlatih perbualan sebenar",
+          "description": "Terokai cerita bercabang untuk melatih sempadan sihat dan komunikasi yakin sebelum situasi sebenar berlaku."
+        },
+        "coaching": {
+          "title": "Dipandu oleh bimbingan berasaskan bukti",
+          "description": "Setiap adegan mencerminkan cabaran tentang keintiman, tekanan rakan sebaya dan lawatan klinik dengan tip yang bersandar pada panduan kesihatan awam."
+        },
+        "feedback": {
+          "title": "Maklum balas segera semasa anda bermain",
+          "description": "Jejaki amaran keselamatan, kekuatan dan bidang penambahbaikan supaya anda tahu apa yang perlu diberi tumpuan pada percubaan seterusnya."
+        }
+      },
+      "pillars": {
+        "choose": {
+          "title": "Pilih senario anda",
+          "description": "Masuk ke dalam perbualan dengan rakan, minat romantik atau profesional kesihatan dan sesuaikan personaliti NPC dengan matlamat pembelajaran anda."
+        },
+        "build": {
+          "title": "Bina respons penuh yakin",
+          "description": "Latih untuk mengatakan \"tidak\", meminta sokongan atau mendapatkan rawatan dalam ruang bertekanan rendah yang direka untuk percubaan."
+        },
+        "review": {
+          "title": "Semak dan ulang dengan pantas",
+          "description": "Gunakan alat akses pantas untuk ubah suai prompt, uji strategi baharu dan bawa dialog berjaya kembali ke simulasi penuh."
+        }
+      },
+      "liveFeedback": {
+        "badge": "Maklum balas langsung",
+        "description": "Ringkasan, skor dan amaran keselamatan dikemas kini selepas setiap giliran."
+      }
+    },
+    "npcList": {
+      "badge": "Senarai NPC Simulator",
+      "title": "Temui setiap jurulatih, teman percaya dan pencabar sebelum anda bermula.",
+      "subtitle": "Tinjau personaliti yang membimbing setiap senario, kemudian teruskan ke latihan perbualan. Pilih NPC untuk masuk ke cerita mereka atau gunakan alat pantas untuk sesuaikan prompt secara langsung.",
+      "startChat": "Mulakan sembang"
+    },
+    "chat": {
+      "back": "Kembali ke senarai NPC",
+      "badge": "Latihan simulasi",
+      "title": "Berbual dengan {npcName}",
+      "scenarioId": "ID Senario · {scenarioId}"
+    },
+    "game": {
+      "loading": "Memuatkan Permainan Simulasi Safhira..."
+    },
+    "gameScenes": {
+      "preload": {
+        "loading": "Memuat..."
+      },
+      "title": {
+        "subtitle": "PERMAINAN SIMULASI",
+        "start": "Mulakan Permainan",
+        "instructions": "Arahan"
+      },
+      "gender": {
+        "title": "Pilih Jantina",
+        "boy": "Lelaki",
+        "girl": "Perempuan",
+        "back": "Kembali ke Skrin Utama"
+      },
+      "instruction": {
+        "title": "Cara Bermain",
+        "sections": {
+          "movement": {
+            "title": "Pergerakan",
+            "keyboard": "* Kekunci W / ATAS : Bergerak ke atas \n* Kekunci S / BAWAH : Bergerak ke bawah \n* Kekunci A / KIRI : Bergerak ke kiri \n* Kekunci D / KANAN : Bergerak ke kanan",
+            "touch": "* Seret joystick untuk menggerakkan watak \n* Bergerak dalam empat arah: Atas, Bawah, Kiri, Kanan \n* Lepaskan untuk berhenti bergerak"
+          },
+          "interaction": {
+            "title": "Interaksi",
+            "keyboard": "* Dekati NPC dan tekan SPACE / ENTER untuk berinteraksi \n* Setiap NPC mempunyai senario berbeza",
+            "touch": "* Dekati NPC dan ketik mereka untuk berinteraksi \n* Setiap NPC mempunyai senario berbeza"
+          },
+          "minimap": {
+            "title": "Peta Mini",
+            "description": "* Peta mini di sudut kiri atas menunjukkan persekitaran anda \n* Titik merah: Watak anda \n* Titik kuning: NPC \n* Segi empat hijau: Kawasan pandangan semasa"
+          }
+        },
+        "back": "Kembali ke Skrin Utama"
+      },
+      "game": {
+        "menu": "MENU"
+      }
+    },
+    "overlay": {
+      "close": "Tutup tetingkap perbualan",
+      "ready": "Sedia untuk berlatih?",
+      "chatWith": "Berbual dengan {name}",
+      "setting": "Persekitaran",
+      "npc": "NPC",
+      "learningGoals": "Matlamat pembelajaran",
+      "start": "Mulakan perbualan",
+      "notNow": "Bukan sekarang",
+      "howItWorks": {
+        "title": "Cara ia berfungsi",
+        "items": [
+          "Berlatih respons dalam ruang selamat. NPC menyesuaikan diri dengan jawapan anda.",
+          "Anda akan melihat jurulatih, keyakinan dan skor penolakan secara langsung.",
+          "Tamatkan perbualan untuk membuka laporan maklum balas penuh."
+        ]
+      },
+      "backToPreview": "Kembali ke pratonton"
+    },
+    "chatPractice": {
+      "activeNpc": "NPC Aktif",
+      "labels": {
+        "status": "Status",
+        "scenario": "Senario"
+      },
+      "status": {
+        "complete": "Selesai",
+        "inProgress": "Sedang berlangsung",
+        "notStarted": "Belum bermula"
+      },
+      "metrics": {
+        "refusal": "Penolakan: {score}%",
+        "confidence": "Keyakinan: {score}%"
+      },
+      "processing": {
+        "awaiting": "Menunggu respons NPC…",
+        "finalizing": "Menjana laporan akhir…"
+      },
+      "conversationComplete": "Perbualan tamat",
+      "conversationCompleteWithReason": "Perbualan tamat · {reason}",
+      "buttons": {
+        "reset": "Tetapkan semula sesi",
+        "finalScores": "Dapatkan skor akhir",
+        "finalScoresLoading": "Sedang disiapkan…",
+        "viewReport": "Lihat laporan akhir",
+        "send": "Hantar",
+        "sending": "Menghantar…"
+      },
+      "finalReport": {
+        "ready": "Laporan akhir sedia dengan bimbingan tersuai.",
+        "locked": "Siapkan sesi untuk membuka laporan akhir."
+      },
+      "summaryHint": "Ringkasan dan skor dikemas kini selepas setiap giliran.",
+      "placeholder": "Tulis mesej anda kepada {name}…",
+      "thinking": "Sedang memikirkan…",
+      "safetyAlerts": "Amaran keselamatan",
+      "rawReport": "Lihat JSON laporan mentah",
+      "dialog": {
+        "title": "Laporan akhir",
+        "description": "Tinjau prestasi anda dan langkah seterusnya yang dipersonalisasi.",
+        "sections": {
+          "strengths": "Kekuatan",
+          "areas": "Bidang penambahbaikan",
+          "recommended": "Amalan disyorkan"
+        },
+        "close": "Tutup",
+        "download": "Muat turun laporan PDF"
+      },
+      "pdf": {
+        "title": "Laporan Akhir Simulasi",
+        "meta": "Berbual dengan {name} · {label}",
+        "generated": "Dijana pada {timestamp}",
+        "sections": {
+          "overall": "Penilaian Keseluruhan",
+          "highlights": "Sorotan",
+          "strengths": "Kekuatan",
+          "areas": "Bidang Penambahbaikan",
+          "recommended": "Amalan Disyorkan"
+        }
+      },
+      "intro": {
+        "fallbackPersona": "Saya {name}.",
+        "message": "Hai, saya {name}. {persona} Jom berlatih {scenario}?"
+      }
     }
   }
 }
