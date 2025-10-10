@@ -11,7 +11,7 @@ import { STIChoroplethChart } from './STIChoroplethChart';
 import STITrendsChart from './STITrendsChart';
 import { Card, CardContent } from '../ui/card';
 import { getAllUniqueStates, getAllUniqueDiseases, getAllYearDiseaseIncidences } from '../../actions/prevalence-actions';
-import {useTranslations} from 'next-intl';
+import {useTranslations, useLocale} from 'next-intl';
 
 interface SharedData {
   states: string[];
@@ -26,6 +26,7 @@ export function PrevalenceSection() {
   const isInView = useInView(ref, { once: true, amount: 0.1 });
   const [activeTab, setActiveTab] = useState("choropleth");
   const t = useTranslations('Landing');
+  const locale = useLocale();
   
   // Shared data state
   const [sharedData, setSharedData] = useState<SharedData>({
@@ -41,9 +42,9 @@ export function PrevalenceSection() {
     const fetchSharedData = async () => {
       try {
         const [statesData, diseasesData, incidenceData] = await Promise.all([
-          getAllUniqueStates(),
-          getAllUniqueDiseases(),
-          getAllYearDiseaseIncidences()
+          getAllUniqueStates(locale),
+          getAllUniqueDiseases(locale),
+          getAllYearDiseaseIncidences(locale)
         ]);
         
         // Extract unique years from incidence data
@@ -63,7 +64,7 @@ export function PrevalenceSection() {
     };
 
     fetchSharedData();
-  }, []);
+  }, [locale]);
 
   return (
     <motion.div 

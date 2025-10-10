@@ -189,7 +189,7 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
             </div>
             
             {/* Locale & Theme */}
-            {/* <LocaleSwitcher /> */}
+            <LocaleSwitcher />
             <ThemeToggle />
             
             {/* Mobile menu button */}

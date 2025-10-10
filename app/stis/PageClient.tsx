@@ -11,6 +11,7 @@ import Image from 'next/image'
 import BreadcrumbTrail from '../components/BreadcrumbTrail'
 
 export interface STISummary {
+  id?: number
   slug: string
   name: string
   type: 'Bacterial' | 'Viral' | 'Parasitic'
@@ -234,7 +235,7 @@ export default function PageClient({ stis }: PageClientProps) {
               <div className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {stis.map((sti, index) => (
                   <motion.div
-                    key={sti.slug}
+                    key={sti.id ?? sti.slug}
                     initial={{ opacity: 0, y: 18 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.35, delay: index * 0.05 }}

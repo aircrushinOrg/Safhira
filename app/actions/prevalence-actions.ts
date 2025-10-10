@@ -6,8 +6,13 @@
 "use server";
 
 import { db } from "../db";
-import { prevalence, state, sti } from "../../db/schema";
-import { eq, ne } from "drizzle-orm";
+import { prevalence, state, stateTranslations, sti, stiTranslations } from "../../db/schema";
+import { eq, ne, sql } from "drizzle-orm";
+
+function normalizeLocale(locale?: string): 'en' | 'ms' | 'zh' {
+  const raw = (locale ?? '').toLowerCase();
+  return raw === 'ms' || raw === 'zh' ? (raw as 'ms' | 'zh') : 'en';
+}
 
 export async function getAllUniqueDates(): Promise<number[]> {
   try {
@@ -29,14 +34,19 @@ export async function getAllUniqueDates(): Promise<number[]> {
   }
 }
 
-export async function getAllUniqueDiseases(): Promise<string[]> {
+export async function getAllUniqueDiseases(locale?: string): Promise<string[]> {
   try {
+    const resolved = normalizeLocale(locale);
     const results = await db
       .selectDistinct({
-        disease: sti.name,
+        disease: sql<string>`COALESCE(${stiTranslations.name}, ${sti.name})`,
       })
       .from(prevalence)
       .innerJoin(sti, eq(prevalence.stiId, sti.stiId))
+      .leftJoin(
+        stiTranslations,
+        sql`${stiTranslations.stiId} = ${sti.stiId} AND ${stiTranslations.locale} = ${resolved}`,
+      )
       .orderBy(sti.name);
 
     if (results.length === 0) {
@@ -50,14 +60,19 @@ export async function getAllUniqueDiseases(): Promise<string[]> {
   }
 }
 
-export async function getAllUniqueStates(): Promise<string[]> {
+export async function getAllUniqueStates(locale?: string): Promise<string[]> {
   try {
+    const resolved = normalizeLocale(locale);
     const results = await db
       .selectDistinct({
-        state: state.stateName,
+        state: sql<string>`COALESCE(${stateTranslations.stateName}, ${state.stateName})`,
       })
       .from(prevalence)
       .innerJoin(state, eq(prevalence.stateId, state.stateId))
+      .leftJoin(
+        stateTranslations,
+        sql`${stateTranslations.stateId} = ${state.stateId} AND ${stateTranslations.locale} = ${resolved}`,
+      )
       .where(ne(state.stateName, "Malaysia"))
       .orderBy(state.stateName);
 
@@ -72,18 +87,27 @@ export async function getAllUniqueStates(): Promise<string[]> {
   }
 }
 
-export async function getAllYearDiseaseIncidences(): Promise<{ year: number; disease: string; state: string; incidence: number }[]> {
+export async function getAllYearDiseaseIncidences(locale?: string): Promise<{ year: number; disease: string; state: string; incidence: number }[]> {
   try {
+    const resolved = normalizeLocale(locale);
     const results = await db
       .select({
         year: prevalence.prevalenceYear,
-        disease: sti.name,
-        state: state.stateName,
+        disease: sql<string>`COALESCE(${stiTranslations.name}, ${sti.name})`,
+        state: sql<string>`COALESCE(${stateTranslations.stateName}, ${state.stateName})`,
         incidence: prevalence.prevalenceIncidence,
       })
       .from(prevalence)
       .innerJoin(sti, eq(prevalence.stiId, sti.stiId))
       .innerJoin(state, eq(prevalence.stateId, state.stateId))
+      .leftJoin(
+        stiTranslations,
+        sql`${stiTranslations.stiId} = ${sti.stiId} AND ${stiTranslations.locale} = ${resolved}`,
+      )
+      .leftJoin(
+        stateTranslations,
+        sql`${stateTranslations.stateId} = ${state.stateId} AND ${stateTranslations.locale} = ${resolved}`,
+      )
       .where(ne(state.stateName, "Malaysia"))
       .orderBy(prevalence.prevalenceYear);
 

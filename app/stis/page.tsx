@@ -1,6 +1,8 @@
 import PageClient, { type STISummary } from './PageClient'
 import { db } from '../db'
-import { sti } from '../../db/schema'
+import { sti, stiTranslations } from '../../db/schema'
+import { getLocale } from 'next-intl/server'
+import { sql } from 'drizzle-orm'
 
 function slugify(value: string): string {
   return value
@@ -31,20 +33,29 @@ function truncateText(text: string, maxLength = 220): string {
 }
 
 export default async function STIsPage() {
+  const locale = await getLocale()
   const results = await db
     .select({
-      name: sti.name,
-      type: sti.type,
-      severity: sti.severity,
-      treatability: sti.treatability,
-      treatment: sti.treatment,
-      malaysianContext: sti.malaysianContext,
+      id: sti.stiId,
+      baseName: sti.name,
+      name: sql<string>`COALESCE(${stiTranslations.name}, ${sti.name})`,
+      // Always use base enums for these fields so translation keys remain stable
+      type: sql<string>`${sti.type}`,
+      severity: sql<string>`${sti.severity}`,
+      treatability: sql<string>`${sti.treatability}`,
+      treatment: sql<string>`COALESCE(${stiTranslations.treatment}, ${sti.treatment})`,
+      malaysianContext: sql<string>`COALESCE(${stiTranslations.malaysianContext}, ${sti.malaysianContext})`,
     })
     .from(sti)
+    .leftJoin(
+      stiTranslations,
+      sql`${stiTranslations.stiId} = ${sti.stiId} AND ${stiTranslations.locale} = ${locale}`,
+    )
     .orderBy(sti.name)
 
   const stis: STISummary[] = results.map((item) => ({
-    slug: slugify(item.name),
+    id: Number(item.id),
+    slug: slugify(item.baseName),
     name: item.name,
     type: item.type as STISummary['type'],
     severity: item.severity as STISummary['severity'],

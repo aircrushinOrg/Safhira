@@ -1525,6 +1525,16 @@
         "copied": "Mesej disalin (tidak disimpan)",
         "copyError": "Tidak dapat menyalin ke papan klip",
         "reset": "Tetap semula ke templat",
+        "best": {
+          "title": "Amalan Terbaik",
+          "items": [
+            "Pilih suasana yang selesa dan privasi",
+            "Jujur dan terus terang, namun hormat",
+            "Berikan masa untuk soalan dan perbincangan",
+            "Sediakan sumber rujukan untuk maklumat lanjut",
+            "Ingat: pendedahan sering diwajibkan oleh undang-undang"
+          ]
+        },
         "gentle": "Saya ambil berat tentang anda dan ingin jujur. Saya didiagnosis dengan STI dan sedang mendapatkan rawatan yang betul. Kita boleh berbincang cara melindungi satu sama lain dengan lebih selamat. Saya ada sumber untuk dibaca bersama jika anda mahu.",
         "direct": "Saya perlu memaklumkan bahawa keputusan saya positif untuk STI. Saya mengikuti panduan perubatan. Mari rancang ujian dan guna perlindungan seperti disyorkan.",
         "text": "Hai, saya baru-baru ini didapati positif STI. Saya sedang dirawat. Penting untuk menjalani ujian. Saya boleh kongsi butiran dan sumber."

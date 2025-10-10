@@ -6,16 +6,21 @@
 "use server";
 
 import { db } from "../db";
-import { 
-  sti, 
-  symptom, 
-  stiSymptom, 
-  transmission, 
-  stiTransmission, 
-  healthEffect, 
-  stiHealthEffect, 
-  prevention, 
-  stiPrevention 
+import {
+  sti,
+  stiTranslations,
+  symptom,
+  symptomTranslations,
+  stiSymptom,
+  transmission,
+  transmissionTranslations,
+  stiTransmission,
+  healthEffect,
+  healthEffectTranslations,
+  stiHealthEffect,
+  prevention,
+  preventionTranslations,
+  stiPrevention,
 } from "../../db/schema";
 import { eq, sql } from "drizzle-orm";
 
@@ -55,13 +60,37 @@ export interface STIInfo {
   malaysianContext: string;
 }
 
+function normalizeLocale(locale?: string): 'en' | 'ms' | 'zh' {
+  const raw = (locale ?? '').toLowerCase();
+  return raw === 'ms' || raw === 'zh' ? (raw as 'ms' | 'zh') : 'en';
+}
+
 // Helper function to get all related data for an STI
-async function getSTIWithRelatedData(stiId: number): Promise<STIInfo | null> {
+async function getSTIWithRelatedData(stiId: number, locale?: string): Promise<STIInfo | null> {
   try {
-    // Get basic STI info
+    const resolvedLocale = normalizeLocale(locale);
+
+    // Get basic STI info (localized via left join on translations with fallback)
     const stiData = await db
-      .select()
+      .select({
+        nameEn: sti.name,
+        typeEn: sti.type,
+        severityEn: sti.severity,
+        treatabilityEn: sti.treatability,
+        treatmentEn: sti.treatment,
+        malaysianContextEn: sti.malaysianContext,
+        nameTr: stiTranslations.name,
+        typeTr: stiTranslations.type,
+        severityTr: stiTranslations.severity,
+        treatabilityTr: stiTranslations.treatability,
+        treatmentTr: stiTranslations.treatment,
+        malaysianContextTr: stiTranslations.malaysianContext,
+      })
       .from(sti)
+      .leftJoin(
+        stiTranslations,
+        sql`${stiTranslations.stiId} = ${sti.stiId} AND ${stiTranslations.locale} = ${resolvedLocale}`
+      )
       .where(eq(sti.stiId, stiId))
       .limit(1);
 
@@ -71,62 +100,90 @@ async function getSTIWithRelatedData(stiId: number): Promise<STIInfo | null> {
 
     const stiInfo = stiData[0];
 
-    // Get symptoms grouped by category
+    // Get symptoms grouped by category (localized)
     const symptomsData = await db
       .select({
-        symptomText: symptom.symptomText,
-        category: stiSymptom.stiSymptomCategory
+        symptomTextEn: symptom.symptomText,
+        symptomTextTr: symptomTranslations.symptomText,
+        category: stiSymptom.stiSymptomCategory,
       })
       .from(stiSymptom)
       .innerJoin(symptom, eq(stiSymptom.symptomId, symptom.symptomId))
+      .leftJoin(
+        symptomTranslations,
+        sql`${symptomTranslations.symptomId} = ${symptom.symptomId} AND ${symptomTranslations.locale} = ${resolvedLocale}`
+      )
       .where(eq(stiSymptom.stiId, stiId));
 
-    // Get transmission methods
+    // Get transmission methods (localized)
     const transmissionData = await db
       .select({
-        transmissionText: transmission.transmissionText
+        transmissionTextEn: transmission.transmissionText,
+        transmissionTextTr: transmissionTranslations.transmissionText,
       })
       .from(stiTransmission)
       .innerJoin(transmission, eq(stiTransmission.transmissionId, transmission.transmissionId))
+      .leftJoin(
+        transmissionTranslations,
+        sql`${transmissionTranslations.transmissionId} = ${transmission.transmissionId} AND ${transmissionTranslations.locale} = ${resolvedLocale}`
+      )
       .where(eq(stiTransmission.stiId, stiId));
 
-    // Get health effects
+    // Get health effects (localized)
     const healthEffectsData = await db
       .select({
-        healthEffectText: healthEffect.healthEffectText
+        healthEffectTextEn: healthEffect.healthEffectText,
+        healthEffectTextTr: healthEffectTranslations.healthEffectText,
       })
       .from(stiHealthEffect)
       .innerJoin(healthEffect, eq(stiHealthEffect.healthEffectId, healthEffect.healthEffectId))
+      .leftJoin(
+        healthEffectTranslations,
+        sql`${healthEffectTranslations.healthEffectId} = ${healthEffect.healthEffectId} AND ${healthEffectTranslations.locale} = ${resolvedLocale}`
+      )
       .where(eq(stiHealthEffect.stiId, stiId));
 
-    // Get prevention methods
+    // Get prevention methods (localized)
     const preventionData = await db
       .select({
-        preventionText: prevention.preventionText
+        preventionTextEn: prevention.preventionText,
+        preventionTextTr: preventionTranslations.preventionText,
       })
       .from(stiPrevention)
       .innerJoin(prevention, eq(stiPrevention.preventionId, prevention.preventionId))
+      .leftJoin(
+        preventionTranslations,
+        sql`${preventionTranslations.preventionId} = ${prevention.preventionId} AND ${preventionTranslations.locale} = ${resolvedLocale}`
+      )
       .where(eq(stiPrevention.stiId, stiId));
 
     // Group symptoms by category
     const symptoms = {
-      common: symptomsData.filter(s => s.category === 'common').map(s => s.symptomText),
-      women: symptomsData.filter(s => s.category === 'women').map(s => s.symptomText),
-      men: symptomsData.filter(s => s.category === 'men').map(s => s.symptomText),
-      general: symptomsData.filter(s => s.category === 'general').map(s => s.symptomText)
+      common: symptomsData
+        .filter((s) => s.category === 'common')
+        .map((s) => s.symptomTextTr ?? s.symptomTextEn),
+      women: symptomsData
+        .filter((s) => s.category === 'women')
+        .map((s) => s.symptomTextTr ?? s.symptomTextEn),
+      men: symptomsData
+        .filter((s) => s.category === 'men')
+        .map((s) => s.symptomTextTr ?? s.symptomTextEn),
+      general: symptomsData
+        .filter((s) => s.category === 'general')
+        .map((s) => s.symptomTextTr ?? s.symptomTextEn),
     };
 
     return {
-      name: stiInfo.name,
-      type: stiInfo.type as 'Bacterial' | 'Viral' | 'Parasitic',
-      severity: stiInfo.severity as 'Low' | 'Medium' | 'High',
-      treatability: stiInfo.treatability as 'Curable' | 'Manageable' | 'Preventable',
+      name: stiInfo.nameTr ?? stiInfo.nameEn,
+      type: stiInfo.typeEn as 'Bacterial' | 'Viral' | 'Parasitic',
+      severity: stiInfo.severityEn as 'Low' | 'Medium' | 'High',
+      treatability: stiInfo.treatabilityEn as 'Curable' | 'Manageable' | 'Preventable',
       symptoms,
-      transmission: transmissionData.map(t => t.transmissionText),
-      healthEffects: healthEffectsData.map(h => h.healthEffectText),
-      prevention: preventionData.map(p => p.preventionText),
-      treatment: stiInfo.treatment,
-      malaysianContext: stiInfo.malaysianContext
+      transmission: transmissionData.map((t) => t.transmissionTextTr ?? t.transmissionTextEn),
+      healthEffects: healthEffectsData.map((h) => h.healthEffectTextTr ?? h.healthEffectTextEn),
+      prevention: preventionData.map((p) => p.preventionTextTr ?? p.preventionTextEn),
+      treatment: stiInfo.treatmentTr ?? stiInfo.treatmentEn,
+      malaysianContext: stiInfo.malaysianContextTr ?? stiInfo.malaysianContextEn,
     };
   } catch (error) {
     console.error('Error fetching STI with related data:', error);
@@ -134,7 +191,7 @@ async function getSTIWithRelatedData(stiId: number): Promise<STIInfo | null> {
   }
 }
 
-export async function getAllSTIs(): Promise<STIInfo[]> {
+export async function getAllSTIs(locale?: string): Promise<STIInfo[]> {
   try {
     const results = await db
       .select()
@@ -148,7 +205,7 @@ export async function getAllSTIs(): Promise<STIInfo[]> {
     // Get full details for each STI
     const fullSTIs = await Promise.all(
       results.map(async (stiRecord) => {
-        return await getSTIWithRelatedData(stiRecord.stiId);
+        return await getSTIWithRelatedData(stiRecord.stiId, locale);
       })
     );
 
@@ -161,7 +218,7 @@ export async function getAllSTIs(): Promise<STIInfo[]> {
 }
 
 
-export async function getSTIBySlug(slug: string): Promise<STIInfo | null> {
+export async function getSTIBySlug(slug: string, locale?: string): Promise<STIInfo | null> {
   try {
     const targetSlug = slugify(slug);
     const results = await db
@@ -180,14 +237,14 @@ export async function getSTIBySlug(slug: string): Promise<STIInfo | null> {
       return null;
     }
 
-    return await getSTIWithRelatedData(match.stiId);
+    return await getSTIWithRelatedData(match.stiId, locale);
   } catch (error) {
     console.error(`Error fetching STI with slug ${slug}:`, error);
     throw new Error(`Failed to fetch STI information for ${slug}`);
   }
 }
 
-export async function getSTIByName(name: string): Promise<STIInfo | null> {
+export async function getSTIByName(name: string, locale?: string): Promise<STIInfo | null> {
   try {
     const result = await db
       .select()
@@ -200,14 +257,14 @@ export async function getSTIByName(name: string): Promise<STIInfo | null> {
     }
 
     const stiRecord = result[0];
-    return await getSTIWithRelatedData(stiRecord.stiId);
+    return await getSTIWithRelatedData(stiRecord.stiId, locale);
   } catch (error) {
     console.error(`Error fetching STI ${name}:`, error);
     throw new Error(`Failed to fetch STI information for ${name}`);
   }
 }
 
-export async function getSTIsByType(type: 'Bacterial' | 'Viral' | 'Parasitic'): Promise<STIInfo[]> {
+export async function getSTIsByType(type: 'Bacterial' | 'Viral' | 'Parasitic', locale?: string): Promise<STIInfo[]> {
   try {
     const results = await db
       .select()
@@ -218,7 +275,7 @@ export async function getSTIsByType(type: 'Bacterial' | 'Viral' | 'Parasitic'): 
     // Get full details for each STI
     const fullSTIs = await Promise.all(
       results.map(async (stiRecord) => {
-        return await getSTIWithRelatedData(stiRecord.stiId);
+        return await getSTIWithRelatedData(stiRecord.stiId, locale);
       })
     );
 
@@ -230,7 +287,7 @@ export async function getSTIsByType(type: 'Bacterial' | 'Viral' | 'Parasitic'): 
   }
 }
 
-export async function getSTIsBySeverity(severity: 'Low' | 'Medium' | 'High'): Promise<STIInfo[]> {
+export async function getSTIsBySeverity(severity: 'Low' | 'Medium' | 'High', locale?: string): Promise<STIInfo[]> {
   try {
     const results = await db
       .select()
@@ -241,7 +298,7 @@ export async function getSTIsBySeverity(severity: 'Low' | 'Medium' | 'High'): Pr
     // Get full details for each STI
     const fullSTIs = await Promise.all(
       results.map(async (stiRecord) => {
-        return await getSTIWithRelatedData(stiRecord.stiId);
+        return await getSTIWithRelatedData(stiRecord.stiId, locale);
       })
     );
 

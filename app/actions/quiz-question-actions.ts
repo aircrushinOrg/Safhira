@@ -8,7 +8,7 @@
 "use server";
 
 import { db } from "../db";
-import { quizQuestions } from "../../db/schema";
+import { quizQuestions, quizQuestionTranslations } from "../../db/schema";
 import { eq, sql, and, ilike } from "drizzle-orm";
 
 export interface QuizQuestionRecord {
@@ -32,15 +32,24 @@ export interface QuizQuestionListResponse {
   total: number;
 }
 
-const quizQuestionSelection = {
-  id: quizQuestions.id,
-  statement: quizQuestions.statement,
-  isTrue: quizQuestions.isTrue,
-  explanation: quizQuestions.explanation,
-  category: quizQuestions.category,
-  createdAt: quizQuestions.createdAt,
-  updatedAt: quizQuestions.updatedAt,
-};
+function normalizeLocale(locale?: string): 'en' | 'ms' | 'zh' {
+  const raw = (locale ?? '').toLowerCase();
+  return raw === 'ms' || raw === 'zh' ? (raw as 'ms' | 'zh') : 'en';
+}
+
+function buildLocalizedSelection(locale?: string) {
+  const resolved = normalizeLocale(locale);
+  return {
+    id: quizQuestions.id,
+    statement: sql<string>`COALESCE(${quizQuestionTranslations.statement}, ${quizQuestions.statement})`,
+    isTrue: quizQuestions.isTrue,
+    explanation: sql<string>`COALESCE(${quizQuestionTranslations.explanation}, ${quizQuestions.explanation})`,
+    category: quizQuestions.category,
+    createdAt: quizQuestions.createdAt,
+    updatedAt: quizQuestions.updatedAt,
+    _locale: sql<string>`${resolved}`,
+  };
+}
 
 function mapQuizQuestion(row: {
   id: number;
@@ -85,17 +94,22 @@ function normalizeOffset(offset?: number): number {
   return Math.max(Math.trunc(offset), 0);
 }
 
-export async function listQuizQuestions(filters: QuizQuestionFilters = {}): Promise<QuizQuestionListResponse> {
+export async function listQuizQuestions(filters: QuizQuestionFilters = {}, locale?: string): Promise<QuizQuestionListResponse> {
   try {
     const category = normalizeCategory(filters.category);
     const limit = normalizeLimit(filters.limit);
     const offset = normalizeOffset(filters.offset);
+    const resolved = normalizeLocale(locale);
 
     const conditions = [eq(quizQuestions.category, category)];
 
     const rows = await db
-      .select(quizQuestionSelection)
+      .select(buildLocalizedSelection(resolved))
       .from(quizQuestions)
+      .leftJoin(
+        quizQuestionTranslations,
+        sql`${quizQuestionTranslations.questionId} = ${quizQuestions.id} AND ${quizQuestionTranslations.locale} = ${resolved}`,
+      )
       .where(and(...conditions))
       .orderBy(quizQuestions.id)
       .limit(limit)
@@ -116,11 +130,16 @@ export async function listQuizQuestions(filters: QuizQuestionFilters = {}): Prom
   }
 }
 
-export async function getQuizQuestionById(id: number): Promise<QuizQuestionRecord | null> {
+export async function getQuizQuestionById(id: number, locale?: string): Promise<QuizQuestionRecord | null> {
   try {
+    const resolved = normalizeLocale(locale);
     const rows = await db
-      .select(quizQuestionSelection)
+      .select(buildLocalizedSelection(resolved))
       .from(quizQuestions)
+      .leftJoin(
+        quizQuestionTranslations,
+        sql`${quizQuestionTranslations.questionId} = ${quizQuestions.id} AND ${quizQuestionTranslations.locale} = ${resolved}`,
+      )
       .where(eq(quizQuestions.id, id))
       .limit(1);
 
@@ -135,14 +154,19 @@ export async function getQuizQuestionById(id: number): Promise<QuizQuestionRecor
   }
 }
 
-export async function getRandomQuizQuestions(category: string, count = 5): Promise<QuizQuestionRecord[]> {
+export async function getRandomQuizQuestions(category: string, count = 5, locale?: string): Promise<QuizQuestionRecord[]> {
   try {
     const normalizedCategory = normalizeCategory(category);
     const limit = normalizeLimit(count, 5, 20);
+    const resolved = normalizeLocale(locale);
 
     const rows = await db
-      .select(quizQuestionSelection)
+      .select(buildLocalizedSelection(resolved))
       .from(quizQuestions)
+      .leftJoin(
+        quizQuestionTranslations,
+        sql`${quizQuestionTranslations.questionId} = ${quizQuestions.id} AND ${quizQuestionTranslations.locale} = ${resolved}`,
+      )
       .where(eq(quizQuestions.category, normalizedCategory))
       .orderBy(sql`RANDOM()`)
       .limit(limit);
@@ -154,20 +178,25 @@ export async function getRandomQuizQuestions(category: string, count = 5): Promi
   }
 }
 
-export async function searchQuizQuestions(term: string, filters: QuizQuestionFilters = {}): Promise<QuizQuestionRecord[]> {
+export async function searchQuizQuestions(term: string, filters: QuizQuestionFilters = {}, locale?: string): Promise<QuizQuestionRecord[]> {
   try {
     const value = (term ?? "").trim();
     if (!value) {
-      const { questions } = await listQuizQuestions(filters);
+      const { questions } = await listQuizQuestions(filters, locale);
       return questions;
     }
 
     const category = normalizeCategory(filters.category);
     const limit = normalizeLimit(filters.limit);
+    const resolved = normalizeLocale(locale);
 
     const rows = await db
-      .select(quizQuestionSelection)
+      .select(buildLocalizedSelection(resolved))
       .from(quizQuestions)
+      .leftJoin(
+        quizQuestionTranslations,
+        sql`${quizQuestionTranslations.questionId} = ${quizQuestions.id} AND ${quizQuestionTranslations.locale} = ${resolved}`,
+      )
       .where(
         and(
           eq(quizQuestions.category, category),
@@ -184,11 +213,16 @@ export async function searchQuizQuestions(term: string, filters: QuizQuestionFil
   }
 }
 
-export async function getAllQuizQuestions(): Promise<QuizQuestionRecord[]> {
+export async function getAllQuizQuestions(locale?: string): Promise<QuizQuestionRecord[]> {
   try {
+    const resolved = normalizeLocale(locale);
     const rows = await db
-      .select(quizQuestionSelection)
+      .select(buildLocalizedSelection(resolved))
       .from(quizQuestions)
+      .leftJoin(
+        quizQuestionTranslations,
+        sql`${quizQuestionTranslations.questionId} = ${quizQuestions.id} AND ${quizQuestionTranslations.locale} = ${resolved}`,
+      )
       .orderBy(quizQuestions.id);
 
     return rows.map(mapQuizQuestion);
