@@ -2,7 +2,7 @@
 // Keeps the list short and culturally generic; add more as needed.
 const bannedWords = [
   'fuck', 'shit', 'bitch', 'asshole', 'bastard', 'slut', 'dick', 'pussy',
-  'cunt', 'faggot', 'motherfucker', 'nigger', 'whore', 'retard', 'twat'
+  'cunt', 'faggot', 'motherfucker', 'nigger', 'whore', 'retard', 'twat', 'nigga'
 ];
 
 // Variants handling: leetspeak and common separators

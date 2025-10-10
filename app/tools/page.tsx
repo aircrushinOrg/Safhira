@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import type { ChangeEvent } from 'react';
+import { SCENARIO_TEMPLATES } from '@/lib/simulator/scenarios';
+import type { NpcFormState, ScenarioFormState } from '@/lib/simulator/scenarios';
 
 type ConversationRole = 'player' | 'npc';
 
@@ -56,98 +58,6 @@ type FinalReportApiResponse = {
   sessionId: string;
   response: ApiResponsePayload;
 };
-
-type ScenarioFormState = {
-  id: string;
-  title: string;
-  setting: string;
-  learningObjectives: string;
-  supportingFacts: string;
-};
-
-type NpcFormState = {
-  id: string;
-  name: string;
-  role: string;
-  persona: string;
-  goals: string;
-  tactics: string;
-  boundaries: string;
-};
-
-type ScenarioTemplate = {
-  id: string;
-  label: string;
-  description: string;
-  scenario: ScenarioFormState;
-  npc: NpcFormState;
-};
-
-const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
-  {
-    id: 'after-school-hallway',
-    label: 'Hallway peer pressure (secondary school)',
-    description: 'Practise firm refusals when a popular peer pushes to break agreed boundaries after class.',
-    scenario: {
-      id: 'after-school-hallway',
-      title: 'Hallway Pressure',
-      setting: 'School hallway after class',
-      learningObjectives: 'Recognise manipulative compliments\nPractise firm but respectful refusals\nEscalate to a trusted adult when needed',
-      supportingFacts: 'You have to catch the late bus home\nYour parents expect you back by 6pm',
-    },
-    npc: {
-      id: 'upperclassman-01',
-      name: 'Ken',
-      role: 'Senior athlete',
-      persona: 'Confident, popular senior who feels entitled to attention',
-      goals: 'Convince the player to break school conduct rules\nKeep the talk secret from adults',
-      tactics: 'Flattery and social status pressure\nPromises of popularity boosts',
-      boundaries: 'No explicit sexual descriptions\nNo illegal behaviour promotion\nRespect firm refusals after multiple attempts',
-    },
-  },
-  {
-    id: 'clinic-screening-request',
-    label: 'Clinic visit (requesting STI screening)',
-    description: 'Role-play asking a healthcare provider for confidential STI testing and follow-up advice.',
-    scenario: {
-      id: 'clinic-screening-request',
-      title: 'Clinic Screening Request',
-      setting: 'Community sexual health clinic intake room',
-      learningObjectives: 'Ask for STI screening despite nerves\nClarify confidentiality and support options\nPlan follow-up steps after results',
-      supportingFacts: 'You had unprotected sex with a new partner last month\nYou have another class after this appointment',
-    },
-    npc: {
-      id: 'nurse-practitioner-jamie',
-      name: 'Jamie',
-      role: 'Nurse practitioner',
-      persona: 'Warm clinician balancing empathy with a tight schedule',
-      goals: 'Understand the player\'s risk history\nProvide accurate testing information\nEncourage safer sex resources and follow-up',
-      tactics: 'Ask open-ended questions to build rapport\nOffer reassurance about confidentiality\nSuggest practical next steps',
-      boundaries: 'Maintain professional tone\nAvoid giving diagnoses without assessment\nKeep language supportive and non-judgmental',
-    },
-  },
-  {
-    id: 'college-party-boundaries',
-    label: 'College party (negotiating condom use)',
-    description: 'Practise negotiating condom use with a romantic interest in a high-energy party setting.',
-    scenario: {
-      id: 'college-party-boundaries',
-      title: 'Party Boundaries',
-      setting: 'College house party after midnight',
-      learningObjectives: 'Negotiate condom use in the moment\nSet boundaries when a partner pushes for unprotected sex\nUse refusal skills while keeping the vibe respectful',
-      supportingFacts: 'You and Alex have been flirting all night\nMusic is loud and friends are nearby but not listening in',
-    },
-    npc: {
-      id: 'romantic-interest-alex',
-      name: 'Alex',
-      role: 'Classmate and crush',
-      persona: 'Charming, excited, and dismissive of perceived risk',
-      goals: 'Convince the player to have unprotected sex tonight\nKeep the moment feeling spontaneous and carefree',
-      tactics: 'Compliments and minimising STI risks\nSuggesting it will feel better without protection\nAppealing to trust and chemistry',
-      boundaries: 'No coercive or violent language\nKeep dialogue PG-13\nRespect a firm refusal after repeated attempts',
-    },
-  },
-];
 
 const CUSTOM_TEMPLATE_ID = 'custom';
 const DEFAULT_TEMPLATE = SCENARIO_TEMPLATES[0];
