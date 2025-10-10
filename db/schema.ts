@@ -202,10 +202,26 @@ export const stiPrevention = pgTable('sti_prevention', {
   index('idx_sti_prevention_prev').on(table.preventionId),
 ]);
 
-// Quiz Leaderboard Table - Records each quiz attempt with results
+// Quiz Leaderboard Stats Table - Aggregated stats per nickname
+export const quizLeaderboardStats = pgTable('quiz_leaderboard_stats', {
+  nickname: varchar('nickname', { length: 100 }).primaryKey(),
+  bestScore: integer('best_score').notNull().default(0),
+  averageScore: numeric('average_score', { precision: 5, scale: 2 }).notNull().default('0'),
+  totalAttempts: integer('total_attempts').notNull().default(0),
+  quizType: varchar('quiz_type', { length: 50 }).notNull().default('myths'),
+  lastPlayedAt: timestamp('last_played_at').defaultNow().notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+}, (table) => [
+  index('idx_quiz_stats_best_score').on(table.bestScore),
+  index('idx_quiz_stats_total_attempts').on(table.totalAttempts),
+  index('idx_quiz_stats_quiz_type').on(table.quizType),
+]);
+
+// Quiz Results Table - Records each quiz attempt linked to leaderboard nickname
 export const quizResults = pgTable('quiz_results', {
   id: serial('id').primaryKey(),
-  nickname: varchar('nickname', { length: 100 }).notNull(),
+  nickname: varchar('nickname', { length: 100 }).notNull().references(() => quizLeaderboardStats.nickname, { onDelete: 'cascade', onUpdate: 'cascade' }),
   score: integer('score').notNull(), // 0-100 score
   totalQuestions: integer('total_questions').notNull().default(5),
   correctAnswers: integer('correct_answers').notNull(),
@@ -240,22 +256,6 @@ export const quizQuestionTranslations = pgTable('quiz_question_translations', {
 }, (table) => [
   primaryKey({ columns: [table.questionId, table.locale] }),
   index('idx_quiz_question_translations_locale').on(table.locale),
-]);
-
-// Quiz Leaderboard Stats Table - Aggregated stats per nickname
-export const quizLeaderboardStats = pgTable('quiz_leaderboard_stats', {
-  nickname: varchar('nickname', { length: 100 }).primaryKey(),
-  bestScore: integer('best_score').notNull().default(0),
-  averageScore: numeric('average_score', { precision: 5, scale: 2 }).notNull().default('0'),
-  totalAttempts: integer('total_attempts').notNull().default(0),
-  quizType: varchar('quiz_type', { length: 50 }).notNull().default('myths'),
-  lastPlayedAt: timestamp('last_played_at').defaultNow().notNull(),
-  createdAt: timestamp('created_at').defaultNow().notNull(),
-  updatedAt: timestamp('updated_at').defaultNow().notNull(),
-}, (table) => [
-  index('idx_quiz_stats_best_score').on(table.bestScore),
-  index('idx_quiz_stats_total_attempts').on(table.totalAttempts),
-  index('idx_quiz_stats_quiz_type').on(table.quizType),
 ]);
 
 // Newsletter subscriptions table
