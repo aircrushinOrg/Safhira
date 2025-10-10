@@ -142,21 +142,21 @@ export const SCENARIO_TEMPLATES: ScenarioTemplate[] = [
     },
   },
   {
-    id: "café-misinformation-both",
-    label: "Café Misinformation (Correcting Myths)",
+    id: "university-misinformation-both",
+    label: "University Misinformation (Amir)",
     description:
       "Practise correcting common sexual health myths and encouraging shared responsibility in a calm, respectful way.",
     scenario: {
-      id: "café-misinformation-both",
+      id: "university-misinformation-both",
       title: "Mixed Messages",
-      setting: "Quiet café or food court after class",
+      setting: "Outside university",
       learningObjectives:
         "Identify common sexual health myths\nPractise respectful correction and assertive communication\nEncourage mutual responsibility in sexual relationships",
       supportingFacts:
         "The player corrects misinformation confidently\nThe player suggests shared responsibility for protection\nThe player promotes testing and communication",
     },
     npc: {
-      id: "partner-both-01",
+      id: "classmate-both-01",
       name: "Amir",
       role: "Misguided Classmate",
       persona:
