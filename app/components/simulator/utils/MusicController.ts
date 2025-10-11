@@ -9,6 +9,8 @@ export class MusicController {
   private static unlocking = false;
   private static initialized = false;
   private static visibilityListenerAdded = false;
+  private static nativeAudioElement: HTMLAudioElement | null = null;
+  private static useNativeAudio = false;
 
   static play(scene: Phaser.Scene, { volume = 0.4 } = {}): void {
     const startPlayback = () => {
@@ -138,6 +140,9 @@ export class MusicController {
       }
     }
 
+    // Try native HTML5 audio for better background playback
+    MusicController.setupNativeAudio(volume);
+
     // Set up background audio support
     MusicController.setupBackgroundAudio();
 
@@ -149,69 +154,35 @@ export class MusicController {
     if (MusicController.visibilityListenerAdded) return;
     MusicController.visibilityListenerAdded = true;
 
-    // Handle page visibility changes to keep music playing in background
-    const handleVisibilityChange = () => {
-      try {
-        if (MusicController.track) {
-          const soundTrack = MusicController.track as any;
-
-          if (document.hidden) {
-            // Page is hidden - try to keep music playing
-            // Force the audio context to stay active
-            const soundManager = (MusicController.track as any).manager;
-            if (soundManager && soundManager.context && typeof soundManager.context === 'object') {
-              const audioContext = soundManager.context as AudioContext;
-              if (audioContext.state === 'suspended') {
-                audioContext.resume().catch(() => {
-                  // Silent fail - some browsers may not allow this
-                });
-              }
-            }
-
-            // Ensure the track keeps playing
-            if (!MusicController.track.isPlaying && typeof soundTrack.play === 'function') {
-              const playResult = soundTrack.play();
-              if (playResult && typeof playResult === 'object' && 'then' in playResult && 'catch' in playResult) {
-                (playResult as Promise<void>).catch(() => {
-                  // Silent fail - browser may prevent background audio
-                });
-              }
-            }
-          } else {
-            // Page is visible again - ensure music is still playing
-            if (!MusicController.track.isPlaying && typeof soundTrack.play === 'function') {
-              const playResult = soundTrack.play();
-              if (playResult && typeof playResult === 'object' && 'then' in playResult && 'catch' in playResult) {
-                (playResult as Promise<void>).catch(() => {
-                  // Silent fail
-                });
-              }
-            }
-          }
-        }
-      } catch (error) {
-        // Silent fail - background audio restrictions
-      }
-    };
-
-    // Listen for visibility change events
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-
-    // Additional event listeners for different browser implementations
-    window.addEventListener('blur', handleVisibilityChange);
-    window.addEventListener('focus', handleVisibilityChange);
-
-    // Prevent audio context from being suspended during inactivity
-    const keepAlive = () => {
+    // Pre-emptively keep audio context active
+    const maintainAudioContext = () => {
       try {
         if (MusicController.track) {
           const soundManager = (MusicController.track as any).manager;
           if (soundManager && soundManager.context && typeof soundManager.context === 'object') {
             const audioContext = soundManager.context as AudioContext;
+
+            // Keep context active with minimal processing
             if (audioContext.state === 'suspended') {
               audioContext.resume().catch(() => {
                 // Silent fail
               });
+            }
+
+            // Create a minimal audio worklet to keep context alive
+            if (audioContext.state === 'running') {
+              try {
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                gainNode.gain.setValueAtTime(0, audioContext.currentTime); // Silent
+                oscillator.frequency.setValueAtTime(440, audioContext.currentTime);
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.001); // Very brief
+              } catch (e) {
+                // Silent fail
+              }
             }
           }
         }
@@ -220,15 +191,163 @@ export class MusicController {
       }
     };
 
-    // Keep audio context alive with periodic checks
-    setInterval(keepAlive, 5000); // Check every 5 seconds
+    // Optimized visibility change handler
+    const handleVisibilityChange = () => {
+      // Use requestAnimationFrame for smoother handling
+      requestAnimationFrame(() => {
+        try {
+          if (MusicController.track) {
+            const soundTrack = MusicController.track as any;
+
+            if (document.hidden) {
+              // Page is hidden - maintain audio context immediately
+              maintainAudioContext();
+            } else {
+              // Page is visible again - immediate audio context check and resume if needed
+              const soundManager = (MusicController.track as any).manager;
+              if (soundManager && soundManager.context && typeof soundManager.context === 'object') {
+                const audioContext = soundManager.context as AudioContext;
+
+                // Immediate resume for smoother transition
+                if (audioContext.state === 'suspended') {
+                  audioContext.resume().then(() => {
+                    // Ensure music is playing after resume
+                    if (!MusicController.track?.isPlaying && typeof soundTrack.play === 'function') {
+                      const playResult = soundTrack.play();
+                      if (playResult && typeof playResult === 'object' && 'then' in playResult && 'catch' in playResult) {
+                        (playResult as Promise<void>).catch(() => {
+                          // Silent fail
+                        });
+                      }
+                    }
+                  }).catch(() => {
+                    // Silent fail
+                  });
+                } else if (!MusicController.track?.isPlaying && typeof soundTrack.play === 'function') {
+                  // Context is running but music stopped - restart immediately
+                  const playResult = soundTrack.play();
+                  if (playResult && typeof playResult === 'object' && 'then' in playResult && 'catch' in playResult) {
+                    (playResult as Promise<void>).catch(() => {
+                      // Silent fail
+                    });
+                  }
+                }
+              }
+            }
+          }
+        } catch (error) {
+          // Silent fail
+        }
+      });
+    };
+
+    // Listen for visibility change events
+    document.addEventListener('visibilitychange', handleVisibilityChange, { passive: true });
+
+    // Use focus/blur for immediate response (more reliable than visibilitychange on some browsers)
+    window.addEventListener('blur', () => {
+      // Pre-emptively maintain context on blur
+      setTimeout(maintainAudioContext, 10); // Small delay to ensure blur is processed
+    }, { passive: true });
+
+    window.addEventListener('focus', handleVisibilityChange, { passive: true });
+
+    // More frequent keep-alive for smoother experience
+    setInterval(maintainAudioContext, 2000); // Check every 2 seconds instead of 5
+
+    // Additional high-frequency check specifically for tab switching
+    setInterval(() => {
+      if (!document.hidden && MusicController.track && !MusicController.track.isPlaying) {
+        // Tab is active but music isn't playing - quick restart
+        const soundTrack = MusicController.track as any;
+        if (typeof soundTrack.play === 'function') {
+          const playResult = soundTrack.play();
+          if (playResult && typeof playResult === 'object' && 'then' in playResult && 'catch' in playResult) {
+            (playResult as Promise<void>).catch(() => {
+              // Silent fail
+            });
+          }
+        }
+      }
+    }, 500); // Check every 500ms when tab is active
+  }
+
+  private static setupNativeAudio(volume: number): void {
+    if (MusicController.nativeAudioElement || MusicController.useNativeAudio) return;
+
+    try {
+      // Create native HTML5 audio element for better background playback
+      MusicController.nativeAudioElement = new Audio();
+      MusicController.nativeAudioElement.loop = true;
+      MusicController.nativeAudioElement.volume = volume;
+      MusicController.nativeAudioElement.preload = 'auto';
+
+      // Use the same audio file that Phaser loads
+      // You'll need to adjust this path to match your actual audio file
+      MusicController.nativeAudioElement.src = '/sounds/simulator-music.mp3'; // Adjust path as needed
+
+      // Set up event listeners
+      MusicController.nativeAudioElement.addEventListener('canplaythrough', () => {
+        // Auto-play once loaded (if user has interacted)
+        if (!MusicController.nativeAudioElement?.paused) return;
+
+        MusicController.nativeAudioElement?.play().then(() => {
+          console.log('Native audio started successfully');
+          MusicController.useNativeAudio = true;
+
+          // Pause Phaser audio to avoid double playback
+          if (MusicController.track && MusicController.track.isPlaying) {
+            MusicController.track.pause();
+          }
+        }).catch((error) => {
+          console.log('Native audio autoplay prevented:', error.message);
+        });
+      });
+
+      // Handle errors
+      MusicController.nativeAudioElement.addEventListener('error', (e) => {
+        console.log('Native audio error:', e);
+        MusicController.useNativeAudio = false;
+      });
+
+      // Keep playing even when tab is hidden
+      document.addEventListener('visibilitychange', () => {
+        if (MusicController.useNativeAudio && MusicController.nativeAudioElement) {
+          if (document.hidden) {
+            // Try to keep playing in background
+            if (MusicController.nativeAudioElement.paused) {
+              MusicController.nativeAudioElement.play().catch(() => {
+                // Silent fail
+              });
+            }
+          }
+        }
+      });
+
+      // Load the audio
+      MusicController.nativeAudioElement.load();
+
+    } catch (error) {
+      console.log('Failed to setup native audio:', error);
+      MusicController.useNativeAudio = false;
+    }
   }
 
   static stop(): void {
+    // Stop Phaser audio
     if (MusicController.track) {
       MusicController.track.stop();
       MusicController.track.destroy();
       MusicController.track = null;
     }
+
+    // Stop native audio
+    if (MusicController.nativeAudioElement) {
+      MusicController.nativeAudioElement.pause();
+      MusicController.nativeAudioElement.currentTime = 0;
+      MusicController.nativeAudioElement = null;
+    }
+
+    MusicController.useNativeAudio = false;
   }
 }

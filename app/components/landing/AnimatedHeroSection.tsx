@@ -428,7 +428,7 @@ export function AnimatedHeroSection() {
       </div>
 
       {/* Navigation Dots and Progress Bar */}
-      <div className="absolute bottom-24 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center space-y-4">
+      <div className="absolute bottom-14 sm:bottom-24 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center space-y-4">
         {/* Progress Bar */}
         {!isInitialLoad && !isAnimating && (
           <div className="w-16 h-1 bg-white/30 rounded-full overflow-hidden">
