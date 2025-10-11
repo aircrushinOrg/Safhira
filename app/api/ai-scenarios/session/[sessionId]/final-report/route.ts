@@ -151,7 +151,7 @@ export async function POST(
       locale: effectiveLocale,
     });
 
-    const formatInstruction = buildFormatInstruction(summaryDue, assessmentDue, finalReportDue);
+    const formatInstruction = buildFormatInstruction(summaryDue, assessmentDue, finalReportDue, effectiveLocale);
     const scenarioSnapshot = buildScenarioSnapshot({
       scenario: scenarioDescriptor,
       history,

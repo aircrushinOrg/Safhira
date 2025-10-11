@@ -651,6 +651,7 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
     force: boolean;
     reason?: string;
     sessionOverride?: string;
+    openDialog?: boolean;
   }) {
     const activeSessionId = options.sessionOverride ?? sessionId;
     if (!activeSessionId || finalizing) return;
@@ -694,6 +695,11 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
       setCheckpoints(data.response.checkpoints);
       setConversationComplete(true);
       setCompleteReason(data.response.conversationCompleteReason);
+
+      // Open the dialog automatically if requested
+      if (options.openDialog && data.response.finalReport) {
+        setIsFinalReportOpen(true);
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unexpected error');
       setLastRawError(err instanceof Error ? err.message : 'Unexpected error');
@@ -785,37 +791,22 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
             </Button>
             <Button
               type="button"
-              onClick={() => fetchFinalReport({ force: true })}
+              onClick={async () => {
+                if (!finalReport) {
+                  await fetchFinalReport({ force: true, openDialog: true });
+                } else {
+                  setIsFinalReportOpen(true);
+                }
+              }}
               disabled={!sessionId || finalizing}
               className="justify-center bg-teal-500 text-slate-900 hover:bg-teal-400 disabled:cursor-not-allowed disabled:bg-teal-500/60"
             >
               {finalizing ? <Loader2 className="size-4 animate-spin" /> : <Sparkles className="size-4" />}
-              {finalizing ? t('buttons.finalScoresLoading') : t('buttons.finalScores')}
+              {finalizing ? t('buttons.finalScoresLoading') : t('buttons.generateReport')}
             </Button>
           </div>
         </div>
 
-        <div className="rounded-2xl border border-slate-200/70 bg-white/85 p-4 text-sm text-slate-700 shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-slate-900/70 dark:text-slate-200">
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <p className="text-xs text-slate-500 dark:text-slate-400">
-              {finalReport ? t('finalReport.ready') : t('finalReport.locked')}
-            </p>
-            <Button
-              type="button"
-              variant={finalReport ? 'default' : 'outline'}
-              disabled={!finalReport}
-              onClick={() => setIsFinalReportOpen(true)}
-              className={cn(
-                'h-8 px-3 text-xs font-semibold uppercase tracking-[0.18em]',
-                finalReport
-                  ? 'bg-teal-500 text-slate-900 hover:bg-teal-400'
-                  : 'border-slate-300 text-slate-400 hover:bg-transparent dark:border-slate-700 dark:text-slate-600',
-              )}
-            >
-              {t('buttons.viewReport')}
-            </Button>
-          </div>
-        </div>
 
         {error && (
           <div className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700 dark:border-rose-500/40 dark:bg-rose-500/10 dark:text-rose-100">

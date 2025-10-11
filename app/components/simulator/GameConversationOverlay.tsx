@@ -64,8 +64,8 @@ export function GameConversationOverlay({
   onClose,
   onStageChange,
 }: GameConversationOverlayProps) {
-  const t = useTranslations('Simulator');
-  const howItWorksItems = (t.raw('overlay.howItWorks.items') as string[]) ?? [];
+  const t = useTranslations('Simulator.overlay');
+  const howItWorksItems = (t.raw('howItWorks.items') as string[]) ?? [];
   const chatTemplate = useMemo(() => (template ? scenarioToChatTemplate(template) : null), [template]);
   const aiChatTemplate = useMemo(() => {
     if (!template) return null;
@@ -130,7 +130,7 @@ export function GameConversationOverlay({
                 className="size-9 rounded-full text-slate-700 hover:bg-white dark:text-slate-200 dark:hover:bg-slate-900"
               >
                 <X className="size-4" />
-                <span className="sr-only">{t('overlay.close')}</span>
+                <span className="sr-only">{t('close')}</span>
               </Button>
             </div>
 
@@ -141,11 +141,11 @@ export function GameConversationOverlay({
                   <div className="rounded-3xl border border-slate-200/70 bg-white/85 p-6 shadow-lg shadow-slate-900/10 dark:border-white/10 dark:bg-slate-900/70 dark:shadow-slate-950/40">
                     <div className="flex items-center gap-3 text-xs uppercase tracking-[0.28em] text-slate-500 dark:text-slate-400">
                       <MessageCircle className="size-4 text-teal-500" />
-                      {t('overlay.ready')}
+                      {t('ready')}
                     </div>
                     
                     <h2 className="mt-3 text-2xl font-semibold text-slate-900 dark:text-slate-50">
-                      {t('overlay.chatWith', { name: template.npc.name })}
+                      {t('chatWith', { name: template.npc.name })}
                     </h2>
                     <p className="mt-3 text-sm text-slate-600 dark:text-slate-300">
                       {template.description}
@@ -153,17 +153,18 @@ export function GameConversationOverlay({
 
                     <dl className="mt-6 space-y-4 text-sm text-slate-600 dark:text-slate-300">
                       <div>
-                        <dt className="font-semibold text-slate-500 dark:text-slate-400">{t('overlay.setting')}</dt>
+                        <dt className="font-semibold text-slate-500 dark:text-slate-400">{t('setting')}</dt>
                         <dd className="mt-1">{template.scenario.setting}</dd>
                       </div>
                       <div>
-                        <dt className="font-semibold text-slate-500 dark:text-slate-400">{t('overlay.npc')}</dt>
+                        <dt className="font-semibold text-slate-500 dark:text-slate-400">{t('npc')}</dt>
                         <dd className="mt-3 flex items-center gap-3">
                           <div className="relative h-12 w-12 overflow-hidden rounded-full border-2 border-teal-200/50 dark:border-teal-700/50">
                             <Image
                               src={getNpcImagePath(template.npc.id)}
                               alt={`${template.npc.name} - ${template.npc.role}`}
                               fill
+                              sizes="48px"
                               className="object-cover"
                             />
                           </div>
@@ -174,7 +175,7 @@ export function GameConversationOverlay({
                         </dd>
                       </div>
                       <div>
-                        <dt className="font-semibold text-slate-500 dark:text-slate-400">{t('overlay.learningGoals')}</dt>
+                        <dt className="font-semibold text-slate-500 dark:text-slate-400">{t('learningGoals')}</dt>
                         <dd className="mt-2">
                           <ul className="space-y-1">
                             {template.scenario.learningObjectives
@@ -198,21 +199,21 @@ export function GameConversationOverlay({
                         className="h-12 flex-1 bg-teal-500 text-slate-900 hover:bg-teal-400"
                         onClick={() => onStageChange('chat')}
                       >
-                        {t('overlay.start')}
+                        {t('start')}
                       </Button>
                       <Button
                         variant="outline"
                         className="h-12 flex-1 border-slate-300 text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-900"
                         onClick={onClose}
                       >
-                        {t('overlay.notNow')}
+                        {t('notNow')}
                       </Button>
                     </div>
                   </div>
 
                   <div className="mb-3 rounded-3xl border border-slate-200/60 bg-white/80 p-5 text-sm shadow-sm shadow-slate-900/5 dark:border-white/10 dark:bg-slate-900/70 dark:text-slate-200">
                     <p className="text-xs uppercase tracking-[0.28em] text-slate-500 dark:text-slate-400">
-                      {t('overlay.howItWorks.title')}
+                      {t('howItWorks.title')}
                     </p>
                     <ul className="mt-3 space-y-2 text-sm text-slate-600 dark:text-slate-300">
                       {howItWorksItems.map((item) => (
@@ -231,7 +232,7 @@ export function GameConversationOverlay({
                       className="text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-slate-100"
                     >
                       <ArrowLeft className="mr-2 size-4" />
-                      {t('overlay.backToPreview')}
+                      {t('backToPreview')}
                     </Button>
                   </div>
                   <ChatPractice key={chatKey} template={chatTemplate} aiTemplate={aiChatTemplate ?? undefined} />

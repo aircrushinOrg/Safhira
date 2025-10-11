@@ -1988,6 +1988,7 @@
       "conversationCompleteWithReason": "Perbualan tamat · {reason}",
       "buttons": {
         "reset": "Tetapkan semula sesi",
+        "generateReport": "Jana Laporan",
         "finalScores": "Dapatkan skor akhir",
         "finalScoresLoading": "Sedang disiapkan…",
         "viewReport": "Lihat laporan akhir",

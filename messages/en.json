@@ -1985,6 +1985,7 @@
       "conversationCompleteWithReason": "Conversation complete · {reason}",
       "buttons": {
         "reset": "Reset session",
+        "generateReport": "Generate Report",
         "finalScores": "Get final scores",
         "finalScoresLoading": "Finishing…",
         "viewReport": "View final report",

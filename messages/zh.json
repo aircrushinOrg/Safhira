@@ -1985,6 +1985,7 @@
       "conversationCompleteWithReason": "对话已完成 · {reason}",
       "buttons": {
         "reset": "重置会话",
+        "generateReport": "生成报告",
         "finalScores": "获取最终评分",
         "finalScoresLoading": "正在生成…",
         "viewReport": "查看最终报告",

@@ -236,24 +236,29 @@ export class GameScene extends Phaser.Scene {
     // Create animations for both genders and all directions
     genders.forEach((gender) => {
       directions.forEach((direction) => {
-        const key = `${gender}-walk-${direction}`;
+        const walkKey = `${gender}-walk-${direction}`;
         const textureKey = `player-${gender}-${direction}`;
         const idleTextureKey = `player-${gender}-idle`;
+        const idleKey = `${gender}-idle-${direction}`;
 
-        // Walking animation
-        this.anims.create({
-          key: key,
-          frames: this.anims.generateFrameNumbers(textureKey, { start: 0, end: 5 }),
-          frameRate: 10,
-          repeat: -1, // Loop indefinitely
-        });
+        // Only create animation if it doesn't already exist
+        if (!this.anims.exists(walkKey)) {
+          this.anims.create({
+            key: walkKey,
+            frames: this.anims.generateFrameNumbers(textureKey, { start: 0, end: 5 }),
+            frameRate: 10,
+            repeat: -1, // Loop indefinitely
+          });
+        }
 
-        // Idle frame
-        this.anims.create({
-          key: `${gender}-idle-${direction}`,
-          frames: [{ key: idleTextureKey, frame: direction === 'right' ? 0 : direction === 'up' ? 1 : direction === 'left' ? 2 : 3 }],
-          frameRate: 1,
-        });
+        // Only create animation if it doesn't already exist
+        if (!this.anims.exists(idleKey)) {
+          this.anims.create({
+            key: idleKey,
+            frames: [{ key: idleTextureKey, frame: direction === 'right' ? 0 : direction === 'up' ? 1 : direction === 'left' ? 2 : 3 }],
+            frameRate: 1,
+          });
+        }
       });
     });
   }
@@ -281,13 +286,16 @@ export class GameScene extends Phaser.Scene {
   }
 
   private createInteractionIndicatorAnimation() {
-    // Create interaction indicator animation using all 6 frames
-    this.anims.create({
-      key: 'interaction-indicator-anim',
-      frames: this.anims.generateFrameNumbers('interaction-indicator', { start: 0, end: 5 }),
-      frameRate: 6, // Medium frame rate for indicator animation
-      repeat: 0, // Play only once
-    });
+    // Only create animation if it doesn't already exist
+    if (!this.anims.exists('interaction-indicator-anim')) {
+      // Create interaction indicator animation using all 6 frames
+      this.anims.create({
+        key: 'interaction-indicator-anim',
+        frames: this.anims.generateFrameNumbers('interaction-indicator', { start: 0, end: 5 }),
+        frameRate: 6, // Medium frame rate for indicator animation
+        repeat: 0, // Play only once
+      });
+    }
   }
 
 
@@ -364,8 +372,8 @@ export class GameScene extends Phaser.Scene {
     // Update animation based on movement state
     if (this.isMoving) {
       const walkKey = `${this.playerGender}-walk-${this.currentDirection}`;
-      if (this.player.anims.currentAnim?.key !== walkKey) {
-        this.player.play(walkKey);
+      if (this.player.anims.currentAnim?.key !== walkKey || !this.player.anims.isPlaying) {
+        this.player.play(walkKey, true);
       }
     } else {
       const idleKey = `${this.playerGender}-idle-${this.currentDirection}`;
