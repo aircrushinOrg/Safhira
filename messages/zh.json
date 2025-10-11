@@ -1836,6 +1836,13 @@
       "notAvailable": "地图不可用"
     }
   },
+  "ProviderDetailsPage": {
+    "metadata": {
+      "notFound": "未找到医疗提供者 | Safhira",
+      "default": "医疗提供者详情 | Safhira",
+      "description": "{providerName} - {stateName}的医疗提供者，提供性传播感染检测、PrEP和PEP服务"
+    }
+  },
   "Simulator": {
     "landing": {
       "badge": "Safhira 模拟器",
@@ -1876,6 +1883,10 @@
       "liveFeedback": {
         "badge": "实时反馈",
         "description": "每回合都会更新摘要、评分与安全提醒。"
+      },
+      "aiDisclaimer": {
+        "title": "AI免责声明与知情同意",
+        "description": "对话数据可能会被收集用于生成模拟结果和改善用户体验，但不会用于训练AI模型或与第三方共享。"
       }
     },
     "npcList": {

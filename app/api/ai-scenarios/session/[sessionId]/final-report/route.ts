@@ -7,7 +7,6 @@ export const runtime = "nodejs";
 import { db } from "@/app/db";
 import { aiScenarioResponses, aiScenarioSessions, aiScenarioTurns } from "@/db/schema";
 import {
-  DEFAULT_MODEL,
   ConversationTurn,
   NpcProfile,
   ScenarioDescriptor,
@@ -18,6 +17,7 @@ import {
   isNonEmptyString,
   normaliseStringArray,
   parseModelResponse,
+  REPORT_MODEL_NAME,
   toOpenAIMessages,
 } from "@/lib/ai-scenarios/engine";
 
@@ -178,7 +178,7 @@ export async function POST(
     });
 
     const baseRequest = {
-      model: DEFAULT_MODEL,
+      model: REPORT_MODEL_NAME,
       temperature: 0.9,
       presence_penalty: 0.6,
       frequency_penalty: 0.3,

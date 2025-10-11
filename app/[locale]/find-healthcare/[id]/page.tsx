@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { getTranslations } from 'next-intl/server';
 import { getProviderById } from '@/app/actions/provider-actions';
 import { ProviderDetails } from '@/app/components/find-healthcare/ProviderDetails';
 
@@ -13,29 +14,34 @@ interface ProviderDetailsPageProps {
 export async function generateMetadata({ params }: ProviderDetailsPageProps): Promise<Metadata> {
   const resolvedParams = await params;
   const id = parseInt(resolvedParams.id);
-  
+  const t = await getTranslations('ProviderDetailsPage');
+  const tBreadcrumbs = await getTranslations('Common.breadcrumbs');
+
   if (isNaN(id)) {
     return {
-      title: 'Provider Not Found | Safhira',
+      title: t('metadata.notFound'),
     };
   }
 
   try {
     const provider = await getProviderById(id);
-    
+
     if (!provider) {
       return {
-        title: 'Provider Not Found | Safhira',
+        title: t('metadata.notFound'),
       };
     }
 
     return {
-      title: `${provider.name} | STI Services | Safhira`,
-      description: `${provider.name} - Healthcare provider in ${provider.stateName} offering STI testing, PrEP, and PEP services`,
+      title: `${provider.name} | ${tBreadcrumbs('services')} | Safhira`,
+      description: t('metadata.description', {
+        providerName: provider.name,
+        stateName: provider.stateName || 'Malaysia'
+      }),
     };
   } catch (error) {
     return {
-      title: 'Provider Details | Safhira',
+      title: t('metadata.default'),
     };
   }
 }

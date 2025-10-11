@@ -61,6 +61,49 @@ export const DEFAULT_MODEL =
   process.env.SCENARIO_MODEL_NAME ||
   "x-ai/grok-4-fast:free";
 
+export const REPORT_MODEL_NAME = process.env.REPORT_MODEL_NAME || DEFAULT_MODEL;
+
+const LOCALE_LANGUAGE_NAMES: Record<string, string> = {
+  en: "natural, empathetic English",
+  zh: "natural, empathetic Simplified Chinese",
+  "zh-cn": "natural, empathetic Simplified Chinese",
+  "zh-hans": "natural, empathetic Simplified Chinese",
+  ms: "natural, empathetic Malay",
+  "ms-my": "natural, empathetic Malay",
+};
+
+export function languageNameFromLocale(locale?: string): string | null {
+  if (!locale || typeof locale !== "string") return null;
+  const normalised = locale.trim().toLowerCase();
+  if (!normalised) return null;
+  if (LOCALE_LANGUAGE_NAMES[normalised]) {
+    return LOCALE_LANGUAGE_NAMES[normalised];
+  }
+
+  const base = normalised.split("-")[0];
+  return LOCALE_LANGUAGE_NAMES[base] ?? null;
+}
+
+export function buildLocaleDirective(options: {
+  locale?: string;
+  fallback?: string;
+  includeMirrorHint?: boolean;
+}): string {
+  const {
+    locale,
+    fallback = "Use approachable, empathetic English suitable for young adults.",
+    includeMirrorHint = true,
+  } = options;
+  const languageName = languageNameFromLocale(locale);
+  const mirrorHint = includeMirrorHint
+    ? " Mirror the player's tone and switch languages gracefully if the player does."
+    : "";
+  if (languageName) {
+    return `Use ${languageName}.${mirrorHint}`.trim();
+  }
+  return `${fallback}${mirrorHint}`.trim();
+}
+
 export function isNonEmptyString(value: unknown): value is string {
   return typeof value === "string" && value.trim().length > 0;
 }
@@ -129,9 +172,10 @@ export function buildSystemPrompt(options: {
     .map((item) => `- ${item}`)
     .join("\n");
 
-  const localeLine = locale
-    ? `Use ${locale} language conventions. If unsure, default to plain international English.`
-    : "Use accessible, empathetic English suitable for teens.";
+  const localeLine = buildLocaleDirective({
+    locale,
+    fallback: "Use accessible, empathetic English suitable for teens.",
+  });
 
   return `You are role-playing as ${npc.name}, ${npc.role}, inside the scenario "${
     scenario.title || scenario.id
@@ -158,7 +202,11 @@ Interaction requirements:
 - Encourage the player to practise refusal skills; react realistically when they resist.
 - ${summaryDue ? "Provide a checkpoint summary and assessment in this turn." : "Do NOT include a summary this turn; set summary to null."}
 - ${assessmentDue ? "Provide a refusal effectiveness score when instructed." : "Do NOT score this turn; set score to null."}
-- ${finalReportDue ? "Produce a comprehensive final coaching report for the player." : "Do NOT include a final report this turn; set final_report to null."}
+- ${
+    finalReportDue
+      ? "Produce a comprehensive final coaching report (multi-paragraph overview plus targeted action items). Tie insights to specific player choices."
+      : "Do NOT include a final report this turn; set final_report to null."
+  }
 - ${
     allowAutoEnd
       ? "You may end the conversation if the learning objectives are met or the risk becomes too high."
@@ -185,7 +233,9 @@ export function buildFormatInstruction(summaryDue: boolean, assessmentDue: boole
   "checkpoints": { totalPlayerTurns: number; summaryDue: boolean; assessmentDue: boolean; };
 }
 Numbers must be 0-100 with no extra text. Strings must not include markdown.
-Ensure summary or score are null exactly when not required.`;
+Ensure summary or score are null exactly when not required.
+When final_report is required, write a 4-6 sentence overallAssessment that references concrete dialogue moments.
+Include at least three rich bullet points in strengths, areasForGrowth, and recommendedPractice, each focusing on actionable guidance.`;
 }
 
 export function buildScenarioSnapshot(options: {
