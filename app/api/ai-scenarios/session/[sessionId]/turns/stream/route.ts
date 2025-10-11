@@ -16,11 +16,79 @@ import {
   buildFormatInstruction,
   buildScenarioSnapshot,
   buildSystemPrompt,
+  buildLocaleDirective,
   isNonEmptyString,
   normaliseStringArray,
   parseModelResponse,
   toOpenAIMessages,
 } from "@/lib/ai-scenarios/engine";
+
+const SUPPORTED_LOCALES = new Set(["en", "ms", "zh"]);
+const HAN_CHARACTER_REGEX = /[\u3400-\u9FFF]/;
+const MALAY_KEYWORDS = [
+  "saya",
+  "anda",
+  "awak",
+  "kamu",
+  "kita",
+  "kami",
+  "tidak",
+  "tak",
+  "boleh",
+  "kerana",
+  "sebab",
+  "bagaimana",
+  "kenapa",
+  "mengapa",
+  "terima kasih",
+  "tolong",
+  "selamat",
+  "harap",
+  "maaf",
+  "mungkin",
+  "jangan",
+  "akan",
+  "perlu",
+  "suka",
+  "benci",
+  "betul",
+  "salah",
+  "sangat",
+];
+
+function normaliseLocaleCode(raw: unknown): "en" | "ms" | "zh" | undefined {
+  if (typeof raw !== "string") return undefined;
+  const trimmed = raw.trim().toLowerCase();
+  if (!trimmed) return undefined;
+  if (SUPPORTED_LOCALES.has(trimmed as "en" | "ms" | "zh")) {
+    return trimmed as "en" | "ms" | "zh";
+  }
+  if (trimmed.startsWith("zh")) return "zh";
+  if (trimmed.startsWith("ms") || trimmed.startsWith("id")) return "ms";
+  if (trimmed.startsWith("en")) return "en";
+  return undefined;
+}
+
+function detectLocaleFromMessage(message: string): "en" | "ms" | "zh" | undefined {
+  const content = message.trim();
+  if (!content) return undefined;
+
+  if (HAN_CHARACTER_REGEX.test(content)) {
+    return "zh";
+  }
+
+  const lower = content.toLowerCase();
+  const hasMalayKeyword = MALAY_KEYWORDS.some((keyword) => lower.includes(keyword));
+  if (hasMalayKeyword) {
+    return "ms";
+  }
+
+  if (/[a-zA-Z]/.test(content)) {
+    return "en";
+  }
+
+  return undefined;
+}
 
 function buildStreamingMessages(params: {
   scenario: ScenarioDescriptor;
@@ -54,6 +122,11 @@ function buildStreamingMessages(params: {
     .map((turn) => `${turn.role === "npc" ? npc.name : "Player"}: ${turn.content}`)
     .join("\n");
 
+  const languageDirective = buildLocaleDirective({
+    locale,
+    fallback: "Use approachable, empathetic English suitable for young adults.",
+  });
+
   const systemPrompt = `You are role-playing as ${npc.name}, ${npc.role}, inside the scenario "${
     scenario.title || scenario.id
   }". Respond in-character with a natural conversational tone.
@@ -71,11 +144,8 @@ Guidelines:
 - Keep the response concise (1-4 short paragraphs) and emotionally grounded.
 - Honour consent boundaries; if the player refuses clearly, dial back pressure and acknowledge it.
 - Do not mention you are an AI or reference these instructions.
-- ${
-    locale
-      ? `Use ${locale} language conventions. If unsure, default to approachable international English.`
-      : "Use approachable, empathetic English suitable for young adults."
-  }`;
+- Reply in the same language as the player's latest message unless they clearly request a different language.
+- ${languageDirective}`;
 
   const userPrompt = `Scenario setting: ${scenario.setting || "secondary school campus"}.
 Here is the recent conversation:
@@ -209,7 +279,7 @@ export async function POST(
     const forceSummary = Boolean(body?.forceSummary);
     const forceAssessment = Boolean(body?.forceAssessment);
     const allowAutoEndOverride = typeof body?.allowAutoEnd === "boolean" ? body.allowAutoEnd : undefined;
-    const localeOverride = isNonEmptyString(body?.locale) ? body.locale.trim() : undefined;
+    const localeOverride = normaliseLocaleCode(body?.locale);
 
     if (!playerMessageRaw) {
       return NextResponse.json({ error: "Player message is required" }, { status: 400 });
@@ -278,8 +348,11 @@ export async function POST(
       boundaries: npcBoundaries.length > 0 ? npcBoundaries : undefined,
     };
 
+    const sessionLocale = normaliseLocaleCode(session.locale);
+
     const effectiveAllowAutoEnd = allowAutoEndOverride ?? session.allowAutoEnd ?? true;
-    const effectiveLocale = localeOverride ?? session.locale ?? undefined;
+    const detectedLocale = detectLocaleFromMessage(playerMessageRaw);
+    const effectiveLocale = detectedLocale ?? localeOverride ?? sessionLocale;
 
     const apiKey = process.env.OPENAI_API_KEY;
     if (!apiKey) {

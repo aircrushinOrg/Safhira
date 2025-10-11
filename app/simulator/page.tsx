@@ -130,7 +130,7 @@ export default async function SimulatorLandingPage() {
         </div>
       </section>
 
-      <section className="border-t border-slate-200/70 bg-slate-100/70 dark:border-white/5 dark:bg-slate-950/75">
+      <section>
         <div className="mx-auto grid max-w-6xl gap-6 px-4 py-16 md:grid-cols-3 md:px-6">
           {pillars.map(({ key, title, description, icon: Icon }) => (
             <div

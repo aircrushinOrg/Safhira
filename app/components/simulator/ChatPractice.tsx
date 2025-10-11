@@ -13,7 +13,7 @@ import {
 import { Progress } from '@/app/components/ui/progress';
 import { cn } from '@/app/components/ui/utils';
 import { Loader2, Send, Sparkles } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 export type ChatTemplate = {
   scenarioId: string;
@@ -130,6 +130,7 @@ function createInitialMessage(
 
 export default function ChatPractice({ template: displayTemplate, aiTemplate }: ChatPracticeProps) {
   const t = useTranslations('Simulator.chatPractice');
+  const locale = useLocale();
   const personaLines = useMemo(
     () => splitLines(displayTemplate.npcPersona),
     [displayTemplate.npcPersona],
@@ -416,6 +417,7 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
         scenario: scenarioPayload,
         npc: npcPayload,
         allowAutoEnd: ALLOW_AUTO_END,
+        locale,
       }),
     });
 
@@ -490,6 +492,7 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
         body: JSON.stringify({
           playerMessage: trimmedDraft,
           allowAutoEnd: ALLOW_AUTO_END,
+          locale,
         }),
       });
 
@@ -667,6 +670,7 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
         body: JSON.stringify({
           force: options.force,
           completionReason: options.reason,
+          locale,
         }),
       });
 
