@@ -45,6 +45,7 @@
     "chart.js": "^4.5.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "docx": "^9.5.1",
     "drizzle-orm": "^0.44.5",
     "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.23.12",
@@ -54,7 +55,6 @@
     "next-intl": "^4.3.7",
     "next-themes": "^0.4.6",
     "openai": "^5.20.3",
-    "pdf-lib": "^1.17.1",
     "phaser": "^3.90.0",
     "phaser3-rex-plugins": "^1.80.16",
     "postgres": "^3.4.3",
@@ -82,8 +82,8 @@
     "eslint-config-next": "^15.0.0",
     "postcss": "^8.4.32",
     "tailwindcss": "^3.4.0",
-    "typescript": "^5.5.0",
-    "tsx": "^4.17.0"
+    "tsx": "^4.17.0",
+    "typescript": "^5.5.0"
   },
   "peerDependenciesStrict": false,
   "overrides": {

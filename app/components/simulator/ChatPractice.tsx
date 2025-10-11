@@ -213,132 +213,15 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
     confidence: Math.max(0, Math.min(100, Math.round(score?.confidence ?? 0))),
   };
 
-  async function handleDownloadFinalReportPdf() {
+  async function handleDownloadFinalReportDocx() {
     if (!finalReport) return;
 
     try {
-      // Import pdf-lib directly
-      const { PDFDocument, StandardFonts, rgb } = await import('pdf-lib');
-
-      const pdfDoc = await PDFDocument.create();
-      const createPage = () => pdfDoc.addPage([595.28, 841.89]);
-      let page = createPage();
-      let { width, height } = page.getSize();
-      const margin = 48;
-      const maxWidth = width - margin * 2;
-      let cursorY = height - margin;
-
-      // Use standard fonts
-      const regularFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
-      const boldFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
-      type PdfFont = typeof regularFont;
-
-      const headingColor = rgb(0.1, 0.1, 0.18);
-      const bodyColor = rgb(0.2, 0.2, 0.24);
-      const bulletColor = rgb(0.2, 0.5, 0.45);
-
-      const lineGap = 6;
-
-      const ensureSpace = (lineHeight: number) => {
-        if (cursorY - lineHeight < margin) {
-          page = createPage();
-          ({ width, height } = page.getSize());
-          cursorY = height - margin;
-        }
-      };
-
-      const wrapText = (text: string, font: PdfFont, size: number) => {
-        // Filter out non-Latin characters that standard fonts can't encode
-        const safeText = text.replace(/[\u4E00-\u9FFF\u3040-\u30FF\u3400-\u4DBF]/g, '');
-        
-        const words = safeText.split(/\s+/);
-        const lines: string[] = [];
-        let currentLine = '';
-
-        for (const word of words) {
-          if (!word) continue; // Skip empty words
-          
-          try {
-            const testLine = currentLine ? `${currentLine} ${word}` : word;
-            const testWidth = font.widthOfTextAtSize(testLine, size);
-            if (testWidth > maxWidth && currentLine) {
-              lines.push(currentLine);
-              currentLine = word;
-            } else {
-              currentLine = testLine;
-            }
-          } catch (error) {
-            // If there's an encoding error with this word, skip it
-            console.warn(`Skipping word due to encoding error: ${word}`);
-            if (currentLine) {
-              lines.push(currentLine);
-            }
-            currentLine = '';
-          }
-        }
-
-        if (currentLine) {
-          lines.push(currentLine);
-        }
-        
-        // If no valid lines were created, return a default message
-        if (lines.length === 0) {
-          lines.push("[Text contains unsupported characters]");
-        }
-        
-        return lines;
-      };
-
-      const drawLines = (lines: string[], size: number, font: PdfFont, color = bodyColor) => {
-        for (const line of lines) {
-          ensureSpace(size + lineGap);
-          page.drawText(line, {
-            x: margin,
-            y: cursorY,
-            size,
-            font,
-            color,
-          });
-          cursorY -= size + lineGap;
-        }
-      };
-
-      const drawHeading = (text: string, size: number) => {
-        ensureSpace(size + lineGap * 2);
-        page.drawText(text, {
-          x: margin,
-          y: cursorY,
-          size,
-          font: boldFont,
-          color: headingColor,
-        });
-        cursorY -= size + lineGap * 1.5;
-      };
-
-      const drawSubheading = (text: string) => {
-        drawLines([text.toUpperCase()], 10, boldFont, bulletColor);
-        cursorY -= 2;
-      };
-
-      const drawParagraph = (text: string) => {
-        if (!text) return;
-        const lines = wrapText(text, regularFont, 11);
-        drawLines(lines, 11, regularFont, bodyColor);
-        cursorY -= 4;
-      };
-
-      const drawList = (title: string, items: string[]) => {
-        if (!items.length) return;
-        drawSubheading(title);
-        for (const item of items) {
-          const bulletLines = wrapText(`• ${item}`, regularFont, 11);
-          drawLines(bulletLines, 11, regularFont, bulletColor);
-        }
-        cursorY -= 4;
-      };
+      // Import docx library
+      const { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType } = await import('docx');
 
       const now = new Date();
-      const pdfTitle = t('pdf.title');
+      const docTitle = t('pdf.title');
       const metaLine = t('pdf.meta', {
         name: displayTemplate.npcName,
         label: displayTemplate.scenarioLabel,
@@ -351,7 +234,7 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
         minute: '2-digit',
       });
       const generatedLine = t('pdf.generated', { timestamp: dateLine });
-      const pdfSections = {
+      const docSections = {
         overall: t('pdf.sections.overall'),
         highlights: t('pdf.sections.highlights'),
         strengths: t('pdf.sections.strengths'),
@@ -359,33 +242,145 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
         recommended: t('pdf.sections.recommended'),
       };
 
-      drawHeading(pdfTitle, 20);
-      drawParagraph(metaLine);
-      drawParagraph(generatedLine);
-      cursorY -= 8;
+      // Create document sections
+      const docChildren: any[] = [];
 
-      drawHeading(pdfSections.overall, 14);
-      drawParagraph(finalReport.overallAssessment);
+      // Title
+      docChildren.push(
+        new Paragraph({
+          text: docTitle,
+          heading: HeadingLevel.HEADING_1,
+          spacing: { after: 200 },
+        })
+      );
 
-      drawHeading(pdfSections.highlights, 14);
-      drawList(pdfSections.strengths, finalReport.strengths);
-      drawList(pdfSections.areas, finalReport.areasForGrowth);
-      drawList(pdfSections.recommended, finalReport.recommendedPractice);
+      // Metadata
+      docChildren.push(
+        new Paragraph({
+          children: [new TextRun({ text: metaLine })],
+          spacing: { after: 100 },
+        })
+      );
 
-      const pdfBytes = await pdfDoc.save();
-      const blob = new Blob([new Uint8Array(pdfBytes)], { type: 'application/pdf' });
+      docChildren.push(
+        new Paragraph({
+          children: [new TextRun({ text: generatedLine })],
+          spacing: { after: 400 },
+        })
+      );
+
+      // Overall Assessment
+      docChildren.push(
+        new Paragraph({
+          text: docSections.overall,
+          heading: HeadingLevel.HEADING_2,
+          spacing: { before: 200, after: 100 },
+        })
+      );
+
+      docChildren.push(
+        new Paragraph({
+          children: [new TextRun({ text: finalReport.overallAssessment })],
+          spacing: { after: 300 },
+        })
+      );
+
+      // Highlights
+      docChildren.push(
+        new Paragraph({
+          text: docSections.highlights,
+          heading: HeadingLevel.HEADING_2,
+          spacing: { before: 200, after: 100 },
+        })
+      );
+
+      // Strengths
+      if (finalReport.strengths.length > 0) {
+        docChildren.push(
+          new Paragraph({
+            text: docSections.strengths,
+            heading: HeadingLevel.HEADING_3,
+            spacing: { before: 100, after: 100 },
+          })
+        );
+
+        finalReport.strengths.forEach((item) => {
+          docChildren.push(
+            new Paragraph({
+              text: `• ${item}`,
+              spacing: { after: 100 },
+              indent: { left: 720 },
+            })
+          );
+        });
+      }
+
+      // Areas for Growth
+      if (finalReport.areasForGrowth.length > 0) {
+        docChildren.push(
+          new Paragraph({
+            text: docSections.areas,
+            heading: HeadingLevel.HEADING_3,
+            spacing: { before: 200, after: 100 },
+          })
+        );
+
+        finalReport.areasForGrowth.forEach((item) => {
+          docChildren.push(
+            new Paragraph({
+              text: `• ${item}`,
+              spacing: { after: 100 },
+              indent: { left: 720 },
+            })
+          );
+        });
+      }
+
+      // Recommended Practice
+      if (finalReport.recommendedPractice.length > 0) {
+        docChildren.push(
+          new Paragraph({
+            text: docSections.recommended,
+            heading: HeadingLevel.HEADING_3,
+            spacing: { before: 200, after: 100 },
+          })
+        );
+
+        finalReport.recommendedPractice.forEach((item) => {
+          docChildren.push(
+            new Paragraph({
+              text: `• ${item}`,
+              spacing: { after: 100 },
+              indent: { left: 720 },
+            })
+          );
+        });
+      }
+
+      // Create the document
+      const doc = new Document({
+        sections: [
+          {
+            properties: {},
+            children: docChildren,
+          },
+        ],
+      });
+
+      // Generate and download the DOCX file
+      const blob = await Packer.toBlob(doc);
       const url = URL.createObjectURL(blob);
       const anchor = document.createElement('a');
       anchor.href = url;
-      anchor.download = `final-report-${sessionId ?? 'session'}.pdf`;
+      anchor.download = `final-report-${sessionId ?? 'session'}.docx`;
       document.body.appendChild(anchor);
       anchor.click();
       anchor.remove();
       URL.revokeObjectURL(url);
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Failed to generate report PDF';
+      const message = err instanceof Error ? err.message : 'Failed to generate report DOCX';
       setError(message);
-      console.error('Final report PDF generation failed', err);
+      console.error('Final report DOCX generation failed', err);
     }
   }
 
@@ -986,7 +981,7 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
             <Button variant="secondary" onClick={() => setIsFinalReportOpen(false)}>
               {t('dialog.close')}
             </Button>
-            <Button disabled={!finalReport} onClick={handleDownloadFinalReportPdf}>
+            <Button disabled={!finalReport} onClick={handleDownloadFinalReportDocx}>
               {t('dialog.download')}
             </Button>
           </DialogFooter>

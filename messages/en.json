@@ -1836,6 +1836,13 @@
       "notAvailable": "Map not available"
     }
   },
+  "ProviderDetailsPage": {
+    "metadata": {
+      "notFound": "Provider Not Found | Safhira",
+      "default": "Provider Details | Safhira",
+      "description": "{providerName} - Healthcare provider in {stateName} offering STI testing, PrEP, and PEP services"
+    }
+  },
   "Simulator": {
     "landing": {
       "badge": "Safhira Simulator",
@@ -1876,6 +1883,10 @@
       "liveFeedback": {
         "badge": "Live feedback",
         "description": "Summaries, scores & safety alerts update after every turn."
+      },
+      "aiDisclaimer": {
+        "title": "AI Disclaimer & Informed Consent",
+        "description": "Conversation data may be collected to generate simulation results and improve user experience, but will not be used to train AI models or shared with third parties."
       }
     },
     "npcList": {

@@ -131,7 +131,7 @@ export default async function SimulatorLandingPage() {
       </section>
 
       <section>
-        <div className="mx-auto grid max-w-6xl gap-6 px-4 py-16 md:grid-cols-3 md:px-6">
+        <div className="mx-auto grid max-w-6xl gap-6 px-4 py-6 md:grid-cols-3 md:px-6">
           {pillars.map(({ key, title, description, icon: Icon }) => (
             <div
               key={key}
@@ -144,6 +144,22 @@ export default async function SimulatorLandingPage() {
               <p className="text-sm text-slate-600 dark:text-slate-300">{description}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      <section className="">
+        <div className="mx-auto max-w-4xl px-4 py-12 md:px-6">
+          <div className="rounded-2xl border border-amber-200/60 bg-amber-50/80 p-6 text-center dark:border-amber-500/30 dark:bg-amber-500/10">
+            <div className="flex items-center justify-center gap-3 mb-3">
+              <ShieldCheck className="size-5 text-amber-600 dark:text-amber-400" />
+              <h3 className="text-sm font-semibold text-amber-800 dark:text-amber-200">
+                {t('aiDisclaimer.title')}
+              </h3>
+            </div>
+            <p className="text-sm text-amber-700 dark:text-amber-300">
+              {t('aiDisclaimer.description')}
+            </p>
+          </div>
         </div>
       </section>
     </div>

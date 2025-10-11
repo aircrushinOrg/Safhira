@@ -1839,6 +1839,13 @@
       "notAvailable": "Peta tidak tersedia"
     }
   },
+  "ProviderDetailsPage": {
+    "metadata": {
+      "notFound": "Pembekal Tidak Dijumpai | Safhira",
+      "default": "Butiran Pembekal | Safhira",
+      "description": "{providerName} - Pembekal penjagaan kesihatan di {stateName} yang menawarkan ujian STI, PrEP, dan perkhidmatan PEP"
+    }
+  },
   "Simulator": {
     "landing": {
       "badge": "Simulator Safhira",
@@ -1879,6 +1886,10 @@
       "liveFeedback": {
         "badge": "Maklum balas langsung",
         "description": "Ringkasan, skor dan amaran keselamatan dikemas kini selepas setiap giliran."
+      },
+      "aiDisclaimer": {
+        "title": "Penafian AI & Persetujuan Berinformasi",
+        "description": "Data perbualan mungkin dikumpulkan untuk menjana hasil simulasi dan meningkatkan pengalaman pengguna, tetapi tidak akan digunakan untuk melatih model AI atau dikongsi dengan pihak ketiga."
       }
     },
     "npcList": {
