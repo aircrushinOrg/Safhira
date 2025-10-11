@@ -20,8 +20,8 @@ type ApiSummary = {
 } | null;
 
 type ApiScore = {
-  refusalEffectiveness: number;
   confidence: number;
+  riskScore: number;
   notes: string;
 } | null;
 
@@ -812,7 +812,7 @@ export default function AiScenarioTesterPage() {
             <h2 className="text-sm font-semibold text-slate-800 dark:text-slate-100">Score & alerts</h2>
             {score ? (
               <div className="space-y-2 text-sm text-slate-700 dark:text-slate-200">
-                <p>Refusal effectiveness: {score.refusalEffectiveness}</p>
+                <p>Risk score: {score.riskScore}</p>
                 <p>Confidence: {score.confidence}</p>
                 {score.notes && <p className="text-sm text-slate-600 dark:text-slate-300">{score.notes}</p>}
               </div>

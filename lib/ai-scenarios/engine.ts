@@ -37,8 +37,8 @@ export type SimulationResponsePayload = {
     coaching: string;
   } | null;
   score: {
-    refusalEffectiveness: number;
     confidence: number;
+    riskScore: number;
     notes: string;
   } | null;
   finalReport: {
@@ -204,7 +204,7 @@ Interaction requirements:
 - ${assessmentDue ? "Provide a refusal effectiveness score when instructed." : "Do NOT score this turn; set score to null."}
 - ${
     finalReportDue
-      ? "Produce a comprehensive final coaching report (multi-paragraph overview plus targeted action items). Tie insights to specific player choices."
+      ? "Produce a comprehensive final coaching report (multi-paragraph overview plus targeted action items). Tie insights to specific player choices. IMPORTANT: Write the final report in the SAME LANGUAGE as the player used in their messages throughout this conversation."
       : "Do NOT include a final report this turn; set final_report to null."
   }
 - ${
@@ -221,13 +221,17 @@ Safety overrides:
 }
 
 export function buildFormatInstruction(summaryDue: boolean, assessmentDue: boolean, finalReportDue: boolean) {
+  const finalReportLanguageNote = finalReportDue 
+    ? "\n\nCRITICAL: Analyze the player's messages in the conversation history to detect which language they are using (English, Chinese, or Malay). Generate the ENTIRE final_report (overallAssessment, strengths, areasForGrowth, and recommendedPractice) in THE SAME LANGUAGE as the player's messages. If the player used Chinese, write the report in Chinese. If they used Malay, write in Malay. If they used English, write in English. Match the player's language exactly."
+    : "";
+  
   return `Return a strict JSON object matching this TypeScript type. Omit no keys.
 {
   "npc_reply": string; // in-character response for the player
   "conversation_complete": boolean;
   "conversation_complete_reason": string | null;
   "summary": ${summaryDue ? "{ riskLevel: 'low'|'medium'|'high'; keyRisks: string[]; effectiveResponses: string[]; coaching: string; }" : "null"};
-  "score": ${assessmentDue ? "{ refusalEffectiveness: number; confidence: number; notes: string; }" : "null"};
+  "score": ${assessmentDue ? "{ confidence: number; riskScore: number; notes: string; }" : "null"};
   "final_report": ${finalReportDue ? "{ overallAssessment: string; strengths: string[]; areasForGrowth: string[]; recommendedPractice: string[]; }" : "null"};
   "safety_alerts": string[];
   "checkpoints": { totalPlayerTurns: number; summaryDue: boolean; assessmentDue: boolean; };
@@ -235,7 +239,7 @@ export function buildFormatInstruction(summaryDue: boolean, assessmentDue: boole
 Numbers must be 0-100 with no extra text. Strings must not include markdown.
 Ensure summary or score are null exactly when not required.
 When final_report is required, write a 4-6 sentence overallAssessment that references concrete dialogue moments.
-Include at least three rich bullet points in strengths, areasForGrowth, and recommendedPractice, each focusing on actionable guidance.`;
+Include at least three rich bullet points in strengths, areasForGrowth, and recommendedPractice, each focusing on actionable guidance.${finalReportLanguageNote}`;
 }
 
 export function buildScenarioSnapshot(options: {
@@ -383,8 +387,8 @@ export function parseModelResponse(raw: string | null | undefined): SimulationRe
 
     const score = parsed.score && typeof parsed.score === "object"
       ? {
-          refusalEffectiveness: clampScore(parsed.score.refusalEffectiveness),
           confidence: clampScore(parsed.score.confidence),
+          riskScore: clampScore(parsed.score.riskScore),
           notes: isNonEmptyString(parsed.score.notes) ? parsed.score.notes : "",
         }
       : null;

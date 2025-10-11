@@ -246,7 +246,7 @@ export async function POST(
           allowAutoEnd: effectiveAllowAutoEnd,
           locale: effectiveLocale ?? null,
           ...(responseBody.summary ? { lastSummaryRisk: responseBody.summary.riskLevel } : {}),
-          ...(responseBody.score ? { lastScore: responseBody.score.refusalEffectiveness } : {}),
+          ...(responseBody.score ? { lastScore: responseBody.score.riskScore } : {}),
           ...(responseBody.conversationComplete
             ? {
                 completedAt: now,

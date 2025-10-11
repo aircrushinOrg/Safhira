@@ -49,8 +49,8 @@ type ApiSummary = {
 } | null;
 
 type ApiScore = {
-  refusalEffectiveness: number;
   confidence: number;
+  riskScore: number;
   notes: string;
 } | null;
 
@@ -209,8 +209,8 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
 
   const hasScore = Boolean(score);
   const displayedScore = {
-    refusalEffectiveness: Math.max(0, Math.min(100, Math.round(score?.refusalEffectiveness ?? 0))),
     confidence: Math.max(0, Math.min(100, Math.round(score?.confidence ?? 0))),
+    riskScore: Math.max(0, Math.min(100, Math.round(score?.riskScore ?? 0))),
   };
 
   async function handleDownloadFinalReportDocx() {
@@ -756,11 +756,11 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
           </span>
           {hasScore && (
             <>
-              <span className="rounded-full bg-blue-50 px-3 py-1 font-medium text-blue-700 dark:bg-blue-900/40 dark:text-blue-200">
-                {t('metrics.refusal', { score: displayedScore.refusalEffectiveness })}
-              </span>
               <span className="rounded-full bg-purple-50 px-3 py-1 font-medium text-purple-700 dark:bg-purple-900/40 dark:text-purple-200">
                 {t('metrics.confidence', { score: displayedScore.confidence })}
+              </span>
+              <span className="rounded-full bg-red-50 px-3 py-1 font-medium text-red-700 dark:bg-red-900/40 dark:text-red-200">
+                {t('metrics.riskScore', { score: displayedScore.riskScore })}
               </span>
             </>
           )}

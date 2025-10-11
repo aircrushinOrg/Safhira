@@ -1974,7 +1974,7 @@
         "notStarted": "未开始"
       },
       "metrics": {
-        "refusal": "拒绝能力：{score}%",
+        "riskScore": "风险分数：{score}%",
         "confidence": "信心：{score}%"
       },
       "processing": {

@@ -1974,8 +1974,8 @@
         "notStarted": "Not started"
       },
       "metrics": {
-        "refusal": "Refusal: {score}%",
-        "confidence": "Confidence: {score}%"
+        "confidence": "Confidence: {score}%",
+        "riskScore": "Risk Score: {score}%"
       },
       "processing": {
         "awaiting": "Awaiting NPC response…",

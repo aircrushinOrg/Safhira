@@ -1977,7 +1977,7 @@
         "notStarted": "Belum bermula"
       },
       "metrics": {
-        "refusal": "Penolakan: {score}%",
+        "riskScore": "Skor Risiko: {score}%",
         "confidence": "Keyakinan: {score}%"
       },
       "processing": {

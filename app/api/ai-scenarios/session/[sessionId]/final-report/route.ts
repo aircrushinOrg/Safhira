@@ -138,7 +138,8 @@ export async function POST(
       boundaries: npcBoundaries.length > 0 ? npcBoundaries : undefined,
     };
 
-    const effectiveLocale = localeOverride ?? session.locale ?? undefined;
+    // Use locale from request body, then session, with fallback to 'en'
+    const effectiveLocale = localeOverride ?? session.locale ?? 'en';
 
     const systemPrompt = buildSystemPrompt({
       scenario: scenarioDescriptor,
@@ -221,7 +222,7 @@ export async function POST(
         {
           role: "user" as const,
           content:
-            "Reminder: respond with a JSON object where `final_report` is a non-null object containing `overallAssessment` (string), `strengths` (string[]), `areasForGrowth` (string[]), and `recommendedPractice` (string[]). Do not return null, markdown, or extra commentary.",
+            "Reminder: respond with a JSON object where `final_report` is a non-null object containing `overallAssessment` (string), `strengths` (string[]), `areasForGrowth` (string[]), and `recommendedPractice` (string[]). Do not return null, markdown, or extra commentary. CRITICAL: Look at the player's messages in the conversation history and write the ENTIRE final_report in the SAME LANGUAGE the player used (English, Chinese, or Malay).",
         },
       ];
 
