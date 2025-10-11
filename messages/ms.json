@@ -1861,10 +1861,6 @@
           "title": "Berlatih perbualan sebenar",
           "description": "Terokai cerita bercabang untuk melatih sempadan sihat dan komunikasi yakin sebelum situasi sebenar berlaku."
         },
-        "coaching": {
-          "title": "Dipandu oleh bimbingan berasaskan bukti",
-          "description": "Setiap adegan mencerminkan cabaran tentang keintiman, tekanan rakan sebaya dan lawatan klinik dengan tip yang bersandar pada panduan kesihatan awam."
-        },
         "feedback": {
           "title": "Maklum balas segera semasa anda bermain",
           "description": "Jejaki amaran keselamatan, kekuatan dan bidang penambahbaikan supaya anda tahu apa yang perlu diberi tumpuan pada percubaan seterusnya."
@@ -1895,7 +1891,7 @@
     },
     "npcList": {
       "badge": "Senarai NPC Simulator",
-      "title": "Temui setiap jurulatih, teman percaya dan pencabar sebelum anda bermula.",
+      "title": "Temui setiap rakan, teman percaya dan pencabar sebelum anda bermula.",
       "subtitle": "Tinjau personaliti yang membimbing setiap senario, kemudian teruskan ke latihan perbualan. Pilih NPC untuk masuk ke cerita mereka atau gunakan alat pantas untuk sesuaikan prompt secara langsung.",
       "startChat": "Mulakan sembang"
     },
@@ -2014,7 +2010,7 @@
           "recommended": "Amalan disyorkan"
         },
         "close": "Tutup",
-        "download": "Muat turun laporan PDF"
+        "download": "Muat turun laporan"
       },
       "pdf": {
         "title": "Laporan Akhir Simulasi",

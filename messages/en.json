@@ -1847,7 +1847,7 @@
   "Simulator": {
     "landing": {
       "badge": "Safhira Simulator",
-      "title": "Practise tough conversations in a safe, story-driven world.",
+      "title": "Practice tough talks in a safe, story-based world.",
       "subtitle": "Navigate realistic nightlife, clinic, and campus scenarios, experiment with dialogue, and collect actionable feedback that strengthens your confidence beyond the screen.",
       "cta": {
         "primary": "Launch game",
@@ -1857,10 +1857,6 @@
         "practice": {
           "title": "Practice real conversations",
           "description": "Explore branching stories to rehearse healthy boundaries and confident communication before life presents the moment."
-        },
-        "coaching": {
-          "title": "Guided by evidence-based coaching",
-          "description": "Each scene mirrors challenges around intimacy, peer pressure, and clinic visits with tips grounded in public health guidance."
         },
         "feedback": {
           "title": "Instant feedback while you play",
@@ -1892,7 +1888,7 @@
     },
     "npcList": {
       "badge": "Simulator NPC Roster",
-      "title": "Meet every coach, confidant, and challenger before you jump in.",
+      "title": "Meet every friend, confidant, and challenger before you jump in.",
       "subtitle": "Review the personalities guiding each scenario, then launch straight into conversation practice. Choose an NPC to step into their story or head to the quick tools to customise prompts on the fly.",
       "startChat": "Start chat"
     },
@@ -2011,7 +2007,7 @@
           "recommended": "Recommended practice"
         },
         "close": "Close",
-        "download": "Download report PDF"
+        "download": "Download report"
       },
       "pdf": {
         "title": "Simulation Final Report",

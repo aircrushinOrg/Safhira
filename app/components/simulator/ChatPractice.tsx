@@ -68,7 +68,6 @@ type ApiResponsePayload = {
   summary: ApiSummary;
   score: ApiScore;
   finalReport: ApiFinalReport;
-  safetyAlerts: string[];
   checkpoints: {
     totalPlayerTurns: number;
     summaryDue: boolean;
@@ -153,8 +152,6 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
   const [score, setScore] = useState<ApiScore>(null);
   const [persistedScore, setPersistedScore] = useState({ confidence: 0, riskScore: 0 });
   const [finalReport, setFinalReport] = useState<ApiFinalReport>(null);
-  const [safetyAlerts, setSafetyAlerts] = useState<string[]>([]);
-  const [persistedAlertsCount, setPersistedAlertsCount] = useState(0);
   const [conversationComplete, setConversationComplete] = useState(false);
   const [completeReason, setCompleteReason] = useState<string | null>(null);
   const [checkpoints, setCheckpoints] = useState(INITIAL_CHECKPOINTS);
@@ -186,6 +183,7 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
   const canSend =
     trimmedDraft.length > 0 && !loading && !finalizing && !conversationComplete && !isStreamingReply;
   const conversationBusy = loading || finalizing || isStreamingReply;
+  const textareaDisabled = conversationComplete; // Only disable textarea when conversation is complete
 
   const statusCompleteLabel = t('status.complete');
   const statusInProgressLabel = t('status.inProgress');
@@ -221,13 +219,6 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
       });
     }
   }, [score]);
-
-  // Update persisted alerts count when new alerts are available
-  useEffect(() => {
-    if (safetyAlerts.length > 0) {
-      setPersistedAlertsCount(safetyAlerts.length);
-    }
-  }, [safetyAlerts]);
 
   const displayedScore = persistedScore;
 
@@ -555,7 +546,6 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
             setSummary(finalPayload.response.summary ?? null);
             setScore(finalPayload.response.score ?? null);
             setFinalReport(finalPayload.response.finalReport ?? null);
-            setSafetyAlerts(finalPayload.response.safetyAlerts ?? []);
             setCheckpoints(finalPayload.response.checkpoints ?? INITIAL_CHECKPOINTS);
             setConversationComplete(finalPayload.response.conversationComplete ?? false);
             setCompleteReason(finalPayload.response.conversationCompleteReason ?? null);
@@ -709,7 +699,6 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
       setSummary(data.response.summary);
       setScore(data.response.score);
       setFinalReport(data.response.finalReport);
-      setSafetyAlerts(data.response.safetyAlerts || []);
       setCheckpoints(data.response.checkpoints);
       setConversationComplete(true);
       setCompleteReason(data.response.conversationCompleteReason);
@@ -751,8 +740,6 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
     setScore(null);
     setPersistedScore({ confidence: 0, riskScore: 0 });
     setFinalReport(null);
-    setSafetyAlerts([]);
-    setPersistedAlertsCount(0);
     setConversationComplete(false);
     setCompleteReason(null);
     setCheckpoints(INITIAL_CHECKPOINTS);
@@ -843,11 +830,13 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
               onKeyDown={(event) => {
                 if (event.key === 'Enter' && !event.shiftKey) {
                   event.preventDefault();
-                  handleSend();
+                  if (canSend) {
+                    handleSend();
+                  }
                 }
               }}
               placeholder={t('placeholder', { name: displayTemplate.npcName })}
-              disabled={conversationBusy || conversationComplete}
+              disabled={textareaDisabled}
               className="min-h-[60px] flex-1 resize-none rounded-2xl border border-slate-200 bg-transparent px-4 py-3 text-sm text-slate-800 shadow-inner shadow-slate-900/5 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500/30 disabled:cursor-not-allowed dark:border-slate-700 dark:text-slate-100 dark:shadow-none"
             />
             <Button
@@ -899,11 +888,6 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
               </div>
             </div>
           </div>
-          {conversationComplete && (
-            <span className="rounded-full bg-emerald-50 px-3 py-1 font-medium text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-200">
-              {completeReason ? t('conversationCompleteWithReason', { reason: completeReason }) : t('conversationComplete')}
-            </span>
-          )}
           <div className="ml-auto flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
             <Button
               type="button"
@@ -931,16 +915,6 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
             </Button>
           </div>
         </div>
-        {safetyAlerts.length > 0 && (
-          <div className="rounded-2xl border border-rose-200/70 bg-rose-50/70 p-4 text-xs text-rose-700 shadow-sm shadow-rose-200/40 dark:border-rose-500/40 dark:bg-rose-500/10 dark:text-rose-100">
-            <p className="mb-2 font-semibold uppercase tracking-[0.28em]">{t('safetyAlerts')}</p>
-            <ul className="space-y-1">
-              {safetyAlerts.map((alert) => (
-                <li key={alert}>• {alert}</li>
-              ))}
-            </ul>
-          </div>
-        )}
       </section>
 
       <Dialog open={isFinalReportOpen && Boolean(finalReport)} onOpenChange={setIsFinalReportOpen}>

@@ -1,24 +1,36 @@
-import Image from 'next/image';
-import { getTranslations } from 'next-intl/server';
-import { Link } from '@/i18n/routing';
-import { Button } from '@/app/components/ui/button';
-import { Gamepad2, MessageCircle, ShieldCheck, Sparkles, Compass, Lightbulb } from 'lucide-react';
-import type { LucideIcon } from 'lucide-react';
+import Image from "next/image";
+import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/routing";
+import { Button } from "@/app/components/ui/button";
+import {
+  Gamepad2,
+  MessageCircle,
+  ShieldCheck,
+  Sparkles,
+  Compass,
+  Lightbulb,
+} from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
-const highlightConfigs: Array<{ key: 'practice' | 'coaching' | 'feedback'; icon: LucideIcon }> = [
-  { key: 'practice', icon: MessageCircle },
-  { key: 'coaching', icon: ShieldCheck },
-  { key: 'feedback', icon: Sparkles },
+const highlightConfigs: Array<{
+  key: "practice" | "coaching" | "feedback";
+  icon: LucideIcon;
+}> = [
+  { key: "practice", icon: MessageCircle },
+  { key: "feedback", icon: Sparkles },
 ];
 
-const pillarConfigs: Array<{ key: 'choose' | 'build' | 'review'; icon: LucideIcon }> = [
-  { key: 'choose', icon: Compass },
-  { key: 'build', icon: Lightbulb },
-  { key: 'review', icon: Gamepad2 },
+const pillarConfigs: Array<{
+  key: "choose" | "build" | "review";
+  icon: LucideIcon;
+}> = [
+  { key: "choose", icon: Compass },
+  { key: "build", icon: Lightbulb },
+  { key: "review", icon: Gamepad2 },
 ];
 
 export default async function SimulatorLandingPage() {
-  const t = await getTranslations('Simulator.landing');
+  const t = await getTranslations("Simulator.landing");
 
   const highlights = highlightConfigs.map(({ key, icon }) => ({
     key,
@@ -54,18 +66,22 @@ export default async function SimulatorLandingPage() {
           <div className="space-y-6">
             <span className="inline-flex items-center gap-2 rounded-full border border-teal-400/40 bg-teal-500/15 px-4 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-teal-700 dark:bg-teal-500/10 dark:text-teal-200">
               <Gamepad2 className="size-4" />
-              {t('badge')}
+              {t("badge")}
             </span>
             <h1 className="text-balance text-4xl font-semibold leading-tight text-slate-900 dark:text-slate-50 md:text-5xl">
-              {t('title')}
+              {t("title")}
             </h1>
             <p className="max-w-2xl text-pretty text-lg text-slate-600 dark:text-slate-200 md:text-xl">
-              {t('subtitle')}
+              {t("subtitle")}
             </p>
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-              <Button asChild size="lg" className="bg-teal-500 text-slate-900 hover:bg-teal-400">
+              <Button
+                asChild
+                size="lg"
+                className="bg-teal-500 text-slate-900 hover:bg-teal-400"
+              >
                 <Link href="/simulator/game" className="font-semibold">
-                  {t('cta.primary')}
+                  {t("cta.primary")}
                 </Link>
               </Button>
               <Button
@@ -75,7 +91,7 @@ export default async function SimulatorLandingPage() {
                 className="border-slate-300 bg-slate-900/5 text-slate-900 hover:bg-slate-900/10 dark:border-slate-200/60 dark:bg-white/10 dark:text-slate-50 dark:hover:bg-slate-100/20"
               >
                 <Link href="/simulator/npc-list" className="font-semibold">
-                  {t('cta.secondary')}
+                  {t("cta.secondary")}
                 </Link>
               </Button>
             </div>
@@ -90,8 +106,12 @@ export default async function SimulatorLandingPage() {
                     <Icon className="size-5" />
                   </span>
                   <div className="space-y-1">
-                    <h2 className="text-base font-semibold text-slate-900 dark:text-slate-50">{title}</h2>
-                    <p className="text-sm text-slate-600 dark:text-slate-300">{description}</p>
+                    <h2 className="text-base font-semibold text-slate-900 dark:text-slate-50">
+                      {title}
+                    </h2>
+                    <p className="text-sm text-slate-600 dark:text-slate-300">
+                      {description}
+                    </p>
                   </div>
                 </li>
               ))}
@@ -118,10 +138,10 @@ export default async function SimulatorLandingPage() {
                 </div>
                 <div className="space-y-1">
                   <p className="text-xs uppercase tracking-[0.28em] text-teal-700/70 dark:text-teal-200/80">
-                    {t('liveFeedback.badge')}
+                    {t("liveFeedback.badge")}
                   </p>
                   <p className="text-sm font-semibold text-slate-900 dark:text-slate-50">
-                    {t('liveFeedback.description')}
+                    {t("liveFeedback.description")}
                   </p>
                 </div>
               </div>
@@ -131,7 +151,7 @@ export default async function SimulatorLandingPage() {
       </section>
 
       <section>
-        <div className="mx-auto grid max-w-6xl gap-6 px-4 py-6 md:grid-cols-3 md:px-6">
+        <div className="mx-auto grid max-w-6xl gap-6 px-4 md:grid-cols-3 md:px-6">
           {pillars.map(({ key, title, description, icon: Icon }) => (
             <div
               key={key}
@@ -140,8 +160,12 @@ export default async function SimulatorLandingPage() {
               <span className="flex size-12 items-center justify-center rounded-2xl bg-teal-500/15 text-teal-600 transition group-hover:bg-teal-500/25 dark:text-teal-200">
                 <Icon className="size-6" />
               </span>
-              <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-50">{title}</h3>
-              <p className="text-sm text-slate-600 dark:text-slate-300">{description}</p>
+              <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-50">
+                {title}
+              </h3>
+              <p className="text-sm text-slate-600 dark:text-slate-300">
+                {description}
+              </p>
             </div>
           ))}
         </div>
@@ -153,11 +177,11 @@ export default async function SimulatorLandingPage() {
             <div className="flex items-center justify-center gap-3 mb-3">
               <ShieldCheck className="size-5 text-amber-600 dark:text-amber-400" />
               <h3 className="text-sm font-semibold text-amber-800 dark:text-amber-200">
-                {t('aiDisclaimer.title')}
+                {t("aiDisclaimer.title")}
               </h3>
             </div>
             <p className="text-sm text-amber-700 dark:text-amber-300">
-              {t('aiDisclaimer.description')}
+              {t("aiDisclaimer.description")}
             </p>
           </div>
         </div>
