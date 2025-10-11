@@ -134,7 +134,7 @@ export function GameConversationOverlay({
               </Button>
             </div>
 
-            <div className="flex-1 overflow-hidden px-6 pb-16 pt-14 md:px-8">
+            <div className="flex-1 overflow-hidden px-6 pb-[2.5rem] pt-14 md:px-8">
               <div className="h-full overflow-y-scroll -mx-6 px-6">
               {stage === 'preview' ? (
                 <div className="flex flex-col gap-6">

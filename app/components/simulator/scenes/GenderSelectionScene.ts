@@ -6,6 +6,7 @@
 import * as Phaser from 'phaser';
 import type { PlayerGender } from '../../../../types/game';
 import { getGameTranslations } from '../utils/gameI18n';
+import { MusicController } from '../utils/MusicController';
 
 export class GenderSelectionScene extends Phaser.Scene {
   private selectedGender: PlayerGender = 'boy';
@@ -123,6 +124,8 @@ export class GenderSelectionScene extends Phaser.Scene {
 
     // Add visual effects
     this.addVisualEffects();
+
+    MusicController.play(this);
   }
 
   private setupNavigation(): void {

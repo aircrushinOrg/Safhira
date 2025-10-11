@@ -15,6 +15,7 @@ import { PlayerHitboxDebugger } from '../debugger/PlayerHitboxDebugger';
 import { SCENARIO_TEMPLATES } from '../../../../lib/simulator/scenarios';
 import type { ScenarioTemplate } from '../../../../lib/simulator/scenarios';
 import { getGameTranslations } from '../utils/gameI18n';
+import { MusicController } from '../utils/MusicController';
 import {
   emitConversationOverlayOpen,
   CONVERSATION_OVERLAY_CLOSE_EVENT,
@@ -144,6 +145,7 @@ export class GameScene extends Phaser.Scene {
     // Create menu button
     const { game: gameTexts } = getGameTranslations();
     this.createMenuButton(gameTexts.menu);
+    MusicController.play(this);
 
     // Create debug visualizations (Debugging purposes)
     this.collisionDebugger = new CollisionDebugger(this, this.collisionManager);

@@ -1997,7 +1997,7 @@
         "locked": "完成整个会话即可解锁最终报告。"
       },
       "summaryHint": "每次交流后都会刷新摘要与评分。",
-      "placeholder": "写下你给 {name} 的信息…",
+      "placeholder": "写下你的信息…",
       "thinking": "思考中…",
       "safetyAlerts": "安全提醒",
       "rawReport": "查看原始报告 JSON",

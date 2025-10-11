@@ -1997,7 +1997,7 @@
         "locked": "Finish the session to unlock the final report."
       },
       "summaryHint": "Summaries and scores refresh after every exchange.",
-      "placeholder": "Write your message to {name}…",
+      "placeholder": "Write your message…",
       "thinking": "Thinking…",
       "safetyAlerts": "Safety alerts",
       "rawReport": "View raw report JSON",

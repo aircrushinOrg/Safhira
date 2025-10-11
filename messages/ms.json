@@ -2000,7 +2000,7 @@
         "locked": "Siapkan sesi untuk membuka laporan akhir."
       },
       "summaryHint": "Ringkasan dan skor dikemas kini selepas setiap giliran.",
-      "placeholder": "Tulis mesej anda kepada {name}…",
+      "placeholder": "Tulis mesej anda…",
       "thinking": "Sedang memikirkan…",
       "safetyAlerts": "Amaran keselamatan",
       "rawReport": "Lihat JSON laporan mentah",

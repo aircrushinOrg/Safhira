@@ -151,8 +151,10 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
   const [error, setError] = useState<string | null>(null);
   const [, setSummary] = useState<ApiSummary>(null);
   const [score, setScore] = useState<ApiScore>(null);
+  const [persistedScore, setPersistedScore] = useState({ confidence: 0, riskScore: 0 });
   const [finalReport, setFinalReport] = useState<ApiFinalReport>(null);
   const [safetyAlerts, setSafetyAlerts] = useState<string[]>([]);
+  const [persistedAlertsCount, setPersistedAlertsCount] = useState(0);
   const [conversationComplete, setConversationComplete] = useState(false);
   const [completeReason, setCompleteReason] = useState<string | null>(null);
   const [checkpoints, setCheckpoints] = useState(INITIAL_CHECKPOINTS);
@@ -161,6 +163,7 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
   const [typingNpcMessage, setTypingNpcMessage] = useState<string | null>(null);
   const [isStreamingReply, setIsStreamingReply] = useState(false);
   const [isFinalReportOpen, setIsFinalReportOpen] = useState(false);
+  const [reportGenerated, setReportGenerated] = useState(false);
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const typingTimeoutRef = useRef<number | null>(null);
@@ -181,8 +184,8 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
 
   const trimmedDraft = draft.trim();
   const canSend =
-    trimmedDraft.length > 0 && !loading && !finalizing && !conversationComplete;
-  const conversationBusy = loading || finalizing;
+    trimmedDraft.length > 0 && !loading && !finalizing && !conversationComplete && !isStreamingReply;
+  const conversationBusy = loading || finalizing || isStreamingReply;
 
   const statusCompleteLabel = t('status.complete');
   const statusInProgressLabel = t('status.inProgress');
@@ -205,13 +208,28 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
     ? t('processing.awaiting')
     : finalizing
       ? t('processing.finalizing')
-      : null;
+      : isStreamingReply
+        ? 'AI is responding...'
+        : null;
 
-  const hasScore = Boolean(score);
-  const displayedScore = {
-    confidence: Math.max(0, Math.min(100, Math.round(score?.confidence ?? 0))),
-    riskScore: Math.max(0, Math.min(100, Math.round(score?.riskScore ?? 0))),
-  };
+  // Update persisted scores when new score data is available
+  useEffect(() => {
+    if (score?.confidence != null && score?.riskScore != null) {
+      setPersistedScore({
+        confidence: Math.max(0, Math.min(100, Math.round(score.confidence))),
+        riskScore: Math.max(0, Math.min(100, Math.round(score.riskScore))),
+      });
+    }
+  }, [score]);
+
+  // Update persisted alerts count when new alerts are available
+  useEffect(() => {
+    if (safetyAlerts.length > 0) {
+      setPersistedAlertsCount(safetyAlerts.length);
+    }
+  }, [safetyAlerts]);
+
+  const displayedScore = persistedScore;
 
   async function handleDownloadFinalReportDocx() {
     if (!finalReport) return;
@@ -695,6 +713,7 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
       setCheckpoints(data.response.checkpoints);
       setConversationComplete(true);
       setCompleteReason(data.response.conversationCompleteReason);
+      setReportGenerated(true);
 
       // Open the dialog automatically if requested
       if (options.openDialog && data.response.finalReport) {
@@ -730,8 +749,10 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
     setError(null);
     setSummary(null);
     setScore(null);
+    setPersistedScore({ confidence: 0, riskScore: 0 });
     setFinalReport(null);
     setSafetyAlerts([]);
+    setPersistedAlertsCount(0);
     setConversationComplete(false);
     setCompleteReason(null);
     setCheckpoints(INITIAL_CHECKPOINTS);
@@ -740,13 +761,13 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
     setTypingNpcMessage(null);
     setIsStreamingReply(false);
     setIsFinalReportOpen(false);
+    setReportGenerated(false);
   }
 
   return (
-    <div className="flex h-full min-h-[70vh] flex-1 flex-col gap-5 rounded-3xl border border-slate-200/70 bg-white/85 p-4 shadow-lg shadow-slate-900/10 backdrop-blur dark:border-white/5 dark:bg-slate-900/70 dark:shadow-slate-950/40">
+    <div className="flex h-full min-h-[70vh] flex-1 flex-col gap-5 rounded-3xl border border-slate-200/70 bg-white/85 p-4 mb-[1rem] shadow-lg shadow-slate-900/10 backdrop-blur dark:border-white/5 dark:bg-slate-900/70 dark:shadow-slate-950/40">
       <header className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-200/60 bg-slate-50/80 px-4 py-3 dark:border-white/5 dark:bg-slate-950/60">
         <div>
-          <p className="text-xs uppercase tracking-[0.28em] text-slate-500 dark:text-slate-400">{t('activeNpc')}</p>
           <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-50">{displayTemplate.npcName}</h2>
           <p className="text-sm text-slate-600 dark:text-slate-300">{displayTemplate.npcRole}</p>
         </div>
@@ -756,58 +777,6 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
       </header>
 
       <div className="flex flex-1 min-h-0 flex-col gap-3">
-        <div className="flex flex-wrap items-center gap-3 rounded-2xl border border-slate-200/60 bg-white/80 px-4 py-3 text-xs text-slate-600 shadow-sm shadow-slate-900/5 dark:border-white/5 dark:bg-slate-900/60 dark:text-slate-300">
-          <span className={cn('rounded-full px-3 py-1 font-semibold', sessionStatusClass)}>
-            {t('labels.status')}: {sessionStatusLabel}
-          </span>
-          {hasScore && (
-            <>
-              <span className="rounded-full bg-purple-50 px-3 py-1 font-medium text-purple-700 dark:bg-purple-900/40 dark:text-purple-200">
-                {t('metrics.confidence', { score: displayedScore.confidence })}
-              </span>
-              <span className="rounded-full bg-red-50 px-3 py-1 font-medium text-red-700 dark:bg-red-900/40 dark:text-red-200">
-                {t('metrics.riskScore', { score: displayedScore.riskScore })}
-              </span>
-            </>
-          )}
-          {processingText && (
-            <span className="rounded-full bg-slate-100 px-3 py-1 font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-200">
-              {processingText}
-            </span>
-          )}
-          {conversationComplete && (
-            <span className="rounded-full bg-emerald-50 px-3 py-1 font-medium text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-200">
-              {completeReason ? t('conversationCompleteWithReason', { reason: completeReason }) : t('conversationComplete')}
-            </span>
-          )}
-          <div className="ml-auto flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={handleReset}
-              className="justify-center border-slate-300 text-slate-700 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-800"
-            >
-              {t('buttons.reset')}
-            </Button>
-            <Button
-              type="button"
-              onClick={async () => {
-                if (!finalReport) {
-                  await fetchFinalReport({ force: true, openDialog: true });
-                } else {
-                  setIsFinalReportOpen(true);
-                }
-              }}
-              disabled={!sessionId || finalizing}
-              className="justify-center bg-teal-500 text-slate-900 hover:bg-teal-400 disabled:cursor-not-allowed disabled:bg-teal-500/60"
-            >
-              {finalizing ? <Loader2 className="size-4 animate-spin" /> : <Sparkles className="size-4" />}
-              {finalizing ? t('buttons.finalScoresLoading') : t('buttons.generateReport')}
-            </Button>
-          </div>
-        </div>
-
-
         {error && (
           <div className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700 dark:border-rose-500/40 dark:bg-rose-500/10 dark:text-rose-100">
             {error}
@@ -818,7 +787,7 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
           ref={scrollRef}
           className="flex min-h-[24rem] flex-1 flex-col gap-3 overflow-hidden rounded-2xl border border-slate-200/60 bg-slate-50/80 dark:border-white/5 dark:bg-slate-950/60"
         >
-          <div className="flex h-full flex-col gap-3 overflow-y-auto px-4 py-5">
+          <div className="flex h-[50vh] flex-col gap-3 overflow-y-auto px-4 py-5">
             {messages.map((message) => (
               <div key={message.id} className={cn('flex', message.role === 'player' ? 'justify-end' : 'justify-start')}>
                 <div
@@ -866,9 +835,8 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
             event.preventDefault();
             handleSend();
           }}
-          className="rounded-2xl border border-slate-200/60 bg-white/90 p-3 shadow-sm shadow-slate-900/10 dark:border-white/5 dark:bg-slate-900/80"
         >
-          <div className="relative">
+          <div className="flex gap-3">
             <textarea
               value={draft}
               onChange={(event) => setDraft(event.target.value)}
@@ -880,25 +848,89 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
               }}
               placeholder={t('placeholder', { name: displayTemplate.npcName })}
               disabled={conversationBusy || conversationComplete}
-              className="min-h-[110px] w-full resize-none rounded-2xl border border-slate-200 bg-transparent px-4 py-3 text-sm text-slate-800 shadow-inner shadow-slate-900/5 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500/30 disabled:cursor-not-allowed dark:border-slate-700 dark:text-slate-100 dark:shadow-none"
+              className="min-h-[60px] flex-1 resize-none rounded-2xl border border-slate-200 bg-transparent px-4 py-3 text-sm text-slate-800 shadow-inner shadow-slate-900/5 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500/30 disabled:cursor-not-allowed dark:border-slate-700 dark:text-slate-100 dark:shadow-none"
             />
-            <div className="mt-3 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-              <span>{t('summaryHint')}</span>
-              <Button
-                type="submit"
-                size="lg"
-                disabled={!canSend}
-                className="bg-teal-500 text-slate-900 hover:bg-teal-400 disabled:cursor-not-allowed disabled:bg-teal-500/60"
-              >
-                {conversationBusy ? <Loader2 className="size-4 animate-spin" /> : <Send className="size-4" />}
+            <Button
+              type="submit"
+              size="lg"
+              disabled={!canSend}
+              className="self-center bg-teal-500 text-slate-900 hover:bg-teal-400 disabled:cursor-not-allowed disabled:bg-teal-500/60"
+            >
+              {conversationBusy ? <Loader2 className="size-4 animate-spin" /> : <Send className="size-4" />}
+              <span className="hidden sm:inline">
                 {conversationBusy ? t('buttons.sending') : t('buttons.send')}
-              </Button>
-            </div>
+              </span>
+            </Button>
           </div>
         </form>
       </div>
 
       <section className="space-y-4">
+        <div className="flex flex-col items-start gap-3 rounded-2xl border border-slate-200/60 bg-white/80 px-4 py-3 text-xs text-slate-600 shadow-sm shadow-slate-900/5 dark:border-white/5 dark:bg-slate-900/60 dark:text-slate-300">
+          <span className={cn('rounded-full px-3 py-1 font-semibold', sessionStatusClass)}>
+            {t('labels.status')}: {sessionStatusLabel}
+          </span>
+          {/* Always show scores and alerts with progress bars */}
+          <div className="flex w-full flex-col gap-3 sm:flex-row sm:gap-6">
+            <div className="flex-1 flex-col gap-1 w-full">
+              <span className="text-xs font-medium text-purple-700 dark:text-purple-200">
+                {t('metrics.confidence', { score: displayedScore.confidence })}
+              </span>
+              <div className="flex items-center gap-2">
+                <div className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-purple-600 dark:bg-purple-400 transition-all duration-300 ease-out"
+                    style={{ width: `${displayedScore.confidence}%` }}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="flex-1 flex-col gap-1 w-full">
+              <span className="text-xs font-medium text-red-700 dark:text-red-200">
+                {t('metrics.riskScore', { score: displayedScore.riskScore })}
+              </span>
+              <div className="flex items-center gap-2">
+                <div className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-red-600 dark:bg-red-400 transition-all duration-300 ease-out"
+                    style={{ width: `${displayedScore.riskScore}%` }}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          {conversationComplete && (
+            <span className="rounded-full bg-emerald-50 px-3 py-1 font-medium text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-200">
+              {completeReason ? t('conversationCompleteWithReason', { reason: completeReason }) : t('conversationComplete')}
+            </span>
+          )}
+          <div className="ml-auto flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleReset}
+              className="justify-center border-slate-300 text-slate-700 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-800"
+            >
+              {t('buttons.reset')}
+            </Button>
+            <Button
+              type="button"
+              onClick={async () => {
+                if (!finalReport && !reportGenerated) {
+                  setReportGenerated(true);
+                  await fetchFinalReport({ force: true, openDialog: true });
+                } else {
+                  setIsFinalReportOpen(true);
+                }
+              }}
+              disabled={!sessionId || finalizing || (reportGenerated && !finalReport)}
+              className="justify-center bg-teal-500 text-slate-900 hover:bg-teal-400 disabled:cursor-not-allowed disabled:bg-teal-500/60"
+            >
+              {finalizing ? <Loader2 className="size-4 animate-spin" /> : <Sparkles className="size-4" />}
+              {finalizing ? t('buttons.finalScoresLoading') : finalReport || reportGenerated ? t('buttons.viewReport') : t('buttons.generateReport')}
+            </Button>
+          </div>
+        </div>
         {safetyAlerts.length > 0 && (
           <div className="rounded-2xl border border-rose-200/70 bg-rose-50/70 p-4 text-xs text-rose-700 shadow-sm shadow-rose-200/40 dark:border-rose-500/40 dark:bg-rose-500/10 dark:text-rose-100">
             <p className="mb-2 font-semibold uppercase tracking-[0.28em]">{t('safetyAlerts')}</p>
@@ -909,22 +941,10 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
             </ul>
           </div>
         )}
-
-        {conversationComplete && lastRawResponse && (
-          <details className="rounded-2xl border border-slate-200/60 bg-white/80 p-3 text-xs text-slate-600 dark:border-white/5 dark:bg-slate-900/60 dark:text-slate-300">
-            <summary className="cursor-pointer font-semibold text-slate-700 dark:text-slate-200">{t('rawReport')}</summary>
-            <pre className="mt-2 max-h-48 overflow-auto whitespace-pre-wrap rounded border border-slate-200/60 bg-slate-100/60 p-2 text-[11px] dark:border-slate-700 dark:bg-slate-950/50">
-              {lastRawResponse}
-            </pre>
-            {lastRawError && (
-              <p className="mt-2 text-rose-500">{lastRawError}</p>
-            )}
-          </details>
-        )}
       </section>
 
       <Dialog open={isFinalReportOpen && Boolean(finalReport)} onOpenChange={setIsFinalReportOpen}>
-        <DialogContent className="max-h-[80vh] overflow-y-auto bg-white text-slate-800 dark:bg-slate-900 dark:text-slate-50">
+        <DialogContent className="fixed left-1/2 top-[55%] z-50 w-full max-w-lg -translate-x-1/2 -translate-y-1/2 transform max-h-[80vh] overflow-y-auto bg-white text-slate-800 shadow-lg dark:bg-slate-900 dark:text-slate-50">
           <DialogHeader>
             <DialogTitle>{t('dialog.title')}</DialogTitle>
             <DialogDescription>
