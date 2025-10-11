@@ -204,7 +204,7 @@ async function generateAnalysis(params: {
     locale,
   });
 
-  const formatInstruction = buildFormatInstruction(summaryDue, assessmentDue, finalReportDue);
+  const formatInstruction = buildFormatInstruction(summaryDue, assessmentDue, finalReportDue, locale);
   const scenarioSnapshot = buildScenarioSnapshot({
     scenario,
     history: historyWithNpc,

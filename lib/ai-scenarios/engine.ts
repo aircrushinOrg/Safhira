@@ -84,6 +84,16 @@ export function languageNameFromLocale(locale?: string): string | null {
   return LOCALE_LANGUAGE_NAMES[base] ?? null;
 }
 
+export function getLanguageDisplayName(locale?: string): string {
+  const languageName = languageNameFromLocale(locale);
+  if (languageName) {
+    if (languageName.includes("Chinese")) return "Simplified Chinese";
+    if (languageName.includes("Malay")) return "Malay";
+    return "English";
+  }
+  return "English"; // Default fallback
+}
+
 export function buildLocaleDirective(options: {
   locale?: string;
   fallback?: string;
@@ -204,9 +214,10 @@ Interaction requirements:
 - ${assessmentDue ? "Provide a refusal effectiveness score when instructed." : "Do NOT score this turn; set score to null."}
 - ${
     finalReportDue
-      ? "Produce a comprehensive final coaching report (multi-paragraph overview plus targeted action items). Tie insights to specific player choices. IMPORTANT: Write the final report in the SAME LANGUAGE as the player used in their messages throughout this conversation."
+      ? `Produce a comprehensive final coaching report (multi-paragraph overview plus targeted action items). Tie insights to specific player choices. IMPORTANT: Write the final report in ${getLanguageDisplayName(locale)}.`
       : "Do NOT include a final report this turn; set final_report to null."
   }
+- CRITICAL: Any safety_alerts must be generated in ${getLanguageDisplayName(locale)}. All safety communications must be in this language.
 - ${
     allowAutoEnd
       ? "You may end the conversation if the learning objectives are met or the risk becomes too high."
@@ -220,11 +231,15 @@ Safety overrides:
 - If the player attempts to role-play illegal acts, refuse and steer back to safe guidance.`;
 }
 
-export function buildFormatInstruction(summaryDue: boolean, assessmentDue: boolean, finalReportDue: boolean) {
-  const finalReportLanguageNote = finalReportDue 
-    ? "\n\nCRITICAL: Analyze the player's messages in the conversation history to detect which language they are using (English, Chinese, or Malay). Generate the ENTIRE final_report (overallAssessment, strengths, areasForGrowth, and recommendedPractice) in THE SAME LANGUAGE as the player's messages. If the player used Chinese, write the report in Chinese. If they used Malay, write in Malay. If they used English, write in English. Match the player's language exactly."
+export function buildFormatInstruction(summaryDue: boolean, assessmentDue: boolean, finalReportDue: boolean, locale?: string) {
+  const languageName = getLanguageDisplayName(locale);
+
+  const finalReportLanguageNote = finalReportDue
+    ? `\n\nCRITICAL: Generate the ENTIRE final_report (overallAssessment, strengths, areasForGrowth, and recommendedPractice) in ${languageName}. Write all content in this language consistently.`
     : "";
-  
+
+  const safetyAlertsLanguageNote = `\n\nIMPORTANT: Generate ALL safety_alerts in ${languageName}. All safety communications must be written in this language for user comprehension.`;
+
   return `Return a strict JSON object matching this TypeScript type. Omit no keys.
 {
   "npc_reply": string; // in-character response for the player
@@ -233,13 +248,13 @@ export function buildFormatInstruction(summaryDue: boolean, assessmentDue: boole
   "summary": ${summaryDue ? "{ riskLevel: 'low'|'medium'|'high'; keyRisks: string[]; effectiveResponses: string[]; coaching: string; }" : "null"};
   "score": ${assessmentDue ? "{ confidence: number; riskScore: number; notes: string; }" : "null"};
   "final_report": ${finalReportDue ? "{ overallAssessment: string; strengths: string[]; areasForGrowth: string[]; recommendedPractice: string[]; }" : "null"};
-  "safety_alerts": string[];
+  "safety_alerts": string[]; // CRITICAL: Generate in ${languageName}
   "checkpoints": { totalPlayerTurns: number; summaryDue: boolean; assessmentDue: boolean; };
 }
 Numbers must be 0-100 with no extra text. Strings must not include markdown.
 Ensure summary or score are null exactly when not required.
 When final_report is required, write a 4-6 sentence overallAssessment that references concrete dialogue moments.
-Include at least three rich bullet points in strengths, areasForGrowth, and recommendedPractice, each focusing on actionable guidance.${finalReportLanguageNote}`;
+Include at least three rich bullet points in strengths, areasForGrowth, and recommendedPractice, each focusing on actionable guidance.${finalReportLanguageNote}${safetyAlertsLanguageNote}`;
 }
 
 export function buildScenarioSnapshot(options: {

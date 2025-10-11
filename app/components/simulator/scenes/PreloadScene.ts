@@ -5,6 +5,7 @@
  */
 import * as Phaser from 'phaser';
 import { getGameTranslations } from '../utils/gameI18n';
+import { MusicController } from '../utils/MusicController';
 
 export class PreloadScene extends Phaser.Scene {
   constructor() {
@@ -63,6 +64,7 @@ export class PreloadScene extends Phaser.Scene {
     this.load.image('map', '/simulator-map.png');
     this.load.image('simulator-background', '/simulator-background.png');
     this.load.image('simulator-foreground', '/simulator-foreground.png');
+    this.load.audio('simulator-music', '/simulator-music.mp3');
 
     // Load boy player sprite sheets
     this.load.spritesheet('player-boy-idle', '/simulator-boy-idle.png', {
@@ -138,6 +140,9 @@ export class PreloadScene extends Phaser.Scene {
   }
 
   create() {
+    // Try to start music as early as possible (will set up unlock listeners if needed)
+    MusicController.play(this);
+
     // Start the title scene
     this.scene.start('TitleScene');
   }

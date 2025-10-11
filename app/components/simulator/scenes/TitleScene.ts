@@ -5,6 +5,7 @@
  */
 import * as Phaser from 'phaser';
 import { getGameTranslations } from '../utils/gameI18n';
+import { MusicController } from '../utils/MusicController';
 
 export class TitleScene extends Phaser.Scene {
   private startButton!: Phaser.GameObjects.Text;
@@ -130,6 +131,9 @@ export class TitleScene extends Phaser.Scene {
 
     // Add visual effects
     this.addVisualEffects();
+
+    // Ensure background music persists across scenes
+    MusicController.play(this);
   }
 
 

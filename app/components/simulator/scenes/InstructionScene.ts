@@ -5,6 +5,7 @@
  */
 import * as Phaser from 'phaser';
 import { getGameTranslations, type GameTranslations } from '../utils/gameI18n';
+import { MusicController } from '../utils/MusicController';
 
 export class InstructionScene extends Phaser.Scene {
   private backButton!: Phaser.GameObjects.Text;
@@ -99,6 +100,7 @@ export class InstructionScene extends Phaser.Scene {
     this.setupKeyboardControls(isSmallScreen);
 
     this.addVisualEffects();
+    MusicController.play(this);
   }
 
   private createMovementSection(

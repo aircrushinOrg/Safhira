@@ -10,7 +10,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { ThemeToggle } from './ThemeToggle';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from './ui/sheet';
 import { useIsMobile } from './ui/use-mobile';
-import { MessageCircle, Shield, BookOpen, HelpCircle, Award, Menu, MapPin, ChevronDown } from 'lucide-react';
+import { MessageCircle, Shield, BookOpen, HelpCircle, Sparkles, Menu, MapPin, ChevronDown } from 'lucide-react';
 import {Link} from '../../i18n/routing';
 import {LocaleSwitcher} from './LocaleSwitcher';
 import { useState } from 'react';
@@ -41,16 +41,6 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
 
   const NavigationItemsDesktop = () => (
     <>
-      <Link href="/quiz" className="w-full md:w-auto">
-        <Button
-          variant={currentSection === 'quiz' ? 'secondary' : 'ghost'}
-          size="sm"
-          className="flex items-center space-x-2 w-full justify-start md:w-auto md:justify-center"
-        >
-          <HelpCircle size={16} />
-          <span>{t('nav.quiz')}</span>
-        </Button>
-      </Link>
 
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -86,12 +76,8 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
           <span>{t('nav.services')}</span>
         </Button>
       </Link>
-    </>
-  );
 
-  const NavigationItemsMobile = () => (
-    <>
-      <Link href="/quiz" className="w-full md:w-auto" onClick={() => setIsSheetOpen(false)}>
+      <Link href="/quiz" className="w-full md:w-auto">
         <Button
           variant={currentSection === 'quiz' ? 'secondary' : 'ghost'}
           size="sm"
@@ -101,6 +87,22 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
           <span>{t('nav.quiz')}</span>
         </Button>
       </Link>
+
+      <Link href="/simulator" className="w-full md:w-auto">
+        <Button
+          variant={currentSection === 'simulator' ? 'secondary' : 'ghost'}
+          size="sm"
+          className="flex items-center space-x-2 w-full justify-start md:w-auto md:justify-center"
+        >
+          <Sparkles size={16} />
+          <span>{t('nav.simulator')}</span>
+        </Button>
+      </Link>
+    </>
+  );
+
+  const NavigationItemsMobile = () => (
+    <>
       <Link href="/stis" className="w-full md:w-auto" onClick={() => setIsSheetOpen(false)}>
         <Button
           variant={currentSection === 'stis' ? 'secondary' : 'ghost'}
@@ -131,6 +133,26 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
           <span>{t('nav.services')}</span>
         </Button>
       </Link>
+      <Link href="/quiz" className="w-full md:w-auto" onClick={() => setIsSheetOpen(false)}>
+        <Button
+          variant={currentSection === 'quiz' ? 'secondary' : 'ghost'}
+          size="sm"
+          className="flex items-center space-x-2 w-full justify-start md:w-auto md:justify-center"
+        >
+          <HelpCircle size={16} />
+          <span>{t('nav.quiz')}</span>
+        </Button>
+      </Link>
+      <Link href="/simulator" className="w-full md:w-auto" onClick={() => setIsSheetOpen(false)}>
+        <Button
+          variant={currentSection === 'simulator' ? 'secondary' : 'ghost'}
+          size="sm"
+          className="flex items-center space-x-2 w-full justify-start md:w-auto md:justify-center"
+        >
+          <Sparkles size={16} />
+          <span>{t('nav.simulator')}</span>
+        </Button>
+      </Link>
     </>
   );
 
@@ -157,7 +179,7 @@ export function Header({ currentSection, onSectionChange, onChatOpen }: HeaderPr
 
   return (
     <header className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 sticky top-0 z-[60]">
-      <div className="mx-auto px-8 py-4 md:px-16">
+      <div className="mx-auto px-4 md:px-8 py-4 lg:px-16">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div 

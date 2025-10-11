@@ -202,7 +202,8 @@
       "learnAboutStis": "Ketahui tentang STI",
       "livingWell": "Hidup Sihat dengan STI",
       "quiz": "Kuiz",
-      "services": "Cari Penjagaan Kesihatan"
+      "services": "Cari Penjagaan Kesihatan",
+      "simulator": "Simulator"
     }
   },
   "Footer": {
@@ -1988,6 +1989,7 @@
       "conversationCompleteWithReason": "Perbualan tamat · {reason}",
       "buttons": {
         "reset": "Tetapkan semula sesi",
+        "generateReport": "Jana Laporan",
         "finalScores": "Dapatkan skor akhir",
         "finalScoresLoading": "Sedang disiapkan…",
         "viewReport": "Lihat laporan akhir",
@@ -1999,7 +2001,7 @@
         "locked": "Siapkan sesi untuk membuka laporan akhir."
       },
       "summaryHint": "Ringkasan dan skor dikemas kini selepas setiap giliran.",
-      "placeholder": "Tulis mesej anda kepada {name}…",
+      "placeholder": "Tulis mesej anda…",
       "thinking": "Sedang memikirkan…",
       "safetyAlerts": "Amaran keselamatan",
       "rawReport": "Lihat JSON laporan mentah",

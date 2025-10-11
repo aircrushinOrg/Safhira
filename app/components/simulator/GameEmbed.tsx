@@ -18,14 +18,17 @@ import {
   type ConversationOverlayOpenDetail,
 } from '@/lib/simulator/overlay-events';
 import { GameConversationOverlay } from '@/app/components/simulator/GameConversationOverlay';
+import { MusicController } from '@/app/components/simulator/utils/MusicController';
 import { setGameTranslations, type GameTranslations } from '@/app/components/simulator/utils/gameI18n';
 
 export default function GameEmbed() {
   const gameRef = useRef<Phaser.Game | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const unlockButtonRef = useRef<HTMLButtonElement>(null);
   const [isClient, setIsClient] = useState(false);
   const [hasLoadError, setHasLoadError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [audioUnlocked, setAudioUnlocked] = useState(false);
   const [overlayState, setOverlayState] = useState<{
     open: boolean;
     stage: 'preview' | 'chat';
@@ -87,6 +90,41 @@ export default function GameEmbed() {
   useEffect(() => {
     setGameTranslations(gameTranslations);
   }, [gameTranslations]);
+
+  // Attempt to unlock audio on any page interaction (very early)
+  useEffect(() => {
+    const unlockAudio = () => {
+      if (gameRef.current) {
+        const activeScenes = gameRef.current.scene.getScenes(true);
+        if (activeScenes.length > 0) {
+          const currentScene = activeScenes[0];
+          MusicController.play(currentScene);
+        }
+      }
+    };
+
+    // Listen for very early page interactions
+    const earlyUnlock = () => {
+      unlockAudio();
+      // Remove listeners after first use
+      document.removeEventListener('touchstart', earlyUnlock);
+      document.removeEventListener('mousedown', earlyUnlock);
+      document.removeEventListener('click', earlyUnlock);
+      document.removeEventListener('keydown', earlyUnlock);
+    };
+
+    document.addEventListener('touchstart', earlyUnlock, { once: true, passive: true });
+    document.addEventListener('mousedown', earlyUnlock, { once: true, passive: true });
+    document.addEventListener('click', earlyUnlock, { once: true, passive: true });
+    document.addEventListener('keydown', earlyUnlock, { once: true, passive: true });
+
+    return () => {
+      document.removeEventListener('touchstart', earlyUnlock);
+      document.removeEventListener('mousedown', earlyUnlock);
+      document.removeEventListener('click', earlyUnlock);
+      document.removeEventListener('keydown', earlyUnlock);
+    };
+  }, []);
 
   // Set client-side flag
   useEffect(() => {
@@ -200,6 +238,18 @@ export default function GameEmbed() {
     setHasLoadError(true);
   };
 
+  // Handle audio unlock button click
+  const handleAudioUnlock = useCallback(() => {
+    if (!audioUnlocked && gameRef.current) {
+      const activeScenes = gameRef.current.scene.getScenes(true);
+      if (activeScenes.length > 0) {
+        const currentScene = activeScenes[0];
+        MusicController.play(currentScene);
+        setAudioUnlocked(true);
+      }
+    }
+  }, [audioUnlocked]);
+
   useEffect(() => {
     // Only initialize on client side after isClient is true
     if (isClient && typeof window !== 'undefined' && !gameRef.current && containerRef.current) {
@@ -221,6 +271,18 @@ export default function GameEmbed() {
           gameRef.current.events.once('ready', () => {
             setIsLoading(false);
             setHasLoadError(false);
+
+            // Attempt to auto-unlock audio by programmatically clicking the unlock button
+            setTimeout(() => {
+              try {
+                if (unlockButtonRef.current) {
+                  // Trigger a real DOM click event on our invisible button
+                  unlockButtonRef.current.click();
+                }
+              } catch (error) {
+                console.log('Auto-unlock failed:', error);
+              }
+            }, 100); // Small delay to ensure game is fully ready
           });
 
           // Set a timeout to catch cases where the game never loads
@@ -245,6 +307,7 @@ export default function GameEmbed() {
     }
 
     return () => {
+      MusicController.stop();
       if (gameRef.current) {
         gameRef.current.destroy(true);
         gameRef.current = null;
@@ -348,7 +411,7 @@ export default function GameEmbed() {
     };
   }, [isClient]);
 
-  // Handle scroll events to pass through the game canvas
+  // Handle scroll events to pass through the game canvas and unlock audio on first interaction
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
       // Prevent the game from consuming the wheel event
@@ -360,6 +423,22 @@ export default function GameEmbed() {
         left: e.deltaX,
         behavior: 'auto'
       });
+    };
+
+    // Handle first interaction to unlock audio context early
+    const handleFirstInteraction = () => {
+      if (gameRef.current) {
+        // Try to unlock audio on any game interaction
+        const activeScenes = gameRef.current.scene.getScenes(true);
+        if (activeScenes.length > 0) {
+          const currentScene = activeScenes[0];
+          // Try to start music immediately on interaction
+          if (currentScene.sound && currentScene.sound.locked) {
+            // The MusicController will handle unlocking when ready
+            MusicController.play(currentScene);
+          }
+        }
+      }
     };
 
     const attachScrollListener = () => {
@@ -378,9 +457,17 @@ export default function GameEmbed() {
             passive: false
           });
 
+          // Add interaction listeners to unlock audio early
+          canvas.addEventListener('click', handleFirstInteraction, { once: true });
+          canvas.addEventListener('touchstart', handleFirstInteraction, { once: true });
+          canvas.addEventListener('keydown', handleFirstInteraction, { once: true });
+
           return () => {
             canvas.removeEventListener('wheel', handleWheel, { capture: true });
             container.removeEventListener('wheel', handleWheel, { capture: true });
+            canvas.removeEventListener('click', handleFirstInteraction);
+            canvas.removeEventListener('touchstart', handleFirstInteraction);
+            canvas.removeEventListener('keydown', handleFirstInteraction);
           };
         }
       }
@@ -451,6 +538,26 @@ export default function GameEmbed() {
           transition: 'opacity 0.3s ease-in-out',
         }}
       />
+
+      {/* Invisible audio unlock button - triggered programmatically */}
+      <button
+        ref={unlockButtonRef}
+        onClick={handleAudioUnlock}
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: 1,
+          height: 1,
+          opacity: 0,
+          pointerEvents: 'none',
+          zIndex: -1,
+        }}
+        aria-hidden="true"
+        tabIndex={-1}
+      >
+        Unlock Audio
+      </button>
 
       <GameConversationOverlay
         open={overlayState.open}
