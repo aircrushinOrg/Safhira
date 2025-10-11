@@ -4,6 +4,7 @@
  * Once loading is complete, it transitions to the TitleScene.
  */
 import * as Phaser from 'phaser';
+import { getGameTranslations } from '../utils/gameI18n';
 
 export class PreloadScene extends Phaser.Scene {
   constructor() {
@@ -14,6 +15,7 @@ export class PreloadScene extends Phaser.Scene {
     // Create loading bar
     const width = this.cameras.main.width;
     const height = this.cameras.main.height;
+    const { preload: preloadTexts } = getGameTranslations();
 
     const progressBar = this.add.graphics();
     const progressBox = this.add.graphics();
@@ -23,7 +25,7 @@ export class PreloadScene extends Phaser.Scene {
     const loadingText = this.make.text({
       x: width / 2,
       y: height / 2 - 50,
-      text: 'Loading...',
+      text: preloadTexts.loading,
       style: {
         font: '20px monospace',
         color: '#ffffff',
@@ -112,6 +114,18 @@ export class PreloadScene extends Phaser.Scene {
       frameHeight: 64,
     });
     this.load.spritesheet('simulator-girl-npc-bar', '/simulator-girl-npc-bar.png', {
+      frameWidth: 32,
+      frameHeight: 64,
+    });
+    this.load.spritesheet('simulator-girl-npc-doctor', '/simulator-girl-npc-doctor.png', {
+      frameWidth: 32,
+      frameHeight: 64,
+    });
+    this.load.spritesheet('simulator-boy-npc-doctor', '/simulator-boy-npc-doctor.png', {
+      frameWidth: 32,
+      frameHeight: 64,
+    });
+    this.load.spritesheet('simulator-both-npc-uni', '/simulator-both-npc-uni.png', {
       frameWidth: 32,
       frameHeight: 64,
     });

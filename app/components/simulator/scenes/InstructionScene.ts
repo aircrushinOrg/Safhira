@@ -4,6 +4,7 @@
  * The scene includes sections on movement, interaction, and minimap usage, along with navigation buttons and keyboard shortcuts.
  */
 import * as Phaser from 'phaser';
+import { getGameTranslations, type GameTranslations } from '../utils/gameI18n';
 
 export class InstructionScene extends Phaser.Scene {
   private backButton!: Phaser.GameObjects.Text;
@@ -21,6 +22,7 @@ export class InstructionScene extends Phaser.Scene {
 
   create() {
     const { width, height } = this.cameras.main;
+    const instructionTexts = getGameTranslations().instruction;
 
     // Add background image with smart scaling
     const background = this.add.image(width / 2, height / 2, 'simulator-background');
@@ -68,7 +70,7 @@ export class InstructionScene extends Phaser.Scene {
     const isMediumScreen = width >= 600 && width < 900;
     const titleFontSize = isSmallScreen ? '24px' : isMediumScreen ? '28px' : '32px';
 
-    const titleText = this.add.text(width / 2, height * 0.1, 'HOW TO PLAY', {
+    const titleText = this.add.text(width / 2, height * 0.1, instructionTexts.title, {
       fontSize: titleFontSize,
       color: '#ffffff',
       fontFamily: '"Press Start 2P", monospace'
@@ -86,11 +88,11 @@ export class InstructionScene extends Phaser.Scene {
     titleText.setOrigin(0.5);
     titleText.setDepth(2);
 
-    this.createMovementSection(width, height, isSmallScreen, isMediumScreen);
-    this.createInteractionSection(width, height, isSmallScreen, isMediumScreen);
-    this.createMinimapSection(width, height, isSmallScreen, isMediumScreen);
+    this.createMovementSection(width, height, isSmallScreen, isMediumScreen, instructionTexts);
+    this.createInteractionSection(width, height, isSmallScreen, isMediumScreen, instructionTexts);
+    this.createMinimapSection(width, height, isSmallScreen, isMediumScreen, instructionTexts);
 
-    this.createNavigationButtons(width, height, isSmallScreen);
+    this.createNavigationButtons(width, height, isSmallScreen, instructionTexts.back);
     const selectorX = this.backButton.getBounds().left - 20;
     this.selector.setPosition(selectorX, height * 0.88);
 
@@ -99,24 +101,27 @@ export class InstructionScene extends Phaser.Scene {
     this.addVisualEffects();
   }
 
-  private createMovementSection(width: number, height: number, isSmallScreen: boolean, isMediumScreen: boolean): void {
+  private createMovementSection(
+    width: number,
+    height: number,
+    isSmallScreen: boolean,
+    isMediumScreen: boolean,
+    instructionTexts: GameTranslations['instruction'],
+  ): void {
     // Movement section
     const headerFontSize = isSmallScreen ? '14px' : isMediumScreen ? '16px' : '18px';
     const textFontSize = isSmallScreen ? '10px' : isMediumScreen ? '12px' : '14px';
 
-    const movementTitle = this.add.text(width * 0.1, height * 0.2, 'MOVEMENT', {
+    const movementTitle = this.add.text(width * 0.1, height * 0.2, instructionTexts.sections.movement.title, {
       fontSize: headerFontSize,
       color: '#e74c3c',
       fontFamily: '"Press Start 2P", monospace'
     });
     movementTitle.setDepth(2);
 
-    let movementText: string;
-    if (this.isTouchDevice) {
-      movementText = '* Drag the joystick to move your character \n* Move in four directions: Up, Down, Left, Right \n* Release to stop moving';
-    } else {
-      movementText = '* W / UP key : Move up \n* S / DOWN key : Move down \n* A / LEFT key : Move left \n* D / RIGHT key : Move right';
-    }
+    const movementText = this.isTouchDevice
+      ? instructionTexts.sections.movement.touch
+      : instructionTexts.sections.movement.keyboard;
 
     const movementInstructions = this.add.text(width * 0.1, height * 0.25, movementText, {
       fontSize: textFontSize,
@@ -128,24 +133,27 @@ export class InstructionScene extends Phaser.Scene {
     movementInstructions.setDepth(2);
   }
 
-  private createInteractionSection(width: number, height: number, isSmallScreen: boolean, isMediumScreen: boolean): void {
+  private createInteractionSection(
+    width: number,
+    height: number,
+    isSmallScreen: boolean,
+    isMediumScreen: boolean,
+    instructionTexts: GameTranslations['instruction'],
+  ): void {
     // Interaction section
     const headerFontSize = isSmallScreen ? '14px' : isMediumScreen ? '16px' : '18px';
     const textFontSize = isSmallScreen ? '10px' : isMediumScreen ? '12px' : '14px';
 
-    const interactionTitle = this.add.text(width * 0.1, height * 0.41, 'INTERACTION', {
+    const interactionTitle = this.add.text(width * 0.1, height * 0.41, instructionTexts.sections.interaction.title, {
       fontSize: headerFontSize,
       color: '#f39c12',
       fontFamily: '"Press Start 2P", monospace'
     });
     interactionTitle.setDepth(2);
 
-    let interactionText: string;
-    if (this.isTouchDevice) {
-      interactionText = '* Walk up to NPCs and tap on them to interact \n* Different NPCs have different scenarios';
-    } else {
-      interactionText = '* Walk up to NPCs and press SPACE / ENTER to interact \n* Different NPCs have different scenarios';
-    }
+    const interactionText = this.isTouchDevice
+      ? instructionTexts.sections.interaction.touch
+      : instructionTexts.sections.interaction.keyboard;
 
     const interactionInstructions = this.add.text(width * 0.1, height * 0.46, interactionText, {
       fontSize: textFontSize,
@@ -157,19 +165,25 @@ export class InstructionScene extends Phaser.Scene {
     interactionInstructions.setDepth(2);
   }
 
-  private createMinimapSection(width: number, height: number, isSmallScreen: boolean, isMediumScreen: boolean): void {
+  private createMinimapSection(
+    width: number,
+    height: number,
+    isSmallScreen: boolean,
+    isMediumScreen: boolean,
+    instructionTexts: GameTranslations['instruction'],
+  ): void {
     // Minimap section
     const headerFontSize = isSmallScreen ? '14px' : isMediumScreen ? '16px' : '18px';
     const textFontSize = isSmallScreen ? '10px' : isMediumScreen ? '12px' : '14px';
 
-    const minimapTitle = this.add.text(width * 0.1, height * 0.62, 'MINIMAP', {
+    const minimapTitle = this.add.text(width * 0.1, height * 0.62, instructionTexts.sections.minimap.title, {
       fontSize: headerFontSize,
       color: '#AD6BFF',
       fontFamily: '"Press Start 2P", monospace'
     });
     minimapTitle.setDepth(2);
 
-    const minimapText = '* Minimap in top-left shows your surroundings \n* Red dot: Your character \n* Yellow dot: NPCs \n* Green rectangle: Your current view area';
+    const minimapText = instructionTexts.sections.minimap.description;
 
     const minimapInstructions = this.add.text(width * 0.1, height * 0.67, minimapText, {
       fontSize: textFontSize,
@@ -181,11 +195,16 @@ export class InstructionScene extends Phaser.Scene {
     minimapInstructions.setDepth(2);
   }
 
-  private createNavigationButtons(width: number, height: number, isSmallScreen: boolean): void {
+  private createNavigationButtons(
+    width: number,
+    height: number,
+    isSmallScreen: boolean,
+    backLabel: string,
+  ): void {
     // Back to Title button
     const buttonFontSize = isSmallScreen ? '16px' : '20px';
 
-    this.backButton = this.add.text(width / 2, height * 0.88, 'BACK TO TITLE', {
+    this.backButton = this.add.text(width / 2, height * 0.88, backLabel, {
       fontSize: buttonFontSize,
       color: '#ffffff',
       fontFamily: '"Press Start 2P", monospace'

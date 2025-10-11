@@ -251,19 +251,58 @@
       "title": "In This Policy",
       "description": "Jump to the section that matters most to you.",
       "items": [
-        {"id": "info-we-collect", "label": "Information We Collect"},
-        {"id": "use-of-information", "label": "How We Use Information"},
-        {"id": "cookies", "label": "Cookies & Local Storage"},
-        {"id": "ai-conversations", "label": "Safhira AI Conversations"},
-        {"id": "data-storage", "label": "Data Storage & Transfers"},
-        {"id": "information-sharing", "label": "Information Sharing"},
-        {"id": "your-rights", "label": "Your Rights & Choices"},
-        {"id": "data-retention", "label": "Data Retention"},
-        {"id": "security", "label": "Security"},
-        {"id": "third-party", "label": "Third-Party Resources"},
-        {"id": "young-people", "label": "Children & Young People"},
-        {"id": "changes", "label": "Changes to This Policy"},
-        {"id": "contact", "label": "Contact Us"}
+        {
+          "id": "info-we-collect",
+          "label": "Information We Collect"
+        },
+        {
+          "id": "use-of-information",
+          "label": "How We Use Information"
+        },
+        {
+          "id": "cookies",
+          "label": "Cookies & Local Storage"
+        },
+        {
+          "id": "ai-conversations",
+          "label": "Safhira AI Conversations"
+        },
+        {
+          "id": "data-storage",
+          "label": "Data Storage & Transfers"
+        },
+        {
+          "id": "information-sharing",
+          "label": "Information Sharing"
+        },
+        {
+          "id": "your-rights",
+          "label": "Your Rights & Choices"
+        },
+        {
+          "id": "data-retention",
+          "label": "Data Retention"
+        },
+        {
+          "id": "security",
+          "label": "Security"
+        },
+        {
+          "id": "third-party",
+          "label": "Third-Party Resources"
+        },
+        {
+          "id": "young-people",
+          "label": "Children & Young People"
+        },
+        {
+          "id": "changes",
+          "label": "Changes to This Policy"
+        },
+        {
+          "id": "contact",
+          "label": "Contact Us"
+        }
       ]
     },
     "sections": {
@@ -378,8 +417,16 @@
         "title": "13. Contact Us",
         "body": "If you have questions, concerns, or requests related to this Privacy Policy, please contact us at:",
         "contacts": [
-          {"label": "Email", "value": "info@safhira.vercel.app", "href": "mailto:info@safhira.vercel.app"},
-          {"label": "Website", "value": "www.safhira.vercel.app", "href": "https://www.safhira.vercel.app"}
+          {
+            "label": "Email",
+            "value": "info@safhira.vercel.app",
+            "href": "mailto:info@safhira.vercel.app"
+          },
+          {
+            "label": "Website",
+            "value": "www.safhira.vercel.app",
+            "href": "https://www.safhira.vercel.app"
+          }
         ],
         "footer": "We aim to respond to privacy inquiries within 14 days. Thank you for trusting Safhira as your companion for safe, evidence-based sexual health learning."
       }
@@ -430,7 +477,7 @@
     "actions": {
       "true": "True",
       "false": "False",
-        "previous": "Previous",
+      "previous": "Previous",
       "next": "Next",
       "finish": "Finish",
       "submitScore": "Submit Score",
@@ -512,28 +559,28 @@
       "subtitle": "Clear, judgment-free STI info to help you make informed choices.",
       "imageAlt": "Medical illustration representing healthcare and medicine"
     },
-  "support": {
-    "title": "You're Taking a Positive Step",
-    "text": "Learning about STIs is responsible and healthy. Sexual health is part of wellbeing."
-  },
-  "sections": {
-    "learn": "Learn the essentials",
-    "learnDescription": "Watch a quick overview on why screening matters and how to stay on top of your sexual health.",
-    "guides": "Dive deeper with guided modules",
-    "guidesDescription": "Explore focused modules that help you build prevention habits and understand local STI trends.",
-    "exploreDescription": "Browse conditions by severity, treatability, and type to understand what support might look like.",
-    "resources": "Get support when you need it",
-    "resourcesDescription": "Find confidential care options and reminders so you know what to expect before booking an appointment."
-  },
-  "grid": {
-    "title": "Common STI diseases"
-  },
-  "video": {
-    "title": "Why STI Testing Matters",
-    "description": "This short video explains how early screening and treatment keeps you and your partners healthy.",
-    "caption": "Video tells the overall description of STI"
-  },
-  "modules": {
+    "support": {
+      "title": "You're Taking a Positive Step",
+      "text": "Learning about STIs is responsible and healthy. Sexual health is part of wellbeing."
+    },
+    "sections": {
+      "learn": "Learn the essentials",
+      "learnDescription": "Watch a quick overview on why screening matters and how to stay on top of your sexual health.",
+      "guides": "Dive deeper with guided modules",
+      "guidesDescription": "Explore focused modules that help you build prevention habits and understand local STI trends.",
+      "exploreDescription": "Browse conditions by severity, treatability, and type to understand what support might look like.",
+      "resources": "Get support when you need it",
+      "resourcesDescription": "Find confidential care options and reminders so you know what to expect before booking an appointment."
+    },
+    "grid": {
+      "title": "Common STI diseases"
+    },
+    "video": {
+      "title": "Why STI Testing Matters",
+      "description": "This short video explains how early screening and treatment keeps you and your partners healthy.",
+      "caption": "Video tells the overall description of STI"
+    },
+    "modules": {
       "prevention": {
         "badge": "Prevention Learning Module"
       },
@@ -1787,6 +1834,188 @@
       "viewInGoogleMaps": "View in Google Maps",
       "searchInGoogleMaps": "Search in Google Maps",
       "notAvailable": "Map not available"
+    }
+  },
+  "Simulator": {
+    "landing": {
+      "badge": "Safhira Simulator",
+      "title": "Practise tough conversations in a safe, story-driven world.",
+      "subtitle": "Navigate realistic nightlife, clinic, and campus scenarios, experiment with dialogue, and collect actionable feedback that strengthens your confidence beyond the screen.",
+      "cta": {
+        "primary": "Launch game",
+        "secondary": "Quick access"
+      },
+      "highlights": {
+        "practice": {
+          "title": "Practice real conversations",
+          "description": "Explore branching stories to rehearse healthy boundaries and confident communication before life presents the moment."
+        },
+        "coaching": {
+          "title": "Guided by evidence-based coaching",
+          "description": "Each scene mirrors challenges around intimacy, peer pressure, and clinic visits with tips grounded in public health guidance."
+        },
+        "feedback": {
+          "title": "Instant feedback while you play",
+          "description": "Track safety alerts, strengths, and growth areas so you know exactly what to focus on in the next attempt."
+        }
+      },
+      "pillars": {
+        "choose": {
+          "title": "Choose your scenario",
+          "description": "Drop into conversations with friends, romantic interests, or healthcare professionals and tailor NPC personalities to your learning goals."
+        },
+        "build": {
+          "title": "Build confident responses",
+          "description": "Practise saying \"no\", asking for support, or requesting care in a low-pressure space designed for experimentation."
+        },
+        "review": {
+          "title": "Review and iterate fast",
+          "description": "Use the quick access tools to tweak prompts, test new strategies, and bring successful lines back into the full simulation."
+        }
+      },
+      "liveFeedback": {
+        "badge": "Live feedback",
+        "description": "Summaries, scores & safety alerts update after every turn."
+      }
+    },
+    "npcList": {
+      "badge": "Simulator NPC Roster",
+      "title": "Meet every coach, confidant, and challenger before you jump in.",
+      "subtitle": "Review the personalities guiding each scenario, then launch straight into conversation practice. Choose an NPC to step into their story or head to the quick tools to customise prompts on the fly.",
+      "startChat": "Start chat"
+    },
+    "chat": {
+      "back": "Back to roster",
+      "badge": "Simulation practice",
+      "title": "Chat with {npcName}",
+      "scenarioId": "Scenario ID · {scenarioId}"
+    },
+    "game": {
+      "loading": "Loading Safhira Simulation Game..."
+    },
+    "gameScenes": {
+      "preload": {
+        "loading": "Loading..."
+      },
+      "title": {
+        "subtitle": "SIMULATION GAME",
+        "start": "START GAME",
+        "instructions": "INSTRUCTIONS"
+      },
+      "gender": {
+        "title": "SELECT GENDER",
+        "boy": "BOY",
+        "girl": "GIRL",
+        "back": "BACK TO TITLE"
+      },
+      "instruction": {
+        "title": "HOW TO PLAY",
+        "sections": {
+          "movement": {
+            "title": "MOVEMENT",
+            "keyboard": "* W / UP key : Move up \n* S / DOWN key : Move down \n* A / LEFT key : Move left \n* D / RIGHT key : Move right",
+            "touch": "* Drag the joystick to move your character \n* Move in four directions: Up, Down, Left, Right \n* Release to stop moving"
+          },
+          "interaction": {
+            "title": "INTERACTION",
+            "keyboard": "* Walk up to NPCs and press SPACE / ENTER to interact \n* Different NPCs have different scenarios",
+            "touch": "* Walk up to NPCs and tap on them to interact \n* Different NPCs have different scenarios"
+          },
+          "minimap": {
+            "title": "MINIMAP",
+            "description": "* Minimap in top-left shows your surroundings \n* Red dot: Your character \n* Yellow dot: NPCs \n* Green rectangle: Your current view area"
+          }
+        },
+        "back": "BACK TO TITLE"
+      },
+      "game": {
+        "menu": "MENU"
+      }
+    },
+    "overlay": {
+      "close": "Close conversation overlay",
+      "ready": "Ready to practise?",
+      "chatWith": "Chat with {name}",
+      "setting": "Setting",
+      "npc": "NPC",
+      "learningGoals": "Learning goals",
+      "start": "Start conversation",
+      "notNow": "Not now",
+      "howItWorks": {
+        "title": "How it works",
+        "items": [
+          "Practise responses in a safe space. The NPC adapts to your replies.",
+          "You'll see live coaching, confidence, and refusal scores.",
+          "Finish the chat to unlock a complete feedback report."
+        ]
+      },
+      "backToPreview": "Back to preview"
+    },
+    "chatPractice": {
+      "activeNpc": "Active NPC",
+      "labels": {
+        "status": "Status",
+        "scenario": "Scenario"
+      },
+      "status": {
+        "complete": "Complete",
+        "inProgress": "In progress",
+        "notStarted": "Not started"
+      },
+      "metrics": {
+        "refusal": "Refusal: {score}%",
+        "confidence": "Confidence: {score}%"
+      },
+      "processing": {
+        "awaiting": "Awaiting NPC response…",
+        "finalizing": "Generating final report…"
+      },
+      "conversationComplete": "Conversation complete",
+      "conversationCompleteWithReason": "Conversation complete · {reason}",
+      "buttons": {
+        "reset": "Reset session",
+        "finalScores": "Get final scores",
+        "finalScoresLoading": "Finishing…",
+        "viewReport": "View final report",
+        "send": "Send",
+        "sending": "Sending…"
+      },
+      "finalReport": {
+        "ready": "Final report ready with tailored coaching.",
+        "locked": "Finish the session to unlock the final report."
+      },
+      "summaryHint": "Summaries and scores refresh after every exchange.",
+      "placeholder": "Write your message to {name}…",
+      "thinking": "Thinking…",
+      "safetyAlerts": "Safety alerts",
+      "rawReport": "View raw report JSON",
+      "dialog": {
+        "title": "Final report",
+        "description": "Deep dive into your performance and personalised next steps.",
+        "sections": {
+          "strengths": "Strengths",
+          "areas": "Areas for growth",
+          "recommended": "Recommended practice"
+        },
+        "close": "Close",
+        "download": "Download report PDF"
+      },
+      "pdf": {
+        "title": "Simulation Final Report",
+        "meta": "Chat with {name} · {label}",
+        "generated": "Generated {timestamp}",
+        "sections": {
+          "overall": "Overall Assessment",
+          "highlights": "Highlights",
+          "strengths": "Strengths",
+          "areas": "Areas for Growth",
+          "recommended": "Recommended Practice"
+        }
+      },
+      "intro": {
+        "fallbackPersona": "I'm {name}.",
+        "message": "Hey, I'm {name}. {persona} Ready to practise {scenario}?"
+      }
     }
   }
 }

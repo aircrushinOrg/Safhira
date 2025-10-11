@@ -5,9 +5,20 @@
  */
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useLocale, useTranslations } from 'next-intl';
 import * as Phaser from 'phaser';
 import { createGameConfig } from '@/lib/simulator/config';
+import { getLocalizedScenarioTemplate } from '@/lib/simulator/scenarios';
+import type { ScenarioLocale, ScenarioTemplate } from '@/lib/simulator/scenarios';
+import type { PlayerGender } from '@/types/game';
+import {
+  CONVERSATION_OVERLAY_OPEN_EVENT,
+  emitConversationOverlayClose,
+  type ConversationOverlayOpenDetail,
+} from '@/lib/simulator/overlay-events';
+import { GameConversationOverlay } from '@/app/components/simulator/GameConversationOverlay';
+import { setGameTranslations, type GameTranslations } from '@/app/components/simulator/utils/gameI18n';
 
 export default function GameEmbed() {
   const gameRef = useRef<Phaser.Game | null>(null);
@@ -15,6 +26,67 @@ export default function GameEmbed() {
   const [isClient, setIsClient] = useState(false);
   const [hasLoadError, setHasLoadError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [overlayState, setOverlayState] = useState<{
+    open: boolean;
+    stage: 'preview' | 'chat';
+    template: ScenarioTemplate | null;
+    playerGender: PlayerGender;
+    chatKey: string;
+  }>({
+    open: false,
+    stage: 'preview',
+    template: null,
+    playerGender: 'boy',
+    chatKey: 'initial',
+  });
+  const locale = useLocale();
+  const tGame = useTranslations('Simulator.gameScenes');
+  const scenarioLocale = useMemo<ScenarioLocale>(() => {
+    return ['en', 'ms', 'zh'].includes(locale) ? (locale as ScenarioLocale) : 'en';
+  }, [locale]);
+  const gameTranslations = useMemo<GameTranslations>(() => ({
+    preload: {
+      loading: tGame('preload.loading'),
+    },
+    title: {
+      subtitle: tGame('title.subtitle'),
+      start: tGame('title.start'),
+      instructions: tGame('title.instructions'),
+    },
+    gender: {
+      title: tGame('gender.title'),
+      boy: tGame('gender.boy'),
+      girl: tGame('gender.girl'),
+      back: tGame('gender.back'),
+    },
+    instruction: {
+      title: tGame('instruction.title'),
+      sections: {
+        movement: {
+          title: tGame('instruction.sections.movement.title'),
+          keyboard: tGame('instruction.sections.movement.keyboard'),
+          touch: tGame('instruction.sections.movement.touch'),
+        },
+        interaction: {
+          title: tGame('instruction.sections.interaction.title'),
+          keyboard: tGame('instruction.sections.interaction.keyboard'),
+          touch: tGame('instruction.sections.interaction.touch'),
+        },
+        minimap: {
+          title: tGame('instruction.sections.minimap.title'),
+          description: tGame('instruction.sections.minimap.description'),
+        },
+      },
+      back: tGame('instruction.back'),
+    },
+    game: {
+      menu: tGame('game.menu'),
+    },
+  }), [tGame]);
+
+  useEffect(() => {
+    setGameTranslations(gameTranslations);
+  }, [gameTranslations]);
 
   // Set client-side flag
   useEffect(() => {
@@ -33,6 +105,94 @@ export default function GameEmbed() {
     setHasLoadError(false);
     setIsLoading(true);
   };
+
+  const closeOverlay = useCallback(() => {
+    setOverlayState((prev) => ({
+      open: false,
+      stage: 'preview',
+      template: null,
+      playerGender: prev.playerGender,
+      chatKey: `${Date.now()}`,
+    }));
+    emitConversationOverlayClose();
+  }, []);
+
+  const handleOverlayStageChange = useCallback((stage: 'preview' | 'chat') => {
+    setOverlayState((prev) => ({
+      ...prev,
+      stage,
+      chatKey: stage === 'chat' ? `${prev.template?.id ?? 'chat'}-${Date.now()}` : prev.chatKey,
+    }));
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const handleOpen = (event: Event) => {
+      const customEvent = event as CustomEvent<ConversationOverlayOpenDetail>;
+      const detail = customEvent.detail;
+      if (!detail) return;
+      const localizedTemplate = getLocalizedScenarioTemplate(detail.scenario.id, scenarioLocale) ?? detail.scenario;
+      setOverlayState({
+        open: true,
+        stage: 'preview',
+        template: localizedTemplate,
+        playerGender: detail.playerGender,
+        chatKey: `${detail.scenario.id}-${Date.now()}`,
+      });
+    };
+
+    window.addEventListener(CONVERSATION_OVERLAY_OPEN_EVENT, handleOpen);
+
+    return () => {
+      window.removeEventListener(CONVERSATION_OVERLAY_OPEN_EVENT, handleOpen);
+    };
+  }, [scenarioLocale]);
+
+  useEffect(() => {
+    if (!overlayState.open) return;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        closeOverlay();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [overlayState.open, closeOverlay]);
+
+  useEffect(() => {
+    const keyboard = gameRef.current?.input?.keyboard;
+    if (!keyboard) return;
+
+    const previousEnabled = keyboard.enabled;
+    const previousManagerEnabled = keyboard.manager ? keyboard.manager.enabled : undefined;
+
+    if (overlayState.open) {
+      keyboard.enabled = false;
+      if (keyboard.manager) {
+        keyboard.manager.enabled = false;
+      }
+      if (typeof (keyboard as any).resetKeys === 'function') {
+        (keyboard as any).resetKeys();
+      }
+    } else {
+      keyboard.enabled = true;
+      if (keyboard.manager) {
+        keyboard.manager.enabled = true;
+      }
+    }
+
+    return () => {
+      if (!keyboard) return;
+      keyboard.enabled = previousEnabled;
+      if (keyboard.manager && typeof previousManagerEnabled === 'boolean') {
+        keyboard.manager.enabled = previousManagerEnabled;
+      }
+    };
+  }, [overlayState.open]);
 
   // Function to simulate error (for testing only)
   const simulateError = () => {
@@ -290,6 +450,16 @@ export default function GameEmbed() {
           opacity: (isLoading || hasLoadError) ? 0 : 1,
           transition: 'opacity 0.3s ease-in-out',
         }}
+      />
+
+      <GameConversationOverlay
+        open={overlayState.open}
+        stage={overlayState.stage}
+        template={overlayState.template}
+        playerGender={overlayState.playerGender}
+        chatKey={overlayState.chatKey}
+        onClose={closeOverlay}
+        onStageChange={handleOverlayStageChange}
       />
 
       {/* Error loading button - Remove later */}
