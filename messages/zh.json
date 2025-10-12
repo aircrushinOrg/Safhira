@@ -1924,12 +1924,16 @@
           "movement": {
             "title": "移动",
             "keyboard": "* W / 上方向键：向上移动 \n* S / 下方向键：向下移动 \n* A / 左方向键：向左移动 \n* D / 右方向键：向右移动",
-            "touch": "* 拖动摇杆即可移动角色 \n* 可向上、下、左、右四个方向移动 \n* 松开摇杆即可停下"
+            "keyboardShortened": "➣ 使用 WASD 或方向键移动 \n➣ 走近 NPC 即可互动",
+            "touch": "* 拖动摇杆即可移动角色 \n* 可向上、下、左、右四个方向移动 \n* 松开摇杆即可停下",
+            "touchShortened": "➣ 拖动摇杆移动 \n➣ 走近 NPC 即可互动"
           },
           "interaction": {
             "title": "互动",
             "keyboard": "* 走近 NPC 并按下 SPACE / ENTER 键进行互动 \n* 不同 NPC 会触发不同情景",
-            "touch": "* 走近 NPC 并轻触即可互动 \n* 不同 NPC 会触发不同情景"
+            "keyboardShortened": "➣ 按下 SPACE / ENTER 键与 NPC 互动",
+            "touch": "* 走近 NPC 并轻触即可互动 \n* 不同 NPC 会触发不同情景",
+            "touchShortened": "➣ 轻触 NPC 即可互动"
           },
           "minimap": {
             "title": "小地图",

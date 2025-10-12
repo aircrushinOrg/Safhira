@@ -14,7 +14,7 @@ import { CollisionDebugger } from '../debugger/CollisionDebugger';
 import { PlayerHitboxDebugger } from '../debugger/PlayerHitboxDebugger';
 import { SCENARIO_TEMPLATES } from '../../../../lib/simulator/scenarios';
 import type { ScenarioTemplate } from '../../../../lib/simulator/scenarios';
-import { getGameTranslations } from '../utils/gameI18n';
+import { type GameTranslations, getGameTranslations } from '../utils/gameI18n';
 import { MusicController } from '../utils/MusicController';
 import {
   emitConversationOverlayOpen,
@@ -50,6 +50,9 @@ export class GameScene extends Phaser.Scene {
   private enterKey!: Phaser.Input.Keyboard.Key;
   private nearbyNPC: NPCInteractionZone | null = null;
   private overlayActive = false;
+  private minimapInstruction!: Phaser.GameObjects.Text;
+  private isNearNpcInstruction = false;
+  private instructionCopy!: GameTranslations['instruction'];
 
   constructor() {
     super({ key: 'GameScene' });
@@ -141,6 +144,60 @@ export class GameScene extends Phaser.Scene {
 
     this.minimap = new Minimap(this, this.player, minimapConfig, this.virtualJoystick?.getRawJoystick());
     this.minimap.create(map);
+    this.instructionCopy = getGameTranslations().instruction;
+
+    // Provide fallback instruction if translations are incomplete
+    const initialInstruction = (this.instructionCopy && this.instructionCopy.sections && this.instructionCopy.sections.movement)
+      ? (this.isTouchDevice
+          ? this.instructionCopy.sections.movement.touchShortened
+          : this.instructionCopy.sections.movement.keyboardShortened)
+      : (this.isTouchDevice
+          ? 'Touch to move around'
+          : 'Use arrow keys or WASD to move');
+    const instructionPadding = minimapConfig.padding;
+    const instructionY = instructionPadding + minimapConfig.height + 12;
+
+    // Debug: log the instruction setup
+    console.log('=== MINIMAP INSTRUCTION SETUP DEBUG ===');
+    console.log('Translation data:', {
+      instructionCopy: this.instructionCopy,
+      sections: this.instructionCopy?.sections,
+      movement: this.instructionCopy?.sections?.movement,
+      touchShortened: this.instructionCopy?.sections?.movement?.touchShortened,
+      keyboardShortened: this.instructionCopy?.sections?.movement?.keyboardShortened
+    });
+    console.log('Device and text:', {
+      isTouchDevice: this.isTouchDevice,
+      initialInstruction: initialInstruction,
+      fallbackText: this.isTouchDevice ? 'Touch to move around' : 'Use arrow keys or WASD to move'
+    });
+    console.log('Position and style:', {
+      x: instructionPadding,
+      y: instructionY,
+      minimapConfig,
+      depth: 2000,
+      visible: true
+    });
+
+    this.minimapInstruction = this.add
+      .text(
+        instructionPadding,
+        instructionY,
+        initialInstruction || 'Use WASD to move',
+        {
+          fontSize: '14px',
+          color: '#ffffff',
+          backgroundColor: '#34495e',
+          padding: { x: 6, y: 3 },
+          fontFamily: '"Poppins", sans-serif',
+          wordWrap: { width: minimapConfig.width },
+        },
+      )
+      .setScrollFactor(0)
+      .setDepth(2000)
+      .setVisible(true);
+
+    this.refreshMinimapInstruction();
 
     // Create menu button
     const { game: gameTexts } = getGameTranslations();
@@ -157,8 +214,9 @@ export class GameScene extends Phaser.Scene {
     // this.playerHitboxDebugger.setEnabled(true);
     // this.npcHitboxDebugger.setEnabled(true);
 
-    // Update minimap to ignore menu button
+    // Update minimap to ignore menu button and instruction text
     this.minimap.ignoreMenuButton(this.menuButton);
+    this.minimap.ignoreMinimapInstruction(this.minimapInstruction);
 
     // Setup interaction keys (space and enter)
     this.spaceKey = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -189,7 +247,7 @@ export class GameScene extends Phaser.Scene {
         color: '#ffffff',
         backgroundColor: '#34495e',
         padding: { x: 12, y: 6 },
-        fontFamily: 'Arial, sans-serif',
+        fontFamily: '"Press Start 2P", sans-serif',
         fontStyle: 'bold'
       }
     );
@@ -263,6 +321,27 @@ export class GameScene extends Phaser.Scene {
         }
       });
     });
+  }
+
+  private refreshMinimapInstruction(): void {
+    if (!this.minimapInstruction || !this.instructionCopy) {
+      console.log('Early return: missing minimapInstruction or instructionCopy');
+      return;
+    }
+
+    // Ensure the required instruction properties exist
+    if (!this.instructionCopy.sections || !this.instructionCopy.sections.movement || !this.instructionCopy.sections.interaction) {
+      console.log('Early return: missing required sections');
+      return;
+    }
+
+    const text = this.isNearNpcInstruction
+      ? (this.isTouchDevice ? this.instructionCopy.sections.interaction.touchShortened : this.instructionCopy.sections.interaction.keyboardShortened)
+      : (this.isTouchDevice ? this.instructionCopy.sections.movement.touchShortened : this.instructionCopy.sections.movement.keyboardShortened);
+
+    if (this.minimapInstruction.text !== text) {
+      this.minimapInstruction.setText(text);
+    } 
   }
 
   private createNPCAnimations() {
@@ -514,6 +593,17 @@ export class GameScene extends Phaser.Scene {
     data.x = sprite.x;
     data.y = sprite.y;
 
+    // Create NPC name label
+    const nameLabel = this.add.text(data.x, data.y + 60, data.name, {
+      fontSize: '16px',
+      color: '#ffffff',
+      backgroundColor: '#34495e',
+      padding: { x: 8, y: 4 },
+      fontFamily: '"Poppins", sans-serif',
+    });
+    nameLabel.setOrigin(0.5, 0.5); // Center the text
+    nameLabel.setDepth(5); // Above interaction indicator
+
     // Create interaction indicator (initially hidden)
     const indicator = this.add.sprite(data.x, data.y - 50, 'interaction-indicator');
     indicator.setVisible(false);
@@ -555,6 +645,7 @@ export class GameScene extends Phaser.Scene {
     const playerY = this.player.y;
 
     this.nearbyNPC = null;
+    let npcCurrentlyNear = false;
 
     this.npcs.forEach(npcZone => {
       // Safety check: ensure sprite is valid and active
@@ -600,6 +691,15 @@ export class GameScene extends Phaser.Scene {
         }
       }
     });
+
+    if (this.nearbyNPC) {
+      npcCurrentlyNear = true;
+    }
+
+    if (npcCurrentlyNear !== this.isNearNpcInstruction) {
+      this.isNearNpcInstruction = npcCurrentlyNear;
+      this.refreshMinimapInstruction();
+    }
   }
 
 

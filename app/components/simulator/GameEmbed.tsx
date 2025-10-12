@@ -68,12 +68,16 @@ export default function GameEmbed() {
         movement: {
           title: tGame('instruction.sections.movement.title'),
           keyboard: tGame('instruction.sections.movement.keyboard'),
+          keyboardShortened: tGame('instruction.sections.movement.keyboardShortened'),
           touch: tGame('instruction.sections.movement.touch'),
+          touchShortened: tGame('instruction.sections.movement.touchShortened'),
         },
         interaction: {
           title: tGame('instruction.sections.interaction.title'),
           keyboard: tGame('instruction.sections.interaction.keyboard'),
+          keyboardShortened: tGame('instruction.sections.interaction.keyboardShortened'),
           touch: tGame('instruction.sections.interaction.touch'),
+          touchShortened: tGame('instruction.sections.interaction.touchShortened'),
         },
         minimap: {
           title: tGame('instruction.sections.minimap.title'),

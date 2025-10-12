@@ -190,6 +190,20 @@ export class Minimap {
     }
   }
 
+  // Method to ignore minimap instruction in minimap camera
+  ignoreMinimapInstruction(instructionText: Phaser.GameObjects.Text): void {
+    if (this.camera && instructionText) {
+      this.camera.ignore(instructionText);
+    }
+  }
+
+  // Method to ignore minimap hint icon in minimap camera
+  ignoreMinimapHintIcon(hintIcon: Phaser.GameObjects.Image): void {
+    if (this.camera && hintIcon) {
+      this.camera.ignore(hintIcon);
+    }
+  }
+
   // NPC tracking methods
   addNPC(npcZone: NPCInteractionZone): void {
     // Add NPC to tracking list

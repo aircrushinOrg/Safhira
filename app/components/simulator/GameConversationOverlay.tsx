@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useEffect } from 'react';
+import { useMemo, useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { X, MessageCircle, Sparkles, ArrowLeft } from 'lucide-react';
 import Image from 'next/image';
@@ -55,6 +55,45 @@ function scenarioToChatTemplate(template: ScenarioTemplate): ChatTemplate {
   };
 }
 
+// Custom hook to get header height dynamically
+function useHeaderHeight() {
+  const [headerHeight, setHeaderHeight] = useState(88); // Default fallback height (5.5rem = 88px)
+
+  useEffect(() => {
+    const updateHeaderHeight = () => {
+      const header = document.querySelector('header');
+      if (header) {
+        const height = header.getBoundingClientRect().height;
+        setHeaderHeight(height);
+      }
+    };
+
+    // Update on mount
+    updateHeaderHeight();
+
+    // Update on resize
+    window.addEventListener('resize', updateHeaderHeight);
+
+    // Use ResizeObserver for more accurate header size changes
+    const header = document.querySelector('header');
+    let resizeObserver: ResizeObserver | null = null;
+
+    if (header && 'ResizeObserver' in window) {
+      resizeObserver = new ResizeObserver(updateHeaderHeight);
+      resizeObserver.observe(header);
+    }
+
+    return () => {
+      window.removeEventListener('resize', updateHeaderHeight);
+      if (resizeObserver) {
+        resizeObserver.disconnect();
+      }
+    };
+  }, []);
+
+  return headerHeight;
+}
+
 export function GameConversationOverlay({
   open,
   stage,
@@ -66,6 +105,7 @@ export function GameConversationOverlay({
 }: GameConversationOverlayProps) {
   const t = useTranslations('Simulator.overlay');
   const howItWorksItems = (t.raw('howItWorks.items') as string[]) ?? [];
+  const headerHeight = useHeaderHeight();
   const chatTemplate = useMemo(() => (template ? scenarioToChatTemplate(template) : null), [template]);
   const aiChatTemplate = useMemo(() => {
     if (!template) return null;
@@ -119,7 +159,8 @@ export function GameConversationOverlay({
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: 40, opacity: 0 }}
             transition={{ duration: 0.25, ease: [0.33, 1, 0.68, 1] }}
-            className="pointer-events-auto relative flex h-[calc(100vh-5rem)] sm:h-[calc(100vh-4.8rem)] w-full flex-col bg-white text-slate-900 shadow-2xl md:max-w-xl md:rounded-l-[32px] md:border-l md:border-slate-100 md:bg-white/95 md:backdrop-blur-lg dark:bg-slate-950 dark:text-slate-50 md:dark:border-white/5 md:dark:bg-slate-950/95"
+            className="pointer-events-auto relative flex w-full flex-col bg-white text-slate-900 shadow-2xl md:max-w-xl md:rounded-l-[32px] md:border-l md:border-slate-100 md:bg-white/95 md:backdrop-blur-lg dark:bg-slate-950 dark:text-slate-50 md:dark:border-white/5 md:dark:bg-slate-950/95"
+            style={{ height: `calc(100vh - ${headerHeight}px)` }}
             onClick={(e) => e.stopPropagation()}
           >
             <div className="absolute right-4 top-4 z-10 flex items-center gap-2">
