@@ -1,0 +1,246 @@
+﻿id (serial),statement (text),is_true (boolean),explanation,category 
+,Anda tidak akan mendapat STI pada kali pertama melakukan hubungan seks.,FALSE,Anda boleh mendapat STI pada bila-bila masa apabila berhubungan seks dengan seseorang yang menghidap STI.,Mitos
+,Anda tidak boleh mendapat STI melalui seks oral.,FALSE,"Seks oral boleh menularkan beberapa STI (contohnya herpes, klamidia, gonorea, sifilis, HPV); gunakan kondom atau dental dam.",Mitos
+,Menggunakan kondom lelaki dan wanita serentak memberi perlindungan berganda.,FALSE,Jangan gunakan kondom lelaki dan wanita serentak; geseran meningkatkan risiko koyak.,Mitos
+,Douching boleh membantu melindungi anda daripada HIV.,FALSE,Douching sebenarnya mengganggu flora perlindungan faraj dan meningkatkan risiko HIV.,Mitos
+,Anda akan tahu jika anda menghidap STI kerana anda pasti mempunyai gejala.,FALSE,Banyak STI tidak bergejala; ujian sahaja boleh memberikan kepastian.,Mitos
+,Hanya remaja mendapat STI.,FALSE,STI boleh menjejaskan semua peringkat umur; diagnosis turut meningkat dalam kalangan warga emas.,Mitos
+,Anda akan mendapat STI jika mempunyai ramai pasangan.,TRUE,Mempunyai ramai pasangan meningkatkan risiko STI walaupun satu pertemuan pun boleh menularkan.,Fakta
+,"Jika saya hamil dengan STI, ia tidak akan menjejaskan janin.",FALSE,"Sesetengah STI boleh menular kepada bayi semasa kehamilan, kelahiran atau penyusuan; rawatan awal membantu mencegahnya.",Mitos
+,Lelaki dan wanita mempunyai gejala STI yang sama.,FALSE,Gejala berbeza mengikut jenis jangkitan dan individu; sesetengah jangkitan tidak bergejala atau kelihatan berbeza pada setiap orang.,Mitos
+,Semua STI boleh disembuhkan.,FALSE,Gejala berbeza mengikut jenis jangkitan dan individu; sesetengah jangkitan tidak bergejala atau kelihatan berbeza pada setiap orang.,Mitos
+,STI tidak menyebabkan kemandulan.,FALSE,STI yang tidak dirawat seperti klamidia boleh menyebabkan PID dan kemandulan.,Mitos
+,Luka sejuk ialah STI.,FALSE,"Luka sejuk biasanya disebabkan HSV‑1 dan sering dijangkiti sejak kecil tanpa hubungan seksual, tetapi masih boleh menular melalui seks oral.",Mitos
+,Anda boleh mendapat STI daripada tempat duduk tandas.,FALSE,"STI tidak menular melalui tempat duduk tandas, makanan, peralatan makan atau berjabat tangan.",Mitos
+,Seks oral ialah seks yang selamat.,FALSE,Seks oral masih membawa risiko STI; gunakan kondom atau dental dam.,Mitos
+,Anda sentiasa boleh tahu jika seseorang menghidap STI.,FALSE,Anda tidak boleh menilai hanya dengan melihat kerana banyak STI tidak menunjukkan tanda yang jelas.,Mitos
+,Hanya lelaki gay mendapat HIV.,FALSE,"HIV boleh menjejaskan sesiapa sahaja tanpa mengira orientasi seksual; risikonya bergantung pada tingkah laku, bukan identiti.",Mitos
+,Menarik keluar sebelum ejakulasi melindungi daripada STI.,FALSE,Kaedah tarik keluar tidak melindungi daripada STI; pra-ejakulat dan sentuhan kulit boleh menularkan jangkitan.,Mitos
+,HIV boleh menular melalui apa-apa cecair badan.,FALSE,"HIV dihantar melalui cecair tertentu (darah, air mani, cecair rektum/faraj, susu ibu) dan bukan melalui peluh, air liur atau air kencing dalam kontak harian.",Mitos
+,Kondom sangat berkesan mencegah kebanyakan STI apabila digunakan dengan betul.,TRUE,"Penggunaan kondom yang betul dan konsisten sangat berkesan untuk banyak STI, walaupun tidak 100% dan kurang berkesan untuk jangkitan sentuhan kulit.",Fakta
+,Ujian STI secara berkala penting bagi individu yang aktif secara seksual.,TRUE,Ujian berkala (contohnya setiap 6–12 bulan atau apabila mempunyai pasangan baharu) membantu mengesan jangkitan tanpa gejala.,Fakta
+,Sesetengah STI boleh menular melalui sentuhan kulit ke kulit.,TRUE,STI seperti herpes dan HPV boleh merebak melalui sentuhan kulit intim.,Fakta
+,STI lebih lazim dalam kumpulan umur tertentu.,TRUE,"Di banyak tempat, kadar jangkitan lebih tinggi dalam kalangan remaja dan dewasa muda.",Fakta
+,Menghidap STI meningkatkan risiko anda mendapat HIV.,TRUE,STI boleh meningkatkan risiko mendapat atau menularkan HIV; ujian dan rawatan mengurangkan risiko.,Fakta
+,Wanita hamil perlu menjalani ujian STI.,TRUE,Ujian dan rawatan STI ketika hamil membantu melindungi bayi daripada jangkitan.,Fakta
+,Sesetengah STI boleh menyebabkan kanser.,TRUE,"HPV boleh menyebabkan kanser serviks, dubur serta beberapa kanser kepala dan leher.",Fakta
+,Terdapat vaksin untuk sesetengah STI.,TRUE,Terdapat vaksin untuk hepatitis B dan HPV.,Fakta
+,Anda boleh dijangkiti semula STI yang sama selepas rawatan.,TRUE,Anda boleh mendapat STI yang sama sekali lagi selepas rawatan jika terdedah semula.,Fakta
+,STI hanya menjejaskan organ reproduktif anda.,FALSE,"STI bukan hanya menjejaskan alat kelamin tetapi juga mulut, tekak, rektum, kulit dan sistem lain.",Mitos
+,Pil perancang kehamilan melindungi daripada STI.,FALSE,Kontrasepsi hormon tidak melindungi daripada STI; kondom masih diperlukan untuk pencegahan.,Mitos
+,HIV boleh disembuhkan dengan rawatan semula jadi.,FALSE,Tiada penawar untuk HIV; rawatan yang berkesan menekan virus tetapi tidak menghapuskannya.,Mitos
+,Anda tidak perlu diuji selagi anda tidak mempunyai ramai pasangan seksual.,FALSE,Satu hubungan seks sahaja boleh menularkan STI; bilangan pasangan hanya mempengaruhi tahap risiko.,Mitos
+,"Jangkitan kelamin mudah dirawat dan disembuhkan, jadi saya tidak perlu memikirkannya.",FALSE,"Sesetengah STI boleh diurus atau disembuhkan, tetapi yang lain (contohnya HIV, herpes) kekal seumur hidup; strain tahan ubat juga wujud.",Mitos
+,Anda hanya akan mendapat jangkitan kelamin yang sama sekali sahaja.,FALSE,Anda boleh dijangkiti semula STI yang sama berkali-kali jika terdedah semula.,Mitos
+,"Saya dan pasangan berkongsi hubungan monogami, jadi tidak perlu membuat ujian.",FALSE,"Walaupun dalam hubungan monogami yang baharu, jangkitan lampau mungkin masih ada; pasangan patut diuji pada permulaan hubungan.",Mitos
+,Sifilis hanyalah penyakit sejarah yang kini tidak lagi dijangkiti sesiapa.,FALSE,Sifilis masih wujud dan diagnosis meningkat dalam beberapa tahun kebelakangan ini.,Mitos
+,Ujian STI sangat menyakitkan.,FALSE,Kebanyakan ujian STI melibatkan air kencing atau darah; swab mungkin digunakan apabila ada gejala dan biasanya hanya sedikit tidak selesa.,Mitos
+,Memalukan untuk menjalani ujian STI.,FALSE,Tiada rasa malu menjaga kesihatan; pengamal perubatan menjalankan ujian STI secara rutin dan sulit.,Mitos
+,Memakai dua kondom serentak memberi perlindungan tambahan.,FALSE,Memakai kondom berlapis meningkatkan geseran dan risiko koyak; gunakan satu kondom dengan betul bersama pelincir berasaskan air.,Mitos
+,Ujian STI sentiasa melibatkan pemeriksaan fizikal alat kelamin.,FALSE,"Jika tiada gejala, kebanyakan ujian hanyalah air kencing, darah atau swab sendiri; pemeriksaan fizikal biasanya diperlukan apabila gejala muncul.",Mitos
+,Hubungan seks dalam tab panas meminimumkan risiko STI.,FALSE,Klorin atau air tab panas tidak mencegah STI dan boleh meningkatkan risiko jangkitan lain.,Mitos
+,Anda tidak akan mendapat STI jika anda tidak melakukan hubungan seks.,FALSE,"Sesetengah STI boleh merebak tanpa hubungan seks, termasuk melalui jarum, sentuhan darah atau dari ibu bapa kepada bayi; sesetengah jangkitan merebak melalui sentuhan kulit intim atau oral.",Mitos
+,Pasangan anda tidak perlu ujian STI kecuali anda dijangkiti.,FALSE,Kedua-dua pasangan perlu diuji; seorang boleh dijangkiti tanpa gejala dan menularkan kepada yang lain.,Mitos
+,STI tidak memerlukan campur tangan perubatan.,FALSE,Banyak STI memerlukan diagnosis dan rawatan untuk mencegah komplikasi; ada yang kronik dan memerlukan penjagaan berterusan.,Mitos
+,Orang dewasa yang aktif lebih mudah mendapat STI berbanding remaja.,FALSE,Faktor seperti seks tanpa perlindungan dan akses rawatan yang terhad sering menyebabkan kadar STI lebih tinggi dalam kalangan remaja dan dewasa muda.,Mitos
+,Kondom melindungi daripada semua STI.,FALSE,Kondom sangat berkesan untuk banyak STI tetapi tidak 100% dan kurang melindungi jangkitan sentuhan kulit seperti HPV atau herpes.,Mitos
+,Anda sentiasa boleh tahu jika anda menghidap Klamidia.,FALSE,Ramai individu yang menghidap Klamidia langsung tidak bergejala.,Gejala
+,Klamidia sentiasa menyebabkan kesakitan atau luka yang jelas.,FALSE,Sesetengah kes Klamidia tidak bergejala atau hanya menunjukkan tanda yang sangat ringan.,Gejala
+,"Jika anda tidak berasa sakit, anda tidak menghidap Klamidia.",FALSE,Klamidia boleh wujud walaupun tanpa tanda yang jelas.,Gejala
+,Hanya wanita menunjukkan gejala Klamidia.,FALSE,"Lelaki dan wanita sama-sama boleh menghidap Klamidia, dengan atau tanpa gejala.",Gejala
+,"Gejala Klamidia akan hilang sendiri, jadi tidak perlu risau.",FALSE,"Walaupun gejala reda, Klamidia boleh kekal dan menyebabkan komplikasi jika tidak dirawat.",Gejala
+,Klamidia tidak menyebabkan masalah kesihatan jangka panjang.,FALSE,"Jika tidak dirawat, Klamidia boleh menyebabkan komplikasi jangka panjang seperti kemandulan atau kerosakan organ.",Kesan Kesihatan
+,"Hanya jangkitan serius seperti HIV menjejaskan kesuburan, bukan Klamidia.",FALSE,Banyak STI termasuk Klamidia boleh menjejaskan kesuburan lelaki dan wanita.,Kesan Kesihatan
+,Klamidia akan hilang dengan sendiri tanpa memudaratkan.,FALSE,"Tanpa rawatan, Klamidia boleh berterusan dan menyebabkan masalah kesihatan serius.",Kesan Kesihatan
+,Klamidia hanya menjejaskan bahagian sulit.,FALSE,Klamidia bukan sahaja menjejaskan alat kelamin tetapi juga bahagian tubuh lain.,Kesan Kesihatan
+,Masalah kesihatan akibat Klamidia hanya berlaku kepada wanita.,FALSE,Klamidia boleh menimbulkan masalah serius kepada lelaki dan wanita.,Kesan Kesihatan
+,Anda hanya boleh mendapat Klamidia melalui seks faraj.,FALSE,"Klamidia boleh merebak melalui seks faraj, oral atau anal.",Penularan
+,Seks oral atau anal tidak akan menyebabkan Klamidia.,FALSE,Klamidia boleh menular melalui pelbagai jenis hubungan seksual.,Penularan
+,Klamidia boleh merebak melalui tempat duduk tandas.,FALSE,Klamidia tidak merebak melalui tempat duduk tandas atau sentuhan biasa.,Penularan
+,Menggunakan kondom sekali sahaja sudah cukup untuk mencegah Klamidia selama-lamanya.,FALSE,Kondom mengurangkan risiko tetapi tidak memberi perlindungan 100% setiap kali.,Penularan
+,"Jika pasangan kelihatan sihat, anda tidak akan mendapat Klamidia.",FALSE,Orang boleh menularkan Klamidia walaupun tanpa gejala yang kelihatan.,Penularan
+,Mencuci selepas seks boleh mencegah Klamidia.,FALSE,Kebersihan tidak mencegah Klamidia; perlindungan dan saringan ialah kuncinya.,Pencegahan
+,Pil perancang kehamilan melindungi daripada Klamidia.,FALSE,"Kawalan kehamilan mencegah kehamilan, bukan STI seperti Klamidia.",Pencegahan
+,Mempunyai seorang pasangan setia menjamin anda tidak akan mendapat Klamidia.,FALSE,"Walaupun hanya ada seorang pasangan, risiko STI tetap wujud jika seorang dijangkiti.",Pencegahan
+,"Jika anda rasa sihat, anda tidak perlu ujian STI berkala.",FALSE,Ujian berkala membantu mengesan Klamidia lebih awal walaupun tanpa gejala.,Pencegahan
+,Hanya mereka yang mempunyai ramai pasangan perlu risau tentang Klamidia.,FALSE,"Sesiapa yang aktif secara seksual boleh mendapat Klamidia, bukan hanya mereka yang mempunyai ramai pasangan.",Pencegahan
+,Antibiotik boleh menyembuhkan semua jangkitan kelamin termasuk Klamidia.,FALSE,Sesetengah STI seperti Klamidia berpunca daripada virus dan tidak boleh disembuhkan dengan antibiotik.,Rawatan
+,"Selepas menerima rawatan untuk Klamidia, anda tidak akan mendapatnya lagi.",FALSE,Anda boleh dijangkiti semula Klamidia walaupun selepas rawatan.,Rawatan
+,Rawatan tradisional atau herba boleh menyembuhkan Klamidia.,FALSE,"Klamidia memerlukan diagnosis perubatan dan rawatan yang betul, bukan ubat tradisional.",Rawatan
+,"Jika gejala hilang, Klamidia sudah sembuh sepenuhnya.",FALSE,"Gejala mungkin hilang, tetapi Klamidia mungkin masih berada dalam badan anda.",Rawatan
+,Tidak perlu memaklumkan pasangan jika anda menghidap Klamidia.,FALSE,Penting untuk memaklumkan pasangan supaya mereka juga boleh diuji dan dirawat.,Rawatan
+,Anda sentiasa boleh tahu jika anda menghidap Gonorea.,FALSE,Ramai individu yang menghidap Gonorea langsung tidak bergejala.,Gejala
+,Gonorea sentiasa menyebabkan kesakitan atau luka yang jelas.,FALSE,Sesetengah kes Gonorea tidak bergejala atau hanya menunjukkan tanda yang sangat ringan.,Gejala
+,"Jika anda tidak berasa sakit, anda tidak menghidap Gonorea.",FALSE,Gonorea boleh wujud walaupun tanpa tanda yang jelas.,Gejala
+,Hanya wanita menunjukkan gejala Gonorea.,FALSE,"Lelaki dan wanita sama-sama boleh menghidap Gonorea, dengan atau tanpa gejala.",Gejala
+,"Gejala Gonorea akan hilang sendiri, jadi tidak perlu risau.",FALSE,"Walaupun gejala reda, Gonorea boleh kekal dan menyebabkan komplikasi jika tidak dirawat.",Gejala
+,Gonorea tidak menyebabkan masalah kesihatan jangka panjang.,FALSE,"Jika tidak dirawat, Gonorea boleh menyebabkan komplikasi jangka panjang seperti kemandulan atau kerosakan organ.",Kesan Kesihatan
+,"Hanya jangkitan serius seperti HIV menjejaskan kesuburan, bukan Gonorea.",FALSE,Banyak STI termasuk Gonorea boleh menjejaskan kesuburan lelaki dan wanita.,Kesan Kesihatan
+,Gonorea akan hilang dengan sendiri tanpa memudaratkan.,FALSE,"Tanpa rawatan, Gonorea boleh berterusan dan menyebabkan masalah kesihatan serius.",Kesan Kesihatan
+,Gonorea hanya menjejaskan bahagian sulit.,FALSE,Gonorea bukan sahaja menjejaskan alat kelamin tetapi juga bahagian tubuh lain.,Kesan Kesihatan
+,Masalah kesihatan akibat Gonorea hanya berlaku kepada wanita.,FALSE,Gonorea boleh menimbulkan masalah serius kepada lelaki dan wanita.,Kesan Kesihatan
+,Anda hanya boleh mendapat Gonorea melalui seks faraj.,FALSE,"Gonorea boleh merebak melalui seks faraj, oral atau anal.",Penularan
+,Seks oral atau anal tidak akan menyebabkan Gonorea.,FALSE,Gonorea boleh menular melalui pelbagai jenis hubungan seksual.,Penularan
+,Gonorea boleh merebak melalui tempat duduk tandas.,FALSE,Gonorea tidak merebak melalui tempat duduk tandas atau sentuhan biasa.,Penularan
+,Menggunakan kondom sekali sahaja sudah cukup untuk mencegah Gonorea selama-lamanya.,FALSE,Kondom mengurangkan risiko tetapi tidak memberi perlindungan 100% setiap kali.,Penularan
+,"Jika pasangan kelihatan sihat, anda tidak akan mendapat Gonorea.",FALSE,Orang boleh menularkan Gonorea walaupun tanpa gejala yang kelihatan.,Penularan
+,Mencuci selepas seks boleh mencegah Gonorea.,FALSE,Kebersihan tidak mencegah Gonorea; perlindungan dan saringan ialah kuncinya.,Pencegahan
+,Pil perancang kehamilan melindungi daripada Gonorea.,FALSE,"Kawalan kehamilan mencegah kehamilan, bukan STI seperti Gonorea.",Pencegahan
+,Mempunyai seorang pasangan setia menjamin anda tidak akan mendapat Gonorea.,FALSE,"Walaupun hanya ada seorang pasangan, risiko STI tetap wujud jika seorang dijangkiti.",Pencegahan
+,"Jika anda rasa sihat, anda tidak perlu ujian STI berkala.",FALSE,Ujian berkala membantu mengesan Gonorea lebih awal walaupun tanpa gejala.,Pencegahan
+,Hanya mereka yang mempunyai ramai pasangan perlu risau tentang Gonorea.,FALSE,"Sesiapa yang aktif secara seksual boleh mendapat Gonorea, bukan hanya mereka yang mempunyai ramai pasangan.",Pencegahan
+,Antibiotik boleh menyembuhkan semua jangkitan kelamin termasuk Gonorea.,FALSE,Sesetengah STI seperti Gonorea berpunca daripada virus dan tidak boleh disembuhkan dengan antibiotik.,Rawatan
+,"Selepas menerima rawatan untuk Gonorea, anda tidak akan mendapatnya lagi.",FALSE,Anda boleh dijangkiti semula Gonorea walaupun selepas rawatan.,Rawatan
+,Rawatan tradisional atau herba boleh menyembuhkan Gonorea.,FALSE,"Gonorea memerlukan diagnosis perubatan dan rawatan yang betul, bukan ubat tradisional.",Rawatan
+,"Jika gejala hilang, Gonorea sudah sembuh sepenuhnya.",FALSE,"Gejala mungkin hilang, tetapi Gonorea mungkin masih berada dalam badan anda.",Rawatan
+,Tidak perlu memaklumkan pasangan jika anda menghidap Gonorea.,FALSE,Penting untuk memaklumkan pasangan supaya mereka juga boleh diuji dan dirawat.,Rawatan
+,Anda sentiasa boleh tahu jika anda menghidap Herpes (HSV-1 & HSV-2).,FALSE,Ramai individu yang menghidap Herpes (HSV-1 & HSV-2) langsung tidak bergejala.,Gejala
+,Herpes (HSV-1 & HSV-2) sentiasa menyebabkan kesakitan atau luka yang jelas.,FALSE,Sesetengah kes Herpes (HSV-1 & HSV-2) tidak bergejala atau hanya menunjukkan tanda yang sangat ringan.,Gejala
+,"Jika anda tidak berasa sakit, anda tidak menghidap Herpes (HSV-1 & HSV-2).",FALSE,Herpes (HSV-1 & HSV-2) boleh wujud walaupun tanpa tanda yang jelas.,Gejala
+,Hanya wanita menunjukkan gejala Herpes (HSV-1 & HSV-2).,FALSE,"Lelaki dan wanita sama-sama boleh menghidap Herpes (HSV-1 & HSV-2), dengan atau tanpa gejala.",Gejala
+,"Gejala Herpes (HSV-1 & HSV-2) akan hilang sendiri, jadi tidak perlu risau.",FALSE,"Walaupun gejala reda, Herpes (HSV-1 & HSV-2) boleh kekal dan menyebabkan komplikasi jika tidak dirawat.",Gejala
+,Herpes (HSV-1 & HSV-2) tidak menyebabkan masalah kesihatan jangka panjang.,FALSE,"Jika tidak dirawat, Herpes (HSV-1 & HSV-2) boleh menyebabkan komplikasi jangka panjang seperti kemandulan atau kerosakan organ.",Kesan Kesihatan
+,"Hanya jangkitan serius seperti HIV menjejaskan kesuburan, bukan Herpes (HSV-1 & HSV-2).",FALSE,Banyak STI termasuk Herpes (HSV-1 & HSV-2) boleh menjejaskan kesuburan lelaki dan wanita.,Kesan Kesihatan
+,Herpes (HSV-1 & HSV-2) akan hilang dengan sendiri tanpa memudaratkan.,FALSE,"Tanpa rawatan, Herpes (HSV-1 & HSV-2) boleh berterusan dan menyebabkan masalah kesihatan serius.",Kesan Kesihatan
+,Herpes (HSV-1 & HSV-2) hanya menjejaskan bahagian sulit.,FALSE,Herpes (HSV-1 & HSV-2) bukan sahaja menjejaskan alat kelamin tetapi juga bahagian tubuh lain.,Kesan Kesihatan
+,Masalah kesihatan akibat Herpes (HSV-1 & HSV-2) hanya berlaku kepada wanita.,FALSE,Herpes (HSV-1 & HSV-2) boleh menimbulkan masalah serius kepada lelaki dan wanita.,Kesan Kesihatan
+,Anda hanya boleh mendapat Herpes (HSV-1 & HSV-2) melalui seks faraj.,FALSE,"Herpes (HSV-1 & HSV-2) boleh merebak melalui seks faraj, oral atau anal.",Penularan
+,Seks oral atau anal tidak akan menyebabkan Herpes (HSV-1 & HSV-2).,FALSE,Herpes (HSV-1 & HSV-2) boleh menular melalui pelbagai jenis hubungan seksual.,Penularan
+,Herpes (HSV-1 & HSV-2) boleh merebak melalui tempat duduk tandas.,FALSE,Herpes (HSV-1 & HSV-2) tidak merebak melalui tempat duduk tandas atau sentuhan biasa.,Penularan
+,Menggunakan kondom sekali sahaja sudah cukup untuk mencegah Herpes (HSV-1 & HSV-2) selama-lamanya.,FALSE,Kondom mengurangkan risiko tetapi tidak memberi perlindungan 100% setiap kali.,Penularan
+,"Jika pasangan kelihatan sihat, anda tidak akan mendapat Herpes (HSV-1 & HSV-2).",FALSE,Orang boleh menularkan Herpes (HSV-1 & HSV-2) walaupun tanpa gejala yang kelihatan.,Penularan
+,Mencuci selepas seks boleh mencegah Herpes (HSV-1 & HSV-2).,FALSE,Kebersihan tidak mencegah Herpes (HSV-1 & HSV-2); perlindungan dan saringan ialah kuncinya.,Pencegahan
+,Pil perancang kehamilan melindungi daripada Herpes (HSV-1 & HSV-2).,FALSE,"Kawalan kehamilan mencegah kehamilan, bukan STI seperti Herpes (HSV-1 & HSV-2).",Pencegahan
+,Mempunyai seorang pasangan setia menjamin anda tidak akan mendapat Herpes (HSV-1 & HSV-2).,FALSE,"Walaupun hanya ada seorang pasangan, risiko STI tetap wujud jika seorang dijangkiti.",Pencegahan
+,"Jika anda rasa sihat, anda tidak perlu ujian STI berkala.",FALSE,Ujian berkala membantu mengesan Herpes (HSV-1 & HSV-2) lebih awal walaupun tanpa gejala.,Pencegahan
+,Hanya mereka yang mempunyai ramai pasangan perlu risau tentang Herpes (HSV-1 & HSV-2).,FALSE,"Sesiapa yang aktif secara seksual boleh mendapat Herpes (HSV-1 & HSV-2), bukan hanya mereka yang mempunyai ramai pasangan.",Pencegahan
+,Antibiotik boleh menyembuhkan semua jangkitan kelamin termasuk Herpes (HSV-1 & HSV-2).,FALSE,Sesetengah STI seperti Herpes (HSV-1 & HSV-2) berpunca daripada virus dan tidak boleh disembuhkan dengan antibiotik.,Rawatan
+,"Selepas menerima rawatan untuk Herpes (HSV-1 & HSV-2), anda tidak akan mendapatnya lagi.",FALSE,Anda boleh dijangkiti semula Herpes (HSV-1 & HSV-2) walaupun selepas rawatan.,Rawatan
+,Rawatan tradisional atau herba boleh menyembuhkan Herpes (HSV-1 & HSV-2).,FALSE,"Herpes (HSV-1 & HSV-2) memerlukan diagnosis perubatan dan rawatan yang betul, bukan ubat tradisional.",Rawatan
+,"Jika gejala hilang, Herpes (HSV-1 & HSV-2) sudah sembuh sepenuhnya.",FALSE,"Gejala mungkin hilang, tetapi Herpes (HSV-1 & HSV-2) mungkin masih berada dalam badan anda.",Rawatan
+,Tidak perlu memaklumkan pasangan jika anda menghidap Herpes (HSV-1 & HSV-2).,FALSE,Penting untuk memaklumkan pasangan supaya mereka juga boleh diuji dan dirawat.,Rawatan
+,Anda sentiasa boleh tahu jika anda menghidap Virus Papiloma Manusia (HPV).,FALSE,Ramai individu yang menghidap Virus Papiloma Manusia (HPV) langsung tidak bergejala.,Gejala
+,Virus Papiloma Manusia (HPV) sentiasa menyebabkan kesakitan atau luka yang jelas.,FALSE,Sesetengah kes Virus Papiloma Manusia (HPV) tidak bergejala atau hanya menunjukkan tanda yang sangat ringan.,Gejala
+,"Jika anda tidak berasa sakit, anda tidak menghidap Virus Papiloma Manusia (HPV).",FALSE,Virus Papiloma Manusia (HPV) boleh wujud walaupun tanpa tanda yang jelas.,Gejala
+,Hanya wanita menunjukkan gejala Virus Papiloma Manusia (HPV).,FALSE,"Lelaki dan wanita sama-sama boleh menghidap Virus Papiloma Manusia (HPV), dengan atau tanpa gejala.",Gejala
+,"Gejala Virus Papiloma Manusia (HPV) akan hilang sendiri, jadi tidak perlu risau.",FALSE,"Walaupun gejala reda, Virus Papiloma Manusia (HPV) boleh kekal dan menyebabkan komplikasi jika tidak dirawat.",Gejala
+,Virus Papiloma Manusia (HPV) tidak menyebabkan masalah kesihatan jangka panjang.,FALSE,"Jika tidak dirawat, Virus Papiloma Manusia (HPV) boleh menyebabkan komplikasi jangka panjang seperti kemandulan atau kerosakan organ.",Kesan Kesihatan
+,"Hanya jangkitan serius seperti HIV menjejaskan kesuburan, bukan Virus Papiloma Manusia (HPV).",FALSE,Banyak STI termasuk Virus Papiloma Manusia (HPV) boleh menjejaskan kesuburan lelaki dan wanita.,Kesan Kesihatan
+,Virus Papiloma Manusia (HPV) akan hilang dengan sendiri tanpa memudaratkan.,FALSE,"Tanpa rawatan, Virus Papiloma Manusia (HPV) boleh berterusan dan menyebabkan masalah kesihatan serius.",Kesan Kesihatan
+,Virus Papiloma Manusia (HPV) hanya menjejaskan bahagian sulit.,FALSE,Virus Papiloma Manusia (HPV) bukan sahaja menjejaskan alat kelamin tetapi juga bahagian tubuh lain.,Kesan Kesihatan
+,Masalah kesihatan akibat Virus Papiloma Manusia (HPV) hanya berlaku kepada wanita.,FALSE,Virus Papiloma Manusia (HPV) boleh menimbulkan masalah serius kepada lelaki dan wanita.,Kesan Kesihatan
+,Anda hanya boleh mendapat Virus Papiloma Manusia (HPV) melalui seks faraj.,FALSE,"Virus Papiloma Manusia (HPV) boleh merebak melalui seks faraj, oral atau anal.",Penularan
+,Seks oral atau anal tidak akan menyebabkan Virus Papiloma Manusia (HPV).,FALSE,Virus Papiloma Manusia (HPV) boleh menular melalui pelbagai jenis hubungan seksual.,Penularan
+,Virus Papiloma Manusia (HPV) boleh merebak melalui tempat duduk tandas.,FALSE,Virus Papiloma Manusia (HPV) tidak merebak melalui tempat duduk tandas atau sentuhan biasa.,Penularan
+,Menggunakan kondom sekali sahaja sudah cukup untuk mencegah Virus Papiloma Manusia (HPV) selama-lamanya.,FALSE,Kondom mengurangkan risiko tetapi tidak memberi perlindungan 100% setiap kali.,Penularan
+,"Jika pasangan kelihatan sihat, anda tidak akan mendapat Virus Papiloma Manusia (HPV).",FALSE,Orang boleh menularkan Virus Papiloma Manusia (HPV) walaupun tanpa gejala yang kelihatan.,Penularan
+,Mencuci selepas seks boleh mencegah Virus Papiloma Manusia (HPV).,FALSE,Kebersihan tidak mencegah Virus Papiloma Manusia (HPV); perlindungan dan saringan ialah kuncinya.,Pencegahan
+,Pil perancang kehamilan melindungi daripada Virus Papiloma Manusia (HPV).,FALSE,"Kawalan kehamilan mencegah kehamilan, bukan STI seperti Virus Papiloma Manusia (HPV).",Pencegahan
+,Mempunyai seorang pasangan setia menjamin anda tidak akan mendapat Virus Papiloma Manusia (HPV).,FALSE,"Walaupun hanya ada seorang pasangan, risiko STI tetap wujud jika seorang dijangkiti.",Pencegahan
+,"Jika anda rasa sihat, anda tidak perlu ujian STI berkala.",FALSE,Ujian berkala membantu mengesan Virus Papiloma Manusia (HPV) lebih awal walaupun tanpa gejala.,Pencegahan
+,Hanya mereka yang mempunyai ramai pasangan perlu risau tentang Virus Papiloma Manusia (HPV).,FALSE,"Sesiapa yang aktif secara seksual boleh mendapat Virus Papiloma Manusia (HPV), bukan hanya mereka yang mempunyai ramai pasangan.",Pencegahan
+,Antibiotik boleh menyembuhkan semua jangkitan kelamin termasuk Virus Papiloma Manusia (HPV).,FALSE,Sesetengah STI seperti Virus Papiloma Manusia (HPV) berpunca daripada virus dan tidak boleh disembuhkan dengan antibiotik.,Rawatan
+,"Selepas menerima rawatan untuk Virus Papiloma Manusia (HPV), anda tidak akan mendapatnya lagi.",FALSE,Anda boleh dijangkiti semula Virus Papiloma Manusia (HPV) walaupun selepas rawatan.,Rawatan
+,Rawatan tradisional atau herba boleh menyembuhkan Virus Papiloma Manusia (HPV).,FALSE,"Virus Papiloma Manusia (HPV) memerlukan diagnosis perubatan dan rawatan yang betul, bukan ubat tradisional.",Rawatan
+,"Jika gejala hilang, Virus Papiloma Manusia (HPV) sudah sembuh sepenuhnya.",FALSE,"Gejala mungkin hilang, tetapi Virus Papiloma Manusia (HPV) mungkin masih berada dalam badan anda.",Rawatan
+,Tidak perlu memaklumkan pasangan jika anda menghidap Virus Papiloma Manusia (HPV).,FALSE,Penting untuk memaklumkan pasangan supaya mereka juga boleh diuji dan dirawat.,Rawatan
+,Anda sentiasa boleh tahu jika anda menghidap Virus Kurang Daya Tahan Manusia (HIV).,FALSE,Ramai individu yang menghidap Virus Kurang Daya Tahan Manusia (HIV) langsung tidak bergejala.,Gejala
+,Virus Kurang Daya Tahan Manusia (HIV) sentiasa menyebabkan kesakitan atau luka yang jelas.,FALSE,Sesetengah kes Virus Kurang Daya Tahan Manusia (HIV) tidak bergejala atau hanya menunjukkan tanda yang sangat ringan.,Gejala
+,"Jika anda tidak berasa sakit, anda tidak menghidap Virus Kurang Daya Tahan Manusia (HIV).",FALSE,Virus Kurang Daya Tahan Manusia (HIV) boleh wujud walaupun tanpa tanda yang jelas.,Gejala
+,Hanya wanita menunjukkan gejala Virus Kurang Daya Tahan Manusia (HIV).,FALSE,"Lelaki dan wanita sama-sama boleh menghidap Virus Kurang Daya Tahan Manusia (HIV), dengan atau tanpa gejala.",Gejala
+,"Gejala Virus Kurang Daya Tahan Manusia (HIV) akan hilang sendiri, jadi tidak perlu risau.",FALSE,"Walaupun gejala reda, Virus Kurang Daya Tahan Manusia (HIV) boleh kekal dan menyebabkan komplikasi jika tidak dirawat.",Gejala
+,Virus Kurang Daya Tahan Manusia (HIV) tidak menyebabkan masalah kesihatan jangka panjang.,FALSE,"Jika tidak dirawat, Virus Kurang Daya Tahan Manusia (HIV) boleh menyebabkan komplikasi jangka panjang seperti kemandulan atau kerosakan organ.",Kesan Kesihatan
+,"Hanya jangkitan serius seperti HIV menjejaskan kesuburan, bukan Virus Kurang Daya Tahan Manusia (HIV).",FALSE,Banyak STI termasuk Virus Kurang Daya Tahan Manusia (HIV) boleh menjejaskan kesuburan lelaki dan wanita.,Kesan Kesihatan
+,Virus Kurang Daya Tahan Manusia (HIV) akan hilang dengan sendiri tanpa memudaratkan.,FALSE,"Tanpa rawatan, Virus Kurang Daya Tahan Manusia (HIV) boleh berterusan dan menyebabkan masalah kesihatan serius.",Kesan Kesihatan
+,Virus Kurang Daya Tahan Manusia (HIV) hanya menjejaskan bahagian sulit.,FALSE,Virus Kurang Daya Tahan Manusia (HIV) bukan sahaja menjejaskan alat kelamin tetapi juga bahagian tubuh lain.,Kesan Kesihatan
+,Masalah kesihatan akibat Virus Kurang Daya Tahan Manusia (HIV) hanya berlaku kepada wanita.,FALSE,Virus Kurang Daya Tahan Manusia (HIV) boleh menimbulkan masalah serius kepada lelaki dan wanita.,Kesan Kesihatan
+,Anda hanya boleh mendapat Virus Kurang Daya Tahan Manusia (HIV) melalui seks faraj.,FALSE,"Virus Kurang Daya Tahan Manusia (HIV) boleh merebak melalui seks faraj, oral atau anal.",Penularan
+,Seks oral atau anal tidak akan menyebabkan Virus Kurang Daya Tahan Manusia (HIV).,FALSE,Virus Kurang Daya Tahan Manusia (HIV) boleh menular melalui pelbagai jenis hubungan seksual.,Penularan
+,Virus Kurang Daya Tahan Manusia (HIV) boleh merebak melalui tempat duduk tandas.,FALSE,Virus Kurang Daya Tahan Manusia (HIV) tidak merebak melalui tempat duduk tandas atau sentuhan biasa.,Penularan
+,Menggunakan kondom sekali sahaja sudah cukup untuk mencegah Virus Kurang Daya Tahan Manusia (HIV) selama-lamanya.,FALSE,Kondom mengurangkan risiko tetapi tidak memberi perlindungan 100% setiap kali.,Penularan
+,"Jika pasangan kelihatan sihat, anda tidak akan mendapat Virus Kurang Daya Tahan Manusia (HIV).",FALSE,Orang boleh menularkan Virus Kurang Daya Tahan Manusia (HIV) walaupun tanpa gejala yang kelihatan.,Penularan
+,Mencuci selepas seks boleh mencegah Virus Kurang Daya Tahan Manusia (HIV).,FALSE,Kebersihan tidak mencegah Virus Kurang Daya Tahan Manusia (HIV); perlindungan dan saringan ialah kuncinya.,Pencegahan
+,Pil perancang kehamilan melindungi daripada Virus Kurang Daya Tahan Manusia (HIV).,FALSE,"Kawalan kehamilan mencegah kehamilan, bukan STI seperti Virus Kurang Daya Tahan Manusia (HIV).",Pencegahan
+,Mempunyai seorang pasangan setia menjamin anda tidak akan mendapat Virus Kurang Daya Tahan Manusia (HIV).,FALSE,"Walaupun hanya ada seorang pasangan, risiko STI tetap wujud jika seorang dijangkiti.",Pencegahan
+,"Jika anda rasa sihat, anda tidak perlu ujian STI berkala.",FALSE,Ujian berkala membantu mengesan Virus Kurang Daya Tahan Manusia (HIV) lebih awal walaupun tanpa gejala.,Pencegahan
+,Hanya mereka yang mempunyai ramai pasangan perlu risau tentang Virus Kurang Daya Tahan Manusia (HIV).,FALSE,"Sesiapa yang aktif secara seksual boleh mendapat Virus Kurang Daya Tahan Manusia (HIV), bukan hanya mereka yang mempunyai ramai pasangan.",Pencegahan
+,Antibiotik boleh menyembuhkan semua jangkitan kelamin termasuk Virus Kurang Daya Tahan Manusia (HIV).,FALSE,Sesetengah STI seperti Virus Kurang Daya Tahan Manusia (HIV) berpunca daripada virus dan tidak boleh disembuhkan dengan antibiotik.,Rawatan
+,"Selepas menerima rawatan untuk Virus Kurang Daya Tahan Manusia (HIV), anda tidak akan mendapatnya lagi.",FALSE,Anda boleh dijangkiti semula Virus Kurang Daya Tahan Manusia (HIV) walaupun selepas rawatan.,Rawatan
+,Rawatan tradisional atau herba boleh menyembuhkan Virus Kurang Daya Tahan Manusia (HIV).,FALSE,"Virus Kurang Daya Tahan Manusia (HIV) memerlukan diagnosis perubatan dan rawatan yang betul, bukan ubat tradisional.",Rawatan
+,"Jika gejala hilang, Virus Kurang Daya Tahan Manusia (HIV) sudah sembuh sepenuhnya.",FALSE,"Gejala mungkin hilang, tetapi Virus Kurang Daya Tahan Manusia (HIV) mungkin masih berada dalam badan anda.",Rawatan
+,Tidak perlu memaklumkan pasangan jika anda menghidap Virus Kurang Daya Tahan Manusia (HIV).,FALSE,Penting untuk memaklumkan pasangan supaya mereka juga boleh diuji dan dirawat.,Rawatan
+,Anda sentiasa boleh tahu jika anda menghidap Sifilis.,FALSE,Ramai individu yang menghidap Sifilis langsung tidak bergejala.,Gejala
+,Sifilis sentiasa menyebabkan kesakitan atau luka yang jelas.,FALSE,Sesetengah kes Sifilis tidak bergejala atau hanya menunjukkan tanda yang sangat ringan.,Gejala
+,"Jika anda tidak berasa sakit, anda tidak menghidap Sifilis.",FALSE,Sifilis boleh wujud walaupun tanpa tanda yang jelas.,Gejala
+,Hanya wanita menunjukkan gejala Sifilis.,FALSE,"Lelaki dan wanita sama-sama boleh menghidap Sifilis, dengan atau tanpa gejala.",Gejala
+,"Gejala Sifilis akan hilang sendiri, jadi tidak perlu risau.",FALSE,"Walaupun gejala reda, Sifilis boleh kekal dan menyebabkan komplikasi jika tidak dirawat.",Gejala
+,Sifilis tidak menyebabkan masalah kesihatan jangka panjang.,FALSE,"Jika tidak dirawat, Sifilis boleh menyebabkan komplikasi jangka panjang seperti kemandulan atau kerosakan organ.",Kesan Kesihatan
+,"Hanya jangkitan serius seperti HIV menjejaskan kesuburan, bukan Sifilis.",FALSE,Banyak STI termasuk Sifilis boleh menjejaskan kesuburan lelaki dan wanita.,Kesan Kesihatan
+,Sifilis akan hilang dengan sendiri tanpa memudaratkan.,FALSE,"Tanpa rawatan, Sifilis boleh berterusan dan menyebabkan masalah kesihatan serius.",Kesan Kesihatan
+,Sifilis hanya menjejaskan bahagian sulit.,FALSE,Sifilis bukan sahaja menjejaskan alat kelamin tetapi juga bahagian tubuh lain.,Kesan Kesihatan
+,Masalah kesihatan akibat Sifilis hanya berlaku kepada wanita.,FALSE,Sifilis boleh menimbulkan masalah serius kepada lelaki dan wanita.,Kesan Kesihatan
+,Anda hanya boleh mendapat Sifilis melalui seks faraj.,FALSE,"Sifilis boleh merebak melalui seks faraj, oral atau anal.",Penularan
+,Seks oral atau anal tidak akan menyebabkan Sifilis.,FALSE,Sifilis boleh menular melalui pelbagai jenis hubungan seksual.,Penularan
+,Sifilis boleh merebak melalui tempat duduk tandas.,FALSE,Sifilis tidak merebak melalui tempat duduk tandas atau sentuhan biasa.,Penularan
+,Menggunakan kondom sekali sahaja sudah cukup untuk mencegah Sifilis selama-lamanya.,FALSE,Kondom mengurangkan risiko tetapi tidak memberi perlindungan 100% setiap kali.,Penularan
+,"Jika pasangan kelihatan sihat, anda tidak akan mendapat Sifilis.",FALSE,Orang boleh menularkan Sifilis walaupun tanpa gejala yang kelihatan.,Penularan
+,Mencuci selepas seks boleh mencegah Sifilis.,FALSE,Kebersihan tidak mencegah Sifilis; perlindungan dan saringan ialah kuncinya.,Pencegahan
+,Pil perancang kehamilan melindungi daripada Sifilis.,FALSE,"Kawalan kehamilan mencegah kehamilan, bukan STI seperti Sifilis.",Pencegahan
+,Mempunyai seorang pasangan setia menjamin anda tidak akan mendapat Sifilis.,FALSE,"Walaupun hanya ada seorang pasangan, risiko STI tetap wujud jika seorang dijangkiti.",Pencegahan
+,"Jika anda rasa sihat, anda tidak perlu ujian STI berkala.",FALSE,Ujian berkala membantu mengesan Sifilis lebih awal walaupun tanpa gejala.,Pencegahan
+,Hanya mereka yang mempunyai ramai pasangan perlu risau tentang Sifilis.,FALSE,"Sesiapa yang aktif secara seksual boleh mendapat Sifilis, bukan hanya mereka yang mempunyai ramai pasangan.",Pencegahan
+,Antibiotik boleh menyembuhkan semua jangkitan kelamin termasuk Sifilis.,FALSE,Sesetengah STI seperti Sifilis berpunca daripada virus dan tidak boleh disembuhkan dengan antibiotik.,Rawatan
+,"Selepas menerima rawatan untuk Sifilis, anda tidak akan mendapatnya lagi.",FALSE,Anda boleh dijangkiti semula Sifilis walaupun selepas rawatan.,Rawatan
+,Rawatan tradisional atau herba boleh menyembuhkan Sifilis.,FALSE,"Sifilis memerlukan diagnosis perubatan dan rawatan yang betul, bukan ubat tradisional.",Rawatan
+,"Jika gejala hilang, Sifilis sudah sembuh sepenuhnya.",FALSE,"Gejala mungkin hilang, tetapi Sifilis mungkin masih berada dalam badan anda.",Rawatan
+,Tidak perlu memaklumkan pasangan jika anda menghidap Sifilis.,FALSE,Penting untuk memaklumkan pasangan supaya mereka juga boleh diuji dan dirawat.,Rawatan
+,Anda sentiasa boleh tahu jika anda menghidap Kankroid.,FALSE,Ramai individu yang menghidap Kankroid langsung tidak bergejala.,Gejala
+,Kankroid sentiasa menyebabkan kesakitan atau luka yang jelas.,FALSE,Sesetengah kes Kankroid tidak bergejala atau hanya menunjukkan tanda yang sangat ringan.,Gejala
+,"Jika anda tidak berasa sakit, anda tidak menghidap Kankroid.",FALSE,Kankroid boleh wujud walaupun tanpa tanda yang jelas.,Gejala
+,Hanya wanita menunjukkan gejala Kankroid.,FALSE,"Lelaki dan wanita sama-sama boleh menghidap Kankroid, dengan atau tanpa gejala.",Gejala
+,"Gejala Kankroid akan hilang sendiri, jadi tidak perlu risau.",FALSE,"Walaupun gejala reda, Kankroid boleh kekal dan menyebabkan komplikasi jika tidak dirawat.",Gejala
+,Kankroid tidak menyebabkan masalah kesihatan jangka panjang.,FALSE,"Jika tidak dirawat, Kankroid boleh menyebabkan komplikasi jangka panjang seperti kemandulan atau kerosakan organ.",Kesan Kesihatan
+,"Hanya jangkitan serius seperti HIV menjejaskan kesuburan, bukan Kankroid.",FALSE,Banyak STI termasuk Kankroid boleh menjejaskan kesuburan lelaki dan wanita.,Kesan Kesihatan
+,Kankroid akan hilang dengan sendiri tanpa memudaratkan.,FALSE,"Tanpa rawatan, Kankroid boleh berterusan dan menyebabkan masalah kesihatan serius.",Kesan Kesihatan
+,Kankroid hanya menjejaskan bahagian sulit.,FALSE,Kankroid bukan sahaja menjejaskan alat kelamin tetapi juga bahagian tubuh lain.,Kesan Kesihatan
+,Masalah kesihatan akibat Kankroid hanya berlaku kepada wanita.,FALSE,Kankroid boleh menimbulkan masalah serius kepada lelaki dan wanita.,Kesan Kesihatan
+,Anda hanya boleh mendapat Kankroid melalui seks faraj.,FALSE,"Kankroid boleh merebak melalui seks faraj, oral atau anal.",Penularan
+,Seks oral atau anal tidak akan menyebabkan Kankroid.,FALSE,Kankroid boleh menular melalui pelbagai jenis hubungan seksual.,Penularan
+,Kankroid boleh merebak melalui tempat duduk tandas.,FALSE,Kankroid tidak merebak melalui tempat duduk tandas atau sentuhan biasa.,Penularan
+,Menggunakan kondom sekali sahaja sudah cukup untuk mencegah Kankroid selama-lamanya.,FALSE,Kondom mengurangkan risiko tetapi tidak memberi perlindungan 100% setiap kali.,Penularan
+,"Jika pasangan kelihatan sihat, anda tidak akan mendapat Kankroid.",FALSE,Orang boleh menularkan Kankroid walaupun tanpa gejala yang kelihatan.,Penularan
+,Mencuci selepas seks boleh mencegah Kankroid.,FALSE,Kebersihan tidak mencegah Kankroid; perlindungan dan saringan ialah kuncinya.,Pencegahan
+,Pil perancang kehamilan melindungi daripada Kankroid.,FALSE,"Kawalan kehamilan mencegah kehamilan, bukan STI seperti Kankroid.",Pencegahan
+,Mempunyai seorang pasangan setia menjamin anda tidak akan mendapat Kankroid.,FALSE,"Walaupun hanya ada seorang pasangan, risiko STI tetap wujud jika seorang dijangkiti.",Pencegahan
+,"Jika anda rasa sihat, anda tidak perlu ujian STI berkala.",FALSE,Ujian berkala membantu mengesan Kankroid lebih awal walaupun tanpa gejala.,Pencegahan
+,Hanya mereka yang mempunyai ramai pasangan perlu risau tentang Kankroid.,FALSE,"Sesiapa yang aktif secara seksual boleh mendapat Kankroid, bukan hanya mereka yang mempunyai ramai pasangan.",Pencegahan
+,Antibiotik boleh menyembuhkan semua jangkitan kelamin termasuk Kankroid.,FALSE,Sesetengah STI seperti Kankroid berpunca daripada virus dan tidak boleh disembuhkan dengan antibiotik.,Rawatan
+,"Selepas menerima rawatan untuk Kankroid, anda tidak akan mendapatnya lagi.",FALSE,Anda boleh dijangkiti semula Kankroid walaupun selepas rawatan.,Rawatan
+,Rawatan tradisional atau herba boleh menyembuhkan Kankroid.,FALSE,"Kankroid memerlukan diagnosis perubatan dan rawatan yang betul, bukan ubat tradisional.",Rawatan
+,"Jika gejala hilang, Kankroid sudah sembuh sepenuhnya.",FALSE,"Gejala mungkin hilang, tetapi Kankroid mungkin masih berada dalam badan anda.",Rawatan
+,Tidak perlu memaklumkan pasangan jika anda menghidap Kankroid.,FALSE,Penting untuk memaklumkan pasangan supaya mereka juga boleh diuji dan dirawat.,Rawatan
+,Anda sentiasa boleh tahu jika anda menghidap AIDS.,FALSE,Ramai individu yang menghidap AIDS langsung tidak bergejala.,Gejala
+,AIDS sentiasa menyebabkan kesakitan atau luka yang jelas.,FALSE,Sesetengah kes AIDS tidak bergejala atau hanya menunjukkan tanda yang sangat ringan.,Gejala
+,"Jika anda tidak berasa sakit, anda tidak menghidap AIDS.",FALSE,AIDS boleh wujud walaupun tanpa tanda yang jelas.,Gejala
+,Hanya wanita menunjukkan gejala AIDS.,FALSE,"Lelaki dan wanita sama-sama boleh menghidap AIDS, dengan atau tanpa gejala.",Gejala
+,"Gejala AIDS akan hilang sendiri, jadi tidak perlu risau.",FALSE,"Walaupun gejala reda, AIDS boleh kekal dan menyebabkan komplikasi jika tidak dirawat.",Gejala
+,AIDS tidak menyebabkan masalah kesihatan jangka panjang.,FALSE,"Jika tidak dirawat, AIDS boleh menyebabkan komplikasi jangka panjang seperti kemandulan atau kerosakan organ.",Kesan Kesihatan
+,"Hanya jangkitan serius seperti HIV menjejaskan kesuburan, bukan AIDS.",FALSE,Banyak STI termasuk AIDS boleh menjejaskan kesuburan lelaki dan wanita.,Kesan Kesihatan
+,AIDS akan hilang dengan sendiri tanpa memudaratkan.,FALSE,"Tanpa rawatan, AIDS boleh berterusan dan menyebabkan masalah kesihatan serius.",Kesan Kesihatan
+,AIDS hanya menjejaskan bahagian sulit.,FALSE,AIDS bukan sahaja menjejaskan alat kelamin tetapi juga bahagian tubuh lain.,Kesan Kesihatan
+,Masalah kesihatan akibat AIDS hanya berlaku kepada wanita.,FALSE,AIDS boleh menimbulkan masalah serius kepada lelaki dan wanita.,Kesan Kesihatan
+,Anda hanya boleh mendapat AIDS melalui seks faraj.,FALSE,"AIDS boleh merebak melalui seks faraj, oral atau anal.",Penularan
+,Seks oral atau anal tidak akan menyebabkan AIDS.,FALSE,AIDS boleh menular melalui pelbagai jenis hubungan seksual.,Penularan
+,AIDS boleh merebak melalui tempat duduk tandas.,FALSE,AIDS tidak merebak melalui tempat duduk tandas atau sentuhan biasa.,Penularan
+,Menggunakan kondom sekali sahaja sudah cukup untuk mencegah AIDS selama-lamanya.,FALSE,Kondom mengurangkan risiko tetapi tidak memberi perlindungan 100% setiap kali.,Penularan
+,"Jika pasangan kelihatan sihat, anda tidak akan mendapat AIDS.",FALSE,Orang boleh menularkan AIDS walaupun tanpa gejala yang kelihatan.,Penularan
+,Mencuci selepas seks boleh mencegah AIDS.,FALSE,Kebersihan tidak mencegah AIDS; perlindungan dan saringan ialah kuncinya.,Pencegahan
+,Pil perancang kehamilan melindungi daripada AIDS.,FALSE,"Kawalan kehamilan mencegah kehamilan, bukan STI seperti AIDS.",Pencegahan
+,Mempunyai seorang pasangan setia menjamin anda tidak akan mendapat AIDS.,FALSE,"Walaupun hanya ada seorang pasangan, risiko STI tetap wujud jika seorang dijangkiti.",Pencegahan
+,"Jika anda rasa sihat, anda tidak perlu ujian STI berkala.",FALSE,Ujian berkala membantu mengesan AIDS lebih awal walaupun tanpa gejala.,Pencegahan
+,Hanya mereka yang mempunyai ramai pasangan perlu risau tentang AIDS.,FALSE,"Sesiapa yang aktif secara seksual boleh mendapat AIDS, bukan hanya mereka yang mempunyai ramai pasangan.",Pencegahan
+,Antibiotik boleh menyembuhkan semua jangkitan kelamin termasuk AIDS.,FALSE,Sesetengah STI seperti AIDS berpunca daripada virus dan tidak boleh disembuhkan dengan antibiotik.,Rawatan
+,"Selepas menerima rawatan untuk AIDS, anda tidak akan mendapatnya lagi.",FALSE,Anda boleh dijangkiti semula AIDS walaupun selepas rawatan.,Rawatan
+,Rawatan tradisional atau herba boleh menyembuhkan AIDS.,FALSE,"AIDS memerlukan diagnosis perubatan dan rawatan yang betul, bukan ubat tradisional.",Rawatan
+,"Jika gejala hilang, AIDS sudah sembuh sepenuhnya.",FALSE,"Gejala mungkin hilang, tetapi AIDS mungkin masih berada dalam badan anda.",Rawatan
+,Tidak perlu memaklumkan pasangan jika anda menghidap AIDS.,FALSE,Penting untuk memaklumkan pasangan supaya mereka juga boleh diuji dan dirawat.,Rawatan
