@@ -394,13 +394,13 @@ export function AnimatedHeroSection() {
                 {React.createElement(quotes[currentIndex].icon, {
                   className: "w-12 h-12 md:w-16 md:h-16 mb-4 text-purple-400"
                 })}
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-white leading-tight text-center">
+                <h1 className="text-3xl md:text-5xl lg:text-6xl font-semibold text-white leading-tight text-center">
                   {t(quotes[currentIndex].headingKey)}
                   <br className="hidden md:block" />
                   <span className="bg-gradient-to-r from-rose-400 via-purple-400 to-teal-400 bg-clip-text text-transparent">{t(quotes[currentIndex].headingHighlightedKey)}</span>
                 </h1>
               </div>
-              <h2 className="text-lg md:text-xl text-white/80 font-normal mb-6">
+              <h2 className="text-sm md:text-xl text-white/80 font-normal mb-6">
                 {t(quotes[currentIndex].subheadingKey)}
               </h2>
               
@@ -412,8 +412,8 @@ export function AnimatedHeroSection() {
                       <Button 
                         className={
                           button.variant === 'outline' 
-                            ? "bg-transparent border-2 border-white text-white hover:bg-purple-400 font-medium px-4 md:px-6 py-3 md:py-4 w-full h-full text-lg"
-                            : "bg-gradient-to-r from-rose-400 via-purple-400 to-teal-400 hover:from-rose-500 hover:via-purple-500 hover:to-teal-500 text-white border-0 font-medium px-4 md:px-6 py-3 md:py-4 w-full h-full text-lg transition-all duration-200"
+                            ? "bg-transparent border-2 border-white text-white hover:bg-purple-400 font-medium px-4 md:px-6 py-2 md:py-4 w-full h-full text-md sm:text-lg"
+                            : "bg-gradient-to-r from-rose-400 via-purple-400 to-teal-400 hover:from-rose-500 hover:via-purple-500 hover:to-teal-500 text-white border-0 font-medium px-4 md:px-6 py-2 md:py-4 w-full h-full text-md sm:text-lg transition-all duration-200"
                         }
                       >
                         {t(button.textKey)}
@@ -428,7 +428,7 @@ export function AnimatedHeroSection() {
       </div>
 
       {/* Navigation Dots and Progress Bar */}
-      <div className="absolute bottom-14 sm:bottom-24 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center space-y-4">
+      <div className="absolute bottom-24 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center space-y-4">
         {/* Progress Bar */}
         {!isInitialLoad && !isAnimating && (
           <div className="w-16 h-1 bg-white/30 rounded-full overflow-hidden">

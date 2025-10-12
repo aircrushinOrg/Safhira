@@ -19,16 +19,16 @@ export type GameTranslations = {
       movement: {
         title: string;
         keyboard: string;
-        keyboardShortened: string;
+        keyboardShortened?: string;
         touch: string;
-        touchShortened: string;
+        touchShortened?: string;
       };
       interaction: {
         title: string;
         keyboard: string;
-        keyboardShortened: string;
+        keyboardShortened?: string;
         touch: string;
-        touchShortened: string;
+        touchShortened?: string;
       };
       minimap: {
         title: string;
@@ -91,7 +91,7 @@ const defaultTranslations: GameTranslations = {
     back: 'BACK TO TITLE',
   },
   game: {
-    menu: 'MENU',
+    menu: 'MENU'
   },
 };
 

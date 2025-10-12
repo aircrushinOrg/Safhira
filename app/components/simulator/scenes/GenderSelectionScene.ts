@@ -17,6 +17,7 @@ export class GenderSelectionScene extends Phaser.Scene {
   private characterPreview!: Phaser.GameObjects.Sprite;
   private menuItems: Phaser.GameObjects.Text[] = [];
   private selectedIndex = 0;
+  private musicToggleButton?: Phaser.GameObjects.Image;
 
   constructor() {
     super({ key: 'GenderSelectionScene' });
@@ -126,6 +127,8 @@ export class GenderSelectionScene extends Phaser.Scene {
     this.addVisualEffects();
 
     MusicController.play(this);
+    this.createMusicToggle();
+    this.updateMusicToggleLabel();
   }
 
   private setupNavigation(): void {
@@ -173,6 +176,32 @@ export class GenderSelectionScene extends Phaser.Scene {
         this.confirmSelection();
       });
     });
+  }
+
+  private createMusicToggle(): void {
+    const iconKey = MusicController.isMuted() ? 'simulator-mute' : 'simulator-unmute';
+    this.musicToggleButton = this.add
+      .image(
+        this.cameras.main.width - 16,
+        this.cameras.main.height - 16,
+        iconKey
+      )
+      .setOrigin(1, 1)
+      .setScrollFactor(0)
+      .setDepth(3000)
+      .setScale(1.6)
+      .setInteractive({ useHandCursor: true });
+
+    this.musicToggleButton.on('pointerup', () => {
+      MusicController.toggleMute(this);
+      this.updateMusicToggleLabel();
+    });
+  }
+
+  private updateMusicToggleLabel(): void {
+    if (!this.musicToggleButton) return;
+    const iconKey = MusicController.isMuted() ? 'simulator-mute' : 'simulator-unmute';
+    this.musicToggleButton.setTexture(iconKey);
   }
 
   private createCharacterPreview(width: number, height: number): void {

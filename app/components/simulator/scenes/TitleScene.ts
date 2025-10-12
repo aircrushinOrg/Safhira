@@ -15,6 +15,7 @@ export class TitleScene extends Phaser.Scene {
   private titleShadow!: Phaser.GameObjects.Text;
   private menuItems: Phaser.GameObjects.Text[] = [];
   private selectedIndex = 0;
+  private musicToggleButton?: Phaser.GameObjects.Image;
 
   constructor() {
     super({ key: 'TitleScene' });
@@ -132,6 +133,9 @@ export class TitleScene extends Phaser.Scene {
     // Add visual effects
     this.addVisualEffects();
 
+    this.createMusicToggle();
+    this.updateMusicToggleLabel();
+
     // Ensure background music persists across scenes
     MusicController.play(this);
   }
@@ -204,6 +208,32 @@ export class TitleScene extends Phaser.Scene {
         this.scene.start('InstructionScene');
         break;
     }
+  }
+
+  private createMusicToggle(): void {
+    const iconKey = MusicController.isMuted() ? 'simulator-mute' : 'simulator-unmute';
+    this.musicToggleButton = this.add
+      .image(
+        this.cameras.main.width - 16,
+        this.cameras.main.height - 16,
+        iconKey
+      )
+      .setOrigin(1, 1)
+      .setScrollFactor(0)
+      .setDepth(3000)
+      .setScale(1.6)
+      .setInteractive({ useHandCursor: true });
+
+    this.musicToggleButton.on('pointerup', () => {
+      MusicController.toggleMute(this);
+      this.updateMusicToggleLabel();
+    });
+  }
+
+  private updateMusicToggleLabel(): void {
+    if (!this.musicToggleButton) return;
+    const iconKey = MusicController.isMuted() ? 'simulator-mute' : 'simulator-unmute';
+    this.musicToggleButton.setTexture(iconKey);
   }
 
   private addVisualEffects(): void {

@@ -31,7 +31,7 @@
       "button": "Mula Berbual"
     },
     "slide3": {
-      "heading": "Belajar dan Berkembang dengan ",
+      "heading": "Belajar dengan ",
       "headingHighlighted": "Pengetahuan Dipercayai",
       "subheading": "Dapatkan maklumat yang jelas tentang STI, kontrasepsi, dan hubungan untuk membuat pilihan termaklum dengan yakin.",
       "button1": "Terokai STI",
@@ -41,7 +41,7 @@
       "heading": "Cari Penyedia Berdekatan untuk ",
       "headingHighlighted": "Penjagaan Kesihatan Seksual",
       "subheading": "Temui klinik tempatan dan perkhidmatan yang dipercayai berhampiran, membantu anda mengakses penjagaan kesihatan seksual dengan mudah apabila diperlukan.",
-      "button": "Cari Penjagaan Kesihatan"
+      "button": "Akses Penjagaan Kesihatan"
     },
     "slide5": {
       "heading": "Mitos atau Kebenaran? ",
@@ -202,7 +202,7 @@
       "learnAboutStis": "Ketahui tentang STI",
       "livingWell": "Hidup Sihat dengan STI",
       "quiz": "Kuiz",
-      "services": "Cari Penjagaan Kesihatan",
+      "services": "Akses",
       "simulator": "Simulator"
     }
   },
@@ -227,7 +227,7 @@
       "livingWell": "Hidup Sihat dengan STI",
       "quiz": "Kuiz Interaktif",
       "simulator": "Simulator",
-      "findHealthcare": "Cari Penjagaan Kesihatan",
+      "findHealthcare": "Akses Penjagaan Kesihatan",
       "privateChat": "Sembang AI Peribadi",
       "aboutAi": "Tentang Safhira AI",
       "prevalence": "Data Prevalens"
@@ -1946,7 +1946,21 @@
         "back": "Kembali ke Skrin Utama"
       },
       "game": {
-        "menu": "MENU"
+        "menu": "MENU",
+        "instructions": {
+          "walking": {
+            "keyboard": "Gunakan kekunci WASD atau anak panah untuk bergerak.",
+            "touch": "Gunakan joystick untuk bergerak."
+          },
+          "interaction": {
+            "keyboard": "Tekan Enter atau Space (atau klik/ketik) untuk berinteraksi dengan NPC.",
+            "touch": "Ketik pada NPC untuk berinteraksi."
+          }
+        },
+        "music": {
+          "mute": "Bisukan muzik",
+          "unmute": "Hidupkan muzik"
+        }
       }
     },
     "overlay": {

@@ -11,6 +11,7 @@ export class InstructionScene extends Phaser.Scene {
   private backButton!: Phaser.GameObjects.Text;
   private selector!: Phaser.GameObjects.Text;
   private isTouchDevice = false;
+  private musicToggleButton?: Phaser.GameObjects.Image;
 
   constructor() {
     super({ key: 'InstructionScene' });
@@ -101,6 +102,8 @@ export class InstructionScene extends Phaser.Scene {
 
     this.addVisualEffects();
     MusicController.play(this);
+    this.createMusicToggle();
+    this.updateMusicToggleLabel();
   }
 
   private createMovementSection(
@@ -259,5 +262,31 @@ export class InstructionScene extends Phaser.Scene {
       yoyo: true,
       repeat: -1
     });
+  }
+
+  private createMusicToggle(): void {
+    const iconKey = MusicController.isMuted() ? 'simulator-mute' : 'simulator-unmute';
+    this.musicToggleButton = this.add
+      .image(
+        this.cameras.main.width - 16,
+        this.cameras.main.height - 16,
+        iconKey
+      )
+      .setOrigin(1, 1)
+      .setScrollFactor(0)
+      .setDepth(3000)
+      .setScale(1.6)
+      .setInteractive({ useHandCursor: true });
+
+    this.musicToggleButton.on('pointerup', () => {
+      MusicController.toggleMute(this);
+      this.updateMusicToggleLabel();
+    });
+  }
+
+  private updateMusicToggleLabel(): void {
+    if (!this.musicToggleButton) return;
+    const iconKey = MusicController.isMuted() ? 'simulator-mute' : 'simulator-unmute';
+    this.musicToggleButton.setTexture(iconKey);
   }
 }

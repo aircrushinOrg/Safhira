@@ -64,6 +64,8 @@ export class PreloadScene extends Phaser.Scene {
     this.load.image('map', '/simulator-map.png');
     this.load.image('simulator-background', '/simulator-background.png');
     this.load.image('simulator-foreground', '/simulator-foreground.png');
+    this.load.image('simulator-mute', '/simulator-mute.png');
+    this.load.image('simulator-unmute', '/simulator-unmute.png');
     this.load.audio('simulator-music', '/simulator-music.mp3');
 
     // Load boy player sprite sheets
@@ -137,9 +139,6 @@ export class PreloadScene extends Phaser.Scene {
       frameWidth: 32,
       frameHeight: 32,
     });
-
-    // Load hint icon for minimap instructions
-    this.load.image('simulator-hint', '/simulator-hint.png');
   }
 
   create() {

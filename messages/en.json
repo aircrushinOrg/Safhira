@@ -31,7 +31,7 @@
       "button": "Start Chatting"
     },
     "slide3": {
-      "heading": "Learn and Grow with ",
+      "heading": "Learn with ",
       "headingHighlighted": "Trusted Knowledge",
       "subheading": "Get clear information on STIs, contraception, and relationships to make informed choices with confidence.",
       "button1": "Explore STIs",
@@ -41,7 +41,7 @@
       "heading": "Find Nearby Providers for ",
       "headingHighlighted": "Sexual Healthcare",
       "subheading": "Locate trusted local clinics and services nearby, helping you access sexual healthcare easily when the need arises.",
-      "button": "Find Healthcare"
+      "button": "Access Healthcare"
     },
     "slide5": {
       "heading": "Myth or Truth? ",
@@ -202,7 +202,7 @@
       "learnAboutStis": "Learn about STIs",
       "livingWell": "Living Well with STIs",
       "quiz": "Quiz",
-      "services": "Find Healthcare",
+      "services": "Access",
       "simulator": "Simulator"
     }
   },
@@ -227,7 +227,7 @@
       "livingWell": "Living Well with STI",
       "quiz": "Interactive Quiz",
       "simulator": "Gamify Simulator",
-      "findHealthcare": "Find Healthcare",
+      "findHealthcare": "Access Healthcare",
       "privateChat": "Private AI Chat",
       "aboutAi": "About Safhira AI",
       "prevalence": "Prevalence Data"
@@ -1943,7 +1943,21 @@
         "back": "BACK TO TITLE"
       },
       "game": {
-        "menu": "MENU"
+        "menu": "MENU",
+        "instructions": {
+          "walking": {
+            "keyboard": "Use WASD or the arrow keys to walk around.",
+            "touch": "Use the joystick to walk around."
+          },
+          "interaction": {
+            "keyboard": "Press Enter or Space (or click/tap) to interact with an NPC.",
+            "touch": "Tap the NPC to interact."
+          }
+        },
+        "music": {
+          "mute": "Mute music",
+          "unmute": "Play music"
+        }
       }
     },
     "overlay": {

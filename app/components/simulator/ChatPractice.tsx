@@ -168,7 +168,13 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
   useEffect(() => {
     const node = scrollRef.current;
     if (!node) return;
-    node.scrollTo({ top: node.scrollHeight, behavior: 'smooth' });
+
+    // Use setTimeout to ensure the DOM has updated before scrolling
+    const timeoutId = setTimeout(() => {
+      node.scrollTo({ top: node.scrollHeight, behavior: 'smooth' });
+    }, 100);
+
+    return () => clearTimeout(timeoutId);
   }, [messages, typingNpcMessage]);
 
   useEffect(() => {
@@ -178,6 +184,19 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
       }
     };
   }, []);
+
+  // Additional autoscroll trigger for streaming state changes
+  useEffect(() => {
+    const node = scrollRef.current;
+    if (!node) return;
+
+    // Scroll when streaming states change (start/stop streaming)
+    const timeoutId = setTimeout(() => {
+      node.scrollTo({ top: node.scrollHeight, behavior: 'smooth' });
+    }, 50);
+
+    return () => clearTimeout(timeoutId);
+  }, [isStreamingReply, loading]);
 
   const trimmedDraft = draft.trim();
   const canSend =
@@ -771,10 +790,9 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
         )}
 
         <div
-          ref={scrollRef}
           className="flex min-h-[24rem] flex-1 flex-col gap-3 overflow-hidden rounded-2xl border border-slate-200/60 bg-slate-50/80 dark:border-white/5 dark:bg-slate-950/60"
         >
-          <div className="flex h-[50vh] flex-col gap-3 overflow-y-auto px-4 py-5">
+          <div ref={scrollRef} className="flex h-[50vh] flex-col gap-3 overflow-y-auto px-4 py-5">
             {messages.map((message) => (
               <div key={message.id} className={cn('flex', message.role === 'player' ? 'justify-end' : 'justify-start')}>
                 <div

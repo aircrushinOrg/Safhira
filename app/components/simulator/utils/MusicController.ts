@@ -11,6 +11,7 @@ export class MusicController {
   private static visibilityListenerAdded = false;
   private static nativeAudioElement: HTMLAudioElement | null = null;
   private static useNativeAudio = false;
+  private static muted = false;
 
   static play(scene: Phaser.Scene, { volume = 0.4 } = {}): void {
     const startPlayback = () => {
@@ -349,5 +350,45 @@ export class MusicController {
     }
 
     MusicController.useNativeAudio = false;
+  }
+
+  static isMuted(): boolean {
+    return MusicController.muted;
+  }
+
+  static toggleMute(scene?: Phaser.Scene): void {
+    MusicController.muted = !MusicController.muted;
+
+    if (MusicController.muted) {
+      // Mute the music
+      if (MusicController.track) {
+        const soundTrack = MusicController.track as any;
+        if (typeof soundTrack.setMute === 'function') {
+          soundTrack.setMute(true);
+        } else if (typeof soundTrack.setVolume === 'function') {
+          soundTrack.setVolume(0);
+        }
+      }
+
+      // Mute native audio
+      if (MusicController.nativeAudioElement) {
+        MusicController.nativeAudioElement.muted = true;
+      }
+    } else {
+      // Unmute the music
+      if (MusicController.track) {
+        const soundTrack = MusicController.track as any;
+        if (typeof soundTrack.setMute === 'function') {
+          soundTrack.setMute(false);
+        } else if (typeof soundTrack.setVolume === 'function') {
+          soundTrack.setVolume(0.4); // Restore default volume
+        }
+      }
+
+      // Unmute native audio
+      if (MusicController.nativeAudioElement) {
+        MusicController.nativeAudioElement.muted = false;
+      }
+    }
   }
 }

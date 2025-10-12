@@ -54,12 +54,6 @@ export const provider = pgTable('provider', {
   index('idx_provider_name').on(table.providerName),
 ]);
 
-// Participant table records quiz/chat participants by nickname
-export const participant = pgTable('participant', {
-  participantId: serial('participant_id').primaryKey(),
-  participantNickname: varchar('participant_nickname', { length: 255 }).notNull(),
-});
-
 // STI table (renamed from sti_info)
 // Dropped JSON array text columns into separate relation tables (see below)
 export const sti = pgTable('sti', {

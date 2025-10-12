@@ -53,6 +53,7 @@ export class GameScene extends Phaser.Scene {
   private minimapInstruction!: Phaser.GameObjects.Text;
   private isNearNpcInstruction = false;
   private instructionCopy!: GameTranslations['instruction'];
+  private musicToggleButton?: Phaser.GameObjects.Image;
 
   constructor() {
     super({ key: 'GameScene' });
@@ -203,6 +204,8 @@ export class GameScene extends Phaser.Scene {
     const { game: gameTexts } = getGameTranslations();
     this.createMenuButton(gameTexts.menu);
     MusicController.play(this);
+    this.createMusicToggleButton();
+    this.updateMusicToggleLabel();
 
     // Create debug visualizations (Debugging purposes)
     this.collisionDebugger = new CollisionDebugger(this, this.collisionManager);
@@ -340,8 +343,34 @@ export class GameScene extends Phaser.Scene {
       : (this.isTouchDevice ? this.instructionCopy.sections.movement.touchShortened : this.instructionCopy.sections.movement.keyboardShortened);
 
     if (this.minimapInstruction.text !== text) {
-      this.minimapInstruction.setText(text);
+      this.minimapInstruction.setText(text!);
     } 
+  }
+
+  private createMusicToggleButton(): void {
+    const iconKey = MusicController.isMuted() ? 'simulator-mute' : 'simulator-unmute';
+    this.musicToggleButton = this.add
+      .image(
+        this.cameras.main.width - 16,
+        this.cameras.main.height - 16,
+        iconKey
+      )
+      .setOrigin(1, 1)
+      .setScrollFactor(0)
+      .setDepth(3005)
+      .setScale(1.6)
+      .setInteractive({ useHandCursor: true });
+
+    this.musicToggleButton.on('pointerup', () => {
+      MusicController.toggleMute(this);
+      this.updateMusicToggleLabel();
+    });
+  }
+
+  private updateMusicToggleLabel(): void {
+    if (!this.musicToggleButton) return;
+    const iconKey = MusicController.isMuted() ? 'simulator-mute' : 'simulator-unmute';
+    this.musicToggleButton.setTexture(iconKey);
   }
 
   private createNPCAnimations() {
