@@ -1896,6 +1896,8 @@
       "back": "返回角色列表",
       "badge": "模拟练习",
       "title": "与 {npcName} 对话",
+      "scenarioDetails": "情景详情",
+      "learningObjectives": "学习目标",
       "scenarioId": "情境编号 · {scenarioId}"
     },
     "game": {

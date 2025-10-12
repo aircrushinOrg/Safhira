@@ -106,7 +106,7 @@ const SCENARIO_TEMPLATE_CONFIG: ScenarioTemplateConfig[] = [
         npc: {
           role: '善于劝说的朋友',
           persona:
-            '班上受欢迎的同学之一，外向、有魅力、爱调情、随性又爱玩；把冒险与自信和归属感画上等号。',
+            '班上受欢迎的同学之一，外向、有魅力、随性又爱玩；把冒险与自信和归属感画上等号。',
           goals:
             '说服玩家在派对上冲动行事\n强化「大家都这么做」的想法\n把冒险描述为友谊和乐趣的一部分',
           tactics:

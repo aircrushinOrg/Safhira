@@ -10,6 +10,7 @@ import {
 } from '@/lib/simulator/scenarios';
 import { getLocale, getTranslations } from 'next-intl/server';
 import { ArrowLeft, MapPin, Sparkles } from 'lucide-react';
+import { BreadcrumbTrail } from '@/app/components/BreadcrumbTrail';
 
 type PageProps = {
   searchParams?: Promise<{
@@ -67,8 +68,11 @@ function toChatTemplate(template: ScenarioTemplateType): ChatTemplate {
 export default async function SimulatorChatPage({ searchParams }: PageProps) {
   const resolvedSearchParams = (await searchParams) ?? {};
   const { scenario: scenarioId, npc: npcId } = resolvedSearchParams;
-  const [t, locale] = await Promise.all([
+  const [t, tCommon, tSimulator, tNpcList, locale] = await Promise.all([
     getTranslations('Simulator.chat'),
+    getTranslations('Common'),
+    getTranslations('Simulator.landing'),
+    getTranslations('Simulator.npcList'),
     getLocale(),
   ]);
 
@@ -82,6 +86,13 @@ export default async function SimulatorChatPage({ searchParams }: PageProps) {
   const chatTemplate = toChatTemplate(localizedTemplate);
   const aiChatTemplate = toChatTemplate(englishTemplate);
 
+  const breadcrumbs = [
+    { label: tCommon('breadcrumbs.home'), href: '/' },
+    { label: tSimulator('badge'), href: '/simulator' },
+    { label: tNpcList('badge'), href: '/simulator/npc-list' },
+    { label: t('badge') },
+  ];
+
   return (
     <div className="relative isolate overflow-hidden bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50">
       <div className="pointer-events-none absolute inset-0 -z-10">
@@ -89,44 +100,61 @@ export default async function SimulatorChatPage({ searchParams }: PageProps) {
         <div className="absolute inset-0 bg-white/70 dark:bg-slate-950/70" />
       </div>
 
-      <div className="mx-auto flex max-w-6xl flex-col gap-10 px-4 py-16 md:px-6 md:py-20">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <Button
-            asChild
-            variant="ghost"
-            className="inline-flex items-center gap-2 rounded-full border border-slate-200/80 bg-white/80 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-white dark:border-white/10 dark:bg-slate-900/60 dark:text-slate-200 dark:hover:bg-slate-900"
-          >
-            <Link href="/simulator/npc-list">
-              <ArrowLeft className="size-4" />
-              {t('back')}
-            </Link>
-          </Button>
-
-          <span className="inline-flex items-center gap-2 rounded-full border border-teal-400/40 bg-teal-500/15 px-4 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-teal-700 dark:bg-teal-500/10 dark:text-teal-200">
-            <Sparkles className="size-4" />
-            {t('badge')}
-          </span>
+      <div className="mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-20">
+        <div className="flex justify-between items-center">
+            <BreadcrumbTrail items={breadcrumbs} />
+            <Button
+              asChild
+              variant="ghost"
+              className="inline-flex items-center gap-2 rounded-full border border-slate-200/80 bg-white/80 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-white dark:border-white/10 dark:bg-slate-900/60 dark:text-slate-200 dark:hover:bg-slate-900"
+            >
+              <Link href="/simulator/npc-list">
+                <ArrowLeft className="size-4" />
+                {t('back')}
+              </Link>
+            </Button>
         </div>
 
-        <header className="space-y-4">
-          <h1 className="text-balance text-3xl font-semibold leading-tight md:text-4xl">
-            {t('title', { npcName: chatTemplate.npcName })}
-          </h1>
-          <p className="max-w-3xl text-pretty text-base text-slate-600 dark:text-slate-300">
-            {localizedTemplate.description}
-          </p>
-          <div className="flex flex-wrap items-center gap-3 text-xs text-slate-500 dark:text-slate-400">
-            <span className="rounded-full border border-slate-200/80 bg-white/70 px-3 py-1 dark:border-white/10 dark:bg-slate-900/70">
-              {t('scenarioId', { scenarioId: chatTemplate.scenarioId })}
-            </span>
-            <span className="inline-flex items-center gap-2 rounded-full border border-slate-200/80 bg-white/70 px-3 py-1 dark:border-white/10 dark:bg-slate-900/70">
-              <MapPin className="size-4" />
-              {chatTemplate.setting}
-            </span>
-          </div>
-        </header>
+        <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-12">
+            <div className="lg:col-span-1">
+                <div className="sticky top-24 space-y-6">
+                    <div className="space-y-4">
+                        <span className="inline-flex items-center gap-2 rounded-full border border-teal-400/40 bg-teal-500/15 px-4 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-teal-700 dark:bg-teal-500/10 dark:text-teal-200">
+                            <Sparkles className="size-4" />
+                            {t('badge')}
+                        </span>
+                        <h1 className="text-balance text-4xl font-bold leading-tight">
+                            {t('title', { npcName: chatTemplate.npcName })}
+                        </h1>
+                        <p className="text-pretty text-lg text-slate-500 dark:text-slate-400">
+                            {localizedTemplate.description}
+                        </p>
+                    </div>
+                    <div className="rounded-2xl border border-slate-200/70 bg-white/80 p-5 shadow-lg shadow-slate-900/5 backdrop-blur-sm dark:border-white/10 dark:bg-slate-900/70">
+                        <h3 className="font-semibold text-slate-900 dark:text-slate-50 mb-3">{t('scenarioDetails')}</h3>
+                        <div className="space-y-3 text-sm">
+                            <div className="flex items-center gap-3">
+                                <MapPin className="text-slate-400" />
+                                <span className="text-slate-600 dark:text-slate-300">{chatTemplate.setting}</span>
+                            </div>
+                            <div className="flex items-start gap-3">
+                                <Sparkles className="size-5 text-slate-400 mt-0.5" />
+                                <div>
+                                    <h4 className="font-medium text-slate-700 dark:text-slate-200">{t('learningObjectives')}</h4>
+                                    <ul className="list-disc list-inside mt-1 text-slate-600 dark:text-slate-300">
+                                        {chatTemplate.learningObjectives.map((obj, i) => <li key={i}>{obj}</li>)}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-        <ChatPractice template={chatTemplate} aiTemplate={aiChatTemplate} />
+            <div className="lg:col-span-2">
+                <ChatPractice template={chatTemplate} aiTemplate={aiChatTemplate} />
+            </div>
+        </div>
       </div>
     </div>
   );

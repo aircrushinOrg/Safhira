@@ -1899,6 +1899,8 @@
       "back": "Kembali ke senarai NPC",
       "badge": "Latihan simulasi",
       "title": "Berbual dengan {npcName}",
+      "scenarioDetails": "Butiran Senario",
+      "learningObjectives": "Objektif Pembelajaran",
       "scenarioId": "ID Senario · {scenarioId}"
     },
     "game": {

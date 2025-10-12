@@ -7,6 +7,7 @@ import {
 import { Users } from 'lucide-react';
 import Image from 'next/image';
 import { getLocale, getTranslations } from 'next-intl/server';
+import { BreadcrumbTrail } from '@/app/components/BreadcrumbTrail';
 
 const npcAvatarById: Record<string, string> = {
   'classmate-both-01': '/simulator-landing-classmate-both-01.png',
@@ -17,11 +18,19 @@ const npcAvatarById: Record<string, string> = {
 };
 
 export default async function SimulatorNpcListPage() {
-  const [t, locale] = await Promise.all([
+  const [t, tCommon, tSimulator, locale] = await Promise.all([
     getTranslations('Simulator.npcList'),
+    getTranslations('Common'),
+    getTranslations('Simulator.landing'),
     getLocale(),
   ]);
   const localizedTemplates = getLocalizedScenarioTemplates(locale as ScenarioLocale);
+
+  const breadcrumbs = [
+    { label: tCommon('breadcrumbs.home'), href: '/' },
+    { label: tSimulator('badge'), href: '/simulator' },
+    { label: t('badge') },
+  ];
 
   return (
     <div className="relative isolate overflow-hidden bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50">
@@ -30,8 +39,9 @@ export default async function SimulatorNpcListPage() {
         <div className="absolute inset-0 bg-white/70 dark:bg-slate-950/70" />
       </div>
 
-      <div className="mx-auto flex max-w-6xl flex-col gap-12 px-4 py-16 md:px-6 md:py-20">
-        <header className="space-y-4 text-center md:text-left">
+      <div className="mx-auto max-w-6xl px-4 py-16 md:px-6 md:py-20">
+        <BreadcrumbTrail items={breadcrumbs} />
+        <header className="mt-4 space-y-4 text-center md:text-left">
           <span className="inline-flex items-center gap-2 rounded-full border border-teal-400/40 bg-teal-500/15 px-4 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-teal-700 dark:bg-teal-500/10 dark:text-teal-200">
             <Users className="size-4" />
             {t('badge')}

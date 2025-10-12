@@ -11,6 +11,7 @@ import {
   Lightbulb,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { BreadcrumbTrail } from "@/app/components/BreadcrumbTrail";
 
 const highlightConfigs: Array<{
   key: "practice" | "coaching" | "feedback";
@@ -31,6 +32,12 @@ const pillarConfigs: Array<{
 
 export default async function SimulatorLandingPage() {
   const t = await getTranslations("Simulator.landing");
+  const tCommon = await getTranslations("Common");
+
+  const breadcrumbs = [
+    { label: tCommon("breadcrumbs.home"), href: "/" },
+    { label: t("badge") },
+  ];
 
   const highlights = highlightConfigs.map(({ key, icon }) => ({
     key,
@@ -61,8 +68,9 @@ export default async function SimulatorLandingPage() {
         <div className="absolute inset-0 bg-white/70 dark:bg-slate-950/60" />
       </div>
 
-      <section className="mx-auto flex max-w-6xl flex-col gap-16 px-4 py-20 md:gap-20 md:px-6 md:py-24">
-        <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+      <section className="mx-auto max-w-6xl px-4 py-20 md:px-6 md:py-24">
+        <BreadcrumbTrail items={breadcrumbs} />
+        <div className="mt-4 grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
           <div className="space-y-6">
             <span className="inline-flex items-center gap-2 rounded-full border border-teal-400/40 bg-teal-500/15 px-4 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-teal-700 dark:bg-teal-500/10 dark:text-teal-200">
               <Gamepad2 className="size-4" />

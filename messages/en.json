@@ -1896,6 +1896,8 @@
       "back": "Back to roster",
       "badge": "Simulation practice",
       "title": "Chat with {npcName}",
+      "scenarioDetails": "Scenario Details",
+      "learningObjectives": "Learning Objectives",
       "scenarioId": "Scenario ID · {scenarioId}"
     },
     "game": {
