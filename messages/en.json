@@ -1879,7 +1879,7 @@
       },
       "liveFeedback": {
         "badge": "Live feedback",
-        "description": "Summaries, scores & safety alerts update after every turn."
+        "description": "Summaries, scores & states update after every turn."
       },
       "aiDisclaimer": {
         "title": "AI Disclaimer & Informed Consent",

@@ -1879,7 +1879,7 @@
       },
       "liveFeedback": {
         "badge": "实时反馈",
-        "description": "每回合都会更新摘要、评分与安全提醒。"
+        "description": "每回合都会更新摘要、评分与状态。"
       },
       "aiDisclaimer": {
         "title": "AI免责声明与知情同意",

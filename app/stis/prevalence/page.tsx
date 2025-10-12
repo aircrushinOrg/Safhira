@@ -27,10 +27,6 @@ export default function STIPrevalencePage() {
               {label: tBreadcrumbs('stiPrevalence')},
             ]}
           />
-          <Button variant="ghost" onClick={() => router.push('/stis')} className="text-sm sm:text-base">
-            <ArrowLeft size={16} className="mr-2" />
-            Back to STIs Overview
-          </Button>
           <PrevalenceSection />
         </div>
       </section>
