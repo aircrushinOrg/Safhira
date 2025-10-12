@@ -1927,12 +1927,16 @@
           "movement": {
             "title": "Pergerakan",
             "keyboard": "* Kekunci W / ATAS : Bergerak ke atas \n* Kekunci S / BAWAH : Bergerak ke bawah \n* Kekunci A / KIRI : Bergerak ke kiri \n* Kekunci D / KANAN : Bergerak ke kanan",
-            "touch": "* Seret joystick untuk menggerakkan watak \n* Bergerak dalam empat arah: Atas, Bawah, Kiri, Kanan \n* Lepaskan untuk berhenti bergerak"
+            "keyboardShortened": "➣ Gunakan WASD atau kekunci anak panah untuk bergerak \n➣ Dekati NPC untuk berinteraksi",
+            "touch": "* Seret joystick untuk menggerakkan watak \n* Bergerak dalam empat arah: Atas, Bawah, Kiri, Kanan \n* Lepaskan untuk berhenti bergerak",
+            "touchShortened": "➣ Seret joystick untuk bergerak \n➣ Dekati NPC untuk berinteraksi"
           },
           "interaction": {
             "title": "Interaksi",
             "keyboard": "* Dekati NPC dan tekan SPACE / ENTER untuk berinteraksi \n* Setiap NPC mempunyai senario berbeza",
-            "touch": "* Dekati NPC dan ketik mereka untuk berinteraksi \n* Setiap NPC mempunyai senario berbeza"
+            "keyboardShortened": "➣ Tekan SPACE / ENTER untuk berinteraksi dengan NPC",
+            "touch": "* Dekati NPC dan ketik mereka untuk berinteraksi \n* Setiap NPC mempunyai senario berbeza",
+            "touchShortened": "➣ Ketik pada NPC untuk berinteraksi"
           },
           "minimap": {
             "title": "Peta Mini",

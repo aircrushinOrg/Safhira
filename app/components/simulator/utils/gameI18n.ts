@@ -19,12 +19,16 @@ export type GameTranslations = {
       movement: {
         title: string;
         keyboard: string;
+        keyboardShortened: string;
         touch: string;
+        touchShortened: string;
       };
       interaction: {
         title: string;
         keyboard: string;
+        keyboardShortened: string;
         touch: string;
+        touchShortened: string;
       };
       minimap: {
         title: string;
@@ -60,15 +64,23 @@ const defaultTranslations: GameTranslations = {
         title: 'MOVEMENT',
         keyboard:
           '* W / UP key : Move up \n* S / DOWN key : Move down \n* A / LEFT key : Move left \n* D / RIGHT key : Move right',
+        keyboardShortened:
+          '* Use WASD or Arrow keys to move \n* Move in four directions: Up, Down, Left, Right \n*Walk up to NPCs to interact',
         touch:
           '* Drag the joystick to move your character \n* Move in four directions: Up, Down, Left, Right \n* Release to stop moving',
+        touchShortened:
+          '* Drag joystick to move \n* Move in four directions: Up, Down, Left, Right \n*Walk up to NPCs to interact',
       },
       interaction: {
         title: 'INTERACTION',
         keyboard:
           '* Walk up to NPCs and press SPACE / ENTER to interact \n* Different NPCs have different scenarios',
+        keyboardShortened:
+          '* Press SPACE / ENTER to interact with NPCs \n* Different NPCs have different scenarios',
         touch:
           '* Walk up to NPCs and tap on them to interact \n* Different NPCs have different scenarios',
+        touchShortened:
+          '* Tap on NPCs to interact \n* Different NPCs have different scenarios',
       },
       minimap: {
         title: 'MINIMAP',

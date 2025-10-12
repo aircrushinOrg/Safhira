@@ -137,6 +137,9 @@ export class PreloadScene extends Phaser.Scene {
       frameWidth: 32,
       frameHeight: 32,
     });
+
+    // Load hint icon for minimap instructions
+    this.load.image('simulator-hint', '/simulator-hint.png');
   }
 
   create() {
