@@ -1,5 +1,5 @@
-﻿id (serial),statement (text),is_true (boolean),explanation,category (Myth/Fact)
-,You can't get an STI the first time you have sex.,FALSE,You can get an STI any time you have sex with someone who has an STI.,Myth
+﻿id (serial),statement (text),is_true (boolean),explanation,category 
+,You can't get an STI the first time you have sex.,FALSE,You can get an STI any time you have sex with someone who has an STI.,category 
 ,You can't get an STI from oral sex.,FALSE,"Oral sex can transmit several STIs (e.g., herpes, chlamydia, gonorrhea, syphilis, HPV). Use condoms/dental dams.",Myth
 ,Using a male condom and a female condom together gives you double protection.,FALSE,Don't use male and female condoms together—friction increases the chance of breakage.,Myth
 ,Douching can help protect you from HIV.,FALSE,Douching can actually increase HIV risk by disrupting protective vaginal flora.,Myth
@@ -8,7 +8,7 @@
 ,You can get an STI if you have multiple partners.,TRUE,Having multiple partners increases your risk of STIs (though even one encounter can transmit).,Fact
 ,"If I'm pregnant with an STI, it won't affect my fetus.",FALSE,"Some STIs can be passed to the baby during pregnancy, delivery, or breastfeeding; early treatment helps prevent this.",Myth
 ,Men and women have the same symptoms for STIs.,FALSE,Symptoms vary by infection and person; some infections are asymptomatic or present differently in different people.,Myth
-,All STIs can be cured.,FALSE,"Bacterial STIs are often curable; most viral STIs (e.g., herpes, HIV) are not.",Myth
+,All STIs can be cured.,FALSE,Symptoms vary by infection and person; some infections are asymptomatic or present differently in different people.,Myth
 ,STIs do not cause infertility.,FALSE,Untreated STIs like chlamydia can cause PID and infertility.,Myth
 ,Cold sores are an STI.,FALSE,"Cold sores are usually HSV‑1 and often acquired non‑sexually in childhood, but they can be sexually transmitted via oral sex.",Myth
 ,You can get an STI from a toilet seat.,FALSE,"STIs are not transmitted via toilet seats, food, utensils, or handshakes.",Myth
@@ -44,3 +44,203 @@
 ,STIs don’t require medical intervention.,FALSE,Many STIs need diagnosis and treatment to prevent complications; some are chronic and require ongoing care.,Myth
 ,Active adults are more likely to get STIs than teens.,FALSE,Teens and young adults often have higher STI rates due to factors like unprotected sex and limited access to care.,Myth
 ,Condoms protect against all STIs.,FALSE,"Condoms are highly effective for many STIs but are not 100% and offer less protection for skin‑to‑skin infections (e.g., HPV, herpes).",Myth
+,You can always tell if you have Chlamydia.,FALSE,Many people with Chlamydia have no symptoms at all.,Symptoms
+,Chlamydia always causes pain or visible sores.,FALSE,Some cases of Chlamydia are asymptomatic or show very mild signs.,Symptoms
+,"If you don't feel sick, you don't have Chlamydia.",FALSE,Chlamydia can be present even without noticeable symptoms.,Symptoms
+,Only women show symptoms of Chlamydia.,FALSE,"Both men and women can have Chlamydia, with or without symptoms.",Symptoms
+,"Chlamydia symptoms go away on their own, so it's nothing to worry about.",FALSE,"Even if symptoms fade, Chlamydia can remain and cause complications without treatment.",Symptoms
+,Chlamydia doesn't cause any long-term health problems.,FALSE,Chlamydia can cause long-term complications like infertility or organ damage if untreated.,Health Effects
+,"Only serious infections like HIV can affect fertility, not Chlamydia.",FALSE,Many STIs including Chlamydia can affect fertility in both men and women.,Health Effects
+,Chlamydia will go away on its own without causing harm.,FALSE,"Without treatment, Chlamydia can persist and cause serious health issues.",Health Effects
+,Chlamydia only affects the private parts.,FALSE,"Chlamydia can affect other parts of the body, not just genitals.",Health Effects
+,Health problems from Chlamydia only happen in women.,FALSE,Chlamydia can cause serious issues in both men and women.,Health Effects
+,You can only get Chlamydia through vaginal sex.,FALSE,"Chlamydia can spread through vaginal, oral, or anal sex.",Transmission
+,You can't get Chlamydia from oral or anal sex.,FALSE,Chlamydia can transmit through various types of sexual contact.,Transmission
+,Chlamydia can be spread through toilet seats.,FALSE,Chlamydia is not spread through toilet seats or casual contact.,Transmission
+,Using a condom once prevents Chlamydia forever.,FALSE,Condoms reduce risk but don't offer 100% protection every time.,Transmission
+,You can't get Chlamydia if your partner looks healthy.,FALSE,People can transmit Chlamydia even without visible symptoms.,Transmission
+,Washing after sex can prevent Chlamydia.,FALSE,Hygiene does not prevent Chlamydia; protection and testing are key.,Prevention
+,Birth control pills protect against Chlamydia.,FALSE,"Birth control prevents pregnancy, not STIs like Chlamydia.",Prevention
+,Having one loyal partner guarantees you won't get Chlamydia.,FALSE,"Even with one partner, STI risk exists if one person is infected.",Prevention
+,You don't need regular STI tests if you feel fine.,FALSE,"Regular testing helps detect Chlamydia early, even without symptoms.",Prevention
+,Only people with multiple partners need to worry about Chlamydia.,FALSE,"Anyone who is sexually active can get Chlamydia, not just those with many partners.",Prevention
+,Antibiotics can cure all STIs including Chlamydia.,FALSE,Some STIs like Chlamydia are viral and cannot be cured with antibiotics.,Treatment
+,"Once you take medicine for Chlamydia, you can't get it again.",FALSE,You can get reinfected with Chlamydia even after treatment.,Treatment
+,You can treat Chlamydia with home remedies or herbs.,FALSE,"Chlamydia requires medical diagnosis and proper treatment, not home remedies.",Treatment
+,"If symptoms disappear, Chlamydia is completely cured.",FALSE,"Symptoms may go away, but Chlamydia might still be in your body.",Treatment
+,There's no need to tell your partner if you have Chlamydia.,FALSE,It's important to inform partners so they can get tested and treated too.,Treatment
+,You can always tell if you have Gonorrhea.,FALSE,Many people with Gonorrhea have no symptoms at all.,Symptoms
+,Gonorrhea always causes pain or visible sores.,FALSE,Some cases of Gonorrhea are asymptomatic or show very mild signs.,Symptoms
+,"If you don't feel sick, you don't have Gonorrhea.",FALSE,Gonorrhea can be present even without noticeable symptoms.,Symptoms
+,Only women show symptoms of Gonorrhea.,FALSE,"Both men and women can have Gonorrhea, with or without symptoms.",Symptoms
+,"Gonorrhea symptoms go away on their own, so it's nothing to worry about.",FALSE,"Even if symptoms fade, Gonorrhea can remain and cause complications without treatment.",Symptoms
+,Gonorrhea doesn't cause any long-term health problems.,FALSE,Gonorrhea can cause long-term complications like infertility or organ damage if untreated.,Health Effects
+,"Only serious infections like HIV can affect fertility, not Gonorrhea.",FALSE,Many STIs including Gonorrhea can affect fertility in both men and women.,Health Effects
+,Gonorrhea will go away on its own without causing harm.,FALSE,"Without treatment, Gonorrhea can persist and cause serious health issues.",Health Effects
+,Gonorrhea only affects the private parts.,FALSE,"Gonorrhea can affect other parts of the body, not just genitals.",Health Effects
+,Health problems from Gonorrhea only happen in women.,FALSE,Gonorrhea can cause serious issues in both men and women.,Health Effects
+,You can only get Gonorrhea through vaginal sex.,FALSE,"Gonorrhea can spread through vaginal, oral, or anal sex.",Transmission
+,You can't get Gonorrhea from oral or anal sex.,FALSE,Gonorrhea can transmit through various types of sexual contact.,Transmission
+,Gonorrhea can be spread through toilet seats.,FALSE,Gonorrhea is not spread through toilet seats or casual contact.,Transmission
+,Using a condom once prevents Gonorrhea forever.,FALSE,Condoms reduce risk but don't offer 100% protection every time.,Transmission
+,You can't get Gonorrhea if your partner looks healthy.,FALSE,People can transmit Gonorrhea even without visible symptoms.,Transmission
+,Washing after sex can prevent Gonorrhea.,FALSE,Hygiene does not prevent Gonorrhea; protection and testing are key.,Prevention
+,Birth control pills protect against Gonorrhea.,FALSE,"Birth control prevents pregnancy, not STIs like Gonorrhea.",Prevention
+,Having one loyal partner guarantees you won't get Gonorrhea.,FALSE,"Even with one partner, STI risk exists if one person is infected.",Prevention
+,You don't need regular STI tests if you feel fine.,FALSE,"Regular testing helps detect Gonorrhea early, even without symptoms.",Prevention
+,Only people with multiple partners need to worry about Gonorrhea.,FALSE,"Anyone who is sexually active can get Gonorrhea, not just those with many partners.",Prevention
+,Antibiotics can cure all STIs including Gonorrhea.,FALSE,Some STIs like Gonorrhea are viral and cannot be cured with antibiotics.,Treatment
+,"Once you take medicine for Gonorrhea, you can't get it again.",FALSE,You can get reinfected with Gonorrhea even after treatment.,Treatment
+,You can treat Gonorrhea with home remedies or herbs.,FALSE,"Gonorrhea requires medical diagnosis and proper treatment, not home remedies.",Treatment
+,"If symptoms disappear, Gonorrhea is completely cured.",FALSE,"Symptoms may go away, but Gonorrhea might still be in your body.",Treatment
+,There's no need to tell your partner if you have Gonorrhea.,FALSE,It's important to inform partners so they can get tested and treated too.,Treatment
+,You can always tell if you have Herpes (HSV-1 & HSV-2).,FALSE,Many people with Herpes (HSV-1 & HSV-2) have no symptoms at all.,Symptoms
+,Herpes (HSV-1 & HSV-2) always causes pain or visible sores.,FALSE,Some cases of Herpes (HSV-1 & HSV-2) are asymptomatic or show very mild signs.,Symptoms
+,"If you don't feel sick, you don't have Herpes (HSV-1 & HSV-2).",FALSE,Herpes (HSV-1 & HSV-2) can be present even without noticeable symptoms.,Symptoms
+,Only women show symptoms of Herpes (HSV-1 & HSV-2).,FALSE,"Both men and women can have Herpes (HSV-1 & HSV-2), with or without symptoms.",Symptoms
+,"Herpes (HSV-1 & HSV-2) symptoms go away on their own, so it's nothing to worry about.",FALSE,"Even if symptoms fade, Herpes (HSV-1 & HSV-2) can remain and cause complications without treatment.",Symptoms
+,Herpes (HSV-1 & HSV-2) doesn't cause any long-term health problems.,FALSE,Herpes (HSV-1 & HSV-2) can cause long-term complications like infertility or organ damage if untreated.,Health Effects
+,"Only serious infections like HIV can affect fertility, not Herpes (HSV-1 & HSV-2).",FALSE,Many STIs including Herpes (HSV-1 & HSV-2) can affect fertility in both men and women.,Health Effects
+,Herpes (HSV-1 & HSV-2) will go away on its own without causing harm.,FALSE,"Without treatment, Herpes (HSV-1 & HSV-2) can persist and cause serious health issues.",Health Effects
+,Herpes (HSV-1 & HSV-2) only affects the private parts.,FALSE,"Herpes (HSV-1 & HSV-2) can affect other parts of the body, not just genitals.",Health Effects
+,Health problems from Herpes (HSV-1 & HSV-2) only happen in women.,FALSE,Herpes (HSV-1 & HSV-2) can cause serious issues in both men and women.,Health Effects
+,You can only get Herpes (HSV-1 & HSV-2) through vaginal sex.,FALSE,"Herpes (HSV-1 & HSV-2) can spread through vaginal, oral, or anal sex.",Transmission
+,You can't get Herpes (HSV-1 & HSV-2) from oral or anal sex.,FALSE,Herpes (HSV-1 & HSV-2) can transmit through various types of sexual contact.,Transmission
+,Herpes (HSV-1 & HSV-2) can be spread through toilet seats.,FALSE,Herpes (HSV-1 & HSV-2) is not spread through toilet seats or casual contact.,Transmission
+,Using a condom once prevents Herpes (HSV-1 & HSV-2) forever.,FALSE,Condoms reduce risk but don't offer 100% protection every time.,Transmission
+,You can't get Herpes (HSV-1 & HSV-2) if your partner looks healthy.,FALSE,People can transmit Herpes (HSV-1 & HSV-2) even without visible symptoms.,Transmission
+,Washing after sex can prevent Herpes (HSV-1 & HSV-2).,FALSE,Hygiene does not prevent Herpes (HSV-1 & HSV-2); protection and testing are key.,Prevention
+,Birth control pills protect against Herpes (HSV-1 & HSV-2).,FALSE,"Birth control prevents pregnancy, not STIs like Herpes (HSV-1 & HSV-2).",Prevention
+,Having one loyal partner guarantees you won't get Herpes (HSV-1 & HSV-2).,FALSE,"Even with one partner, STI risk exists if one person is infected.",Prevention
+,You don't need regular STI tests if you feel fine.,FALSE,"Regular testing helps detect Herpes (HSV-1 & HSV-2) early, even without symptoms.",Prevention
+,Only people with multiple partners need to worry about Herpes (HSV-1 & HSV-2).,FALSE,"Anyone who is sexually active can get Herpes (HSV-1 & HSV-2), not just those with many partners.",Prevention
+,Antibiotics can cure all STIs including Herpes (HSV-1 & HSV-2).,FALSE,Some STIs like Herpes (HSV-1 & HSV-2) are viral and cannot be cured with antibiotics.,Treatment
+,"Once you take medicine for Herpes (HSV-1 & HSV-2), you can't get it again.",FALSE,You can get reinfected with Herpes (HSV-1 & HSV-2) even after treatment.,Treatment
+,You can treat Herpes (HSV-1 & HSV-2) with home remedies or herbs.,FALSE,"Herpes (HSV-1 & HSV-2) requires medical diagnosis and proper treatment, not home remedies.",Treatment
+,"If symptoms disappear, Herpes (HSV-1 & HSV-2) is completely cured.",FALSE,"Symptoms may go away, but Herpes (HSV-1 & HSV-2) might still be in your body.",Treatment
+,There's no need to tell your partner if you have Herpes (HSV-1 & HSV-2).,FALSE,It's important to inform partners so they can get tested and treated too.,Treatment
+,You can always tell if you have Human Papillomavirus (HPV).,FALSE,Many people with Human Papillomavirus (HPV) have no symptoms at all.,Symptoms
+,Human Papillomavirus (HPV) always causes pain or visible sores.,FALSE,Some cases of Human Papillomavirus (HPV) are asymptomatic or show very mild signs.,Symptoms
+,"If you don't feel sick, you don't have Human Papillomavirus (HPV).",FALSE,Human Papillomavirus (HPV) can be present even without noticeable symptoms.,Symptoms
+,Only women show symptoms of Human Papillomavirus (HPV).,FALSE,"Both men and women can have Human Papillomavirus (HPV), with or without symptoms.",Symptoms
+,"Human Papillomavirus (HPV) symptoms go away on their own, so it's nothing to worry about.",FALSE,"Even if symptoms fade, Human Papillomavirus (HPV) can remain and cause complications without treatment.",Symptoms
+,Human Papillomavirus (HPV) doesn't cause any long-term health problems.,FALSE,Human Papillomavirus (HPV) can cause long-term complications like infertility or organ damage if untreated.,Health Effects
+,"Only serious infections like HIV can affect fertility, not Human Papillomavirus (HPV).",FALSE,Many STIs including Human Papillomavirus (HPV) can affect fertility in both men and women.,Health Effects
+,Human Papillomavirus (HPV) will go away on its own without causing harm.,FALSE,"Without treatment, Human Papillomavirus (HPV) can persist and cause serious health issues.",Health Effects
+,Human Papillomavirus (HPV) only affects the private parts.,FALSE,"Human Papillomavirus (HPV) can affect other parts of the body, not just genitals.",Health Effects
+,Health problems from Human Papillomavirus (HPV) only happen in women.,FALSE,Human Papillomavirus (HPV) can cause serious issues in both men and women.,Health Effects
+,You can only get Human Papillomavirus (HPV) through vaginal sex.,FALSE,"Human Papillomavirus (HPV) can spread through vaginal, oral, or anal sex.",Transmission
+,You can't get Human Papillomavirus (HPV) from oral or anal sex.,FALSE,Human Papillomavirus (HPV) can transmit through various types of sexual contact.,Transmission
+,Human Papillomavirus (HPV) can be spread through toilet seats.,FALSE,Human Papillomavirus (HPV) is not spread through toilet seats or casual contact.,Transmission
+,Using a condom once prevents Human Papillomavirus (HPV) forever.,FALSE,Condoms reduce risk but don't offer 100% protection every time.,Transmission
+,You can't get Human Papillomavirus (HPV) if your partner looks healthy.,FALSE,People can transmit Human Papillomavirus (HPV) even without visible symptoms.,Transmission
+,Washing after sex can prevent Human Papillomavirus (HPV).,FALSE,Hygiene does not prevent Human Papillomavirus (HPV); protection and testing are key.,Prevention
+,Birth control pills protect against Human Papillomavirus (HPV).,FALSE,"Birth control prevents pregnancy, not STIs like Human Papillomavirus (HPV).",Prevention
+,Having one loyal partner guarantees you won't get Human Papillomavirus (HPV).,FALSE,"Even with one partner, STI risk exists if one person is infected.",Prevention
+,You don't need regular STI tests if you feel fine.,FALSE,"Regular testing helps detect Human Papillomavirus (HPV) early, even without symptoms.",Prevention
+,Only people with multiple partners need to worry about Human Papillomavirus (HPV).,FALSE,"Anyone who is sexually active can get Human Papillomavirus (HPV), not just those with many partners.",Prevention
+,Antibiotics can cure all STIs including Human Papillomavirus (HPV).,FALSE,Some STIs like Human Papillomavirus (HPV) are viral and cannot be cured with antibiotics.,Treatment
+,"Once you take medicine for Human Papillomavirus (HPV), you can't get it again.",FALSE,You can get reinfected with Human Papillomavirus (HPV) even after treatment.,Treatment
+,You can treat Human Papillomavirus (HPV) with home remedies or herbs.,FALSE,"Human Papillomavirus (HPV) requires medical diagnosis and proper treatment, not home remedies.",Treatment
+,"If symptoms disappear, Human Papillomavirus (HPV) is completely cured.",FALSE,"Symptoms may go away, but Human Papillomavirus (HPV) might still be in your body.",Treatment
+,There's no need to tell your partner if you have Human Papillomavirus (HPV).,FALSE,It's important to inform partners so they can get tested and treated too.,Treatment
+,You can always tell if you have Human Immunodeficiency Virus (HIV).,FALSE,Many people with Human Immunodeficiency Virus (HIV) have no symptoms at all.,Symptoms
+,Human Immunodeficiency Virus (HIV) always causes pain or visible sores.,FALSE,Some cases of Human Immunodeficiency Virus (HIV) are asymptomatic or show very mild signs.,Symptoms
+,"If you don't feel sick, you don't have Human Immunodeficiency Virus (HIV).",FALSE,Human Immunodeficiency Virus (HIV) can be present even without noticeable symptoms.,Symptoms
+,Only women show symptoms of Human Immunodeficiency Virus (HIV).,FALSE,"Both men and women can have Human Immunodeficiency Virus (HIV), with or without symptoms.",Symptoms
+,"Human Immunodeficiency Virus (HIV) symptoms go away on their own, so it's nothing to worry about.",FALSE,"Even if symptoms fade, Human Immunodeficiency Virus (HIV) can remain and cause complications without treatment.",Symptoms
+,Human Immunodeficiency Virus (HIV) doesn't cause any long-term health problems.,FALSE,Human Immunodeficiency Virus (HIV) can cause long-term complications like infertility or organ damage if untreated.,Health Effects
+,"Only serious infections like HIV can affect fertility, not Human Immunodeficiency Virus (HIV).",FALSE,Many STIs including Human Immunodeficiency Virus (HIV) can affect fertility in both men and women.,Health Effects
+,Human Immunodeficiency Virus (HIV) will go away on its own without causing harm.,FALSE,"Without treatment, Human Immunodeficiency Virus (HIV) can persist and cause serious health issues.",Health Effects
+,Human Immunodeficiency Virus (HIV) only affects the private parts.,FALSE,"Human Immunodeficiency Virus (HIV) can affect other parts of the body, not just genitals.",Health Effects
+,Health problems from Human Immunodeficiency Virus (HIV) only happen in women.,FALSE,Human Immunodeficiency Virus (HIV) can cause serious issues in both men and women.,Health Effects
+,You can only get Human Immunodeficiency Virus (HIV) through vaginal sex.,FALSE,"Human Immunodeficiency Virus (HIV) can spread through vaginal, oral, or anal sex.",Transmission
+,You can't get Human Immunodeficiency Virus (HIV) from oral or anal sex.,FALSE,Human Immunodeficiency Virus (HIV) can transmit through various types of sexual contact.,Transmission
+,Human Immunodeficiency Virus (HIV) can be spread through toilet seats.,FALSE,Human Immunodeficiency Virus (HIV) is not spread through toilet seats or casual contact.,Transmission
+,Using a condom once prevents Human Immunodeficiency Virus (HIV) forever.,FALSE,Condoms reduce risk but don't offer 100% protection every time.,Transmission
+,You can't get Human Immunodeficiency Virus (HIV) if your partner looks healthy.,FALSE,People can transmit Human Immunodeficiency Virus (HIV) even without visible symptoms.,Transmission
+,Washing after sex can prevent Human Immunodeficiency Virus (HIV).,FALSE,Hygiene does not prevent Human Immunodeficiency Virus (HIV); protection and testing are key.,Prevention
+,Birth control pills protect against Human Immunodeficiency Virus (HIV).,FALSE,"Birth control prevents pregnancy, not STIs like Human Immunodeficiency Virus (HIV).",Prevention
+,Having one loyal partner guarantees you won't get Human Immunodeficiency Virus (HIV).,FALSE,"Even with one partner, STI risk exists if one person is infected.",Prevention
+,You don't need regular STI tests if you feel fine.,FALSE,"Regular testing helps detect Human Immunodeficiency Virus (HIV) early, even without symptoms.",Prevention
+,Only people with multiple partners need to worry about Human Immunodeficiency Virus (HIV).,FALSE,"Anyone who is sexually active can get Human Immunodeficiency Virus (HIV), not just those with many partners.",Prevention
+,Antibiotics can cure all STIs including Human Immunodeficiency Virus (HIV).,FALSE,Some STIs like Human Immunodeficiency Virus (HIV) are viral and cannot be cured with antibiotics.,Treatment
+,"Once you take medicine for Human Immunodeficiency Virus (HIV), you can't get it again.",FALSE,You can get reinfected with Human Immunodeficiency Virus (HIV) even after treatment.,Treatment
+,You can treat Human Immunodeficiency Virus (HIV) with home remedies or herbs.,FALSE,"Human Immunodeficiency Virus (HIV) requires medical diagnosis and proper treatment, not home remedies.",Treatment
+,"If symptoms disappear, Human Immunodeficiency Virus (HIV) is completely cured.",FALSE,"Symptoms may go away, but Human Immunodeficiency Virus (HIV) might still be in your body.",Treatment
+,There's no need to tell your partner if you have Human Immunodeficiency Virus (HIV).,FALSE,It's important to inform partners so they can get tested and treated too.,Treatment
+,You can always tell if you have Syphilis.,FALSE,Many people with Syphilis have no symptoms at all.,Symptoms
+,Syphilis always causes pain or visible sores.,FALSE,Some cases of Syphilis are asymptomatic or show very mild signs.,Symptoms
+,"If you don't feel sick, you don't have Syphilis.",FALSE,Syphilis can be present even without noticeable symptoms.,Symptoms
+,Only women show symptoms of Syphilis.,FALSE,"Both men and women can have Syphilis, with or without symptoms.",Symptoms
+,"Syphilis symptoms go away on their own, so it's nothing to worry about.",FALSE,"Even if symptoms fade, Syphilis can remain and cause complications without treatment.",Symptoms
+,Syphilis doesn't cause any long-term health problems.,FALSE,Syphilis can cause long-term complications like infertility or organ damage if untreated.,Health Effects
+,"Only serious infections like HIV can affect fertility, not Syphilis.",FALSE,Many STIs including Syphilis can affect fertility in both men and women.,Health Effects
+,Syphilis will go away on its own without causing harm.,FALSE,"Without treatment, Syphilis can persist and cause serious health issues.",Health Effects
+,Syphilis only affects the private parts.,FALSE,"Syphilis can affect other parts of the body, not just genitals.",Health Effects
+,Health problems from Syphilis only happen in women.,FALSE,Syphilis can cause serious issues in both men and women.,Health Effects
+,You can only get Syphilis through vaginal sex.,FALSE,"Syphilis can spread through vaginal, oral, or anal sex.",Transmission
+,You can't get Syphilis from oral or anal sex.,FALSE,Syphilis can transmit through various types of sexual contact.,Transmission
+,Syphilis can be spread through toilet seats.,FALSE,Syphilis is not spread through toilet seats or casual contact.,Transmission
+,Using a condom once prevents Syphilis forever.,FALSE,Condoms reduce risk but don't offer 100% protection every time.,Transmission
+,You can't get Syphilis if your partner looks healthy.,FALSE,People can transmit Syphilis even without visible symptoms.,Transmission
+,Washing after sex can prevent Syphilis.,FALSE,Hygiene does not prevent Syphilis; protection and testing are key.,Prevention
+,Birth control pills protect against Syphilis.,FALSE,"Birth control prevents pregnancy, not STIs like Syphilis.",Prevention
+,Having one loyal partner guarantees you won't get Syphilis.,FALSE,"Even with one partner, STI risk exists if one person is infected.",Prevention
+,You don't need regular STI tests if you feel fine.,FALSE,"Regular testing helps detect Syphilis early, even without symptoms.",Prevention
+,Only people with multiple partners need to worry about Syphilis.,FALSE,"Anyone who is sexually active can get Syphilis, not just those with many partners.",Prevention
+,Antibiotics can cure all STIs including Syphilis.,FALSE,Some STIs like Syphilis are viral and cannot be cured with antibiotics.,Treatment
+,"Once you take medicine for Syphilis, you can't get it again.",FALSE,You can get reinfected with Syphilis even after treatment.,Treatment
+,You can treat Syphilis with home remedies or herbs.,FALSE,"Syphilis requires medical diagnosis and proper treatment, not home remedies.",Treatment
+,"If symptoms disappear, Syphilis is completely cured.",FALSE,"Symptoms may go away, but Syphilis might still be in your body.",Treatment
+,There's no need to tell your partner if you have Syphilis.,FALSE,It's important to inform partners so they can get tested and treated too.,Treatment
+,You can always tell if you have Chancroid.,FALSE,Many people with Chancroid have no symptoms at all.,Symptoms
+,Chancroid always causes pain or visible sores.,FALSE,Some cases of Chancroid are asymptomatic or show very mild signs.,Symptoms
+,"If you don't feel sick, you don't have Chancroid.",FALSE,Chancroid can be present even without noticeable symptoms.,Symptoms
+,Only women show symptoms of Chancroid.,FALSE,"Both men and women can have Chancroid, with or without symptoms.",Symptoms
+,"Chancroid symptoms go away on their own, so it's nothing to worry about.",FALSE,"Even if symptoms fade, Chancroid can remain and cause complications without treatment.",Symptoms
+,Chancroid doesn't cause any long-term health problems.,FALSE,Chancroid can cause long-term complications like infertility or organ damage if untreated.,Health Effects
+,"Only serious infections like HIV can affect fertility, not Chancroid.",FALSE,Many STIs including Chancroid can affect fertility in both men and women.,Health Effects
+,Chancroid will go away on its own without causing harm.,FALSE,"Without treatment, Chancroid can persist and cause serious health issues.",Health Effects
+,Chancroid only affects the private parts.,FALSE,"Chancroid can affect other parts of the body, not just genitals.",Health Effects
+,Health problems from Chancroid only happen in women.,FALSE,Chancroid can cause serious issues in both men and women.,Health Effects
+,You can only get Chancroid through vaginal sex.,FALSE,"Chancroid can spread through vaginal, oral, or anal sex.",Transmission
+,You can't get Chancroid from oral or anal sex.,FALSE,Chancroid can transmit through various types of sexual contact.,Transmission
+,Chancroid can be spread through toilet seats.,FALSE,Chancroid is not spread through toilet seats or casual contact.,Transmission
+,Using a condom once prevents Chancroid forever.,FALSE,Condoms reduce risk but don't offer 100% protection every time.,Transmission
+,You can't get Chancroid if your partner looks healthy.,FALSE,People can transmit Chancroid even without visible symptoms.,Transmission
+,Washing after sex can prevent Chancroid.,FALSE,Hygiene does not prevent Chancroid; protection and testing are key.,Prevention
+,Birth control pills protect against Chancroid.,FALSE,"Birth control prevents pregnancy, not STIs like Chancroid.",Prevention
+,Having one loyal partner guarantees you won't get Chancroid.,FALSE,"Even with one partner, STI risk exists if one person is infected.",Prevention
+,You don't need regular STI tests if you feel fine.,FALSE,"Regular testing helps detect Chancroid early, even without symptoms.",Prevention
+,Only people with multiple partners need to worry about Chancroid.,FALSE,"Anyone who is sexually active can get Chancroid, not just those with many partners.",Prevention
+,Antibiotics can cure all STIs including Chancroid.,FALSE,Some STIs like Chancroid are viral and cannot be cured with antibiotics.,Treatment
+,"Once you take medicine for Chancroid, you can't get it again.",FALSE,You can get reinfected with Chancroid even after treatment.,Treatment
+,You can treat Chancroid with home remedies or herbs.,FALSE,"Chancroid requires medical diagnosis and proper treatment, not home remedies.",Treatment
+,"If symptoms disappear, Chancroid is completely cured.",FALSE,"Symptoms may go away, but Chancroid might still be in your body.",Treatment
+,There's no need to tell your partner if you have Chancroid.,FALSE,It's important to inform partners so they can get tested and treated too.,Treatment
+,You can always tell if you have AIDS.,FALSE,Many people with AIDS have no symptoms at all.,Symptoms
+,AIDS always causes pain or visible sores.,FALSE,Some cases of AIDS are asymptomatic or show very mild signs.,Symptoms
+,"If you don't feel sick, you don't have AIDS.",FALSE,AIDS can be present even without noticeable symptoms.,Symptoms
+,Only women show symptoms of AIDS.,FALSE,"Both men and women can have AIDS, with or without symptoms.",Symptoms
+,"AIDS symptoms go away on their own, so it's nothing to worry about.",FALSE,"Even if symptoms fade, AIDS can remain and cause complications without treatment.",Symptoms
+,AIDS doesn't cause any long-term health problems.,FALSE,AIDS can cause long-term complications like infertility or organ damage if untreated.,Health Effects
+,"Only serious infections like HIV can affect fertility, not AIDS.",FALSE,Many STIs including AIDS can affect fertility in both men and women.,Health Effects
+,AIDS will go away on its own without causing harm.,FALSE,"Without treatment, AIDS can persist and cause serious health issues.",Health Effects
+,AIDS only affects the private parts.,FALSE,"AIDS can affect other parts of the body, not just genitals.",Health Effects
+,Health problems from AIDS only happen in women.,FALSE,AIDS can cause serious issues in both men and women.,Health Effects
+,You can only get AIDS through vaginal sex.,FALSE,"AIDS can spread through vaginal, oral, or anal sex.",Transmission
+,You can't get AIDS from oral or anal sex.,FALSE,AIDS can transmit through various types of sexual contact.,Transmission
+,AIDS can be spread through toilet seats.,FALSE,AIDS is not spread through toilet seats or casual contact.,Transmission
+,Using a condom once prevents AIDS forever.,FALSE,Condoms reduce risk but don't offer 100% protection every time.,Transmission
+,You can't get AIDS if your partner looks healthy.,FALSE,People can transmit AIDS even without visible symptoms.,Transmission
+,Washing after sex can prevent AIDS.,FALSE,Hygiene does not prevent AIDS; protection and testing are key.,Prevention
+,Birth control pills protect against AIDS.,FALSE,"Birth control prevents pregnancy, not STIs like AIDS.",Prevention
+,Having one loyal partner guarantees you won't get AIDS.,FALSE,"Even with one partner, STI risk exists if one person is infected.",Prevention
+,You don't need regular STI tests if you feel fine.,FALSE,"Regular testing helps detect AIDS early, even without symptoms.",Prevention
+,Only people with multiple partners need to worry about AIDS.,FALSE,"Anyone who is sexually active can get AIDS, not just those with many partners.",Prevention
+,Antibiotics can cure all STIs including AIDS.,FALSE,Some STIs like AIDS are viral and cannot be cured with antibiotics.,Treatment
+,"Once you take medicine for AIDS, you can't get it again.",FALSE,You can get reinfected with AIDS even after treatment.,Treatment
+,You can treat AIDS with home remedies or herbs.,FALSE,"AIDS requires medical diagnosis and proper treatment, not home remedies.",Treatment
+,"If symptoms disappear, AIDS is completely cured.",FALSE,"Symptoms may go away, but AIDS might still be in your body.",Treatment
+,There's no need to tell your partner if you have AIDS.,FALSE,It's important to inform partners so they can get tested and treated too.,Treatment
