@@ -56,12 +56,7 @@ export default function STIPreventionPage() {
               {label: tBreadcrumbs('stiPrevention')},
             ]}
           />
-          <div className="mb-6 sm:mb-8">
-            <Button variant="ghost" onClick={() => router.push('/stis')} className="mb-4 text-sm sm:text-base">
-              <ArrowLeft size={16} className="mr-2" />
-              {tDetail('back')}
-            </Button>
-            
+          <div className="mb-6 sm:mb-8">           
             <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 items-center mb-6">
               <div>
                 <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-3 sm:mb-4">

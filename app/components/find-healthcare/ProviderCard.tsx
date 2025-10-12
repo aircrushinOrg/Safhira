@@ -7,7 +7,7 @@
 
 import React from 'react';
 import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/i18n/routing';
 import { ProviderRecord } from '@/app/actions/provider-actions';
 import { Card, CardTitle } from '@/app/components/ui/card';
 import { Badge } from '@/app/components/ui/badge';

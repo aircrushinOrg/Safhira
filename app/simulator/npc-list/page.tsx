@@ -54,7 +54,7 @@ export default async function SimulatorNpcListPage() {
           </p>
         </header>
 
-        <section className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+        <section className="grid gap-6 md:grid-cols-2 xl:grid-cols-3 mt-6">
           {localizedTemplates.map(({ id, label, description, npc }) => (
             <article
               key={id}
