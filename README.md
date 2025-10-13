@@ -13,34 +13,44 @@ Safhira is a comprehensive sexual health education platform specifically designe
 ### ✨ Key Features
 
 - **📚 Comprehensive STI Education**: Detailed information on symptoms, transmission, prevention, and treatment for major STIs
-- **🗺️ Interactive Data Visualization**: 
+- **🗺️ Interactive Data Visualization**:
   - Choropleth maps visualizing STI prevalence across Malaysian states (2017-2022)
   - Real-time year slider with animated transitions
   - Color-coded intensity based on incidence rates
   - Hover tooltips with detailed state statistics
   - Zoom and pan functionality for detailed exploration
-- **📈 Advanced Analytics**: 
+- **📈 Advanced Analytics**:
   - Time series charts showing STI trends over time
   - Statistical summaries (highest, lowest, average rates)
   - Multi-disease comparison capabilities
-- **💬 AI-Powered Chat Assistant**: 
+- **💬 AI-Powered Chat Assistant**:
   - Personalized guidance and answers to health questions
   - RAG (Retrieval-Augmented Generation) architecture
   - Web search integration for current information
   - Location-based healthcare provider recommendations
-- **🎮 Interactive Learning**: 
+- **🎮 Interactive Learning**:
   - Gamified quiz system with myths vs facts
   - Leaderboard and scoring system
   - Tilted scroll interface for engaging content delivery
-- **🏥 Healthcare Provider Directory**: 
+- **🎭 AI Chat Practice Simulator**:
+  - Realistic conversation scenarios with AI-powered NPCs
+  - Practice sexual health conversations in safe environment
+  - Real-time confidence and risk scoring
+  - Detailed performance reports and feedback
+  - Interactive game environment built with Phaser.js
+- **🏥 Healthcare Provider Directory**:
   - Searchable database of STI testing centers
   - Location-based filtering and distance calculation
   - Service-specific search (STI testing, PrEP, PEP)
-- **🏠 Living Well Resources**: 
+- **🏠 Living Well Resources**:
   - Treatment adherence tracking tools
   - Lifestyle management guidance
   - Relationship communication support with AI-powered tone tuning
-- **🎨 Modern Design System**: 
+- **🛠️ Sexual Health Tools**:
+  - Collection of practical sexual health utilities
+  - Educational calculators and assessments
+  - Interactive guidance tools
+- **🎨 Modern Design System**:
   - Dark/light theme support
   - Responsive design for all devices
   - Accessibility-first approach
@@ -54,10 +64,12 @@ Safhira is a comprehensive sexual health education platform specifically designe
 - **Styling**: Tailwind CSS + Shadcn/ui + Radix UI components
 - **Animations**: Framer Motion for smooth transitions
 - **Charts**: Chart.js for time series, React Simple Maps for choropleth visualizations
+- **Game Engine**: Phaser.js 3 for interactive conversation simulator
+- **Document Generation**: docx library for report exports
 - **Internationalization**: Next-intl for multi-language support
 - **Theme**: Next Themes with system preference support
 - **Icons**: Lucide React for consistent iconography
-- **Fonts**: Poppins font family for modern typography
+- **Fonts**: Geist font family for modern typography
 
 ### Backend & Database
 - **Database**: PostgreSQL (supports Vercel Postgres, Neon, local instances)
@@ -172,6 +184,8 @@ safhira/
 │   │   ├── leaderboard-actions.ts   # Scoring and rankings
 │   │   └── prevalence-actions.ts    # Epidemiological data
 │   ├── api/                          # API routes
+│   │   ├── ai-scenarios/            # AI conversation simulator APIs
+│   │   │   └── session/             # Session management and chat streaming
 │   │   ├── geocode/                 # Location coordinate lookup
 │   │   ├── calculate-distances/     # Provider distance calculation
 │   │   ├── leaderboard/             # Quiz scoring system
@@ -197,6 +211,13 @@ safhira/
 │   │   │   ├── LeaderboardDisplay.tsx     # Ranking visualization
 │   │   │   ├── NicknameInputDialog.tsx    # Score submission
 │   │   │   └── ScoreSubmittedDialog.tsx   # Achievement feedback
+│   │   ├── simulator/               # Chat practice simulator components
+│   │   │   ├── ChatPractice.tsx           # Main chat interface
+│   │   │   ├── GameEmbed.tsx              # Phaser game integration
+│   │   │   ├── GameConversationOverlay.tsx # Game UI overlay
+│   │   │   ├── scenes/                    # Phaser game scenes
+│   │   │   ├── utils/                     # Game utility functions
+│   │   │   └── debugger/                  # Development debugging tools
 │   │   ├── Header.tsx               # Navigation with locale switcher
 │   │   ├── Footer.tsx               # Site footer with resources
 │   │   ├── ThemeToggle.tsx          # Dark/light mode toggle
@@ -207,6 +228,12 @@ safhira/
 │   ├── stis/                         # Direct STI routes (non-localized)
 │   ├── living-well-with-sti/         # Direct wellness routes
 │   ├── quiz/                         # Direct quiz routes
+│   ├── simulator/                    # AI chat practice simulator
+│   │   ├── chat/                     # Chat practice sessions
+│   │   ├── game/                     # Interactive game environment
+│   │   ├── npc-list/                # NPC character directory
+│   │   └── page.tsx                 # Simulator landing page
+│   ├── tools/                        # Sexual health utility tools
 │   ├── privacy-policy/               # Direct policy routes
 │   ├── terms-of-use/                # Direct terms routes
 │   ├── providers/                    # React context providers
@@ -349,6 +376,16 @@ pnpm db:studio        # Open Drizzle Studio for database inspection
 - **Relationship Support** (`/relationships`): Communication tools and advice
 - **AI-Powered Tone Tuning**: Conversation assistance for difficult topics
 - **Resource Bookmarking**: Save important information for later
+
+### 🎭 AI Chat Practice Simulator (`/simulator`)
+- **Interactive Scenarios**: Practice conversations about sexual health topics
+- **Game Environment** (`/simulator/game`): Phaser.js-powered 2D interactive world
+- **Chat Sessions** (`/simulator/chat`): AI-driven conversation practice
+- **NPC Directory** (`/simulator/npc-list`): Browse available conversation partners
+- **Real-time Scoring**: Confidence and risk assessment during conversations
+- **Performance Analytics**: Detailed reports on conversation skills
+- **Safe Learning Environment**: Practice difficult topics without judgment
+- **Multi-language NPCs**: Conversations in English, Malay, and Chinese
 
 ### 📄 Legal & Privacy
 - **Privacy Policy** (`/privacy-policy`): Comprehensive data handling transparency
