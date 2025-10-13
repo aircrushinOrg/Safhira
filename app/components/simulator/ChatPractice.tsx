@@ -191,9 +191,11 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
   const [isStreamingReply, setIsStreamingReply] = useState(false);
   const [isFinalReportOpen, setIsFinalReportOpen] = useState(false);
   const [reportGenerated, setReportGenerated] = useState(false);
+  const [reportProgress, setReportProgress] = useState(0);
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const typingTimeoutRef = useRef<number | null>(null);
+  const progressIntervalRef = useRef<number | null>(null);
 
   useEffect(() => {
     const node = scrollRef.current;
@@ -258,6 +260,39 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
       : isStreamingReply
         ? 'AI is responding...'
         : null;
+
+  function clearReportProgressInterval() {
+    if (progressIntervalRef.current) {
+      window.clearInterval(progressIntervalRef.current);
+      progressIntervalRef.current = null;
+    }
+  }
+
+  useEffect(() => {
+    clearReportProgressInterval();
+
+    if (!finalizing) {
+      setReportProgress(0);
+      return;
+    }
+
+    setReportProgress(12);
+
+    progressIntervalRef.current = window.setInterval(() => {
+      setReportProgress((prev) => {
+        if (prev >= 90) {
+          return prev;
+        }
+
+        const increment = Math.random() * 12 + 4;
+        return Math.min(prev + increment, 90);
+      });
+    }, 320);
+
+    return () => {
+      clearReportProgressInterval();
+    };
+  }, [finalizing]);
 
   function applyScoreUpdate(nextScore: ApiScore | null) {
     setScore(nextScore);
@@ -860,6 +895,7 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
       window.clearTimeout(typingTimeoutRef.current);
       typingTimeoutRef.current = null;
     }
+    clearReportProgressInterval();
     setMessages([
       {
         id: 'npc-intro',
@@ -886,6 +922,7 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
     setIsStreamingReply(false);
     setIsFinalReportOpen(false);
     setReportGenerated(false);
+    setReportProgress(0);
   }
 
   return (
@@ -1058,6 +1095,27 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
               </div>
             </div>
           </div>
+          <p className="text-xs text-slate-500 dark:text-slate-400">
+            {t('scoreDelayNotice')}
+          </p>
+          {finalizing && (
+            <div className="w-full overflow-hidden rounded-2xl border border-teal-200/60 bg-teal-50/80 p-4 shadow-inner shadow-teal-500/10 backdrop-blur-sm dark:border-teal-500/30 dark:bg-teal-500/10">
+              <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-teal-700 dark:text-teal-200">
+                <Loader2 className="size-4 animate-spin" />
+                {t('processing.finalizing')}
+              </div>
+              <div className="mt-3">
+                <div className="relative">
+                  <Progress value={reportProgress} className="h-2 bg-teal-100/60 dark:bg-teal-900/40" />
+                  <div className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/60 to-transparent opacity-80 mix-blend-overlay" />
+                  <div className="pointer-events-none absolute inset-0 animate-pulse rounded-full bg-gradient-to-r from-teal-300/0 via-teal-300/40 to-teal-300/0" />
+                </div>
+                <p className="mt-2 text-[11px] font-medium uppercase tracking-[0.2em] text-teal-600/80 dark:text-teal-200/70">
+                  {t('buttons.finalScoresLoading')}
+                </p>
+              </div>
+            </div>
+          )}
           <div className="ml-auto flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
             <Button
               type="button"

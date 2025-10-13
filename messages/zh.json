@@ -1991,9 +1991,10 @@
         "notStarted": "未开始"
       },
       "metrics": {
-        "riskScore": "风险分数：{score}%",
-        "confidence": "信心：{score}%"
+        "riskScore": "风险分数",
+        "confidence": "信心"
       },
+      "scoreDelayNotice": "为了准确度，分数会在三轮对话后才显示。",
       "processing": {
         "awaiting": "等待 NPC 回应…",
         "finalizing": "正在生成最终报告…"

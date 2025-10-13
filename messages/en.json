@@ -1994,6 +1994,7 @@
         "confidence": "Confidence: {score}%",
         "riskScore": "Risk Score: {score}%"
       },
+      "scoreDelayNotice": "For accuracy, scores appear after three conversation rounds.",
       "processing": {
         "awaiting": "Awaiting NPC response…",
         "finalizing": "Generating final report…"

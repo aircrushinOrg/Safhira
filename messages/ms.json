@@ -1997,6 +1997,7 @@
         "riskScore": "Skor Risiko: {score}%",
         "confidence": "Keyakinan: {score}%"
       },
+      "scoreDelayNotice": "Untuk ketepatan, skor hanya dipaparkan selepas tiga pusingan perbualan.",
       "processing": {
         "awaiting": "Menunggu respons NPC…",
         "finalizing": "Menjana laporan akhir…"
