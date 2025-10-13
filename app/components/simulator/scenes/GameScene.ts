@@ -806,15 +806,19 @@ export class GameScene extends Phaser.Scene {
       this.input.pointer2.reset();
     }
 
-    // Re-create virtual joystick if on touch device and re-enabling
+    // Only reset pointers when re-enabling - don't recreate the joystick
+    // The virtual joystick should continue working with the existing event listeners
     if (enabled && this.isTouchDevice && this.virtualJoystick) {
       // Small delay to ensure input system is fully restored
       setTimeout(() => {
-        if (this.virtualJoystick) {
-          // Recreate the joystick to ensure event listeners are properly attached
-          this.virtualJoystick.create();
+        // Force a pointer reset to clear any stale touch states
+        if (this.input.pointer1) {
+          this.input.pointer1.reset();
         }
-      }, 100);
+        if (this.input.pointer2) {
+          this.input.pointer2.reset();
+        }
+      }, 50);
     }
   }
 }
