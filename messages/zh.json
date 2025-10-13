@@ -2025,6 +2025,7 @@
         "scoresHeading": "评分",
         "performanceMetrics": "性能指标",
         "sections": {
+          "overall": "整体评估",
           "strengths": "优势",
           "areas": "待提升之处",
           "recommended": "建议练习"

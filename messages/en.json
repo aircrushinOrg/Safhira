@@ -2025,6 +2025,7 @@
         "scoresHeading": "Scores",
         "performanceMetrics": "Performance metrics",
         "sections": {
+          "overall": "Overall Assessment",
           "strengths": "Strengths",
           "areas": "Areas for growth",
           "recommended": "Recommended practice"

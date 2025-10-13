@@ -2028,6 +2028,7 @@
         "scoresHeading": "Skor",
         "performanceMetrics": "Metrik prestasi",
         "sections": {
+          "overall": "Penilaian keseluruhan",
           "strengths": "Kekuatan",
           "areas": "Bidang penambahbaikan",
           "recommended": "Amalan disyorkan"

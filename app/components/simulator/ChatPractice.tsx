@@ -1171,7 +1171,9 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
                   <div className="flex size-10 items-center justify-center rounded-xl bg-gradient-to-br from-teal-500 to-emerald-500 text-white shadow-md">
                     <BarChart3 className="size-5" />
                   </div>
-                  <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">Performance Metrics</h3>
+                  <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
+                    {t('dialog.performanceMetrics')}
+                  </h3>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -1238,7 +1240,9 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
                   <div className="flex size-10 items-center justify-center rounded-xl bg-teal-500 text-white shadow-md">
                     <CheckCircle className="size-5" />
                   </div>
-                  <h3 className="font-semibold text-teal-900 dark:text-teal-100">Overall Assessment</h3>
+                  <h3 className="font-semibold text-teal-900 dark:text-teal-100">
+                    {t('dialog.sections.overall')}
+                  </h3>
                 </div>
                 <p className="leading-relaxed text-teal-800 dark:text-teal-200">{finalReport.overallAssessment}</p>
               </div>
