@@ -1994,6 +1994,7 @@
         "confidence": "Confidence: {score}%",
         "riskScore": "Risk Score: {score}%"
       },
+      "scoreDelayNotice": "For accuracy, scores appear after three conversation rounds.",
       "processing": {
         "awaiting": "Awaiting NPC response…",
         "finalizing": "Generating final report…"
@@ -2020,9 +2021,11 @@
       "rawReport": "View raw report JSON",
       "dialog": {
         "title": "Final report",
-  "description": "Deep dive into your performance and personalised next steps.",
-  "scoresHeading": "Scores",
-  "sections": {
+        "description": "Deep dive into your performance and personalised next steps.",
+        "scoresHeading": "Scores",
+        "performanceMetrics": "Performance metrics",
+        "sections": {
+          "overall": "Overall Assessment",
           "strengths": "Strengths",
           "areas": "Areas for growth",
           "recommended": "Recommended practice"

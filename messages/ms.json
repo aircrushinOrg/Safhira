@@ -1997,6 +1997,7 @@
         "riskScore": "Skor Risiko: {score}%",
         "confidence": "Keyakinan: {score}%"
       },
+      "scoreDelayNotice": "Untuk ketepatan, skor hanya dipaparkan selepas tiga pusingan perbualan.",
       "processing": {
         "awaiting": "Menunggu respons NPC…",
         "finalizing": "Menjana laporan akhir…"
@@ -2023,9 +2024,11 @@
       "rawReport": "Lihat JSON laporan mentah",
       "dialog": {
         "title": "Laporan akhir",
-  "description": "Tinjau prestasi anda dan langkah seterusnya yang dipersonalisasi.",
-  "scoresHeading": "Skor",
-  "sections": {
+        "description": "Tinjau prestasi anda dan langkah seterusnya yang dipersonalisasi.",
+        "scoresHeading": "Skor",
+        "performanceMetrics": "Metrik prestasi",
+        "sections": {
+          "overall": "Penilaian keseluruhan",
           "strengths": "Kekuatan",
           "areas": "Bidang penambahbaikan",
           "recommended": "Amalan disyorkan"
