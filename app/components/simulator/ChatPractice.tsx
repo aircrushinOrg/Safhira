@@ -12,6 +12,8 @@ import {
   type ChatTemplate,
   type ConversationTurn,
   type FinalReportApiResponse,
+  type SuggestedQuestions,
+  type SuggestedQuestionsApiResponse,
   type StreamFinalEvent,
   type StreamResponsePayload,
 } from './chat-practice/types';
@@ -98,6 +100,11 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
   const [isFinalReportOpen, setIsFinalReportOpen] = useState(false);
   const [reportGenerated, setReportGenerated] = useState(false);
   const [reportProgress, setReportProgress] = useState(0);
+  const [suggestedState, setSuggestedState] = useState<{
+    npcTurnIndex: number;
+    options: SuggestedQuestions;
+  } | null>(null);
+  const [loadingSuggestions, setLoadingSuggestions] = useState(false);
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const typingTimeoutRef = useRef<number | null>(null);
@@ -443,6 +450,46 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
     setIsStreamingReply(false);
   }
 
+  async function loadSuggestedQuestions(options: { session: string; npcTurnIndex: number }) {
+    const activeSession = options.session;
+    if (!activeSession || options.npcTurnIndex < 0) {
+      return;
+    }
+
+    setLoadingSuggestions(true);
+    try {
+      const response = await fetch(`/api/ai-scenarios/session/${activeSession}/suggested`, {
+        method: 'GET',
+        cache: 'no-store',
+      });
+      const rawText = await response.text();
+      if (!response.ok) {
+        throw new Error(rawText || `Suggestions failed with status ${response.status}`);
+      }
+
+      let data: SuggestedQuestionsApiResponse;
+      try {
+        data = JSON.parse(rawText) as SuggestedQuestionsApiResponse;
+      } catch (parseError) {
+        throw new Error('Failed to parse suggested questions JSON');
+      }
+
+      if (data.npcTurnIndex !== options.npcTurnIndex) {
+        return;
+      }
+
+      setSuggestedState({
+        npcTurnIndex: data.npcTurnIndex,
+        options: data.suggestions,
+      });
+    } catch (err) {
+      console.error('Failed to load suggested questions', err);
+      setSuggestedState(null);
+    } finally {
+      setLoadingSuggestions(false);
+    }
+  }
+
   async function fetchTurnAnalysis(options: { session: string; force?: boolean }) {
     try {
       const response = await fetch(`/api/ai-scenarios/session/${options.session}/turns/analysis`, {
@@ -503,9 +550,18 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
     }
   }
 
-  async function handleSend() {
-    if (!canSend) return;
+  async function handleSend(messageOverride?: string) {
+    const usingOverride = typeof messageOverride === 'string';
+    const rawMessage = usingOverride ? messageOverride ?? '' : draft;
+    const messageToSend = rawMessage.trim();
 
+    if (!messageToSend) return;
+    if (conversationComplete) return;
+    if (conversationBusy) return;
+    if (!usingOverride && !canSend) return;
+
+    setSuggestedState(null);
+    setLoadingSuggestions(false);
     setLoading(true);
     setError(null);
     setLastRawResponse(null);
@@ -523,7 +579,7 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
         {
           id: `player-${prev.length}`,
           role: 'player',
-          content: trimmedDraft,
+          content: messageToSend,
           timestamp: new Date().toISOString(),
         },
       ]);
@@ -537,7 +593,7 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
           Accept: 'text/event-stream',
         },
         body: JSON.stringify({
-          playerMessage: trimmedDraft,
+          playerMessage: messageToSend,
           allowAutoEnd: ALLOW_AUTO_END,
           locale,
         }),
@@ -702,6 +758,15 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
       const needsAnalysis =
         resolvedPayload.analysisDue ?? resolvedPayload.response.checkpoints.summaryDue;
 
+      if (!resolvedPayload.response.conversationComplete) {
+        void loadSuggestedQuestions({
+          session: resolvedPayload.sessionId,
+          npcTurnIndex: resolvedPayload.npcTurnIndex ?? -1,
+        });
+      } else {
+        setSuggestedState(null);
+      }
+
       if (resolvedPayload.response.conversationComplete && !needsAnalysis) {
         await fetchFinalReport({
           force: false,
@@ -822,6 +887,8 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
     setIsFinalReportOpen(false);
     setReportGenerated(false);
     setReportProgress(0);
+    setSuggestedState(null);
+    setLoadingSuggestions(false);
   }
 
   async function handleReportButtonClick() {
@@ -861,6 +928,12 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
           typingNpcMessage={typingNpcMessage}
           thinkingLabel={t('thinking')}
           scrollRef={scrollRef}
+          suggestions={suggestedState?.options ?? null}
+          suggestionsLoading={loadingSuggestions}
+          suggestionsDisabled={conversationBusy || conversationComplete}
+          onSuggestionSelect={(value) => {
+            void handleSend(value);
+          }}
         />
 
         <ChatComposer

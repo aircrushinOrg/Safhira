@@ -4,14 +4,13 @@ import { FormEvent } from 'react';
 import { Loader2, Send } from 'lucide-react';
 
 import { Button } from '@/app/components/ui/button';
-
 type ChatComposerProps = {
   draft: string;
   onDraftChange: (value: string) => void;
   canSend: boolean;
   disabled: boolean;
   busy: boolean;
-  onSend: () => void | Promise<void>;
+  onSend: (value?: string) => void | Promise<void>;
   placeholder: string;
   sendLabel: string;
   sendingLabel: string;

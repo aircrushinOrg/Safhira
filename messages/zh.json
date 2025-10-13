@@ -2006,19 +2006,23 @@
         "generateReport": "生成报告",
         "finalScores": "获取最终评分",
         "finalScoresLoading": "正在生成…",
-        "viewReport": "查看最终报告",
-        "send": "发送",
-        "sending": "发送中…"
-      },
-      "finalReport": {
+    "viewReport": "查看最终报告",
+    "send": "发送",
+    "sending": "发送中…"
+  },
+  "finalReport": {
         "ready": "最终报告已准备好，包含个性化指导。",
         "locked": "完成整个会话即可解锁最终报告。"
       },
-      "summaryHint": "每次交流后都会刷新摘要与评分。",
-      "placeholder": "写下你的信息…",
-      "thinking": "思考中…",
-      "safetyAlerts": "安全提醒",
-      "rawReport": "查看原始报告 JSON",
+  "summaryHint": "每次交流后都会刷新摘要与评分。",
+  "placeholder": "写下你的信息…",
+  "thinking": "思考中…",
+  "quickPicks": {
+    "title": "快速建议",
+    "loading": "正在构思贴心的后续问题..."
+  },
+  "safetyAlerts": "安全提醒",
+  "rawReport": "查看原始报告 JSON",
       "dialog": {
         "title": "最终报告",
         "description": "深入了解你的表现，并获得个性化的下一步建议。",

@@ -2006,19 +2006,23 @@
         "generateReport": "Generate Report",
         "finalScores": "Get final scores",
         "finalScoresLoading": "Finishing…",
-        "viewReport": "View final report",
-        "send": "Send",
-        "sending": "Sending…"
-      },
-      "finalReport": {
+    "viewReport": "View final report",
+    "send": "Send",
+    "sending": "Sending…"
+  },
+  "finalReport": {
         "ready": "Final report ready with tailored coaching.",
         "locked": "Finish the session to unlock the final report."
       },
-      "summaryHint": "Summaries and scores refresh after every exchange.",
-      "placeholder": "Write your message…",
-      "thinking": "Thinking…",
-      "safetyAlerts": "Safety alerts",
-      "rawReport": "View raw report JSON",
+  "summaryHint": "Summaries and scores refresh after every exchange.",
+  "placeholder": "Write your message…",
+  "thinking": "Thinking…",
+  "quickPicks": {
+    "title": "Quick Picks",
+    "loading": "Crafting thoughtful follow-ups..."
+  },
+  "safetyAlerts": "Safety alerts",
+  "rawReport": "View raw report JSON",
       "dialog": {
         "title": "Final report",
         "description": "Deep dive into your performance and personalised next steps.",

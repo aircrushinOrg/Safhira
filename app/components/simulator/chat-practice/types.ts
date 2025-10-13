@@ -58,6 +58,17 @@ export type ApiResponsePayload = {
   };
 };
 
+export type SuggestedQuestions = {
+  positive: string;
+  negative: string;
+};
+
+export type SuggestedQuestionsApiResponse = {
+  sessionId: string;
+  npcTurnIndex: number;
+  suggestions: SuggestedQuestions;
+};
+
 export type FinalReportApiResponse = {
   sessionId: string;
   response: ApiResponsePayload;

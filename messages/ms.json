@@ -2009,19 +2009,23 @@
         "generateReport": "Jana Laporan",
         "finalScores": "Dapatkan skor akhir",
         "finalScoresLoading": "Sedang disiapkan…",
-        "viewReport": "Lihat laporan akhir",
-        "send": "Hantar",
-        "sending": "Menghantar…"
-      },
-      "finalReport": {
+    "viewReport": "Lihat laporan akhir",
+    "send": "Hantar",
+    "sending": "Menghantar…"
+  },
+  "finalReport": {
         "ready": "Laporan akhir sedia dengan bimbingan tersuai.",
         "locked": "Siapkan sesi untuk membuka laporan akhir."
       },
-      "summaryHint": "Ringkasan dan skor dikemas kini selepas setiap giliran.",
-      "placeholder": "Tulis mesej anda…",
-      "thinking": "Sedang memikirkan…",
-      "safetyAlerts": "Amaran keselamatan",
-      "rawReport": "Lihat JSON laporan mentah",
+  "summaryHint": "Ringkasan dan skor dikemas kini selepas setiap giliran.",
+  "placeholder": "Tulis mesej anda…",
+  "thinking": "Sedang memikirkan…",
+  "quickPicks": {
+    "title": "Cadangan Pantas",
+    "loading": "Sedang menyusun susulan yang sesuai..."
+  },
+  "safetyAlerts": "Amaran keselamatan",
+  "rawReport": "Lihat JSON laporan mentah",
       "dialog": {
         "title": "Laporan akhir",
         "description": "Tinjau prestasi anda dan langkah seterusnya yang dipersonalisasi.",
