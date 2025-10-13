@@ -69,7 +69,7 @@ Safhira is a comprehensive sexual health education platform specifically designe
 - **Internationalization**: Next-intl for multi-language support
 - **Theme**: Next Themes with system preference support
 - **Icons**: Lucide React for consistent iconography
-- **Fonts**: Geist font family for modern typography
+- **Fonts**: Poppins font family for modern typography
 
 ### Backend & Database
 - **Database**: PostgreSQL (supports Vercel Postgres, Neon, local instances)
@@ -82,7 +82,6 @@ Safhira is a comprehensive sexual health education platform specifically designe
 - **AI Chat**: OpenAI integration for conversational AI
 - **Web Search**: Tavily API for real-time information retrieval
 - **Maps**: Google Maps API for location services and distance calculation
-- **Geocoding**: OpenStreetMap Nominatim for address lookup
 
 ### Development Tools
 - **Package Manager**: pnpm for fast, efficient dependency management
@@ -176,13 +175,7 @@ safhira/
 │   │   ├── stis/                     # STI information and data
 │   │   ├── privacy-policy/           # Privacy policy page
 │   │   ├── terms-of-use/            # Terms of service page
-│   │   └── layout.tsx               # Locale-specific layout
 │   ├── actions/                      # Server actions for data operations
-│   │   ├── sti-actions.ts           # STI database operations
-│   │   ├── provider-actions.ts      # Healthcare provider queries
-│   │   ├── quiz-question-actions.ts # Quiz content management
-│   │   ├── leaderboard-actions.ts   # Scoring and rankings
-│   │   └── prevalence-actions.ts    # Epidemiological data
 │   ├── api/                          # API routes
 │   │   ├── ai-scenarios/            # AI conversation simulator APIs
 │   │   │   └── session/             # Session management and chat streaming
@@ -190,40 +183,16 @@ safhira/
 │   │   ├── calculate-distances/     # Provider distance calculation
 │   │   ├── leaderboard/             # Quiz scoring system
 │   │   └── tone-tune/               # AI conversation assistance
-│   ├── components/                   # React components
+│   ├── components/                   # Safhira UI components 
 │   │   ├── ui/                      # Shadcn/ui design system components
 │   │   ├── landing/                 # Homepage sections
-│   │   │   ├── AnimatedHeroSection.tsx    # Dynamic hero slideshow
-│   │   │   ├── BreakingStigmaSection.tsx  # Anti-stigma messaging
-│   │   │   ├── FeaturesSection.tsx        # Platform capabilities
-│   │   │   ├── FAQSection.tsx             # Frequently asked questions
-│   │   │   ├── PrevalenceSection.tsx      # Data visualization hub
-│   │   │   ├── STIChoroplethChart.tsx     # Interactive Malaysia map
-│   │   │   └── STITrendsChart.tsx         # Time series analytics
 │   │   ├── find-healthcare/         # Provider directory components
-│   │   │   ├── ProviderSearch.tsx         # Search and filtering
-│   │   │   ├── ProviderCard.tsx           # Provider information cards
-│   │   │   └── ProviderDetails.tsx        # Detailed provider profiles
-│   │   ├── quiz/                    # Interactive learning components
-│   │   │   ├── TiltedScrollDemo.tsx       # Scroll-based quiz interface
-│   │   │   └── MythListClient.tsx         # Myth vs fact content
-│   │   ├── leaderboard/             # Gamification components
-│   │   │   ├── LeaderboardDisplay.tsx     # Ranking visualization
-│   │   │   ├── NicknameInputDialog.tsx    # Score submission
-│   │   │   └── ScoreSubmittedDialog.tsx   # Achievement feedback
+│   │   ├── quiz/                    # Interactive quiz components
+│   │   ├── leaderboard/             # Leaderboard components
 │   │   ├── simulator/               # Chat practice simulator components
-│   │   │   ├── ChatPractice.tsx           # Main chat interface
-│   │   │   ├── GameEmbed.tsx              # Phaser game integration
-│   │   │   ├── GameConversationOverlay.tsx # Game UI overlay
 │   │   │   ├── scenes/                    # Phaser game scenes
 │   │   │   ├── utils/                     # Game utility functions
 │   │   │   └── debugger/                  # Development debugging tools
-│   │   ├── Header.tsx               # Navigation with locale switcher
-│   │   ├── Footer.tsx               # Site footer with resources
-│   │   ├── ThemeToggle.tsx          # Dark/light mode toggle
-│   │   ├── BreadcrumbTrail.tsx      # Navigation breadcrumbs
-│   │   ├── ResourcesSection.tsx     # Emergency resources and contacts
-│   │   └── DifyChatbotEmbed.tsx     # External chatbot integration
 │   ├── chat/                         # Direct chat routes (non-localized)
 │   ├── stis/                         # Direct STI routes (non-localized)
 │   ├── living-well-with-sti/         # Direct wellness routes
@@ -232,7 +201,6 @@ safhira/
 │   │   ├── chat/                     # Chat practice sessions
 │   │   ├── game/                     # Interactive game environment
 │   │   ├── npc-list/                # NPC character directory
-│   │   └── page.tsx                 # Simulator landing page
 │   ├── tools/                        # Sexual health utility tools
 │   ├── privacy-policy/               # Direct policy routes
 │   ├── terms-of-use/                # Direct terms routes
@@ -279,35 +247,71 @@ pnpm db:studio        # Open Drizzle Studio for database inspection
 
 ### Core Tables
 
+#### **Geographic & STI Data**
+- **`state`** & **`state_translations`**: Malaysian states with multi-language support
+  - Supports locale-specific state names (English, Malay, Chinese)
 - **`prevalence`**: STI prevalence data by Malaysian states, years, and disease types
-  - Primary key: (date, state, disease)
+  - Composite primary key: (sti_id, state_id, prevalence_year)
   - Tracks cases and incidence rates per 100,000 population
   - Supports choropleth map visualizations and trend analysis
-- **`sti`**: Comprehensive STI information database
-  - Detailed symptoms, transmission methods, prevention strategies
+- **`sti`** & **`sti_translations`**: Comprehensive STI information database
+  - Categorized by type (Bacterial/Viral/Parasitic), severity, and treatability
   - Treatment options and Malaysian-specific context
-  - Categorized by type (Bacterial/Viral/Parasitic) and severity
+  - Multi-language support for all content
+
+#### **STI Information Dictionary Tables**
+- **`symptom`** & **`symptom_translations`**: STI symptoms dictionary
+- **`transmission`** & **`transmission_translations`**: Transmission methods dictionary
+- **`health_effect`** & **`health_effect_translations`**: Health effects dictionary
+- **`prevention`** & **`prevention_translations`**: Prevention strategies dictionary
+- **Junction Tables**: `sti_symptom`, `sti_transmission`, `sti_health_effect`, `sti_prevention`
+  - Link STIs to their respective symptoms, transmission methods, health effects, and prevention strategies
+  - Supports categorization (e.g., symptoms by gender: common, men, women, general)
+
+#### **Healthcare Services**
 - **`provider`**: Healthcare provider directory for STI services
-  - Location data with coordinates for mapping
-  - Service types (STI testing, PrEP, PEP)
-  - Contact information and operating hours
-- **`quiz_questions`**: Interactive quiz content for education
-  - Myth vs fact statements with explanations
-  - Categorization and difficulty levels
-- **`quiz_results`**: User quiz performance tracking
-  - Score history and leaderboard functionality
-  - Anonymous participation tracking
+  - Location data with coordinates for mapping and distance calculation
+  - Service types (STI testing, PrEP, PEP, free screening)
+  - Contact information and Google Places integration
+
+#### **Interactive Learning**
+- **`quiz_questions`** & **`quiz_question_translations`**: Quiz content for education
+  - Myth vs fact statements with detailed explanations
+  - Category-based organization with multi-language support
+- **`quiz_results`**: Individual quiz attempt records
+  - Links to leaderboard nicknames with scoring details
+  - Performance tracking per quiz type
 - **`quiz_leaderboard_stats`**: Aggregated leaderboard statistics
-  - Ranking calculations and performance metrics
+  - Best scores, average performance, and attempt counts per nickname
+  - Quiz type categorization and timing data
 
-### Key Features
+#### **AI Chat Practice Simulator**
+- **`ai_scenario_sessions`**: Conversation practice session management
+  - Scenario configuration with learning objectives and supporting facts
+  - NPC character definitions (persona, goals, tactics, boundaries)
+  - Session state tracking with completion status
+- **`ai_scenario_turns`**: Individual conversation turns
+  - Sequential turn tracking with role identification (user/npc)
+  - Complete conversation history per session
+- **`ai_scenario_responses`**: AI-generated responses and assessments
+  - Real-time scoring and performance analytics
+  - Safety alerts and conversation completion tracking
+  - Final reports with detailed feedback
 
-- **Type-safe queries** with Drizzle ORM
-- **Automated migrations** with Drizzle Kit
-- **Composite primary keys** for complex relationships
-- **Strategic indexing** for optimized data retrieval
-- **JSON-stored arrays** for flexible symptom and prevention data
-- **Geospatial support** for location-based provider search
+#### **User Engagement**
+- **`newsletter_subscriptions`**: Email subscription management
+  - Unique email validation with subscription timestamps
+
+### Technical Features
+
+- **🌐 Internationalization**: Complete multi-language support with `locale` enum (en, ms, zh)
+- **🔗 Relational Integrity**: Foreign key constraints with cascade operations
+- **📊 Performance Optimization**: Strategic indexing on frequently queried columns
+- **🎯 Type Safety**: Drizzle ORM with full TypeScript integration
+- **🔄 Automated Migrations**: Version-controlled schema changes with Drizzle Kit
+- **📍 Geospatial Support**: Coordinate storage for location-based provider search
+- **📊 JSONB Storage**: Flexible data structures for complex objects (arrays, learning objectives, scores)
+- **🔍 Advanced Indexing**: Composite primary keys and optimized query patterns
 
 ## 🎨 Design System
 
