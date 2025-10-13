@@ -758,6 +758,7 @@ export class GameScene extends Phaser.Scene {
 
     this.overlayActive = true;
     this.setKeyboardControlsEnabled(false);
+    this.setPointerControlsEnabled(false);
     const playerBody = this.player.body as Phaser.Physics.Arcade.Body;
     playerBody.setVelocity(0);
     emitConversationOverlayOpen(detail);
@@ -766,6 +767,7 @@ export class GameScene extends Phaser.Scene {
   private handleOverlayClosed = () => {
     this.overlayActive = false;
     this.setKeyboardControlsEnabled(true);
+    this.setPointerControlsEnabled(true);
   };
 
   private setKeyboardControlsEnabled(enabled: boolean): void {
@@ -780,6 +782,39 @@ export class GameScene extends Phaser.Scene {
     const keyboardWithReset = keyboard as Phaser.Input.Keyboard.KeyboardPlugin & { resetKeys?: () => void };
     if (!enabled && typeof keyboardWithReset.resetKeys === 'function') {
       keyboardWithReset.resetKeys();
+    }
+  }
+
+  private setPointerControlsEnabled(enabled: boolean): void {
+    if (!this.input) {
+      return;
+    }
+
+    // Enable/disable the main input system
+    this.input.enabled = enabled;
+
+    // Handle the input manager if available
+    if (this.input.manager) {
+      this.input.manager.enabled = enabled;
+    }
+
+    // Specifically handle pointer/touch events
+    if (this.input.pointer1) {
+      this.input.pointer1.reset();
+    }
+    if (this.input.pointer2) {
+      this.input.pointer2.reset();
+    }
+
+    // Re-create virtual joystick if on touch device and re-enabling
+    if (enabled && this.isTouchDevice && this.virtualJoystick) {
+      // Small delay to ensure input system is fully restored
+      setTimeout(() => {
+        if (this.virtualJoystick) {
+          // Recreate the joystick to ensure event listeners are properly attached
+          this.virtualJoystick.create();
+        }
+      }, 100);
     }
   }
 }
