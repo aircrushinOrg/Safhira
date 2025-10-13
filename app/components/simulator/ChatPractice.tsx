@@ -1013,7 +1013,7 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
                     <span className="text-sm font-semibold text-purple-900 dark:text-purple-100">
                       {t('metrics.confidence', { score: displayedScore.confidence }).split(':')[0]}
                     </span>
-                    <span className="text-lg font-bold text-purple-700 dark:text-purple-200">
+                    <span className="text-sm font-bold text-purple-700 dark:text-purple-200">
                       {displayedScore.confidence}%
                     </span>
                   </div>
@@ -1041,7 +1041,7 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
                     <span className="text-sm font-semibold text-red-900 dark:text-red-100">
                       {t('metrics.riskScore', { score: displayedScore.riskScore }).split(':')[0]}
                     </span>
-                    <span className="text-lg font-bold text-red-700 dark:text-red-200">
+                    <span className="text-sm font-bold text-red-700 dark:text-red-200">
                       {displayedScore.riskScore}%
                     </span>
                   </div>
