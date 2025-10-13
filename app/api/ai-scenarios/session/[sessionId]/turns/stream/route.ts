@@ -13,14 +13,8 @@ import {
   NpcProfile,
   ConversationTurn,
   SimulationResponsePayload,
-  buildFormatInstruction,
-  buildScenarioSnapshot,
-  buildSystemPrompt,
   buildLocaleDirective,
-  isNonEmptyString,
   normaliseStringArray,
-  parseModelResponse,
-  toOpenAIMessages,
 } from "@/lib/ai-scenarios/engine";
 
 const SUPPORTED_LOCALES = new Set(["en", "ms", "zh"]);
@@ -159,111 +153,6 @@ Respond as ${npc.name} to the player's latest message.`;
   ];
 }
 
-async function generateAnalysis(params: {
-  client: OpenAI;
-  baseRequest: Omit<Parameters<OpenAI["chat"]["completions"]["create"]>[0], "messages">;
-  scenario: ScenarioDescriptor;
-  npc: NpcProfile;
-  history: ConversationTurn[];
-  playerMessage: string;
-  npcReply: string;
-  summaryDue: boolean;
-  assessmentDue: boolean;
-  allowAutoEnd: boolean;
-  finalReportDue: boolean;
-  locale?: string;
-}) {
-  const {
-    client,
-    baseRequest,
-    scenario,
-    npc,
-    history,
-    playerMessage,
-    npcReply,
-    summaryDue,
-    assessmentDue,
-    allowAutoEnd,
-    finalReportDue,
-    locale,
-  } = params;
-
-  const historyWithNpc: ConversationTurn[] = [
-    ...history,
-    { role: "player", content: playerMessage },
-    { role: "npc", content: npcReply },
-  ];
-
-  const systemPrompt = buildSystemPrompt({
-    scenario,
-    npc,
-    summaryDue,
-    assessmentDue,
-    allowAutoEnd,
-    finalReportDue,
-    locale,
-  });
-
-  const formatInstruction = buildFormatInstruction(summaryDue, assessmentDue, finalReportDue, locale);
-  const scenarioSnapshot = buildScenarioSnapshot({
-    scenario,
-    history: historyWithNpc,
-    summaryDue,
-    assessmentDue,
-    allowAutoEnd,
-    finalReportDue,
-  });
-
-  const messages = toOpenAIMessages({
-    systemPrompt,
-    formatInstruction,
-    scenarioSnapshot,
-    history: historyWithNpc,
-  });
-
-  let completion;
-  try {
-    completion = await client.chat.completions.create({
-      ...baseRequest,
-      messages,
-      response_format: { type: "json_object" },
-      stream: false,
-    });
-  } catch (error) {
-    const message =
-      (typeof error === "object" && error && "message" in error && typeof (error as any).message === "string"
-        ? (error as any).message
-        : "") ||
-      (typeof error === "object" && error && "error" in error && typeof (error as any).error?.message === "string"
-        ? (error as any).error.message
-        : "");
-
-    if (/response_format/i.test(message)) {
-      completion = await client.chat.completions.create({
-        ...baseRequest,
-        messages,
-        stream: false,
-      });
-    } else {
-      throw error;
-    }
-  }
-
-  const rawContent = completion.choices?.[0]?.message?.content?.trim() ?? null;
-  const parsed = parseModelResponse(rawContent);
-  if (!parsed) {
-    return { response: null, raw: rawContent };
-  }
-
-  return {
-    response: {
-      ...parsed,
-      npcReply,
-    },
-    raw: rawContent,
-  };
-}
-
 export async function POST(
   request: Request,
   { params }: { params: Promise<{ sessionId: string }> }
@@ -317,7 +206,6 @@ export async function POST(
 
     const summaryDue = Boolean(forceSummary) || (playerTurns > 0 && playerTurns % SUMMARY_INTERVAL === 0);
     const assessmentDue = Boolean(forceAssessment) || summaryDue;
-    const finalReportDue = false;
 
     const scenarioLearning = normaliseStringArray(session.learningObjectives ?? []);
     const supportingFacts = normaliseStringArray(session.supportingFacts ?? []);
@@ -417,30 +305,14 @@ export async function POST(
             return;
           }
 
-          const analysis = await generateAnalysis({
-            client,
-            baseRequest,
-            scenario: scenarioDescriptor,
-            npc: npcProfile,
-            history,
-            playerMessage: playerMessageRaw,
-            npcReply,
-            summaryDue,
-            assessmentDue,
-            allowAutoEnd: effectiveAllowAutoEnd,
-            finalReportDue,
-            locale: effectiveLocale,
-          });
-
-          if (!analysis.response) {
-            sendEvent("error", { message: "Model returned invalid analytics", raw: analysis.raw });
-            controller.close();
-            return;
-          }
-
           const responseBody: SimulationResponsePayload = {
-            ...analysis.response,
             npcReply,
+            conversationComplete: false,
+            conversationCompleteReason: null,
+            summary: null,
+            score: null,
+            finalReport: null,
+            safetyAlerts: [],
             checkpoints: {
               totalPlayerTurns: playerTurns,
               summaryDue,
@@ -455,14 +327,6 @@ export async function POST(
                 updatedAt: now,
                 allowAutoEnd: effectiveAllowAutoEnd,
                 locale: effectiveLocale ?? null,
-                ...(responseBody.summary ? { lastSummaryRisk: responseBody.summary.riskLevel } : {}),
-                ...(responseBody.score ? { lastScore: responseBody.score.riskScore } : {}),
-                ...(responseBody.conversationComplete
-                  ? {
-                      completedAt: now,
-                      completionReason: responseBody.conversationCompleteReason ?? null,
-                    }
-                  : {}),
               })
               .where(eq(aiScenarioSessions.sessionId, sessionId));
 
@@ -524,7 +388,8 @@ export async function POST(
             npcTurnIndex,
             playerTurnIndex,
             response: responseBody,
-            raw: analysis.raw,
+            raw: null,
+            analysisDue: summaryDue,
           });
         } catch (error) {
           console.error("/api/ai-scenarios/session/[id]/turns/stream error", error);
