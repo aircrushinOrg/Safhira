@@ -259,15 +259,15 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
         ? 'AI is responding...'
         : null;
 
-  // Update persisted scores when new score data is available
-  useEffect(() => {
-    if (score?.confidence != null && score?.riskScore != null) {
+  function applyScoreUpdate(nextScore: ApiScore | null) {
+    setScore(nextScore);
+    if (nextScore?.confidence != null && nextScore?.riskScore != null) {
       setPersistedScore({
-        confidence: Math.max(0, Math.min(100, Math.round(score.confidence))),
-        riskScore: Math.max(0, Math.min(100, Math.round(score.riskScore))),
+        confidence: Math.max(0, Math.min(100, Math.round(nextScore.confidence))),
+        riskScore: Math.max(0, Math.min(100, Math.round(nextScore.riskScore))),
       });
     }
-  }, [score]);
+  }
 
   const displayedScore = persistedScore;
 
@@ -548,7 +548,7 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
       const analysis = data as AnalysisApiResponse;
       setSessionId(analysis.sessionId);
       setSummary(analysis.response.summary);
-      setScore(analysis.response.score);
+      applyScoreUpdate(analysis.response.score);
       setFinalReport(analysis.response.finalReport);
       setCheckpoints(analysis.response.checkpoints ?? INITIAL_CHECKPOINTS);
       setConversationComplete(Boolean(analysis.response.conversationComplete));
@@ -664,7 +664,7 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
               setSummary(finalData.response.summary);
             }
             if (finalData.response.score) {
-              setScore(finalData.response.score);
+              applyScoreUpdate(finalData.response.score);
             }
             if (finalData.response.finalReport) {
               setFinalReport(finalData.response.finalReport);
@@ -764,18 +764,20 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
         throw new Error('Stream ended without final payload');
       }
 
-      const needsAnalysis = finalPayload.analysisDue ?? finalPayload.response.checkpoints.summaryDue;
+      const resolvedPayload: StreamFinalEvent = finalPayload;
+      const needsAnalysis =
+        resolvedPayload.analysisDue ?? resolvedPayload.response.checkpoints.summaryDue;
 
-      if (finalPayload.response.conversationComplete && !needsAnalysis) {
+      if (resolvedPayload.response.conversationComplete && !needsAnalysis) {
         await fetchFinalReport({
           force: false,
-          reason: finalPayload.response.conversationCompleteReason ?? undefined,
-          sessionOverride: finalPayload.sessionId,
+          reason: resolvedPayload.response.conversationCompleteReason ?? undefined,
+          sessionOverride: resolvedPayload.sessionId,
         });
       }
 
       if (needsAnalysis) {
-        await fetchTurnAnalysis({ session: finalPayload.sessionId });
+        await fetchTurnAnalysis({ session: resolvedPayload.sessionId });
       }
     } catch (err) {
       if (appendedPlayerMessage && !appendedNpcMessage) {
@@ -832,7 +834,7 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
 
       setSessionId(data.sessionId);
       setSummary(data.response.summary);
-      setScore(data.response.score);
+      applyScoreUpdate(data.response.score);
       setFinalReport(data.response.finalReport);
       setCheckpoints(data.response.checkpoints);
       setConversationComplete(true);
@@ -1063,6 +1065,21 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
           {finalReport ? (
             <div className="space-y-4 text-sm text-slate-700 dark:text-slate-200">
               <p className="font-semibold text-slate-900 dark:text-slate-50">{finalReport.overallAssessment}</p>
+              <div className="rounded-xl border border-slate-200/60 bg-slate-50/80 px-4 py-3 text-xs text-slate-600 dark:border-white/5 dark:bg-slate-900/60 dark:text-slate-300">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
+                  {t('dialog.scoresHeading')}
+                </p>
+                <div className="mt-2 space-y-2">
+                  <div className="flex items-center justify-between gap-4 text-sm text-slate-700 dark:text-slate-200">
+                    <span>{t('metrics.confidence', { score: displayedScore.confidence })}</span>
+                    <span className="font-semibold text-purple-600 dark:text-purple-200">{displayedScore.confidence}</span>
+                  </div>
+                  <div className="flex items-center justify-between gap-4 text-sm text-slate-700 dark:text-slate-200">
+                    <span>{t('metrics.riskScore', { score: displayedScore.riskScore })}</span>
+                    <span className="font-semibold text-red-600 dark:text-red-200">{displayedScore.riskScore}</span>
+                  </div>
+                </div>
+              </div>
               {finalReport.strengths.length > 0 && (
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">{t('dialog.sections.strengths')}</p>

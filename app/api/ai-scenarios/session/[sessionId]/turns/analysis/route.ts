@@ -16,6 +16,8 @@ import {
   normaliseStringArray,
 } from "@/lib/ai-scenarios/engine";
 
+const ANALYSIS_MODEL = process.env.ANALYSIS_MODEL_NAME || DEFAULT_MODEL;
+
 type ScoreAnalysisResult = {
   confidence: number;
   riskScore: number;
@@ -282,16 +284,14 @@ export async function POST(
       return NextResponse.json({ error: "Missing OPENAI_API_KEY" }, { status: 500 });
     }
 
-    const client = new OpenAI({
+  const client = new OpenAI({
       apiKey,
       baseURL: process.env.OPENAI_BASE_URL,
     });
 
     const baseRequest = {
-      model: DEFAULT_MODEL,
-      temperature: 0.9,
-      presence_penalty: 0.6,
-      frequency_penalty: 0.3,
+      model: ANALYSIS_MODEL,
+      temperature: 0.2,
     } as const;
 
     const { response, raw } = await runAnalysis({
