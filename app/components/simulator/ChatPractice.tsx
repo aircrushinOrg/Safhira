@@ -908,6 +908,7 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
   return (
     <div className="mb-[1rem] flex h-full min-h-[70vh] flex-1 flex-col gap-5 rounded-3xl border border-slate-200/70 bg-white/85 p-4 shadow-lg shadow-slate-900/10 backdrop-blur dark:border-white/5 dark:bg-slate-900/70 dark:shadow-slate-950/40">
       <ChatPracticeHeader
+        npcId={displayTemplate.npcId}
         npcName={displayTemplate.npcName}
         npcRole={displayTemplate.npcRole}
         scenarioLabel={displayTemplate.scenarioLabel}

@@ -13,7 +13,7 @@ import {
   isNonEmptyString,
 } from "@/lib/ai-scenarios/engine";
 
-type SuggestedQuestionPair = {
+type SuggestedResponsePair = {
   positive: string;
   negative: string;
 };
@@ -129,15 +129,15 @@ export async function GET(
       "Recent conversation transcript:",
       transcript,
       "",
-      `Craft two contrasting follow-up questions the player could ask next, written in ${languageLabel.toLowerCase()}.`,
-      "- Option A (positive) should build rapport, show empathy, or keep the conversation open while staying safe.",
-      "- Option B (negative) should set boundaries, question unhealthy assumptions, or challenge unsafe pressure firmly.",
-      "- Both options must be phrased as clear questions, stay under 160 characters, and remain contextually relevant.",
-      "- Keep language concise, natural, and actionable for the player.",
+      `Craft two contrasting follow-up replies the player could say next, written in ${languageLabel.toLowerCase()}.`,
+      "- Option A (positive) should sound warm and empathetic while reinforcing healthy communication.",
+      "- Option B (negative) should assert boundaries, surface concerns, or challenge unsafe pressure firmly yet respectfully.",
+      "- Make each reply feel human and conversational, reference the NPC's latest message, and keep it under 160 characters.",
+      "- Avoid stage directions or labels; deliver natural speech the player could genuinely use.",
       localeInstruction ? `- ${localeInstruction}` : "",
       "",
       'Return a strict JSON object with keys "positive" and "negative". Example:',
-      '{ "positive": "How do you think we can keep things comfortable for both of us?", "negative": "Why are you pushing this when I already said I\'m not ready?" }',
+      '{ "positive": "I get that this matters to you, and I want us both to feel comfortable moving forward.", "negative": "I hear what you\'re saying, but I need you to stop pushing - my boundaries aren\'t up for negotiation right now." }',
     ]
       .filter(Boolean)
       .join("\n");
@@ -161,7 +161,7 @@ export async function GET(
         {
           role: "system",
           content:
-            "You are a communication coach helping a player respond to a simulated conversation about healthy relationships. Provide contrasting question suggestions that respect safety.",
+            "You are a communication coach helping a player respond to a simulated conversation about healthy relationships. Provide contrasting response suggestions that respect safety and feel natural.",
         },
         {
           role: "user",
@@ -186,7 +186,7 @@ export async function GET(
       return NextResponse.json({ error: "Incomplete suggestions generated" }, { status: 502 });
     }
 
-    const suggestions: SuggestedQuestionPair = {
+    const suggestions: SuggestedResponsePair = {
       positive,
       negative,
     };
