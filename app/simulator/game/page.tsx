@@ -66,7 +66,7 @@ export default function SimulatorGamePage() {
   const headerHeight = useHeaderHeight();
 
   return (
-    <div className="w-full" style={{ height: `calc(100vh - ${headerHeight}px)` }}>
+    <div className="w-full" style={{ height: `calc(100svh - ${headerHeight}px)` }}>
       <Suspense fallback={<LoadingState />}>
         <div className="relative h-full w-full">
           <GameEmbed />

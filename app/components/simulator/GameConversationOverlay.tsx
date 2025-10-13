@@ -160,7 +160,7 @@ export function GameConversationOverlay({
             exit={{ x: 40, opacity: 0 }}
             transition={{ duration: 0.25, ease: [0.33, 1, 0.68, 1] }}
             className="pointer-events-auto relative flex w-full flex-col bg-white text-slate-900 shadow-2xl md:max-w-xl md:rounded-l-[32px] md:border-l md:border-slate-100 md:bg-white/95 md:backdrop-blur-lg dark:bg-slate-950 dark:text-slate-50 md:dark:border-white/5 md:dark:bg-slate-950/95"
-            style={{ height: `calc(100dvh - ${headerHeight}px)` }}
+            style={{ height: `calc(100svh - ${headerHeight}px)` }}
             onClick={(e) => e.stopPropagation()}
           >
             <div className="absolute right-4 top-4 z-10 flex items-center gap-2">
