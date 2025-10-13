@@ -104,15 +104,22 @@ Safhira is a comprehensive sexual health education platform specifically designe
    
    Create a `.env.local` file:
    ```env
-   # Database (Required)
-   DATABASE_URL="postgresql://username:password@host:5432/database?sslmode=require"
-   
-   # AI Services (Optional - for chat functionality)
-   OPENAI_API_KEY="your_openai_api_key"
-   TAVILY_API_KEY="your_tavily_api_key"
-   
-   # Google Maps (Optional - for location services)
-   NEXT_PUBLIC_GOOGLE_MAPS_API_KEY="your_google_maps_api_key"
+# Create a Postgres database on Vercel: https://vercel.com/postgres
+DATABASE_URL=
+
+# LLM
+OPENAI_API_KEY=
+OPENAI_BASE_URL=
+TUNE_MODEL_NAME=
+SCENARIO_MODEL_NAME=
+REPORT_MODEL_NAME=
+
+#email
+RESEND_API_KEY=
+RESEND_FROM=
+
+# maps
+NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=
    ```
 
    **Database Options:**

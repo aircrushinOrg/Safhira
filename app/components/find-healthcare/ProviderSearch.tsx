@@ -413,7 +413,7 @@ export function ProviderSearch({ initialProviders = [], showHero = true, classNa
   };
 
   return (
-    <div className={cn('w-full max-w-6xl mx-auto p-6', className)}>
+    <div className={cn('w-full', className)}>
       {showHero && (
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
