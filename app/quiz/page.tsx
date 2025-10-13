@@ -12,11 +12,13 @@ type QuizListItem = {
   id: string
   text: string
   fact?: string
+  isTrue: boolean
 }
 
 export default async function QuizPage() {
   const t = await getTranslations('QuizPage')
   const tBreadcrumbs = await getTranslations('Common.breadcrumbs')
+  const tQuiz = await getTranslations('Quiz')
   const locale = await getLocale()
 
   const [randomQuestions, allQuestions] = await Promise.all([
@@ -24,13 +26,17 @@ export default async function QuizPage() {
     getAllQuizQuestions(locale),
   ])
 
+  const factLabel = tQuiz('fact')
+  const mythLabel = tQuiz('myth')
+
   const mapToQuizListItem = (question: QuizQuestionRecord): QuizListItem => {
-    const prefix = question.isTrue ? 'Fact.' : 'Myth.'
+    const prefix = question.isTrue ? `${factLabel}.` : `${mythLabel}.`
     const explanation = question.explanation?.trim()
     return {
       id: question.id.toString(),
       text: question.statement,
       fact: explanation ? `${prefix} ${explanation}` : prefix,
+      isTrue: question.isTrue,
     }
   }
 

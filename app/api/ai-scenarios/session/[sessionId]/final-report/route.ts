@@ -61,6 +61,8 @@ export async function POST(
         playerTurnCount: aiScenarioResponses.playerTurnCount,
         conversationComplete: aiScenarioResponses.conversationComplete,
         conversationCompleteReason: aiScenarioResponses.conversationCompleteReason,
+        score: aiScenarioResponses.score,
+        summary: aiScenarioResponses.summary,
       })
       .from(aiScenarioResponses)
       .where(eq(aiScenarioResponses.sessionId, sessionId))
@@ -106,7 +108,7 @@ export async function POST(
     const playerTurns = history.filter((turn) => turn.role === "player").length;
 
     const summaryDue = true;
-    const assessmentDue = true;
+    const assessmentDue = false;
     const finalReportDue = true;
 
     const scenarioLearning = normaliseStringArray(session.learningObjectives ?? []);
@@ -167,6 +169,38 @@ export async function POST(
       scenarioSnapshot,
       history,
     });
+
+    const clampScore = (value: unknown, fallback: number) => {
+      const numeric = typeof value === "number" ? value : Number(value);
+      if (!Number.isFinite(numeric)) return fallback;
+      return Math.max(0, Math.min(100, Math.round(numeric)));
+    };
+
+    const latestScoreRecord = (latestResponse.score ?? null) as
+      | { confidence?: number | string | null; riskScore?: number | string | null; notes?: string | null }
+      | null;
+
+    const analysisScore = latestScoreRecord
+      ? {
+          confidence: clampScore(latestScoreRecord.confidence ?? 0, 50),
+          riskScore: clampScore(latestScoreRecord.riskScore ?? 0, 50),
+          notes: isNonEmptyString(latestScoreRecord.notes) ? latestScoreRecord.notes : "",
+        }
+      : session.lastScore != null
+        ? {
+            confidence: 50,
+            riskScore: clampScore(session.lastScore, 50),
+            notes: "",
+          }
+        : null;
+
+    const scoreLine = analysisScore
+      ? `Latest analysis risk_score (0 = very safe, 100 = extremely unsafe): ${analysisScore.riskScore}. Confidence in the analysis: ${analysisScore.confidence}.`
+      : "No quantified risk score was recorded; treat ambiguous behaviour cautiously and err on the side of warning the user.";
+
+    const accuracyInstruction = `CONSIDER THE RISK DATA:\n${scoreLine}\n\nWrite the final report to match the player's actual behaviour. If the risk score is 70 or higher, explicitly state that the conversation was high-risk, cite the player's words that created danger, and provide urgent, practical next steps. If the player ignored boundaries, minimised harm, or agreed to risky acts, call this out directly. Avoid unearned praise. Offer concrete, youth-friendly coaching that references the transcript.\n\nDo NOT include a score object in your JSON. Leave "score" as null or omit it. Focus on accurate final_report content and, if summary is included, ensure it reflects the real risk level.`;
+
+    messages.push({ role: "user", content: accuracyInstruction });
 
     const apiKey = process.env.OPENAI_API_KEY;
     if (!apiKey) {
@@ -249,12 +283,14 @@ export async function POST(
       assessmentDue,
     };
 
+    const resolvedScore = analysisScore;
+
     const responseBody: SimulationResponsePayload = {
       npcReply: parsed.npcReply,
       conversationComplete: true,
       conversationCompleteReason: computedReason,
       summary: parsed.summary,
-      score: parsed.score,
+      score: resolvedScore,
       finalReport: parsed.finalReport,
       safetyAlerts: parsed.safetyAlerts,
       checkpoints: {

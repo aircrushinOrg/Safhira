@@ -25,7 +25,7 @@ import { submitQuizScore } from "../../actions/leaderboard-actions";
 import { LeaderboardResponse } from "@/types/leaderboard";
 import {useTranslations} from 'next-intl';
 
-type Item = { id: string; text: string; fact?: string };
+type Item = { id: string; text: string; fact?: string; isTrue?: boolean };
 
 type QuizQuestion = {
   id: string;
@@ -35,13 +35,26 @@ type QuizQuestion = {
 };
 
 // Utils
-function deriveTruth(fact?: string) {
+function escapeRegExp(value: string) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function stripLeadingLabel(text: string, labels: string[]) {
+  if (!text) return '';
+  const pattern = new RegExp(`^(?:${labels.map(escapeRegExp).join('|')})[.,:]*\\s*`, 'i');
+  return text.replace(pattern, '').trim();
+}
+
+function deriveTruth(fact?: string, fallback?: boolean) {
+  if (typeof fallback === 'boolean') {
+    return fallback;
+  }
   if (!fact) return false;
   const normalized = fact.trim().toLowerCase();
-  if (normalized.startsWith("fact.")) return true;
-  if (normalized.startsWith("myth.")) return false;
-  const fi = normalized.indexOf("fact.");
-  const mi = normalized.indexOf("myth.");
+  if (normalized.startsWith('fact.')) return true;
+  if (normalized.startsWith('myth.')) return false;
+  const fi = normalized.indexOf('fact.');
+  const mi = normalized.indexOf('myth.');
   if (fi !== -1 && (mi === -1 || fi < mi)) return true;
   if (mi !== -1 && (fi === -1 || mi < fi)) return false;
   return false;
@@ -60,10 +73,20 @@ function MythFactBadge({ isFactual, t }: { isFactual: boolean; t: any }) {
   );
 }
 
-function ViewAllListItem({ item, onSelect, t }: { item: Item; onSelect: (item: Item) => void; t: any }) {
-  const isFactual = deriveTruth(item.fact);
+function ViewAllListItem({
+  item,
+  onSelect,
+  t,
+  labels,
+}: {
+  item: Item;
+  onSelect: (item: Item) => void;
+  t: any;
+  labels: { fact: string; myth: string };
+}) {
+  const isFactual = deriveTruth(item.fact, item.isTrue);
   const factText = item.fact || '';
-  const explanation = factText.replace(/^(myth|fact)\.\s*/i, '');
+  const explanation = stripLeadingLabel(factText, [labels.fact, labels.myth, 'Fact', 'Myth']);
   
   return (
     <div
@@ -98,6 +121,7 @@ function ViewAllListItem({ item, onSelect, t }: { item: Item; onSelect: (item: I
 
 export default function MythListClient({ items, allItems }: { items: Item[]; allItems?: Item[] }) {
   const t = useTranslations('Quiz');
+  const labelSet = { fact: t('fact'), myth: t('myth') };
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<Item | null>(null);
 
@@ -137,7 +161,7 @@ export default function MythListClient({ items, allItems }: { items: Item[]; all
       return completeList;
     }
     return completeList.filter((item) => {
-      const isFactual = deriveTruth(item.fact);
+      const isFactual = deriveTruth(item.fact, item.isTrue);
       return viewAllFilter === "fact" ? isFactual : !isFactual;
     });
   }, [completeList, viewAllFilter]);
@@ -156,7 +180,7 @@ export default function MythListClient({ items, allItems }: { items: Item[]; all
     const pool: QuizQuestion[] = completeList.map((it) => ({
       id: it.id,
       statement: it.text,
-      isTrue: deriveTruth(it.fact),
+      isTrue: deriveTruth(it.fact, it.isTrue),
       fact: it.fact,
     }));
     const shuffled = [...pool].sort(() => Math.random() - 0.5);
@@ -364,9 +388,9 @@ export default function MythListClient({ items, allItems }: { items: Item[]; all
         <DialogContent className="sm:max-w-lg">
           {selected && (
             (() => {
-              const isFactual = deriveTruth(selected?.fact);
+              const isFactual = deriveTruth(selected?.fact, selected?.isTrue);
               const factText = selected?.fact || '';
-              const explanation = factText.replace(/^(myth|fact)\.\s*/i, '');
+              const explanation = stripLeadingLabel(factText, [labelSet.fact, labelSet.myth, 'Fact', 'Myth']);
               
               return (
                 <>
@@ -679,7 +703,7 @@ export default function MythListClient({ items, allItems }: { items: Item[]; all
               onClick={() => setViewAllFilter("myth")}
               className="transition-all duration-200"
             >
-              ✗ {t('viewAll.filterMyths', {count: completeList.filter(item => !deriveTruth(item.fact)).length})}
+              ✗ {t('viewAll.filterMyths', {count: completeList.filter(item => !deriveTruth(item.fact, item.isTrue)).length})}
             </Button>
             <Button
               size="sm"
@@ -687,16 +711,16 @@ export default function MythListClient({ items, allItems }: { items: Item[]; all
               onClick={() => setViewAllFilter("fact")}
               className="transition-all duration-200"
             >
-              ✓ {t('viewAll.filterFacts', {count: completeList.filter(item => deriveTruth(item.fact)).length})}
+              ✓ {t('viewAll.filterFacts', {count: completeList.filter(item => deriveTruth(item.fact, item.isTrue)).length})}
             </Button>
           </div>
           
           <div className="flex-1 overflow-y-auto pr-2">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {filteredList.map((item, index) => {
-                const isFactual = deriveTruth(item.fact);
+                const isFactual = deriveTruth(item.fact, item.isTrue);
                 const factText = item.fact || '';
-                const explanation = factText.replace(/^(myth|fact)\.\s*/i, '');
+                const explanation = stripLeadingLabel(factText, [labelSet.fact, labelSet.myth, 'Fact', 'Myth']);
                 
                 return (
                   <div

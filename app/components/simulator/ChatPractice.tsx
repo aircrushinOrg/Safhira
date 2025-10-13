@@ -75,16 +75,46 @@ type ApiResponsePayload = {
   };
 };
 
-type TurnApiResponse = {
-  sessionId: string;
-  playerTurnIndex: number;
-  npcTurnIndex: number;
-  response: ApiResponsePayload;
-};
-
 type FinalReportApiResponse = {
   sessionId: string;
   response: ApiResponsePayload;
+};
+
+type StreamResponsePayload = {
+  npcReply: string;
+  conversationComplete?: boolean;
+  conversationCompleteReason?: string | null;
+  summary?: ApiSummary | null;
+  score?: ApiScore | null;
+  finalReport?: ApiFinalReport | null;
+  safetyAlerts?: string[];
+  checkpoints: {
+    totalPlayerTurns: number;
+    summaryDue: boolean;
+    assessmentDue: boolean;
+  };
+};
+
+type StreamFinalEvent = {
+  sessionId: string;
+  playerTurnIndex: number;
+  npcTurnIndex: number;
+  response: StreamResponsePayload;
+  raw?: string | null;
+  analysisDue?: boolean;
+};
+
+type AnalysisApiResponse = {
+  sessionId: string;
+  response: ApiResponsePayload;
+  raw?: string | null;
+};
+
+type AnalysisSkipResponse = {
+  sessionId: string;
+  skipped: true;
+  reason?: string;
+  checkpoints?: StreamResponsePayload['checkpoints'];
 };
 
 const INITIAL_CHECKPOINTS = {
@@ -229,15 +259,15 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
         ? 'AI is responding...'
         : null;
 
-  // Update persisted scores when new score data is available
-  useEffect(() => {
-    if (score?.confidence != null && score?.riskScore != null) {
+  function applyScoreUpdate(nextScore: ApiScore | null) {
+    setScore(nextScore);
+    if (nextScore?.confidence != null && nextScore?.riskScore != null) {
       setPersistedScore({
-        confidence: Math.max(0, Math.min(100, Math.round(score.confidence))),
-        riskScore: Math.max(0, Math.min(100, Math.round(score.riskScore))),
+        confidence: Math.max(0, Math.min(100, Math.round(nextScore.confidence))),
+        riskScore: Math.max(0, Math.min(100, Math.round(nextScore.riskScore))),
       });
     }
-  }, [score]);
+  }
 
   const displayedScore = persistedScore;
 
@@ -479,6 +509,66 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
     setIsStreamingReply(false);
   }
 
+  async function fetchTurnAnalysis(options: { session: string; force?: boolean }) {
+    try {
+      const response = await fetch(`/api/ai-scenarios/session/${options.session}/turns/analysis`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          force: options.force ?? false,
+          allowAutoEnd: ALLOW_AUTO_END,
+          locale,
+        }),
+      });
+
+      const rawText = await response.text();
+      if (!response.ok) {
+        setLastRawError(rawText);
+        throw new Error(rawText || `Analysis failed with status ${response.status}`);
+      }
+
+      setLastRawResponse(rawText);
+      setLastRawError(null);
+
+      let data: AnalysisApiResponse | AnalysisSkipResponse;
+      try {
+        data = JSON.parse(rawText) as AnalysisApiResponse | AnalysisSkipResponse;
+      } catch (_parseError) {
+        setLastRawError(rawText);
+        throw new Error('Failed to parse analysis JSON');
+      }
+
+      if ('skipped' in data && data.skipped) {
+        if (data.checkpoints) {
+          setCheckpoints(data.checkpoints);
+        }
+        return;
+      }
+
+      const analysis = data as AnalysisApiResponse;
+      setSessionId(analysis.sessionId);
+      setSummary(analysis.response.summary);
+      applyScoreUpdate(analysis.response.score);
+      setFinalReport(analysis.response.finalReport);
+      setCheckpoints(analysis.response.checkpoints ?? INITIAL_CHECKPOINTS);
+      setConversationComplete(Boolean(analysis.response.conversationComplete));
+      setCompleteReason(analysis.response.conversationCompleteReason ?? null);
+
+      if (analysis.response.conversationComplete) {
+        await fetchFinalReport({
+          force: false,
+          reason: analysis.response.conversationCompleteReason ?? undefined,
+          sessionOverride: analysis.sessionId,
+        });
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Unexpected error');
+      setLastRawError(err instanceof Error ? err.message : 'Unexpected error');
+      setTypingNpcMessage(null);
+      setIsStreamingReply(false);
+    }
+  }
+
   async function handleSend() {
     if (!canSend) return;
 
@@ -489,7 +579,7 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
 
     let appendedPlayerMessage = false;
     let appendedNpcMessage = false;
-    let finalPayload: { sessionId: string; response: ApiResponsePayload; raw?: string } | null = null;
+    let finalPayload: StreamFinalEvent | null = null;
 
     try {
       const activeSessionId = await ensureSession();
@@ -553,22 +643,43 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
         if (eventName === 'final') {
           const finalData =
             typeof payload === 'object' && payload
-              ? (payload as { sessionId?: string; response?: ApiResponsePayload; raw?: string })
+              ? (payload as StreamFinalEvent)
               : { response: undefined };
           if (finalData.response) {
             finalPayload = {
               sessionId: finalData.sessionId ?? activeSessionId,
+              playerTurnIndex: finalData.playerTurnIndex ?? -1,
+              npcTurnIndex: finalData.npcTurnIndex ?? -1,
               response: finalData.response,
-              raw: finalData.raw,
+              raw: finalData.raw ?? null,
+              analysisDue:
+                typeof finalData.analysisDue === 'boolean'
+                  ? finalData.analysisDue
+                  : finalData.response.checkpoints?.summaryDue ?? false,
             };
+
             setSessionId(finalPayload.sessionId);
-            setSummary(finalPayload.response.summary ?? null);
-            setScore(finalPayload.response.score ?? null);
-            setFinalReport(finalPayload.response.finalReport ?? null);
-            setCheckpoints(finalPayload.response.checkpoints ?? INITIAL_CHECKPOINTS);
-            setConversationComplete(finalPayload.response.conversationComplete ?? false);
-            setCompleteReason(finalPayload.response.conversationCompleteReason ?? null);
-            setLastRawResponse(finalPayload.raw ?? null);
+
+            if (finalData.response.summary) {
+              setSummary(finalData.response.summary);
+            }
+            if (finalData.response.score) {
+              applyScoreUpdate(finalData.response.score);
+            }
+            if (finalData.response.finalReport) {
+              setFinalReport(finalData.response.finalReport);
+            }
+
+            setCheckpoints(finalData.response.checkpoints ?? INITIAL_CHECKPOINTS);
+
+            if (Object.prototype.hasOwnProperty.call(finalData.response, 'conversationComplete')) {
+              setConversationComplete(Boolean(finalData.response.conversationComplete));
+            }
+            if (Object.prototype.hasOwnProperty.call(finalData.response, 'conversationCompleteReason')) {
+              setCompleteReason(finalData.response.conversationCompleteReason ?? null);
+            }
+
+            setLastRawResponse(finalData.raw ?? null);
             setLastRawError(null);
             const replyText = finalPayload.response.npcReply ?? '';
             if (replyText) {
@@ -653,13 +764,20 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
         throw new Error('Stream ended without final payload');
       }
 
-      const ensuredPayload = finalPayload as { sessionId: string; response: ApiResponsePayload; raw?: string };
-      if (ensuredPayload.response.conversationComplete) {
+      const resolvedPayload: StreamFinalEvent = finalPayload;
+      const needsAnalysis =
+        resolvedPayload.analysisDue ?? resolvedPayload.response.checkpoints.summaryDue;
+
+      if (resolvedPayload.response.conversationComplete && !needsAnalysis) {
         await fetchFinalReport({
           force: false,
-          reason: ensuredPayload.response.conversationCompleteReason ?? undefined,
-          sessionOverride: ensuredPayload.sessionId,
+          reason: resolvedPayload.response.conversationCompleteReason ?? undefined,
+          sessionOverride: resolvedPayload.sessionId,
         });
+      }
+
+      if (needsAnalysis) {
+        await fetchTurnAnalysis({ session: resolvedPayload.sessionId });
       }
     } catch (err) {
       if (appendedPlayerMessage && !appendedNpcMessage) {
@@ -716,7 +834,7 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
 
       setSessionId(data.sessionId);
       setSummary(data.response.summary);
-      setScore(data.response.score);
+      applyScoreUpdate(data.response.score);
       setFinalReport(data.response.finalReport);
       setCheckpoints(data.response.checkpoints);
       setConversationComplete(true);
@@ -947,6 +1065,21 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
           {finalReport ? (
             <div className="space-y-4 text-sm text-slate-700 dark:text-slate-200">
               <p className="font-semibold text-slate-900 dark:text-slate-50">{finalReport.overallAssessment}</p>
+              <div className="rounded-xl border border-slate-200/60 bg-slate-50/80 px-4 py-3 text-xs text-slate-600 dark:border-white/5 dark:bg-slate-900/60 dark:text-slate-300">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
+                  {t('dialog.scoresHeading')}
+                </p>
+                <div className="mt-2 space-y-2">
+                  <div className="flex items-center justify-between gap-4 text-sm text-slate-700 dark:text-slate-200">
+                    <span>{t('metrics.confidence', { score: displayedScore.confidence })}</span>
+                    <span className="font-semibold text-purple-600 dark:text-purple-200">{displayedScore.confidence}</span>
+                  </div>
+                  <div className="flex items-center justify-between gap-4 text-sm text-slate-700 dark:text-slate-200">
+                    <span>{t('metrics.riskScore', { score: displayedScore.riskScore })}</span>
+                    <span className="font-semibold text-red-600 dark:text-red-200">{displayedScore.riskScore}</span>
+                  </div>
+                </div>
+              </div>
               {finalReport.strengths.length > 0 && (
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">{t('dialog.sections.strengths')}</p>

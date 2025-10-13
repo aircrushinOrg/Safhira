@@ -2020,8 +2020,9 @@
       "rawReport": "查看原始报告 JSON",
       "dialog": {
         "title": "最终报告",
-        "description": "深入了解你的表现，并获得个性化的下一步建议。",
-        "sections": {
+  "description": "深入了解你的表现，并获得个性化的下一步建议。",
+  "scoresHeading": "评分",
+  "sections": {
           "strengths": "优势",
           "areas": "待提升之处",
           "recommended": "建议练习"
