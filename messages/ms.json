@@ -2024,9 +2024,10 @@
       "rawReport": "Lihat JSON laporan mentah",
       "dialog": {
         "title": "Laporan akhir",
-  "description": "Tinjau prestasi anda dan langkah seterusnya yang dipersonalisasi.",
-  "scoresHeading": "Skor",
-  "sections": {
+        "description": "Tinjau prestasi anda dan langkah seterusnya yang dipersonalisasi.",
+        "scoresHeading": "Skor",
+        "performanceMetrics": "Metrik prestasi",
+        "sections": {
           "strengths": "Kekuatan",
           "areas": "Bidang penambahbaikan",
           "recommended": "Amalan disyorkan"

@@ -2021,9 +2021,10 @@
       "rawReport": "View raw report JSON",
       "dialog": {
         "title": "Final report",
-  "description": "Deep dive into your performance and personalised next steps.",
-  "scoresHeading": "Scores",
-  "sections": {
+        "description": "Deep dive into your performance and personalised next steps.",
+        "scoresHeading": "Scores",
+        "performanceMetrics": "Performance metrics",
+        "sections": {
           "strengths": "Strengths",
           "areas": "Areas for growth",
           "recommended": "Recommended practice"

@@ -1040,26 +1040,26 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
           {/* Enhanced Score Display */}
           <div className="flex w-full flex-col gap-4 sm:flex-row sm:gap-8">
             {/* Confidence Score */}
-            <div className="flex-1 rounded-xl bg-gradient-to-r from-purple-50 to-indigo-50 p-4 border border-purple-100 dark:from-purple-900/20 dark:to-indigo-900/20 dark:border-purple-800/30">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="flex size-8 items-center justify-center rounded-lg bg-purple-500 text-white shadow-sm">
+            <div className="flex-1 rounded-xl bg-gradient-to-br from-teal-50 to-emerald-50 p-4 border border-teal-100 dark:from-teal-900/20 dark:to-emerald-900/20 dark:border-teal-800/30">
+              <div className="mb-3 flex items-center gap-3">
+                <div className="flex size-8 items-center justify-center rounded-lg bg-teal-100 text-teal-600 shadow-sm dark:bg-teal-800/40 dark:text-teal-200">
                   <Brain className="size-4" />
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-semibold text-purple-900 dark:text-purple-100">
+                    <span className="text-sm font-semibold text-teal-900 dark:text-teal-100">
                       {t('metrics.confidence', { score: displayedScore.confidence }).split(':')[0]}
                     </span>
-                    <span className="text-sm font-bold text-purple-700 dark:text-purple-200">
+                    <span className="text-sm font-bold text-teal-700 dark:text-teal-200">
                       {displayedScore.confidence}%
                     </span>
                   </div>
                 </div>
               </div>
               <div className="relative">
-                <div className="w-full h-3 bg-purple-100 dark:bg-purple-800/30 rounded-full overflow-hidden">
+                <div className="h-3 w-full overflow-hidden rounded-full bg-teal-100 dark:bg-teal-900/30">
                   <div
-                    className="h-full bg-gradient-to-r from-purple-500 to-purple-600 dark:from-purple-400 dark:to-purple-500 transition-all duration-500 ease-out rounded-full shadow-sm"
+                    className="h-full rounded-full bg-gradient-to-r from-teal-500 to-emerald-500 transition-all duration-500 ease-out shadow-sm dark:from-teal-400 dark:to-emerald-500"
                     style={{ width: `${displayedScore.confidence}%` }}
                   />
                 </div>
@@ -1068,26 +1068,26 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
             </div>
 
             {/* Risk Score */}
-            <div className="flex-1 rounded-xl bg-gradient-to-r from-red-50 to-orange-50 p-4 border border-red-100 dark:from-red-900/20 dark:to-orange-900/20 dark:border-red-800/30">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="flex size-8 items-center justify-center rounded-lg bg-red-500 text-white shadow-sm">
+            <div className="flex-1 rounded-xl bg-gradient-to-br from-amber-50 to-orange-50 p-4 border border-amber-100 dark:from-amber-900/20 dark:to-orange-900/20 dark:border-amber-800/30">
+              <div className="mb-3 flex items-center gap-3">
+                <div className="flex size-8 items-center justify-center rounded-lg bg-amber-100 text-amber-600 shadow-sm dark:bg-amber-800/40 dark:text-amber-200">
                   <AlertTriangle className="size-4" />
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-semibold text-red-900 dark:text-red-100">
+                    <span className="text-sm font-semibold text-amber-900 dark:text-amber-100">
                       {t('metrics.riskScore', { score: displayedScore.riskScore }).split(':')[0]}
                     </span>
-                    <span className="text-sm font-bold text-red-700 dark:text-red-200">
+                    <span className="text-sm font-bold text-amber-700 dark:text-amber-200">
                       {displayedScore.riskScore}%
                     </span>
                   </div>
                 </div>
               </div>
               <div className="relative">
-                <div className="w-full h-3 bg-red-100 dark:bg-red-800/30 rounded-full overflow-hidden">
+                <div className="h-3 w-full overflow-hidden rounded-full bg-amber-100 dark:bg-amber-900/30">
                   <div
-                    className="h-full bg-gradient-to-r from-red-500 to-red-600 dark:from-red-400 dark:to-red-500 transition-all duration-500 ease-out rounded-full shadow-sm"
+                    className="h-full rounded-full bg-gradient-to-r from-amber-500 to-orange-500 transition-all duration-500 ease-out shadow-sm dark:from-amber-400 dark:to-orange-500"
                     style={{ width: `${displayedScore.riskScore}%` }}
                   />
                 </div>
@@ -1167,8 +1167,8 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
             <div className="space-y-6 text-slate-700 dark:text-slate-200 py-6">
               {/* Enhanced Score Display for Report */}
               <div className="rounded-2xl bg-gradient-to-r from-slate-50 to-slate-100 p-6 border border-slate-200 dark:from-slate-800/50 dark:to-slate-700/50 dark:border-slate-700/60">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="flex size-10 items-center justify-center rounded-xl bg-gradient-to-br from-slate-600 to-slate-700 text-white shadow-md">
+                <div className="mb-4 flex items-center gap-3">
+                  <div className="flex size-10 items-center justify-center rounded-xl bg-gradient-to-br from-teal-500 to-emerald-500 text-white shadow-md">
                     <BarChart3 className="size-5" />
                   </div>
                   <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">Performance Metrics</h3>
@@ -1176,26 +1176,26 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {/* Confidence Score Card */}
-                  <div className="rounded-xl bg-gradient-to-br from-purple-50 to-indigo-50 p-4 border border-purple-100 dark:from-purple-900/20 dark:to-indigo-900/20 dark:border-purple-800/30">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="flex size-8 items-center justify-center rounded-lg bg-purple-500 text-white shadow-sm">
+                  <div className="rounded-xl bg-gradient-to-br from-teal-50 to-emerald-50 p-4 border border-teal-100 dark:from-teal-900/20 dark:to-emerald-900/20 dark:border-teal-800/30">
+                    <div className="mb-3 flex items-center gap-3">
+                      <div className="flex size-8 items-center justify-center rounded-lg bg-teal-100 text-teal-600 shadow-sm dark:bg-teal-800/40 dark:text-teal-200">
                         <Brain className="size-4" />
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center justify-between">
-                          <span className="text-sm font-semibold text-purple-900 dark:text-purple-100">
+                          <span className="text-sm font-semibold text-teal-900 dark:text-teal-100">
                             {t('metrics.confidence', { score: displayedScore.confidence }).split(':')[0]}
                           </span>
-                          <span className="text-xl font-bold text-purple-700 dark:text-purple-200">
+                          <span className="text-xl font-bold text-teal-700 dark:text-teal-200">
                             {displayedScore.confidence}%
                           </span>
                         </div>
                       </div>
                     </div>
                     <div className="relative">
-                      <div className="w-full h-3 bg-purple-100 dark:bg-purple-800/30 rounded-full overflow-hidden">
+                      <div className="h-3 w-full overflow-hidden rounded-full bg-teal-100 dark:bg-teal-900/30">
                         <div
-                          className="h-full bg-gradient-to-r from-purple-500 to-purple-600 dark:from-purple-400 dark:to-purple-500 transition-all duration-500 ease-out rounded-full shadow-sm"
+                          className="h-full rounded-full bg-gradient-to-r from-teal-500 to-emerald-500 transition-all duration-500 ease-out shadow-sm dark:from-teal-400 dark:to-emerald-500"
                           style={{ width: `${displayedScore.confidence}%` }}
                         />
                       </div>
@@ -1204,26 +1204,26 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
                   </div>
 
                   {/* Risk Score Card */}
-                  <div className="rounded-xl bg-gradient-to-br from-red-50 to-orange-50 p-4 border border-red-100 dark:from-red-900/20 dark:to-orange-900/20 dark:border-red-800/30">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="flex size-8 items-center justify-center rounded-lg bg-red-500 text-white shadow-sm">
+                  <div className="rounded-xl bg-gradient-to-br from-amber-50 to-orange-50 p-4 border border-amber-100 dark:from-amber-900/20 dark:to-orange-900/20 dark:border-amber-800/30">
+                    <div className="mb-3 flex items-center gap-3">
+                      <div className="flex size-8 items-center justify-center rounded-lg bg-amber-100 text-amber-600 shadow-sm dark:bg-amber-800/40 dark:text-amber-200">
                         <AlertTriangle className="size-4" />
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center justify-between">
-                          <span className="text-sm font-semibold text-red-900 dark:text-red-100">
+                          <span className="text-sm font-semibold text-amber-900 dark:text-amber-100">
                             {t('metrics.riskScore', { score: displayedScore.riskScore }).split(':')[0]}
                           </span>
-                          <span className="text-xl font-bold text-red-700 dark:text-red-200">
+                          <span className="text-xl font-bold text-amber-700 dark:text-amber-200">
                             {displayedScore.riskScore}%
                           </span>
                         </div>
                       </div>
                     </div>
                     <div className="relative">
-                      <div className="w-full h-3 bg-red-100 dark:bg-red-800/30 rounded-full overflow-hidden">
+                      <div className="h-3 w-full overflow-hidden rounded-full bg-amber-100 dark:bg-amber-900/30">
                         <div
-                          className="h-full bg-gradient-to-r from-red-500 to-red-600 dark:from-red-400 dark:to-red-500 transition-all duration-500 ease-out rounded-full shadow-sm"
+                          className="h-full rounded-full bg-gradient-to-r from-amber-500 to-orange-500 transition-all duration-500 ease-out shadow-sm dark:from-amber-400 dark:to-orange-500"
                           style={{ width: `${displayedScore.riskScore}%` }}
                         />
                       </div>
@@ -1233,14 +1233,14 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
                 </div>
               </div>
               {/* Overall Assessment */}
-              <div className="rounded-2xl bg-gradient-to-r from-blue-50 to-indigo-50 p-6 border border-blue-100 dark:from-blue-900/20 dark:to-indigo-900/20 dark:border-blue-800/30">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="flex size-10 items-center justify-center rounded-xl bg-blue-500 text-white shadow-md">
+              <div className="rounded-2xl bg-gradient-to-r from-teal-50 to-sky-50 p-6 border border-teal-100 dark:from-teal-900/20 dark:to-sky-900/20 dark:border-teal-800/30">
+                <div className="mb-4 flex items-center gap-3">
+                  <div className="flex size-10 items-center justify-center rounded-xl bg-teal-500 text-white shadow-md">
                     <CheckCircle className="size-5" />
                   </div>
-                  <h3 className="font-semibold text-blue-900 dark:text-blue-100">Overall Assessment</h3>
+                  <h3 className="font-semibold text-teal-900 dark:text-teal-100">Overall Assessment</h3>
                 </div>
-                <p className="text-blue-800 dark:text-blue-200 leading-relaxed">{finalReport.overallAssessment}</p>
+                <p className="leading-relaxed text-teal-800 dark:text-teal-200">{finalReport.overallAssessment}</p>
               </div>
               {/* Strengths */}
               {finalReport.strengths.length > 0 && (
@@ -1288,20 +1288,20 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
 
               {/* Recommended Practice */}
               {finalReport.recommendedPractice.length > 0 && (
-                <div className="rounded-2xl bg-gradient-to-r from-purple-50 to-pink-50 p-6 border border-purple-100 dark:from-purple-900/20 dark:to-pink-900/20 dark:border-purple-800/30">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="flex size-10 items-center justify-center rounded-xl bg-purple-500 text-white shadow-md">
+                <div className="rounded-2xl bg-gradient-to-r from-sky-50 to-cyan-50 p-6 border border-sky-100 dark:from-sky-900/20 dark:to-cyan-900/20 dark:border-sky-800/30">
+                  <div className="mb-4 flex items-center gap-3">
+                    <div className="flex size-10 items-center justify-center rounded-xl bg-sky-100 text-sky-600 shadow-md dark:bg-sky-800/40 dark:text-sky-200">
                       <BookOpen className="size-5" />
                     </div>
-                    <h3 className="font-semibold text-purple-900 dark:text-purple-100">
+                    <h3 className="font-semibold text-sky-900 dark:text-sky-100">
                       {t('dialog.sections.recommended')}
                     </h3>
                   </div>
                   <div className="flex items-start gap-3">
                     <ul className="space-y-2">
                       {finalReport.recommendedPractice.map((item, index) => (
-                        <li key={index} className="flex items-start gap-2 text-purple-800 dark:text-purple-200">
-                          <BookOpen className="size-4 mt-0.5 text-purple-500 flex-shrink-0" />
+                        <li key={index} className="flex items-start gap-2 text-sky-800 dark:text-sky-200">
+                          <BookOpen className="mt-0.5 size-4 flex-shrink-0 text-sky-500" />
                           <span className="leading-relaxed">{item}</span>
                         </li>
                       ))}
