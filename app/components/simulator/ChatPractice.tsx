@@ -12,7 +12,7 @@ import {
 } from '@/app/components/ui/dialog';
 import { Progress } from '@/app/components/ui/progress';
 import { cn } from '@/app/components/ui/utils';
-import { Loader2, Send, Sparkles } from 'lucide-react';
+import { Loader2, Send, Sparkles, CheckCircle, TrendingUp, BookOpen, Award, Download, X, Brain, AlertTriangle, BarChart3 } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 
 export type ChatTemplate = {
@@ -991,36 +991,70 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
       </div>
 
       <section className="space-y-4">
-        <div className="flex flex-col items-start gap-3 rounded-2xl border border-slate-200/60 bg-white/80 px-4 py-3 text-xs text-slate-600 shadow-sm shadow-slate-900/5 dark:border-white/5 dark:bg-slate-900/60 dark:text-slate-300">
-          <span className={cn('rounded-full px-3 py-1 font-semibold', sessionStatusClass)}>
-            {t('labels.status')}: {sessionStatusLabel}
-          </span>
-          {/* Always show scores and alerts with progress bars */}
-          <div className="flex w-full flex-col gap-3 sm:flex-row sm:gap-6">
-            <div className="flex-1 flex-col gap-1 w-full">
-              <span className="text-xs font-medium text-purple-700 dark:text-purple-200">
-                {t('metrics.confidence', { score: displayedScore.confidence })}
-              </span>
-              <div className="flex items-center gap-2">
-                <div className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+        <div className="flex flex-col items-start gap-4 rounded-2xl border border-slate-200/60 bg-gradient-to-br from-white/90 to-slate-50/80 px-6 py-4 text-xs text-slate-600 shadow-lg shadow-slate-900/10 dark:border-white/5 dark:from-slate-900/70 dark:to-slate-800/80 dark:text-slate-300">
+          {/* Status Badge */}
+          <div className="flex items-center gap-2">
+            <BarChart3 className="size-4 text-slate-500 dark:text-slate-400" />
+            <span className={cn('rounded-full px-3 py-1 font-semibold text-xs', sessionStatusClass)}>
+              {t('labels.status')}: {sessionStatusLabel}
+            </span>
+          </div>
+
+          {/* Enhanced Score Display */}
+          <div className="flex w-full flex-col gap-4 sm:flex-row sm:gap-8">
+            {/* Confidence Score */}
+            <div className="flex-1 rounded-xl bg-gradient-to-r from-purple-50 to-indigo-50 p-4 border border-purple-100 dark:from-purple-900/20 dark:to-indigo-900/20 dark:border-purple-800/30">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="flex size-8 items-center justify-center rounded-lg bg-purple-500 text-white shadow-sm">
+                  <Brain className="size-4" />
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-semibold text-purple-900 dark:text-purple-100">
+                      {t('metrics.confidence', { score: displayedScore.confidence }).split(':')[0]}
+                    </span>
+                    <span className="text-lg font-bold text-purple-700 dark:text-purple-200">
+                      {displayedScore.confidence}%
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div className="relative">
+                <div className="w-full h-3 bg-purple-100 dark:bg-purple-800/30 rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-purple-600 dark:bg-purple-400 transition-all duration-300 ease-out"
+                    className="h-full bg-gradient-to-r from-purple-500 to-purple-600 dark:from-purple-400 dark:to-purple-500 transition-all duration-500 ease-out rounded-full shadow-sm"
                     style={{ width: `${displayedScore.confidence}%` }}
                   />
                 </div>
+                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />
               </div>
             </div>
-            <div className="flex-1 flex-col gap-1 w-full">
-              <span className="text-xs font-medium text-red-700 dark:text-red-200">
-                {t('metrics.riskScore', { score: displayedScore.riskScore })}
-              </span>
-              <div className="flex items-center gap-2">
-                <div className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+
+            {/* Risk Score */}
+            <div className="flex-1 rounded-xl bg-gradient-to-r from-red-50 to-orange-50 p-4 border border-red-100 dark:from-red-900/20 dark:to-orange-900/20 dark:border-red-800/30">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="flex size-8 items-center justify-center rounded-lg bg-red-500 text-white shadow-sm">
+                  <AlertTriangle className="size-4" />
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-semibold text-red-900 dark:text-red-100">
+                      {t('metrics.riskScore', { score: displayedScore.riskScore }).split(':')[0]}
+                    </span>
+                    <span className="text-lg font-bold text-red-700 dark:text-red-200">
+                      {displayedScore.riskScore}%
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div className="relative">
+                <div className="w-full h-3 bg-red-100 dark:bg-red-800/30 rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-red-600 dark:bg-red-400 transition-all duration-300 ease-out"
+                    className="h-full bg-gradient-to-r from-red-500 to-red-600 dark:from-red-400 dark:to-red-500 transition-all duration-500 ease-out rounded-full shadow-sm"
                     style={{ width: `${displayedScore.riskScore}%` }}
                   />
                 </div>
+                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />
               </div>
             </div>
           </div>
@@ -1054,70 +1088,187 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
       </section>
 
       <Dialog open={isFinalReportOpen && Boolean(finalReport)} onOpenChange={setIsFinalReportOpen}>
-        <DialogContent className="fixed left-1/2 top-[55%] z-50 w-full max-w-lg -translate-x-1/2 -translate-y-1/2 transform max-h-[80vh] overflow-y-auto bg-white text-slate-800 shadow-lg dark:bg-slate-900 dark:text-slate-50">
-          <DialogHeader>
-            <DialogTitle>{t('dialog.title')}</DialogTitle>
-            <DialogDescription>
-              {t('dialog.description')}
-            </DialogDescription>
+        <DialogContent className="fixed left-1/2 top-[55%] z-50 w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 transform max-h-[85vh] overflow-y-auto bg-gradient-to-br from-white to-slate-50 text-slate-800 shadow-xl shadow-slate-900/20 border-0 rounded-3xl dark:from-slate-900 dark:to-slate-800 dark:text-slate-50 dark:shadow-slate-950/40">
+          <DialogHeader className="space-y-4 pb-6 border-b border-slate-200/60 dark:border-slate-700/60">
+            <div className="flex items-center gap-6">
+              <div className="flex size-12 items-center justify-center rounded-2xl bg-gradient-to-br from-teal-500 to-emerald-500 text-white shadow-lg shadow-teal-500/30">
+                <Award className="size-6" />
+              </div>
+              <div className="flex-1">
+                <DialogTitle className="text-left text-2xl font-bold text-slate-900 dark:text-slate-50">
+                  {t('dialog.title')}
+                </DialogTitle>
+                <DialogDescription className="text-left text-slate-600 dark:text-slate-300 mt-1">
+                  {t('dialog.description')}
+                </DialogDescription>
+              </div>
+            </div>
           </DialogHeader>
 
           {finalReport ? (
-            <div className="space-y-4 text-sm text-slate-700 dark:text-slate-200">
-              <p className="font-semibold text-slate-900 dark:text-slate-50">{finalReport.overallAssessment}</p>
-              <div className="rounded-xl border border-slate-200/60 bg-slate-50/80 px-4 py-3 text-xs text-slate-600 dark:border-white/5 dark:bg-slate-900/60 dark:text-slate-300">
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
-                  {t('dialog.scoresHeading')}
-                </p>
-                <div className="mt-2 space-y-2">
-                  <div className="flex items-center justify-between gap-4 text-sm text-slate-700 dark:text-slate-200">
-                    <span>{t('metrics.confidence', { score: displayedScore.confidence })}</span>
-                    <span className="font-semibold text-purple-600 dark:text-purple-200">{displayedScore.confidence}</span>
+            <div className="space-y-6 text-slate-700 dark:text-slate-200 py-6">
+              {/* Enhanced Score Display for Report */}
+              <div className="rounded-2xl bg-gradient-to-r from-slate-50 to-slate-100 p-6 border border-slate-200 dark:from-slate-800/50 dark:to-slate-700/50 dark:border-slate-700/60">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="flex size-10 items-center justify-center rounded-xl bg-gradient-to-br from-slate-600 to-slate-700 text-white shadow-md">
+                    <BarChart3 className="size-5" />
                   </div>
-                  <div className="flex items-center justify-between gap-4 text-sm text-slate-700 dark:text-slate-200">
-                    <span>{t('metrics.riskScore', { score: displayedScore.riskScore })}</span>
-                    <span className="font-semibold text-red-600 dark:text-red-200">{displayedScore.riskScore}</span>
+                  <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">Performance Metrics</h3>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {/* Confidence Score Card */}
+                  <div className="rounded-xl bg-gradient-to-br from-purple-50 to-indigo-50 p-4 border border-purple-100 dark:from-purple-900/20 dark:to-indigo-900/20 dark:border-purple-800/30">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="flex size-8 items-center justify-center rounded-lg bg-purple-500 text-white shadow-sm">
+                        <Brain className="size-4" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm font-semibold text-purple-900 dark:text-purple-100">
+                            {t('metrics.confidence', { score: displayedScore.confidence }).split(':')[0]}
+                          </span>
+                          <span className="text-xl font-bold text-purple-700 dark:text-purple-200">
+                            {displayedScore.confidence}%
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="relative">
+                      <div className="w-full h-3 bg-purple-100 dark:bg-purple-800/30 rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-gradient-to-r from-purple-500 to-purple-600 dark:from-purple-400 dark:to-purple-500 transition-all duration-500 ease-out rounded-full shadow-sm"
+                          style={{ width: `${displayedScore.confidence}%` }}
+                        />
+                      </div>
+                      <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+                    </div>
+                  </div>
+
+                  {/* Risk Score Card */}
+                  <div className="rounded-xl bg-gradient-to-br from-red-50 to-orange-50 p-4 border border-red-100 dark:from-red-900/20 dark:to-orange-900/20 dark:border-red-800/30">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="flex size-8 items-center justify-center rounded-lg bg-red-500 text-white shadow-sm">
+                        <AlertTriangle className="size-4" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm font-semibold text-red-900 dark:text-red-100">
+                            {t('metrics.riskScore', { score: displayedScore.riskScore }).split(':')[0]}
+                          </span>
+                          <span className="text-xl font-bold text-red-700 dark:text-red-200">
+                            {displayedScore.riskScore}%
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="relative">
+                      <div className="w-full h-3 bg-red-100 dark:bg-red-800/30 rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-gradient-to-r from-red-500 to-red-600 dark:from-red-400 dark:to-red-500 transition-all duration-500 ease-out rounded-full shadow-sm"
+                          style={{ width: `${displayedScore.riskScore}%` }}
+                        />
+                      </div>
+                      <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+                    </div>
                   </div>
                 </div>
               </div>
+              {/* Overall Assessment */}
+              <div className="rounded-2xl bg-gradient-to-r from-blue-50 to-indigo-50 p-6 border border-blue-100 dark:from-blue-900/20 dark:to-indigo-900/20 dark:border-blue-800/30">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="flex size-10 items-center justify-center rounded-xl bg-blue-500 text-white shadow-md">
+                    <CheckCircle className="size-5" />
+                  </div>
+                  <h3 className="font-semibold text-blue-900 dark:text-blue-100">Overall Assessment</h3>
+                </div>
+                <p className="text-blue-800 dark:text-blue-200 leading-relaxed">{finalReport.overallAssessment}</p>
+              </div>
+              {/* Strengths */}
               {finalReport.strengths.length > 0 && (
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">{t('dialog.sections.strengths')}</p>
-                  <ul className="mt-2 space-y-1 text-sm">
-                    {finalReport.strengths.map((item) => (
-                      <li key={item}>• {item}</li>
+                <div className="rounded-2xl bg-gradient-to-r from-emerald-50 to-teal-50 p-6 border border-emerald-100 dark:from-emerald-900/20 dark:to-teal-900/20 dark:border-emerald-800/30">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="flex size-10 items-center justify-center rounded-xl bg-emerald-500 text-white shadow-md">
+                      <CheckCircle className="size-5" />
+                    </div>
+                    <h3 className="font-semibold text-emerald-900 dark:text-emerald-100">
+                      {t('dialog.sections.strengths')}
+                    </h3>
+                  </div>
+                  <ul className="space-y-2">
+                    {finalReport.strengths.map((item, index) => (
+                      <li key={index} className="flex items-start gap-2 text-emerald-800 dark:text-emerald-200">
+                        <CheckCircle className="size-4 mt-0.5 text-emerald-500 flex-shrink-0" />
+                        <span className="leading-relaxed">{item}</span>
+                      </li>
                     ))}
                   </ul>
                 </div>
               )}
+
+              {/* Areas for Growth */}
               {finalReport.areasForGrowth.length > 0 && (
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">{t('dialog.sections.areas')}</p>
-                  <ul className="mt-2 space-y-1 text-sm">
-                    {finalReport.areasForGrowth.map((item) => (
-                      <li key={item}>• {item}</li>
+                <div className="rounded-2xl bg-gradient-to-r from-amber-50 to-orange-50 p-6 border border-amber-100 dark:from-amber-900/20 dark:to-orange-900/20 dark:border-amber-800/30">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="flex size-10 items-center justify-center rounded-xl bg-amber-500 text-white shadow-md">
+                      <TrendingUp className="size-5" />
+                    </div>
+                    <h3 className="font-semibold text-amber-900 dark:text-amber-100">
+                      {t('dialog.sections.areas')}
+                    </h3>
+                  </div>
+                  <ul className="space-y-2">
+                    {finalReport.areasForGrowth.map((item, index) => (
+                      <li key={index} className="flex items-start gap-2 text-amber-800 dark:text-amber-200">
+                        <TrendingUp className="size-4 mt-0.5 text-amber-500 flex-shrink-0" />
+                        <span className="leading-relaxed">{item}</span>
+                      </li>
                     ))}
                   </ul>
                 </div>
               )}
+
+              {/* Recommended Practice */}
               {finalReport.recommendedPractice.length > 0 && (
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">{t('dialog.sections.recommended')}</p>
-                  <ul className="mt-2 space-y-1 text-sm">
-                    {finalReport.recommendedPractice.map((item) => (
-                      <li key={item}>• {item}</li>
-                    ))}
-                  </ul>
+                <div className="rounded-2xl bg-gradient-to-r from-purple-50 to-pink-50 p-6 border border-purple-100 dark:from-purple-900/20 dark:to-pink-900/20 dark:border-purple-800/30">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="flex size-10 items-center justify-center rounded-xl bg-purple-500 text-white shadow-md">
+                      <BookOpen className="size-5" />
+                    </div>
+                    <h3 className="font-semibold text-purple-900 dark:text-purple-100">
+                      {t('dialog.sections.recommended')}
+                    </h3>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <ul className="space-y-2">
+                      {finalReport.recommendedPractice.map((item, index) => (
+                        <li key={index} className="flex items-start gap-2 text-purple-800 dark:text-purple-200">
+                          <BookOpen className="size-4 mt-0.5 text-purple-500 flex-shrink-0" />
+                          <span className="leading-relaxed">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               )}
             </div>
           ) : null}
 
-          <DialogFooter>
-            <Button variant="secondary" onClick={() => setIsFinalReportOpen(false)}>
+          <DialogFooter className="flex flex-col sm:flex-row gap-3 pt-6 border-t border-slate-200/60 dark:border-slate-700/60">
+            <Button
+              variant="secondary"
+              onClick={() => setIsFinalReportOpen(false)}
+              className="flex items-center gap-2 order-2 sm:order-1"
+            >
+              <X className="size-4" />
               {t('dialog.close')}
             </Button>
-            <Button disabled={!finalReport} onClick={handleDownloadFinalReportDocx}>
+            <Button
+              disabled={!finalReport}
+              onClick={handleDownloadFinalReportDocx}
+              className="flex items-center gap-2 bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 text-white shadow-lg order-1 sm:order-2"
+            >
+              <Download className="size-4" />
               {t('dialog.download')}
             </Button>
           </DialogFooter>

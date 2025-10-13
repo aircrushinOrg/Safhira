@@ -10,6 +10,7 @@ export class VirtualJoystick {
   private scene: Phaser.Scene;
   private config: JoystickConfig;
   private joystick: any = null;
+  private created: boolean = false;
 
   constructor(scene: Phaser.Scene, config: JoystickConfig) {
     this.scene = scene;
@@ -17,7 +18,11 @@ export class VirtualJoystick {
   }
 
   create(): void {
-    this.createSimpleJoystick();
+    // Only create once to prevent duplicate joysticks
+    if (!this.created) {
+      this.createSimpleJoystick();
+      this.created = true;
+    }
   }
 
   private createSimpleJoystick(): void {
