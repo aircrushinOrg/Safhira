@@ -187,6 +187,53 @@ export function buildSystemPrompt(options: {
     fallback: "Use accessible, empathetic English suitable for teens.",
   });
 
+  const scoringGuidance = assessmentDue ? `
+
+RISK SCORING FRAMEWORK (when assessment is required):
+Evaluate the player's responses across these dimensions and calculate a riskScore (0-100):
+
+1. RECOGNITION OF MANIPULATION (0-25 points):
+   - 0-8: Failed to identify any manipulative tactics; accepted coercive framing
+   - 9-16: Showed some awareness but didn't name specific tactics
+   - 17-25: Clearly identified manipulation (flattery, pressure, misinformation, etc.)
+
+2. BOUNDARY SETTING (0-30 points):
+   - 0-10: Agreed to risky behavior; no boundaries set
+   - 11-20: Hesitant or unclear boundaries; gave mixed signals
+   - 21-30: Firm, clear, direct refusal or boundary statement
+
+3. COMMUNICATION EFFECTIVENESS (0-25 points):
+   - 0-8: Apologetic, vague, or people-pleasing responses
+   - 9-16: Somewhat clear but lacked confidence or directness
+   - 17-25: Assertive, confident, and unambiguous communication
+
+4. SAFETY AWARENESS & HELP-SEEKING (0-20 points):
+   - 0-6: No mention of seeking help or involving trusted adults
+   - 7-13: Acknowledged need for support but didn't commit to action
+   - 14-20: Actively mentioned seeking help, telling trusted adults, or leaving situation
+
+RISK SCORE CALCULATION:
+- Add points from all four dimensions (total possible: 100)
+- CRITICAL: The riskScore reflects the player's RISK EXPOSURE, so INVERT the total:
+  riskScore = 100 - (total points earned)
+- Result interpretation:
+  * 0-30: LOW RISK - Player demonstrated strong refusal skills and safety awareness
+  * 31-60: MEDIUM RISK - Player showed some skills but has gaps in protection
+  * 61-100: HIGH RISK - Player is vulnerable; failed to set boundaries or recognize danger
+
+CONFIDENCE SCORE (0-100):
+Base confidence on:
+- Clarity of player's responses (clear intent = higher confidence)
+- Consistency across conversation turns (consistent = higher confidence)
+- Length of conversation history (more turns = higher confidence)
+- Ambiguity or contradictions (reduce confidence accordingly)
+
+NOTES FIELD:
+Provide 2-3 sentences explaining:
+- Which specific dimension(s) drove the score
+- Concrete examples from player's recent responses
+- What the player did well or needs to improve` : "";
+
   return `You are role-playing as ${npc.name}, ${npc.role}, inside the scenario "${
     scenario.title || scenario.id
   }" set in ${setting}. Stay in-character while following the educational intent described below.
@@ -211,7 +258,7 @@ Interaction requirements:
 - Inject unhealthy or coercive undertones, but avoid explicit content and respect the boundaries.
 - Encourage the player to practise refusal skills; react realistically when they resist.
 - ${summaryDue ? "Provide a checkpoint summary and assessment in this turn." : "Do NOT include a summary this turn; set summary to null."}
-- ${assessmentDue ? "Provide a refusal effectiveness score when instructed." : "Do NOT score this turn; set score to null."}
+- ${assessmentDue ? "Provide a refusal effectiveness score using the detailed scoring framework below." : "Do NOT score this turn; set score to null."}
 - ${
     finalReportDue
       ? `Produce a comprehensive final coaching report (multi-paragraph overview plus targeted action items). Tie insights to specific player choices. IMPORTANT: Write the final report in ${getLanguageDisplayName(locale)}.`
@@ -225,6 +272,7 @@ Interaction requirements:
   }
 - Only produce a JSON object in your output with the exact schema provided. No markdown, no commentary.
 - ${localeLine}
+${scoringGuidance}
 
 Safety overrides:
 - If the player reports harm, escalate toward encouraging them to seek trusted adult help.
@@ -240,6 +288,18 @@ export function buildFormatInstruction(summaryDue: boolean, assessmentDue: boole
 
   const safetyAlertsLanguageNote = `\n\nIMPORTANT: Generate ALL safety_alerts in ${languageName}. All safety communications must be written in this language for user comprehension.`;
 
+  const scoreGuidance = assessmentDue ? `
+
+SCORING FIELD REQUIREMENTS:
+- confidence (0-100): How certain you are about this assessment based on response clarity and conversation length
+- riskScore (0-100): INVERTED score where higher = more vulnerable (use framework above: 100 - total_points_earned)
+- notes: 2-3 complete sentences citing specific player statements and explaining the score rationale
+
+EXAMPLE SCORING:
+Good example: { "confidence": 85, "riskScore": 45, "notes": "Player clearly identified the pressure tactic ('You're using urgency to push me') earning high marks for recognition. However, their boundary was hesitant ('Maybe we should wait?') rather than firm, and they didn't mention seeking advice from trusted adults, resulting in moderate risk." }
+
+Bad example: { "confidence": 50, "riskScore": 60, "notes": "Not great." } // TOO VAGUE - must cite specific evidence` : "";
+
   return `Return a strict JSON object matching this TypeScript type. Omit no keys.
 {
   "npc_reply": string; // in-character response for the player
@@ -254,7 +314,7 @@ export function buildFormatInstruction(summaryDue: boolean, assessmentDue: boole
 Numbers must be 0-100 with no extra text. Strings must not include markdown.
 Ensure summary or score are null exactly when not required.
 When final_report is required, write a 4-6 sentence overallAssessment that references concrete dialogue moments.
-Include at least three rich bullet points in strengths, areasForGrowth, and recommendedPractice, each focusing on actionable guidance.${finalReportLanguageNote}${safetyAlertsLanguageNote}`;
+Include at least three rich bullet points in strengths, areasForGrowth, and recommendedPractice, each focusing on actionable guidance.${scoreGuidance}${finalReportLanguageNote}${safetyAlertsLanguageNote}`;
 }
 
 export function buildScenarioSnapshot(options: {
