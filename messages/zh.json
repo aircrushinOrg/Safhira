@@ -1991,8 +1991,10 @@
         "notStarted": "未开始"
       },
       "metrics": {
+        "confidence": "信心",
+        "confidenceTooltip": "反映你在情景中回答的自信程度。",
         "riskScore": "风险分数",
-        "confidence": "信心"
+        "riskScoreTooltip": "根据同理心缺口、错误信息或升级迹象评估潜在风险。"
       },
       "scoreDelayNotice": "为了准确度，分数会在三轮对话后才显示。",
       "processing": {
@@ -2006,19 +2008,23 @@
         "generateReport": "生成报告",
         "finalScores": "获取最终评分",
         "finalScoresLoading": "正在生成…",
-        "viewReport": "查看最终报告",
-        "send": "发送",
-        "sending": "发送中…"
-      },
-      "finalReport": {
+    "viewReport": "查看最终报告",
+    "send": "发送",
+    "sending": "发送中…"
+  },
+  "finalReport": {
         "ready": "最终报告已准备好，包含个性化指导。",
         "locked": "完成整个会话即可解锁最终报告。"
       },
-      "summaryHint": "每次交流后都会刷新摘要与评分。",
-      "placeholder": "写下你的信息…",
-      "thinking": "思考中…",
-      "safetyAlerts": "安全提醒",
-      "rawReport": "查看原始报告 JSON",
+  "summaryHint": "每次交流后都会刷新摘要与评分。",
+  "placeholder": "写下你的信息…",
+  "thinking": "思考中…",
+  "quickPicks": {
+    "title": "快速建议",
+    "loading": "正在构思贴心的后续问题..."
+  },
+  "safetyAlerts": "安全提醒",
+  "rawReport": "查看原始报告 JSON",
       "dialog": {
         "title": "最终报告",
         "description": "深入了解你的表现，并获得个性化的下一步建议。",
@@ -2046,8 +2052,15 @@
         }
       },
       "intro": {
-        "fallbackPersona": "我是{name}。",
-        "message": "嗨，我是{name}。{persona} 一起练习{scenario}好吗？"
+        "fallbackPersona": "我会在这里支持你。",
+        "message": "今天练习{scenario}，你感觉怎么样？我是{name}。{persona}",
+        "scenarioMessages": {
+          "outside-bar-girl": "喂，我是{name}！大家都在聊今晚的派对——你要不要一起去，还是又想逃走？",
+          "outside-bar-boy": "嘿，我是{name}。今晚有派对，你准备好去认识新人了吗，还是要我再推你一下？",
+          "health-clinic-visit-girl": "你好，我是{name}。今天是什么情况让你来呢？有没有什么地方不舒服？",
+          "health-clinic-visit-boy": "嗨，我是{name}。最近发生了什么，或有任何不舒服，让你想来做这次性病筛检吗？",
+          "university-misinformation-both": "嘿，我是{name}。有人说只要双方都觉得身体健康，约会几次之后就可以不戴安全套——你觉得这样靠谱吗？"
+        }
       }
     }
   }

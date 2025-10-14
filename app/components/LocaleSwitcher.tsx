@@ -9,6 +9,7 @@ import {Languages} from 'lucide-react';
 import {Button} from './ui/button';
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from './ui/dropdown-menu';
 import {useRouter, usePathname} from '../../i18n/routing';
+import {useSearchParams} from 'next/navigation';
 import {useLocale} from 'next-intl';
 import {locales} from '../../i18n/routing';
 
@@ -21,11 +22,15 @@ const flags: Record<string, string> = {
 export function LocaleSwitcher() {
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const locale = useLocale() as (typeof locales)[number];
 
   const changeLocale = (next: (typeof locales)[number]) => {
     if (next === locale) return;
-    router.replace(pathname || '/', {locale: next});
+    const params = searchParams.toString();
+    router.replace(`${pathname}${params ? `?${params}` : ''}`, {
+      locale: next
+    });
   };
 
   return (

@@ -1994,8 +1994,10 @@
         "notStarted": "Belum bermula"
       },
       "metrics": {
+        "confidence": "Keyakinan: {score}%",
+        "confidenceTooltip": "Menunjukkan tahap keyakinan respons anda sepanjang senario.",
         "riskScore": "Skor Risiko: {score}%",
-        "confidence": "Keyakinan: {score}%"
+        "riskScoreTooltip": "Menganggarkan risiko berpotensi berdasarkan jurang empati, maklumat salah atau tanda-tanda eskalasi."
       },
       "scoreDelayNotice": "Untuk ketepatan, skor hanya dipaparkan selepas tiga pusingan perbualan.",
       "processing": {
@@ -2009,19 +2011,23 @@
         "generateReport": "Jana Laporan",
         "finalScores": "Dapatkan skor akhir",
         "finalScoresLoading": "Sedang disiapkan…",
-        "viewReport": "Lihat laporan akhir",
-        "send": "Hantar",
-        "sending": "Menghantar…"
-      },
-      "finalReport": {
+    "viewReport": "Lihat laporan akhir",
+    "send": "Hantar",
+    "sending": "Menghantar…"
+  },
+  "finalReport": {
         "ready": "Laporan akhir sedia dengan bimbingan tersuai.",
         "locked": "Siapkan sesi untuk membuka laporan akhir."
       },
-      "summaryHint": "Ringkasan dan skor dikemas kini selepas setiap giliran.",
-      "placeholder": "Tulis mesej anda…",
-      "thinking": "Sedang memikirkan…",
-      "safetyAlerts": "Amaran keselamatan",
-      "rawReport": "Lihat JSON laporan mentah",
+  "summaryHint": "Ringkasan dan skor dikemas kini selepas setiap giliran.",
+  "placeholder": "Tulis mesej anda…",
+  "thinking": "Sedang memikirkan…",
+  "quickPicks": {
+    "title": "Cadangan Pantas",
+    "loading": "Sedang menyusun susulan yang sesuai..."
+  },
+  "safetyAlerts": "Amaran keselamatan",
+  "rawReport": "Lihat JSON laporan mentah",
       "dialog": {
         "title": "Laporan akhir",
         "description": "Tinjau prestasi anda dan langkah seterusnya yang dipersonalisasi.",
@@ -2049,8 +2055,15 @@
         }
       },
       "intro": {
-        "fallbackPersona": "Saya {name}.",
-        "message": "Hai, saya {name}. {persona} Jom berlatih {scenario}?"
+        "fallbackPersona": "Saya di sini untuk menyokong anda.",
+        "message": "Bagaimana perasaan anda untuk berlatih {scenario} hari ini? Saya {name}. {persona}",
+        "scenarioMessages": {
+          "outside-bar-girl": "Hoi, ini {name}! Semua orang tengah semangat nak pergi parti malam ni — awak ikut sekali ke nak tarik diri lagi?",
+          "outside-bar-boy": "Yo, {name} di sini. Parti malam ni — awak berani nak sembang dengan orang baru tak atau perlu aku tolong push?",
+          "health-clinic-visit-girl": "Hai, saya {name}. Apa yang bawa awak datang hari ni, ada lelehan atau perubahan lain yang awak risaukan?",
+          "health-clinic-visit-boy": "Hai, saya {name}. Ada pengalaman atau gejala baru-baru ni yang buat awak nak jalani pemeriksaan STI ni?",
+          "university-misinformation-both": "Hei, {name} ni. Ada kawan kata kalau dua-dua rasa sihat, lepas beberapa temu janji boleh je tak guna kondom — logik ke tu?"
+        }
       }
     }
   }

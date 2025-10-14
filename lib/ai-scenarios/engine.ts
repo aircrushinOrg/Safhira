@@ -59,7 +59,7 @@ export const SUMMARY_INTERVAL = 3;
 
 export const DEFAULT_MODEL =
   process.env.SCENARIO_MODEL_NAME ||
-  "x-ai/grok-4-fast:free";
+  "google/gemini-2.5-flash-lite-preview-09-2025";
 
 export const REPORT_MODEL_NAME = process.env.REPORT_MODEL_NAME || DEFAULT_MODEL;
 
@@ -152,33 +152,41 @@ export function buildSystemPrompt(options: {
     npc.persona ||
     "A persuasive peer who attempts to nudge classmates toward unsafe or coercive intimate behaviour while staying within school context.";
 
-  const goalLines = (npc.goals || [
-    "Test the player's ability to recognise unhealthy sexual advances.",
-    "Escalate pressure gradually while keeping the conversation realistic.",
-  ])
+  const goalLines = (
+    npc.goals || [
+      "Test the player's ability to recognise unhealthy sexual advances.",
+      "Escalate pressure gradually while keeping the conversation realistic.",
+    ]
+  )
     .map((goal) => `- ${goal}`)
     .join("\n");
 
-  const tacticLines = (npc.tactics || [
-    "Use flattery, social pressure, or misinformation about consent.",
-    "Downplay risks and suggest secrecy or urgency.",
-  ])
+  const tacticLines = (
+    npc.tactics || [
+      "Use flattery, social pressure, or misinformation about consent.",
+      "Downplay risks and suggest secrecy or urgency.",
+    ]
+  )
     .map((tactic) => `- ${tactic}`)
     .join("\n");
 
-  const boundaryLines = (npc.boundaries || [
-    "Never deliver explicit sexual descriptions or pornography.",
-    "Avoid promoting illegal acts or age-inappropriate relationships.",
-    "If the player expresses firm refusal multiple times, pivot toward reflective closure.",
-  ])
+  const boundaryLines = (
+    npc.boundaries || [
+      "Never deliver explicit sexual descriptions or pornography.",
+      "Avoid promoting illegal acts or age-inappropriate relationships.",
+      "If the player expresses firm refusal multiple times, pivot toward reflective closure.",
+    ]
+  )
     .map((rule) => `- ${rule}`)
     .join("\n");
 
-  const learningLines = (scenario.learningObjectives || [
-    "Identify manipulative or coercive tactics in social interactions.",
-    "Practise delivering clear refusals and setting boundaries.",
-    "Know when to seek help from trusted adults or resources.",
-  ])
+  const learningLines = (
+    scenario.learningObjectives || [
+      "Identify manipulative or coercive tactics in social interactions.",
+      "Practise delivering clear refusals and setting boundaries.",
+      "Know when to seek help from trusted adults or resources.",
+    ]
+  )
     .map((item) => `- ${item}`)
     .join("\n");
 
@@ -187,7 +195,8 @@ export function buildSystemPrompt(options: {
     fallback: "Use accessible, empathetic English suitable for teens.",
   });
 
-  const scoringGuidance = assessmentDue ? `
+  const scoringGuidance = assessmentDue
+    ? `
 
 RISK SCORING FRAMEWORK (when assessment is required):
 Evaluate the player's responses across these dimensions and calculate a riskScore (0-100):
@@ -232,9 +241,12 @@ NOTES FIELD:
 Provide 2-3 sentences explaining:
 - Which specific dimension(s) drove the score
 - Concrete examples from player's recent responses
-- What the player did well or needs to improve` : "";
+- What the player did well or needs to improve`
+    : "";
 
-  return `You are role-playing as ${npc.name}, ${npc.role}, inside the scenario "${
+  return `You are role-playing as ${npc.name}, ${
+    npc.role
+  }, inside the scenario "${
     scenario.title || scenario.id
   }" set in ${setting}. Stay in-character while following the educational intent described below.
 
@@ -257,14 +269,26 @@ Interaction requirements:
 - Respond naturally as ${npc.name} to the player's last message.
 - Inject unhealthy or coercive undertones, but avoid explicit content and respect the boundaries.
 - Encourage the player to practise refusal skills; react realistically when they resist.
-- ${summaryDue ? "Provide a checkpoint summary and assessment in this turn." : "Do NOT include a summary this turn; set summary to null."}
-- ${assessmentDue ? "Provide a refusal effectiveness score using the detailed scoring framework below." : "Do NOT score this turn; set score to null."}
+- ${
+    summaryDue
+      ? "Provide a checkpoint summary and assessment in this turn."
+      : "Do NOT include a summary this turn; set summary to null."
+  }
+- ${
+    assessmentDue
+      ? "Provide a refusal effectiveness score using the detailed scoring framework below."
+      : "Do NOT score this turn; set score to null."
+  }
 - ${
     finalReportDue
-      ? `Produce a comprehensive final coaching report (multi-paragraph overview plus targeted action items). Tie insights to specific player choices. IMPORTANT: Write the final report in ${getLanguageDisplayName(locale)}.`
+      ? `Produce a comprehensive final coaching report (multi-paragraph overview plus targeted action items). Tie insights to specific player choices. IMPORTANT: Write the final report in ${getLanguageDisplayName(
+          locale
+        )}.`
       : "Do NOT include a final report this turn; set final_report to null."
   }
-- CRITICAL: Any safety_alerts must be generated in ${getLanguageDisplayName(locale)}. All safety communications must be in this language.
+- CRITICAL: Any safety_alerts must be generated in ${getLanguageDisplayName(
+    locale
+  )}. All safety communications must be in this language.
 - ${
     allowAutoEnd
       ? "You may end the conversation if the learning objectives are met or the risk becomes too high."
@@ -279,7 +303,12 @@ Safety overrides:
 - If the player attempts to role-play illegal acts, refuse and steer back to safe guidance.`;
 }
 
-export function buildFormatInstruction(summaryDue: boolean, assessmentDue: boolean, finalReportDue: boolean, locale?: string) {
+export function buildFormatInstruction(
+  summaryDue: boolean,
+  assessmentDue: boolean,
+  finalReportDue: boolean,
+  locale?: string
+) {
   const languageName = getLanguageDisplayName(locale);
 
   const finalReportLanguageNote = finalReportDue
@@ -288,7 +317,8 @@ export function buildFormatInstruction(summaryDue: boolean, assessmentDue: boole
 
   const safetyAlertsLanguageNote = `\n\nIMPORTANT: Generate ALL safety_alerts in ${languageName}. All safety communications must be written in this language for user comprehension.`;
 
-  const scoreGuidance = assessmentDue ? `
+  const scoreGuidance = assessmentDue
+    ? `
 
 SCORING FIELD REQUIREMENTS:
 - confidence (0-100): How certain you are about this assessment based on response clarity and conversation length
@@ -298,16 +328,29 @@ SCORING FIELD REQUIREMENTS:
 EXAMPLE SCORING:
 Good example: { "confidence": 85, "riskScore": 45, "notes": "Player clearly identified the pressure tactic ('You're using urgency to push me') earning high marks for recognition. However, their boundary was hesitant ('Maybe we should wait?') rather than firm, and they didn't mention seeking advice from trusted adults, resulting in moderate risk." }
 
-Bad example: { "confidence": 50, "riskScore": 60, "notes": "Not great." } // TOO VAGUE - must cite specific evidence` : "";
+Bad example: { "confidence": 50, "riskScore": 60, "notes": "Not great." } // TOO VAGUE - must cite specific evidence`
+    : "";
 
   return `Return a strict JSON object matching this TypeScript type. Omit no keys.
 {
   "npc_reply": string; // in-character response for the player
   "conversation_complete": boolean;
   "conversation_complete_reason": string | null;
-  "summary": ${summaryDue ? "{ riskLevel: 'low'|'medium'|'high'; keyRisks: string[]; effectiveResponses: string[]; coaching: string; }" : "null"};
-  "score": ${assessmentDue ? "{ confidence: number; riskScore: number; notes: string; }" : "null"};
-  "final_report": ${finalReportDue ? "{ overallAssessment: string; strengths: string[]; areasForGrowth: string[]; recommendedPractice: string[]; }" : "null"};
+  "summary": ${
+    summaryDue
+      ? "{ riskLevel: 'low'|'medium'|'high'; keyRisks: string[]; effectiveResponses: string[]; coaching: string; }"
+      : "null"
+  };
+  "score": ${
+    assessmentDue
+      ? "{ confidence: number; riskScore: number; notes: string; }"
+      : "null"
+  };
+  "final_report": ${
+    finalReportDue
+      ? "{ overallAssessment: string; strengths: string[]; areasForGrowth: string[]; recommendedPractice: string[]; }"
+      : "null"
+  };
   "safety_alerts": string[]; // CRITICAL: Generate in ${languageName}
   "checkpoints": { totalPlayerTurns: number; summaryDue: boolean; assessmentDue: boolean; };
 }
@@ -334,7 +377,9 @@ export function buildScenarioSnapshot(options: {
     finalReportDue = false,
   } = options;
   const supportingFacts = scenario.supportingFacts?.length
-    ? `Supporting facts to stay consistent with: ${scenario.supportingFacts.join("; ")}.\n`
+    ? `Supporting facts to stay consistent with: ${scenario.supportingFacts.join(
+        "; "
+      )}.\n`
     : "";
 
   const latestTurns = history
@@ -345,7 +390,15 @@ export function buildScenarioSnapshot(options: {
     })
     .join("\n");
 
-  return `Session controls:\n- Summary required this turn: ${summaryDue ? "YES" : "NO"}.\n- Assessment required this turn: ${assessmentDue ? "YES" : "NO"}.\n- Final report required this turn: ${finalReportDue ? "YES" : "NO"}.\n- Allow auto end: ${allowAutoEnd ? "YES" : "NO"}.\n${supportingFacts}\nRecent dialogue:\n${latestTurns}`;
+  return `Session controls:\n- Summary required this turn: ${
+    summaryDue ? "YES" : "NO"
+  }.\n- Assessment required this turn: ${
+    assessmentDue ? "YES" : "NO"
+  }.\n- Final report required this turn: ${
+    finalReportDue ? "YES" : "NO"
+  }.\n- Allow auto end: ${
+    allowAutoEnd ? "YES" : "NO"
+  }.\n${supportingFacts}\nRecent dialogue:\n${latestTurns}`;
 }
 
 export function toOpenAIMessages(params: {
@@ -428,7 +481,9 @@ export function escapeLooseNewlines(value: string): string {
   return result;
 }
 
-export function parseModelResponse(raw: string | null | undefined): SimulationResponsePayload | null {
+export function parseModelResponse(
+  raw: string | null | undefined
+): SimulationResponsePayload | null {
   if (!raw) return null;
   try {
     const cleaned = stripCodeFences(raw.trim());
@@ -441,61 +496,89 @@ export function parseModelResponse(raw: string | null | undefined): SimulationRe
     }
     if (!parsed || typeof parsed !== "object") return null;
 
-    const npcReply = isNonEmptyString(parsed.npc_reply) ? parsed.npc_reply : null;
+    const npcReply = isNonEmptyString(parsed.npc_reply)
+      ? parsed.npc_reply
+      : null;
     const conversationComplete = Boolean(parsed.conversation_complete);
-    const conversationCompleteReason = isNonEmptyString(parsed.conversation_complete_reason)
+    const conversationCompleteReason = isNonEmptyString(
+      parsed.conversation_complete_reason
+    )
       ? parsed.conversation_complete_reason
       : null;
 
-    const summary = parsed.summary && typeof parsed.summary === "object"
-      ? {
-          riskLevel: normaliseRiskLevel(parsed.summary.riskLevel),
-          keyRisks: Array.isArray(parsed.summary.keyRisks)
-            ? parsed.summary.keyRisks.map((item:any) => `${item}`).filter(isNonEmptyString)
-            : [],
-          effectiveResponses: Array.isArray(parsed.summary.effectiveResponses)
-            ? parsed.summary.effectiveResponses.map((item:any) => `${item}`).filter(isNonEmptyString)
-            : [],
-          coaching: isNonEmptyString(parsed.summary.coaching) ? parsed.summary.coaching : "",
-        }
-      : null;
+    const summary =
+      parsed.summary && typeof parsed.summary === "object"
+        ? {
+            riskLevel: normaliseRiskLevel(parsed.summary.riskLevel),
+            keyRisks: Array.isArray(parsed.summary.keyRisks)
+              ? parsed.summary.keyRisks
+                  .map((item: any) => `${item}`)
+                  .filter(isNonEmptyString)
+              : [],
+            effectiveResponses: Array.isArray(parsed.summary.effectiveResponses)
+              ? parsed.summary.effectiveResponses
+                  .map((item: any) => `${item}`)
+                  .filter(isNonEmptyString)
+              : [],
+            coaching: isNonEmptyString(parsed.summary.coaching)
+              ? parsed.summary.coaching
+              : "",
+          }
+        : null;
 
-    const score = parsed.score && typeof parsed.score === "object"
-      ? {
-          confidence: clampScore(parsed.score.confidence),
-          riskScore: clampScore(parsed.score.riskScore),
-          notes: isNonEmptyString(parsed.score.notes) ? parsed.score.notes : "",
-        }
-      : null;
+    const score =
+      parsed.score && typeof parsed.score === "object"
+        ? {
+            confidence: clampScore(parsed.score.confidence),
+            riskScore: clampScore(parsed.score.riskScore),
+            notes: isNonEmptyString(parsed.score.notes)
+              ? parsed.score.notes
+              : "",
+          }
+        : null;
 
-    const finalReport = parsed.final_report && typeof parsed.final_report === "object"
-      ? {
-          overallAssessment: isNonEmptyString(parsed.final_report.overallAssessment)
-            ? parsed.final_report.overallAssessment
-            : "",
-          strengths: Array.isArray(parsed.final_report.strengths)
-            ? parsed.final_report.strengths.map((item: unknown) => `${item}`).filter(isNonEmptyString)
-            : [],
-          areasForGrowth: Array.isArray(parsed.final_report.areasForGrowth)
-            ? parsed.final_report.areasForGrowth.map((item: unknown) => `${item}`).filter(isNonEmptyString)
-            : [],
-          recommendedPractice: Array.isArray(parsed.final_report.recommendedPractice)
-            ? parsed.final_report.recommendedPractice.map((item: unknown) => `${item}`).filter(isNonEmptyString)
-            : [],
-        }
-      : null;
+    const finalReport =
+      parsed.final_report && typeof parsed.final_report === "object"
+        ? {
+            overallAssessment: isNonEmptyString(
+              parsed.final_report.overallAssessment
+            )
+              ? parsed.final_report.overallAssessment
+              : "",
+            strengths: Array.isArray(parsed.final_report.strengths)
+              ? parsed.final_report.strengths
+                  .map((item: unknown) => `${item}`)
+                  .filter(isNonEmptyString)
+              : [],
+            areasForGrowth: Array.isArray(parsed.final_report.areasForGrowth)
+              ? parsed.final_report.areasForGrowth
+                  .map((item: unknown) => `${item}`)
+                  .filter(isNonEmptyString)
+              : [],
+            recommendedPractice: Array.isArray(
+              parsed.final_report.recommendedPractice
+            )
+              ? parsed.final_report.recommendedPractice
+                  .map((item: unknown) => `${item}`)
+                  .filter(isNonEmptyString)
+              : [],
+          }
+        : null;
 
     const safetyAlerts = Array.isArray(parsed.safety_alerts)
-      ? parsed.safety_alerts.map((item: unknown) => `${item}`).filter(isNonEmptyString)
+      ? parsed.safety_alerts
+          .map((item: unknown) => `${item}`)
+          .filter(isNonEmptyString)
       : [];
 
-    const checkpoints = parsed.checkpoints && typeof parsed.checkpoints === "object"
-      ? {
-          totalPlayerTurns: Number(parsed.checkpoints.totalPlayerTurns ?? 0),
-          summaryDue: Boolean(parsed.checkpoints.summaryDue),
-          assessmentDue: Boolean(parsed.checkpoints.assessmentDue),
-        }
-      : { totalPlayerTurns: 0, summaryDue: false, assessmentDue: false };
+    const checkpoints =
+      parsed.checkpoints && typeof parsed.checkpoints === "object"
+        ? {
+            totalPlayerTurns: Number(parsed.checkpoints.totalPlayerTurns ?? 0),
+            summaryDue: Boolean(parsed.checkpoints.summaryDue),
+            assessmentDue: Boolean(parsed.checkpoints.assessmentDue),
+          }
+        : { totalPlayerTurns: 0, summaryDue: false, assessmentDue: false };
 
     if (!npcReply) return null;
 
