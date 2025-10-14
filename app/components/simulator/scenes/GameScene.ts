@@ -33,7 +33,7 @@ export class GameScene extends Phaser.Scene {
   };
   private playerGender: PlayerGender = 'boy';
   private currentDirection: Direction = 'down';
-  private playerSpeed = 200;
+  private playerSpeed = 240;
   private isMoving = false;
   private virtualJoystick?: VirtualJoystick;
   private isTouchDevice = false;
@@ -551,6 +551,14 @@ export class GameScene extends Phaser.Scene {
     const mapHeight = this.physics.world.bounds.height;
     const baseY = mapHeight / 3;
     const spacing = 110;
+    // Keep NPCs anchored near relevant map landmarks
+    const npcPositions: Record<string, { x: number; y: number }> = {
+      'outside-bar-girl': { x: 1675, y: 1150 },
+      'outside-bar-boy': { x: 1675, y: 1150 },
+      'health-clinic-visit-girl': { x: 360, y: 2400 },
+      'health-clinic-visit-boy': { x: 360, y: 2400 },
+      'university-misinformation-both': { x: 688, y: 768 },
+    };
     const resolvedConfigs = npcConfigs
       .map(({ scenarioId, sprite }) => {
         const scenario = SCENARIO_TEMPLATES.find((template) => template.id === scenarioId);
@@ -566,13 +574,14 @@ export class GameScene extends Phaser.Scene {
       : mapWidth / 2;
 
     resolvedConfigs.forEach(({ scenario, sprite }, index) => {
-      const x = startX + index * spacing;
+      const overridePosition = npcPositions[scenario.id];
+      const x = overridePosition?.x ?? (startX + index * spacing);
       const npcData: NPCData = {
         id: scenario.npc.id,
         name: scenario.npc.name,
         scenarioId: scenario.id,
         x,
-        y: baseY,
+        y: overridePosition?.y ?? baseY,
         sprite,
         interactionRadius: 80,
         isInteractive: true,
