@@ -58,10 +58,20 @@ function createInitialMessage(
 ) {
   const fallbackPersona = translate('intro.fallbackPersona', { name: template.npcName });
   const personaIntro = personaLines[0] || fallbackPersona;
+  const scenarioMessages = translate.raw('intro.scenarioMessages') as Record<string, string> | undefined;
+  const scenarioSummary = template.scenarioDescription.trim();
+  if (scenarioMessages?.[template.scenarioId]) {
+    return translate(`intro.scenarioMessages.${template.scenarioId}`, {
+      name: template.npcName,
+      persona: personaIntro,
+      scenario: scenarioSummary,
+      setting: template.setting,
+    });
+  }
   return translate('intro.message', {
     name: template.npcName,
     persona: personaIntro,
-    scenario: template.scenarioDescription.toLowerCase(),
+    scenario: scenarioSummary,
   });
 }
 

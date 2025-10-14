@@ -1,6 +1,7 @@
 'use client';
 
 import { type RefObject } from 'react';
+import ReactMarkdown from 'react-markdown';
 import { useTranslations } from 'next-intl';
 import { Loader2 } from 'lucide-react';
 
@@ -52,7 +53,9 @@ export function ChatMessageList({
                   : 'bg-white text-slate-800 shadow-slate-900/10 dark:bg-slate-800 dark:text-slate-100',
               )}
             >
-              <p className="whitespace-pre-wrap">{message.content}</p>
+              <div className="prose prose-sm max-w-none dark:prose-invert">
+                <ReactMarkdown>{message.content}</ReactMarkdown>
+              </div>
               <span className="mt-2 block text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
                 {new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
               </span>

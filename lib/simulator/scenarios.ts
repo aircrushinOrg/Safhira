@@ -42,7 +42,7 @@ const SCENARIO_TEMPLATE_CONFIG: ScenarioTemplateConfig[] = [
     id: 'outside-bar-girl',
     label: 'Party Pressure',
     description:
-      'Resist peer pressure and practise assertive refusal skills when a friend encourages risky behaviour at a party.',
+      'Resist peer pressure and practise assertive refusal skills when a friend encourages risky behaviour at a party',
     scenario: {
       id: 'outside-bar-girl',
       title: 'Party Pressure',
@@ -70,7 +70,7 @@ const SCENARIO_TEMPLATE_CONFIG: ScenarioTemplateConfig[] = [
       ms: {
         label: 'Tekanan Parti',
         description:
-          'Tolak tekanan rakan dan latih kemahiran menolak dengan tegas apabila rakan menggalakkan tingkah laku berisiko di parti.',
+          'Tolak tekanan rakan dan latih kemahiran menolak dengan tegas apabila rakan menggalakkan tingkah laku berisiko di parti',
         scenario: {
           title: 'Tekanan Parti',
           setting:
@@ -94,7 +94,7 @@ const SCENARIO_TEMPLATE_CONFIG: ScenarioTemplateConfig[] = [
       },
       zh: {
         label: '派对压力',
-        description: '当朋友在派对上怂恿你做危险的事时，练习抵抗同侪压力并学会坚定拒绝。',
+        description: '当朋友在派对上怂恿你做危险的事时，练习抵抗同侪压力并学会坚定拒绝',
         scenario: {
           title: '派对压力',
           setting: '清晨的酒吧外；朋友们计划稍后与学长学姐一起参加派对。',

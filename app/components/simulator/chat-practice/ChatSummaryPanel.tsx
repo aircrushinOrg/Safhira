@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 
 import { Button } from '@/app/components/ui/button';
 import { Progress } from '@/app/components/ui/progress';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/app/components/ui/tooltip';
 import { cn } from '@/app/components/ui/utils';
 
 type ChatSummaryPanelProps = {
@@ -38,7 +39,9 @@ export function ChatSummaryPanel({
   const t = useTranslations('Simulator.chatPractice');
 
   const confidenceLabel = t('metrics.confidence', { score: scores.confidence }).split(':')[0];
+  const confidenceTooltip = t('metrics.confidenceTooltip');
   const riskLabel = t('metrics.riskScore', { score: scores.riskScore }).split(':')[0];
+  const riskTooltip = t('metrics.riskScoreTooltip');
   const reportButtonLabel = finalizing
     ? t('buttons.finalScoresLoading')
     : finalReportAvailable || reportGenerated
@@ -56,51 +59,65 @@ export function ChatSummaryPanel({
         </div>
 
         <div className="flex w-full flex-col gap-4 sm:flex-row sm:gap-8">
-          <div className="flex-1 rounded-xl border border-teal-100 bg-gradient-to-br from-teal-50 to-emerald-50 p-4 dark:border-teal-800/30 dark:from-teal-900/20 dark:to-emerald-900/20">
-            <div className="mb-3 flex items-center gap-3">
-              <div className="flex size-8 items-center justify-center rounded-lg bg-teal-100 text-teal-600 shadow-sm dark:bg-teal-800/40 dark:text-teal-200">
-                <Brain className="size-4" />
-              </div>
-              <div className="flex-1">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-semibold text-teal-900 dark:text-teal-100">{confidenceLabel}</span>
-                  <span className="text-sm font-bold text-teal-700 dark:text-teal-200">{scores.confidence}%</span>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div className="flex-1 rounded-xl border border-teal-100 bg-gradient-to-br from-teal-50 to-emerald-50 p-4 transition-colors dark:border-teal-800/30 dark:from-teal-900/20 dark:to-emerald-900/20">
+                <div className="mb-3 flex items-center gap-3">
+                  <div className="flex size-8 items-center justify-center rounded-lg bg-teal-100 text-teal-600 shadow-sm dark:bg-teal-800/40 dark:text-teal-200">
+                    <Brain className="size-4" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-semibold text-teal-900 dark:text-teal-100">{confidenceLabel}</span>
+                      <span className="text-sm font-bold text-teal-700 dark:text-teal-200">{scores.confidence}%</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="relative">
+                  <div className="h-3 w-full overflow-hidden rounded-full bg-teal-100 dark:bg-teal-900/30">
+                    <div
+                      className="h-full rounded-full bg-gradient-to-r from-teal-500 to-emerald-500 transition-all duration-500 ease-out shadow-sm dark:from-teal-400 dark:to-emerald-500"
+                      style={{ width: `${scores.confidence}%` }}
+                    />
+                  </div>
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />
                 </div>
               </div>
-            </div>
-            <div className="relative">
-              <div className="h-3 w-full overflow-hidden rounded-full bg-teal-100 dark:bg-teal-900/30">
-                <div
-                  className="h-full rounded-full bg-gradient-to-r from-teal-500 to-emerald-500 transition-all duration-500 ease-out shadow-sm dark:from-teal-400 dark:to-emerald-500"
-                  style={{ width: `${scores.confidence}%` }}
-                />
-              </div>
-              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-            </div>
-          </div>
+            </TooltipTrigger>
+            <TooltipContent sideOffset={12} className="max-w-xs text-left">
+              {confidenceTooltip}
+            </TooltipContent>
+          </Tooltip>
 
-          <div className="flex-1 rounded-xl border border-amber-100 bg-gradient-to-br from-amber-50 to-orange-50 p-4 dark:border-amber-800/30 dark:from-amber-900/20 dark:to-orange-900/20">
-            <div className="mb-3 flex items-center gap-3">
-              <div className="flex size-8 items-center justify-center rounded-lg bg-amber-100 text-amber-600 shadow-sm dark:bg-amber-800/40 dark:text-amber-200">
-                <AlertTriangle className="size-4" />
-              </div>
-              <div className="flex-1">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-semibold text-amber-900 dark:text-amber-100">{riskLabel}</span>
-                  <span className="text-sm font-bold text-amber-700 dark:text-amber-200">{scores.riskScore}%</span>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div className="flex-1 rounded-xl border border-amber-100 bg-gradient-to-br from-amber-50 to-orange-50 p-4 transition-colors dark:border-amber-800/30 dark:from-amber-900/20 dark:to-orange-900/20">
+                <div className="mb-3 flex items-center gap-3">
+                  <div className="flex size-8 items-center justify-center rounded-lg bg-amber-100 text-amber-600 shadow-sm dark:bg-amber-800/40 dark:text-amber-200">
+                    <AlertTriangle className="size-4" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-semibold text-amber-900 dark:text-amber-100">{riskLabel}</span>
+                      <span className="text-sm font-bold text-amber-700 dark:text-amber-200">{scores.riskScore}%</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="relative">
+                  <div className="h-3 w-full overflow-hidden rounded-full bg-amber-100 dark:bg-amber-900/30">
+                    <div
+                      className="h-full rounded-full bg-gradient-to-r from-amber-500 to-orange-500 transition-all duration-500 ease-out shadow-sm dark:from-amber-400 dark:to-orange-500"
+                      style={{ width: `${scores.riskScore}%` }}
+                    />
+                  </div>
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />
                 </div>
               </div>
-            </div>
-            <div className="relative">
-              <div className="h-3 w-full overflow-hidden rounded-full bg-amber-100 dark:bg-amber-900/30">
-                <div
-                  className="h-full rounded-full bg-gradient-to-r from-amber-500 to-orange-500 transition-all duration-500 ease-out shadow-sm dark:from-amber-400 dark:to-orange-500"
-                  style={{ width: `${scores.riskScore}%` }}
-                />
-              </div>
-              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-            </div>
-          </div>
+            </TooltipTrigger>
+            <TooltipContent sideOffset={12} className="max-w-xs text-left">
+              {riskTooltip}
+            </TooltipContent>
+          </Tooltip>
         </div>
 
         <p className="text-xs text-slate-500 dark:text-slate-400">{t('scoreDelayNotice')}</p>

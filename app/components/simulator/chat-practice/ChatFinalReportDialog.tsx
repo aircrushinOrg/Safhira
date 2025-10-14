@@ -40,7 +40,7 @@ export function ChatFinalReportDialog({
 
   return (
     <Dialog open={open && Boolean(finalReport)} onOpenChange={onOpenChange}>
-      <DialogContent className="fixed left-1/2 top-[55%] z-50 w-full max-w-3xl -translate-x-1/2 -translate-y-1/2 transform max-h-[85vh] overflow-y-auto rounded-3xl border-0 bg-gradient-to-br from-white to-slate-50 text-slate-800 shadow-xl shadow-slate-900/20 dark:from-slate-900 dark:to-slate-800 dark:text-slate-50 dark:shadow-slate-950/40">
+      <DialogContent className="fixed left-1/2 top-[55%] z-50 w-full max-w-4xl -translate-x-1/2 -translate-y-1/2 transform max-h-[85vh] overflow-y-auto rounded-3xl border-0 bg-gradient-to-br from-white to-slate-50 text-slate-800 shadow-xl shadow-slate-900/20 dark:from-slate-900 dark:to-slate-800 dark:text-slate-50 dark:shadow-slate-950/40">
         <DialogHeader className="space-y-4 border-b border-slate-200/60 pb-6 dark:border-slate-700/60">
           <div className="flex items-center gap-6">
             <div className="flex size-12 items-center justify-center rounded-2xl bg-gradient-to-br from-teal-500 to-emerald-500 text-white shadow-lg shadow-teal-500/30">
