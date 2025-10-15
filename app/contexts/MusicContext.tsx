@@ -1,0 +1,168 @@
+'use client';
+
+import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
+
+interface MusicContextType {
+  isPlaying: boolean;
+  isMuted: boolean;
+  toggleMute: () => void;
+  play: () => void;
+  pause: () => void;
+}
+
+const MusicContext = createContext<MusicContextType | undefined>(undefined);
+
+export function MusicProvider({ children }: { children: React.ReactNode }) {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const toggleMuteRef = useRef<(() => void) | null>(null);
+
+  const toggleMute = () => {
+    const newMutedState = !isMuted;
+    setIsMuted(newMutedState);
+
+    // Save to localStorage AND mark that user has explicitly set a preference
+    localStorage.setItem('safhira-music-muted', newMutedState.toString());
+    localStorage.setItem('safhira-music-user-set', 'true');
+
+    if (audioRef.current) {
+      // Just toggle the muted property - audio keeps playing but silenced
+      audioRef.current.muted = newMutedState;
+
+      // If we're unmuting and the audio isn't playing, start it
+      if (!newMutedState && audioRef.current.paused) {
+        audioRef.current.play().then(() => {
+          setIsPlaying(true);
+        }).catch((error) => {
+          console.log('Music play prevented:', error.message);
+        });
+      }
+    }
+  };
+
+  // Update the ref whenever toggleMute changes
+  toggleMuteRef.current = toggleMute;
+
+  const play = () => {
+    if (audioRef.current) {
+      audioRef.current.play().then(() => {
+        setIsPlaying(true);
+      }).catch((error) => {
+        console.log('Music play prevented:', error.message);
+      });
+    }
+  };
+
+  const pause = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      setIsPlaying(false);
+    }
+  };
+
+  // Initialize audio and load mute state from localStorage
+  useEffect(() => {
+    // Check if user has explicitly set a music preference
+    const userHasSetPreference = localStorage.getItem('safhira-music-user-set') === 'true';
+    const savedMuteState = localStorage.getItem('safhira-music-muted');
+
+    let shouldBeMuted = false;
+
+    if (userHasSetPreference && savedMuteState !== null) {
+      // User has explicitly set a preference, respect it
+      shouldBeMuted = savedMuteState === 'true';
+    } else {
+      // First time or no explicit preference, default to unmuted (playing)
+      shouldBeMuted = false;
+    }
+
+    setIsMuted(shouldBeMuted);
+
+    // Create audio element
+    const audio = new Audio('/simulator-music.mp3');
+    audio.loop = true;
+    audio.volume = 0.4;
+    audioRef.current = audio;
+
+    // Set initial mute state
+    audio.muted = shouldBeMuted;
+
+    // Always start playing the audio, but it will be muted if needed
+    audio.play().then(() => {
+      setIsPlaying(true);
+    }).catch((error) => {
+      console.log('Music autoplay prevented:', error.message);
+    });
+
+    // Add event listeners
+    const handlePlay = () => setIsPlaying(true);
+    const handlePause = () => setIsPlaying(false);
+    const handleEnded = () => setIsPlaying(false);
+
+    audio.addEventListener('play', handlePlay);
+    audio.addEventListener('pause', handlePause);
+    audio.addEventListener('ended', handleEnded);
+
+    // Listen for global toggle events from Phaser scenes
+    const handleGlobalToggle = () => {
+      if (toggleMuteRef.current) {
+        toggleMuteRef.current();
+      }
+    };
+    window.addEventListener('music-toggle-mute', handleGlobalToggle);
+
+    return () => {
+      audio.removeEventListener('play', handlePlay);
+      audio.removeEventListener('pause', handlePause);
+      audio.removeEventListener('ended', handleEnded);
+      window.removeEventListener('music-toggle-mute', handleGlobalToggle);
+      audio.pause();
+      audio.src = '';
+    };
+  }, []); // Empty dependency array - only run once on mount
+
+  return (
+    <MusicContext.Provider value={{
+      isPlaying,
+      isMuted,
+      toggleMute,
+      play,
+      pause
+    }}>
+      {children}
+    </MusicContext.Provider>
+  );
+}
+
+export function useMusic() {
+  const context = useContext(MusicContext);
+  if (context === undefined) {
+    throw new Error('useMusic must be used within a MusicProvider');
+  }
+  return context;
+}
+
+// Global music controller for Phaser scenes to use
+export const GlobalMusicController = {
+  toggleMute: () => {
+    if (typeof window !== 'undefined') {
+      const event = new CustomEvent('music-toggle-mute');
+      window.dispatchEvent(event);
+    }
+  },
+  isMuted: () => {
+    if (typeof window !== 'undefined') {
+      const userHasSetPreference = localStorage.getItem('safhira-music-user-set') === 'true';
+      const savedMuteState = localStorage.getItem('safhira-music-muted');
+
+      if (userHasSetPreference && savedMuteState !== null) {
+        return savedMuteState === 'true';
+      } else {
+        // Default to unmuted if no explicit preference
+        return false;
+      }
+    }
+    return false;
+  }
+};

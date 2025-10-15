@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 import { Suspense } from 'react';
 import { useTranslations } from 'next-intl';
+import { MusicProvider } from '@/app/contexts/MusicContext';
 
 const GameEmbed = dynamic(() => import('@/app/components/simulator/GameEmbed'), {
   ssr: false,
@@ -66,12 +67,14 @@ export default function SimulatorGamePage() {
   const headerHeight = useHeaderHeight();
 
   return (
-    <div className="w-full" style={{ height: `calc(100svh - ${headerHeight}px)` }}>
-      <Suspense fallback={<LoadingState />}>
-        <div className="relative h-full w-full">
-          <GameEmbed />
-        </div>
-      </Suspense>
-    </div>
+    <MusicProvider>
+      <div className="w-full" style={{ height: `calc(100svh - ${headerHeight}px)` }}>
+        <Suspense fallback={<LoadingState />}>
+          <div className="relative h-full w-full">
+            <GameEmbed />
+          </div>
+        </Suspense>
+      </div>
+    </MusicProvider>
   );
 }

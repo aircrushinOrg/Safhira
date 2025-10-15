@@ -18,7 +18,6 @@ import {
   type ConversationOverlayOpenDetail,
 } from '@/lib/simulator/overlay-events';
 import { GameConversationOverlay } from '@/app/components/simulator/GameConversationOverlay';
-import { MusicController } from '@/app/components/simulator/utils/MusicController';
 import { setGameTranslations, type GameTranslations } from '@/app/components/simulator/utils/gameI18n';
 
 export default function GameEmbed() {
@@ -102,7 +101,7 @@ export default function GameEmbed() {
         const activeScenes = gameRef.current.scene.getScenes(true);
         if (activeScenes.length > 0) {
           const currentScene = activeScenes[0];
-          MusicController.play(currentScene);
+          // Music is now handled by React context
         }
       }
     };
@@ -248,7 +247,6 @@ export default function GameEmbed() {
       const activeScenes = gameRef.current.scene.getScenes(true);
       if (activeScenes.length > 0) {
         const currentScene = activeScenes[0];
-        MusicController.play(currentScene);
         setAudioUnlocked(true);
       }
     }
@@ -311,7 +309,7 @@ export default function GameEmbed() {
     }
 
     return () => {
-      MusicController.stop();
+      // Music cleanup is handled by React context
       if (gameRef.current) {
         gameRef.current.destroy(true);
         gameRef.current = null;
@@ -438,8 +436,8 @@ export default function GameEmbed() {
           const currentScene = activeScenes[0];
           // Try to start music immediately on interaction
           if (currentScene.sound && currentScene.sound.locked) {
-            // The MusicController will handle unlocking when ready
-            MusicController.play(currentScene);
+            // Music is now handled by React context
+            // Music is now handled by React context
           }
         }
       }

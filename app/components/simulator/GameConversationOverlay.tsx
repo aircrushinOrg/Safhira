@@ -28,7 +28,7 @@ function getNpcImagePath(npcId: string): string {
   const imageMap: Record<string, string> = {
     'friend-girl-01': '/simulator-landing-friend-girl-01.png',
     'friend-boy-01': '/simulator-landing-friend-boy-01.png',
-    'doctor-girl-01': '/simulator-landing-doctor-girl-01r.png',
+    'doctor-girl-01': '/simulator-landing-doctor-girl-01.png',
     'doctor-boy-01': '/simulator-landing-doctor-boy-01.png',
     'classmate-both-01': '/simulator-landing-classmate-both-01.png',
   };

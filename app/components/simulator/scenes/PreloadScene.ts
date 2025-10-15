@@ -5,7 +5,7 @@
  */
 import * as Phaser from 'phaser';
 import { getGameTranslations } from '../utils/gameI18n';
-import { MusicController } from '../utils/MusicController';
+// Music is now handled by React context
 
 export class PreloadScene extends Phaser.Scene {
   constructor() {
@@ -113,23 +113,31 @@ export class PreloadScene extends Phaser.Scene {
     });
 
     // Load NPC sprites as sprite sheets (6 frames for idle animation)
-    this.load.spritesheet('simulator-boy-npc-bar', '/simulator-boy-npc-bar.png', {
+    this.load.spritesheet('simulator-npc-boy-jordan', '/simulator-npc-boy-jordan.png', {
       frameWidth: 32,
       frameHeight: 64,
     });
-    this.load.spritesheet('simulator-girl-npc-bar', '/simulator-girl-npc-bar.png', {
+    this.load.spritesheet('simulator-npc-girl-maya', '/simulator-npc-girl-maya.png', {
       frameWidth: 32,
       frameHeight: 64,
     });
-    this.load.spritesheet('simulator-girl-npc-doctor', '/simulator-girl-npc-doctor.png', {
+    this.load.spritesheet('simulator-npc-girl-drwong', '/simulator-npc-girl-drwong.png', {
       frameWidth: 32,
       frameHeight: 64,
     });
-    this.load.spritesheet('simulator-boy-npc-doctor', '/simulator-boy-npc-doctor.png', {
+    this.load.spritesheet('simulator-npc-boy-drtan', '/simulator-npc-boy-drtan.png', {
       frameWidth: 32,
       frameHeight: 64,
     });
-    this.load.spritesheet('simulator-both-npc-uni', '/simulator-both-npc-uni.png', {
+    this.load.spritesheet('simulator-npc-girl-alex', '/simulator-npc-girl-alex.png', {
+      frameWidth: 32,
+      frameHeight: 64,
+    });
+    this.load.spritesheet('simulator-npc-boy-alexa', '/simulator-npc-boy-alexa.png', {
+      frameWidth: 32,
+      frameHeight: 64,
+    });
+    this.load.spritesheet('simulator-npc-both-amir', '/simulator-npc-both-amir.png', {
       frameWidth: 32,
       frameHeight: 64,
     });
@@ -143,7 +151,7 @@ export class PreloadScene extends Phaser.Scene {
 
   create() {
     // Try to start music as early as possible (will set up unlock listeners if needed)
-    MusicController.play(this);
+    // Music is now handled by React context
 
     // Start the title scene
     this.scene.start('TitleScene');

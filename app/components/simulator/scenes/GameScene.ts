@@ -15,7 +15,7 @@ import { PlayerHitboxDebugger } from '../debugger/PlayerHitboxDebugger';
 import { SCENARIO_TEMPLATES } from '../../../../lib/simulator/scenarios';
 import type { ScenarioTemplate } from '../../../../lib/simulator/scenarios';
 import { type GameTranslations, getGameTranslations } from '../utils/gameI18n';
-import { MusicController } from '../utils/MusicController';
+import { GlobalMusicController } from '../../../contexts/MusicContext';
 import {
   emitConversationOverlayOpen,
   CONVERSATION_OVERLAY_CLOSE_EVENT,
@@ -203,7 +203,6 @@ export class GameScene extends Phaser.Scene {
     // Create menu button
     const { game: gameTexts } = getGameTranslations();
     this.createMenuButton(gameTexts.menu);
-    MusicController.play(this);
     this.createMusicToggleButton();
     this.updateMusicToggleLabel();
 
@@ -348,7 +347,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   private createMusicToggleButton(): void {
-    const iconKey = MusicController.isMuted() ? 'simulator-mute' : 'simulator-unmute';
+    const iconKey = GlobalMusicController.isMuted() ? 'simulator-mute' : 'simulator-unmute';
     this.musicToggleButton = this.add
       .image(
         this.cameras.main.width - 16,
@@ -362,24 +361,24 @@ export class GameScene extends Phaser.Scene {
       .setInteractive({ useHandCursor: true });
 
     this.musicToggleButton.on('pointerup', () => {
-      MusicController.toggleMute(this);
+      GlobalMusicController.toggleMute();
       this.updateMusicToggleLabel();
     });
   }
 
   private updateMusicToggleLabel(): void {
     if (!this.musicToggleButton) return;
-    const iconKey = MusicController.isMuted() ? 'simulator-mute' : 'simulator-unmute';
+    const iconKey = GlobalMusicController.isMuted() ? 'simulator-mute' : 'simulator-unmute';
     this.musicToggleButton.setTexture(iconKey);
   }
 
   private createNPCAnimations() {
     const spriteKeys = [
-      'simulator-boy-npc-bar',
-      'simulator-girl-npc-bar',
-      'simulator-boy-npc-doctor',
-      'simulator-girl-npc-doctor',
-      'simulator-both-npc-uni',
+      'simulator-npc-boy-jordan',
+      'simulator-npc-girl-maya',
+      'simulator-npc-boy-drtan',
+      'simulator-npc-girl-drwong',
+      'simulator-npc-both-amir',
     ];
 
     spriteKeys.forEach((textureKey) => {
@@ -534,16 +533,16 @@ export class GameScene extends Phaser.Scene {
   private createNPCs(): void {
     const npcConfigs = [
       {
-        scenarioId: this.playerGender === 'girl' ? 'outside-bar-girl' : 'outside-bar-boy',
-        sprite: this.playerGender === 'girl' ? 'simulator-girl-npc-bar' : 'simulator-boy-npc-bar',
+        scenarioId: this.playerGender === 'girl' ? 'party-pressure-girl' : 'party-pressure-boy',
+        sprite: this.playerGender === 'girl' ? 'simulator-npc-girl-maya' : 'simulator-npc-boy-jordan',
       },
       {
-        scenarioId: this.playerGender === 'girl' ? 'health-clinic-visit-girl' : 'health-clinic-visit-boy',
-        sprite: this.playerGender === 'girl' ? 'simulator-girl-npc-doctor' : 'simulator-boy-npc-doctor',
+        scenarioId: this.playerGender === 'girl' ? 'health-checkup-girl' : 'health-checkup-boy',
+        sprite: this.playerGender === 'girl' ? 'simulator-npc-girl-drwong' : 'simulator-npc-boy-drtan',
       },
       {
-        scenarioId: 'university-misinformation-both',
-        sprite: 'simulator-both-npc-uni',
+        scenarioId: 'correcting-misinformation-both',
+        sprite: 'simulator-npc-both-amir',
       },
     ];
 
@@ -553,11 +552,11 @@ export class GameScene extends Phaser.Scene {
     const spacing = 110;
     // Keep NPCs anchored near relevant map landmarks
     const npcPositions: Record<string, { x: number; y: number }> = {
-      'outside-bar-girl': { x: 1675, y: 1150 },
-      'outside-bar-boy': { x: 1675, y: 1150 },
-      'health-clinic-visit-girl': { x: 360, y: 2400 },
-      'health-clinic-visit-boy': { x: 360, y: 2400 },
-      'university-misinformation-both': { x: 688, y: 768 },
+      'party-pressure-girl': { x: 1675, y: 1150 },
+      'party-pressure-boy': { x: 1675, y: 1150 },
+      'health-checkup-girl': { x: 360, y: 2400 },
+      'health-checkup-boy': { x: 360, y: 2400 },
+      'correcting-misinformation-both': { x: 688, y: 768 },
     };
     const resolvedConfigs = npcConfigs
       .map(({ scenarioId, sprite }) => {

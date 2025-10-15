@@ -39,12 +39,12 @@ export type ScenarioTemplateConfig = ScenarioTemplate & {
 
 const SCENARIO_TEMPLATE_CONFIG: ScenarioTemplateConfig[] = [
   {
-    id: 'outside-bar-girl',
+    id: 'party-pressure-girl',
     label: 'Party Pressure',
     description:
       'Resist peer pressure and practise assertive refusal skills when a friend encourages risky behaviour at a party',
     scenario: {
-      id: 'outside-bar-girl',
+      id: 'party-pressure-girl',
       title: 'Party Pressure',
       setting:
         'Outside a bar in the morning; friends are planning to go to a party later on with other seniors.',
@@ -118,12 +118,12 @@ const SCENARIO_TEMPLATE_CONFIG: ScenarioTemplateConfig[] = [
     },
   },
   {
-    id: 'outside-bar-boy',
+    id: 'party-pressure-boy',
     label: 'Party Pressure',
     description:
       'Learn to resist ego-based peer pressure and stay confident in your own boundaries when a friend challenges your decisions.',
     scenario: {
-      id: 'outside-bar-boy',
+      id: 'party-pressure-boy',
       title: 'Party Pressure',
       setting:
         'Outside a bar in the morning; friends are planning to go to a party later on to hook up with girls.',
@@ -197,12 +197,12 @@ const SCENARIO_TEMPLATE_CONFIG: ScenarioTemplateConfig[] = [
     },
   },
   {
-    id: 'health-clinic-visit-girl',
+    id: 'health-checkup-girl',
     label: 'The STI Check',
     description:
       'Learn what happens during an STI check-up and how to talk openly with a healthcare professional about female sexual and reproductive health.',
     scenario: {
-      id: 'health-clinic-visit-girl',
+      id: 'health-checkup-girl',
       title: 'The STI Check',
       setting:
         'Community health clinic consultation room. The player has come in after noticing unusual discharge or wanting peace of mind after unprotected sex.',
@@ -277,12 +277,12 @@ const SCENARIO_TEMPLATE_CONFIG: ScenarioTemplateConfig[] = [
     },
   },
   {
-    id: 'health-clinic-visit-boy',
+    id: 'health-checkup-boy',
     label: 'The STI Check',
     description:
       'Understand what to expect during an STI check-up and learn how to discuss male sexual health and prevention confidently with a doctor.',
     scenario: {
-      id: 'health-clinic-visit-boy',
+      id: 'health-checkup-boy',
       title: 'The STI Check',
       setting:
         'Men’s health clinic or general practice. The player visits for an STI screening after a recent unprotected encounter or a partner’s suggestion.',
@@ -357,12 +357,12 @@ const SCENARIO_TEMPLATE_CONFIG: ScenarioTemplateConfig[] = [
     },
   },
   {
-    id: 'university-misinformation-both',
+    id: 'correcting-misinformation-both',
     label: 'Misinformation',
     description:
       'Practise correcting common sexual health myths and encouraging shared responsibility in a calm, respectful way.',
     scenario: {
-      id: 'university-misinformation-both',
+      id: 'correcting-misinformation-both',
       title: 'Mixed Messages',
       setting: 'Outside university.',
       learningObjectives:

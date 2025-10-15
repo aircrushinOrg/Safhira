@@ -2058,11 +2058,11 @@
         "fallbackPersona": "我会在这里支持你。",
         "message": "今天练习{scenario}，你感觉怎么样？我是{name}。{persona}",
         "scenarioMessages": {
-          "outside-bar-girl": "喂，我是{name}！大家都在聊今晚的派对——你要不要一起去，还是又想逃走？",
-          "outside-bar-boy": "嘿，我是{name}。今晚有派对，你准备好去认识新人了吗，还是要我再推你一下？",
-          "health-clinic-visit-girl": "你好，我是{name}。今天是什么情况让你来呢？有没有什么地方不舒服？",
-          "health-clinic-visit-boy": "嗨，我是{name}。最近发生了什么，或有任何不舒服，让你想来做这次性病筛检吗？",
-          "university-misinformation-both": "嘿，我是{name}。有人说只要双方都觉得身体健康，约会几次之后就可以不戴安全套——你觉得这样靠谱吗？"
+          "party-pressure-girl": "喂，我是{name}！大家都在聊今晚的派对——你要不要一起去，还是又想逃走？",
+          "party-pressure-boy": "嘿，我是{name}。今晚有派对，你准备好去认识新人了吗，还是要我再推你一下？",
+          "health-checkup-girl": "你好，我是{name}。今天是什么情况让你来呢？有没有什么地方不舒服？",
+          "health-checkup-boy": "嗨，我是{name}。最近发生了什么，或有任何不舒服，让你想来做这次性病筛检吗？",
+          "correcting-misinformation-both": "嘿，我是{name}。有人说只要双方都觉得身体健康，约会几次之后就可以不戴安全套——你觉得这样靠谱吗？"
         }
       }
     }

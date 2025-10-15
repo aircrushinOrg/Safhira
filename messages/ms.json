@@ -2061,11 +2061,11 @@
         "fallbackPersona": "Saya di sini untuk menyokong anda.",
         "message": "Bagaimana perasaan anda untuk berlatih {scenario} hari ini? Saya {name}. {persona}",
         "scenarioMessages": {
-          "outside-bar-girl": "Hoi, ini {name}! Semua orang tengah semangat nak pergi parti malam ni — awak ikut sekali ke nak tarik diri lagi?",
-          "outside-bar-boy": "Yo, {name} di sini. Parti malam ni — awak berani nak sembang dengan orang baru tak atau perlu aku tolong push?",
-          "health-clinic-visit-girl": "Hai, saya {name}. Apa yang bawa awak datang hari ni, ada lelehan atau perubahan lain yang awak risaukan?",
-          "health-clinic-visit-boy": "Hai, saya {name}. Ada pengalaman atau gejala baru-baru ni yang buat awak nak jalani pemeriksaan STI ni?",
-          "university-misinformation-both": "Hei, {name} ni. Ada kawan kata kalau dua-dua rasa sihat, lepas beberapa temu janji boleh je tak guna kondom — logik ke tu?"
+          "party-pressure-girl": "Hoi, ini {name}! Semua orang tengah semangat nak pergi parti malam ni — awak ikut sekali ke nak tarik diri lagi?",
+          "party-pressure-boy": "Yo, {name} di sini. Parti malam ni — awak berani nak sembang dengan orang baru tak atau perlu aku tolong push?",
+          "health-checkup-girl": "Hai, saya {name}. Apa yang bawa awak datang hari ni, ada lelehan atau perubahan lain yang awak risaukan?",
+          "health-checkup-boy": "Hai, saya {name}. Ada pengalaman atau gejala baru-baru ni yang buat awak nak jalani pemeriksaan STI ni?",
+          "correcting-misinformation-both": "Hei, {name} ni. Ada kawan kata kalau dua-dua rasa sihat, lepas beberapa temu janji boleh je tak guna kondom — logik ke tu?"
         }
       }
     }

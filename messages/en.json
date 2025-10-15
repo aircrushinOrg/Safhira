@@ -2058,11 +2058,11 @@
         "fallbackPersona": "I'm right here to support you.",
         "message": "How are you feeling about practising {scenario} today? I'm {name}. {persona}",
         "scenarioMessages": {
-          "outside-bar-girl": "Hey, it's {name}! We're hyping up the party tonight — are you coming with us or sitting it out again?",
-          "outside-bar-boy": "Yo, it's {name}. Party's on later — are you ready to chat someone up or do I need to nudge you?",
-          "health-clinic-visit-girl": "Hi, I'm {name}. What brought you in today, and are you noticing any discharge or changes you want to talk through?",
-          "health-clinic-visit-boy": "Hey there, I'm {name}. Did something happen recently or are there any symptoms you're worried about that made you book this STI check?",
-          "university-misinformation-both": "Hey, it's {name}. Some friends say if both people feel healthy you can skip condoms after a few dates — does that actually sound right to you?"
+          "party-pressure-girl": "Hey, it's {name}! We're hyping up the party tonight — are you coming with us or sitting it out again?",
+          "party-pressure-boy": "Yo, it's {name}. Party's on later — are you ready to chat someone up or do I need to nudge you?",
+          "health-checkup-girl": "Hi, I'm {name}. What brought you in today, and are you noticing any discharge or changes you want to talk through?",
+          "health-checkup-boy": "Hey there, I'm {name}. Did something happen recently or are there any symptoms you're worried about that made you book this STI check?",
+          "correcting-misinformation-both": "Hey, it's {name}. Some friends say if both people feel healthy you can skip condoms after a few dates — does that actually sound right to you?"
         }
       }
     }

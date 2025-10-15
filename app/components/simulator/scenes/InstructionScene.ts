@@ -5,7 +5,7 @@
  */
 import * as Phaser from 'phaser';
 import { getGameTranslations, type GameTranslations } from '../utils/gameI18n';
-import { MusicController } from '../utils/MusicController';
+import { GlobalMusicController } from '../../../contexts/MusicContext';
 
 export class InstructionScene extends Phaser.Scene {
   private backButton!: Phaser.GameObjects.Text;
@@ -101,7 +101,7 @@ export class InstructionScene extends Phaser.Scene {
     this.setupKeyboardControls(isSmallScreen);
 
     this.addVisualEffects();
-    MusicController.play(this);
+    // Music is now handled by React context
     this.createMusicToggle();
     this.updateMusicToggleLabel();
   }
@@ -265,7 +265,7 @@ export class InstructionScene extends Phaser.Scene {
   }
 
   private createMusicToggle(): void {
-    const iconKey = MusicController.isMuted() ? 'simulator-mute' : 'simulator-unmute';
+    const iconKey = GlobalMusicController.isMuted() ? 'simulator-mute' : 'simulator-unmute';
     this.musicToggleButton = this.add
       .image(
         this.cameras.main.width - 16,
@@ -279,14 +279,14 @@ export class InstructionScene extends Phaser.Scene {
       .setInteractive({ useHandCursor: true });
 
     this.musicToggleButton.on('pointerup', () => {
-      MusicController.toggleMute(this);
+      GlobalMusicController.toggleMute();
       this.updateMusicToggleLabel();
     });
   }
 
   private updateMusicToggleLabel(): void {
     if (!this.musicToggleButton) return;
-    const iconKey = MusicController.isMuted() ? 'simulator-mute' : 'simulator-unmute';
+    const iconKey = GlobalMusicController.isMuted() ? 'simulator-mute' : 'simulator-unmute';
     this.musicToggleButton.setTexture(iconKey);
   }
 }
