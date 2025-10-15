@@ -54,7 +54,7 @@ export default async function SimulatorLandingPage() {
   }));
 
   return (
-    <div className="relative isolate overflow-hidden bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50">
+    <div className="relative isolate min-h-screen overflow-hidden bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-50">
       <div className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-br from-teal-200/40 via-cyan-100/40 to-indigo-200/50 dark:from-teal-500/30 dark:via-cyan-500/10 dark:to-indigo-500/30" />
         <Image
@@ -68,9 +68,9 @@ export default async function SimulatorLandingPage() {
         <div className="absolute inset-0 bg-white/70 dark:bg-slate-950/60" />
       </div>
 
-      <section className="mx-auto max-w-6xl px-4 py-20 md:px-6 md:py-24">
+      <section className="mx-auto max-w-6xl px-4 py-8 sm:py-12 md:px-6 md:py-16">
         <BreadcrumbTrail items={breadcrumbs} />
-        <div className="mt-4 grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+        <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
           <div className="space-y-6">
             <span className="inline-flex items-center gap-2 rounded-full border border-teal-400/40 bg-teal-500/15 px-4 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-teal-700 dark:bg-teal-500/10 dark:text-teal-200">
               <Gamepad2 className="size-4" />
