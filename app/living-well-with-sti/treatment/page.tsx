@@ -122,7 +122,7 @@ export default function TreatmentAdherencePage() {
     },
     upcomingDose
       ? {
-          label: 'Next dose',
+          label: t('adherence.nextDose'),
           value: `${weekdayFormatter.format(upcomingDose.date)} • ${timeFormatter.format(upcomingDose.date)}`,
           icon: Droplets,
         }
@@ -455,7 +455,7 @@ export default function TreatmentAdherencePage() {
                   <div className="absolute inset-x-6 top-4 h-px bg-gradient-to-r from-transparent via-teal-400/60 to-transparent" />
                   <div className="mb-5 flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.2em] text-teal-600 dark:text-teal-300">
                     <Sparkles className="h-4 w-4" />
-                    Wellness Snapshot
+                    {t("adherence.snapshot")}
                   </div>
                   <div className="grid gap-3">
                     {heroStats.map(({ label, value, icon: Icon }, index) => (

@@ -7,7 +7,7 @@
  */
 'use client'
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Card } from '../ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
@@ -18,6 +18,66 @@ import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simp
 import { stiTypes, type STIType, type Year } from '@/types/sti-prevalence';
 import { useIsMobile } from '../ui/use-mobile';
 import {useTranslations} from 'next-intl';
+
+// Normalizes localized state names so they line up with the GeoJSON dataset keys
+const stateNameLookup: Record<string, string> = {
+  johor: 'Johor',
+  '柔佛': 'Johor',
+  kedah: 'Kedah',
+  '吉打': 'Kedah',
+  kelantan: 'Kelantan',
+  '吉兰丹': 'Kelantan',
+  melaka: 'Melaka',
+  malacca: 'Melaka',
+  '马六甲': 'Melaka',
+  'negeri sembilan': 'Negeri Sembilan',
+  '森美兰': 'Negeri Sembilan',
+  pahang: 'Pahang',
+  '彭亨': 'Pahang',
+  perak: 'Perak',
+  '霹雳': 'Perak',
+  perlis: 'Perlis',
+  '玻璃市': 'Perlis',
+  'pulau pinang': 'Pulau Pinang',
+  penang: 'Pulau Pinang',
+  '槟城': 'Pulau Pinang',
+  sabah: 'Sabah',
+  '沙巴': 'Sabah',
+  sarawak: 'Sarawak',
+  '砂拉越': 'Sarawak',
+  selangor: 'Selangor',
+  '雪兰莪': 'Selangor',
+  terengganu: 'Terengganu',
+  '登嘉楼': 'Terengganu',
+  'w.p. kuala lumpur': 'W.P. Kuala Lumpur',
+  'wilayah persekutuan kuala lumpur': 'W.P. Kuala Lumpur',
+  '吉隆坡联邦直辖区': 'W.P. Kuala Lumpur',
+  'kuala lumpur': 'W.P. Kuala Lumpur',
+  'w.p. labuan': 'W.P. Labuan',
+  'wilayah persekutuan labuan': 'W.P. Labuan',
+  '纳闽联邦直辖区': 'W.P. Labuan',
+  labuan: 'W.P. Labuan',
+  putrajaya: 'Putrajaya',
+  'wilayah persekutuan putrajaya': 'Putrajaya',
+  '布城联邦直辖区': 'Putrajaya',
+};
+
+const getStateKey = (stateName: string) => {
+  const normalized = stateName?.trim().toLowerCase();
+  if (!normalized) return stateName;
+  return stateNameLookup[normalized] ?? stateName;
+};
+
+const diseaseKeyLookup: Record<string, STIType> = {
+  hiv: 'hiv',
+  hivaids: 'hiv',
+  aids: 'aids',
+  gonorrhea: 'gonorrhea',
+  gonorrhoea: 'gonorrhea',
+  syphilis: 'syphillis',
+  syphillis: 'syphillis',
+  chancroid: 'chancroid',
+};
 
 interface SharedData {
   states: string[];
@@ -46,6 +106,17 @@ export function STIChoroplethChart({ sharedData }: STIChoroplethChartProps) {
   // Use shared data
   const { years, diseases, incidenceData: allIncidenceData, loading } = sharedData; 
 
+  const localizedStateLabels = useMemo(() => {
+    if (!sharedData.states.length) return {} as Record<string, string>;
+    return sharedData.states.reduce((acc, stateName) => {
+      const key = getStateKey(stateName);
+      if (key) {
+        acc[key] = stateName;
+      }
+      return acc;
+    }, {} as Record<string, string>);
+  }, [sharedData.states]);
+
   // Filter function to get incidence data by year and disease
   const getFilteredIncidenceData = (year: number, disease: string) => {
     return allIncidenceData.filter(item => 
@@ -53,13 +124,22 @@ export function STIChoroplethChart({ sharedData }: STIChoroplethChartProps) {
     );
   };
   
+  const sanitizeDiseaseKey = (diseaseName: string) => diseaseName.toLowerCase().replace(/[^a-z0-9]/g, '');
+
   // Initialize selections when shared data loads
   useEffect(() => {
-    if (!loading && years.length > 0 && diseases.length > 0) {
+    if (!loading && years.length > 0) {
       setSelectedYear(years[0] as Year);
-      setSelectedSTI(diseases[0].toLowerCase().replace(/[^a-z0-9]/g, '') as STIType);
     }
-  }, [loading, years, diseases]);
+  }, [loading, years]);
+
+  useEffect(() => {
+    if (!loading && diseases.length > 0) {
+      const rawKey = sanitizeDiseaseKey(diseases[0]);
+      const matchedKey = (rawKey && (diseaseKeyLookup[rawKey] ?? (Object.prototype.hasOwnProperty.call(stiTypes, rawKey) ? rawKey : undefined))) as STIType | undefined;
+      setSelectedSTI(matchedKey ?? 'hiv');
+    }
+  }, [loading, diseases]);
 
   // Load Malaysia GeoJSON data on mount
   useEffect(() => {
@@ -125,9 +205,11 @@ export function STIChoroplethChart({ sharedData }: STIChoroplethChartProps) {
   };
 
   // Get current data from database instead of static data
-  const selectedDiseaseFromDb = diseases.find(d => 
-    d.toLowerCase().replace(/[^a-z0-9]/g, '') === selectedSTI
-  ) || diseases[0] || 'HIV/AIDS';
+  const selectedDiseaseFromDb = diseases.find(d => {
+    const sanitized = sanitizeDiseaseKey(d);
+    const matchedKey = diseaseKeyLookup[sanitized] ?? sanitized;
+    return matchedKey === selectedSTI;
+  }) || diseases[0] || 'HIV/AIDS';
   
   const rawCurrentData = getFilteredIncidenceData(selectedYear, selectedDiseaseFromDb);
   
@@ -146,24 +228,31 @@ export function STIChoroplethChart({ sharedData }: STIChoroplethChartProps) {
   const minRate = allRatesForDisease.length > 0 ? Math.min(...allRatesForDisease) : 0;
 
   const normalizeStateName = (geoJsonName: string): string => {
-    return geoJsonName;
+    return getStateKey(geoJsonName);
   };
 
   // Create a lookup map for state data
   const stateDataMap = currentData.reduce((acc, item) => {
-    acc[item.state] = item.rate;
+    const key = getStateKey(item.state);
+    if (key) {
+      acc[key] = item.rate;
+    }
     return acc;
   }, {} as Record<string, number>);
 
   // Color intensity based on rate
   const getColorIntensity = (rate: number) => {
+    if (maxRate === minRate) {
+      return rate > 0 ? 1 : 0.2;
+    }
     const normalized = (rate - minRate) / (maxRate - minRate);
     return Math.max(0.2, Math.min(1, normalized));
   };
 
   // Get color based on STI type and intensity
   const getStateColor = (stateName: string) => {
-    const rate = stateDataMap[stateName] || 0;
+    const key = getStateKey(stateName);
+    const rate = key ? stateDataMap[key] || 0 : 0;
     const intensity = getColorIntensity(rate);
     const colors = {
       hiv: `rgba(219, 39, 119, ${intensity})`, // Pink
@@ -172,7 +261,7 @@ export function STIChoroplethChart({ sharedData }: STIChoroplethChartProps) {
       chancroid: `rgba(234, 88, 12, ${intensity})`, // Orange
       aids: `rgba(220, 38, 38, ${intensity})`, // Red
     };
-    return colors[selectedSTI];
+    return colors[selectedSTI] ?? `rgba(148, 163, 184, ${intensity})`;
   };
 
   // Get gradient colors for legend based on selected STI
@@ -414,8 +503,8 @@ export function STIChoroplethChart({ sharedData }: STIChoroplethChartProps) {
                   transform: 'translate(0, -100%)'
                 }}
               >
-                <div className="font-semibold">{hoveredState}</div>
-                <div>{stiTypes[selectedSTI] || selectedDiseaseFromDb}: {stateDataMap[normalizeStateName(hoveredState)] || 0}/100k</div>
+                <div className="font-semibold">{localizedStateLabels[getStateKey(hoveredState)] ?? hoveredState}</div>
+                <div>{stiTypes[selectedSTI] || selectedDiseaseFromDb}: {stateDataMap[getStateKey(hoveredState)] || 0}/100k</div>
                 <div className="text-gray-300">Year: {selectedYear}</div>
               </motion.div>
             )}

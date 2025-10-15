@@ -1198,6 +1198,8 @@
     "adherence": {
       "title": "Kepatuhan Rawatan",
       "subtitle": "Kekal ikut rawatan anda dan urus kesan sampingan dengan berkesan",
+      "snapshot": "Gambaran Kesihatan",
+      "nextDose": "Dos seterusnya",
       "regimen": {
         "label": "Regimen anda",
         "options": {

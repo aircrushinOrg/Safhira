@@ -218,7 +218,7 @@ export default function RelationshipsPage() {
                       <div>
                         <Label htmlFor="tplKind">{t("partner.templates.label")}</Label>
                         <Select value={tplKey} onValueChange={setTplKey}>
-                          <SelectTrigger id="tplKind" className="mt-2 border border-gray-200 dark:border-white">
+                          <SelectTrigger id="tplKind" className="mt-2 border border-gray-200 dark:border-gray-600">
                             <SelectValue placeholder={t("partner.templates.choose")} />
                           </SelectTrigger>
                           <SelectContent>
@@ -348,7 +348,7 @@ export default function RelationshipsPage() {
                       <div>
                         <Label htmlFor="stiType">{t("partner.safer.stiLabel")}</Label>
                         <Select value={stiType} onValueChange={(v) => setStiType(v as StiType)}>
-                          <SelectTrigger id="stiType" className="mt-2">
+                          <SelectTrigger id="stiType" className="mt-2 border border-gray-200 dark:border-gray-600">
                             <SelectValue placeholder={t("partner.safer.chooseSti")} />
                           </SelectTrigger>
                           <SelectContent>
@@ -389,6 +389,7 @@ export default function RelationshipsPage() {
                         
                         <div className="flex items-center gap-2 mb-3">
                           <Switch 
+                            className="bg-gray-200 dark:bg-gray-600"
                             id="loc" 
                             checked={locationShared} 
                             onCheckedChange={(v) => setLocationShared(!!v)} 

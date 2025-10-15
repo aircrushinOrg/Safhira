@@ -20,8 +20,8 @@
   },
   "hero": {
     "slide1": {
-      "heading": "您的安全港湾",
-      "headingHighlighted": "学习性健康知识",
+      "heading": "您的性健康知识",
+      "headingHighlighted": "安全港湾",
       "subheading": "在一个安全、无污名的环境中探索人际关系和生殖健康，您的问题总是受到欢迎。"
     },
     "slide2": {
@@ -39,7 +39,7 @@
     },
     "slide4": {
       "heading": "寻找附近的",
-      "headingHighlighted": "性健康服务提供者",
+      "headingHighlighted": "性健康服务诊所",
       "subheading": "定位您附近可信赖的本地诊所和医疗服务，在需要时轻松获得性健康服务。",
       "button": "查找医疗保健"
     },
@@ -1198,6 +1198,8 @@
     "adherence": {
       "title": "治疗依从性",
       "subtitle": "坚持按时用药，并有效管理副作用",
+      "snapshot": "健康速览",
+      "nextDose": "下一次服药",
       "regimen": {
         "label": "你的用药方案",
         "options": {

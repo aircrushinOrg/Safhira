@@ -1198,6 +1198,8 @@
     "adherence": {
       "title": "Treatment Adherence",
       "subtitle": "Stay on track with your treatment and manage side effects effectively",
+      "snapshot": "Wellness Snapshot",
+      "nextDose": "Next dose",
       "regimen": {
         "label": "Your regimen",
         "options": {
