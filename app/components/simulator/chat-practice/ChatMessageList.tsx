@@ -49,7 +49,7 @@ export function ChatMessageList({
               className={cn(
                 'max-w-[85%] rounded-2xl px-4 py-3 text-sm shadow-sm transition',
                 message.role === 'player'
-                  ? 'bg-teal-500 text-slate-900 shadow-teal-500/20 dark:bg-teal-300'
+                  ? 'bg-teal-500 text-white shadow-teal-500/20 dark:bg-teal-700 dark:text-white'
                   : 'bg-white text-slate-800 shadow-slate-900/10 dark:bg-slate-800 dark:text-slate-100',
               )}
             >

@@ -170,7 +170,7 @@ export default function RelationshipsPage() {
                 >
                   <div className="mb-4 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.25em] text-teal-700 dark:text-emerald-200">
                     <Sparkles className="h-4 w-4" />
-                    Toolkit Highlights
+                    {t("partner.toolkitHighlights")}
                   </div>
                   <div className="space-y-3 text-sm text-slate-600 dark:text-slate-200">
                     <p>{t("partner.tabs.templates")}: {t("partner.templates.desc")}</p>
@@ -218,7 +218,7 @@ export default function RelationshipsPage() {
                       <div>
                         <Label htmlFor="tplKind">{t("partner.templates.label")}</Label>
                         <Select value={tplKey} onValueChange={setTplKey}>
-                          <SelectTrigger id="tplKind" className="mt-2">
+                          <SelectTrigger id="tplKind" className="mt-2 border border-black dark:border-white">
                             <SelectValue placeholder={t("partner.templates.choose")} />
                           </SelectTrigger>
                           <SelectContent>

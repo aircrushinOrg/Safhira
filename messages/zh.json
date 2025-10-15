@@ -1551,6 +1551,7 @@
     "partner": {
       "title": "与您的伴侣沟通",
       "subtitle": "用尊重的方式沟通并彼此保护，附带按 STI 类型定制的更安全性行为指南。",
+      "toolkitHighlights": "工具箱预览",
       "tabs": {
         "templates": "消息模板",
         "safer": "更安全性行为"
