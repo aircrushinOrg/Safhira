@@ -218,7 +218,7 @@ export default function RelationshipsPage() {
                       <div>
                         <Label htmlFor="tplKind">{t("partner.templates.label")}</Label>
                         <Select value={tplKey} onValueChange={setTplKey}>
-                          <SelectTrigger id="tplKind" className="mt-2 border border-black dark:border-white">
+                          <SelectTrigger id="tplKind" className="mt-2 border border-gray-200 dark:border-white">
                             <SelectValue placeholder={t("partner.templates.choose")} />
                           </SelectTrigger>
                           <SelectContent>
