@@ -22,9 +22,9 @@ export function MusicProvider({ children }: { children: React.ReactNode }) {
     const newMutedState = !isMuted;
     setIsMuted(newMutedState);
 
-    // Save to localStorage AND mark that user has explicitly set a preference
-    localStorage.setItem('safhira-music-muted', newMutedState.toString());
-    localStorage.setItem('safhira-music-user-set', 'true');
+    // Save to sessionStorage AND mark that user has explicitly set a preference
+    sessionStorage.setItem('safhira-music-muted', newMutedState.toString());
+    sessionStorage.setItem('safhira-music-user-set', 'true');
 
     if (audioRef.current) {
       // Just toggle the muted property - audio keeps playing but silenced
@@ -61,11 +61,11 @@ export function MusicProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  // Initialize audio and load mute state from localStorage
+  // Initialize audio and load mute state from sessionStorage
   useEffect(() => {
     // Check if user has explicitly set a music preference
-    const userHasSetPreference = localStorage.getItem('safhira-music-user-set') === 'true';
-    const savedMuteState = localStorage.getItem('safhira-music-muted');
+    const userHasSetPreference = sessionStorage.getItem('safhira-music-user-set') === 'true';
+    const savedMuteState = sessionStorage.getItem('safhira-music-muted');
 
     let shouldBeMuted = false;
 
@@ -153,8 +153,8 @@ export const GlobalMusicController = {
   },
   isMuted: () => {
     if (typeof window !== 'undefined') {
-      const userHasSetPreference = localStorage.getItem('safhira-music-user-set') === 'true';
-      const savedMuteState = localStorage.getItem('safhira-music-muted');
+      const userHasSetPreference = sessionStorage.getItem('safhira-music-user-set') === 'true';
+      const savedMuteState = sessionStorage.getItem('safhira-music-muted');
 
       if (userHasSetPreference && savedMuteState !== null) {
         return savedMuteState === 'true';
