@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
+import { Loader2, Mic, Square } from 'lucide-react';
 import {
   type AnalysisApiResponse,
   type AnalysisSkipResponse,
@@ -22,6 +23,7 @@ import { ChatFinalReportDialog } from './chat-practice/ChatFinalReportDialog';
 import { ChatMessageList } from './chat-practice/ChatMessageList';
 import { ChatPracticeHeader } from './chat-practice/ChatPracticeHeader';
 import { ChatSummaryPanel } from './chat-practice/ChatSummaryPanel';
+import { Button } from '@/app/components/ui/button';
 
 export type { ChatTemplate } from './chat-practice/types';
 
@@ -37,6 +39,29 @@ type ChatPracticeProps = {
   template: ChatTemplate;
   aiTemplate?: ChatTemplate;
 };
+
+type WebSpeechRecognitionEvent = {
+  results?: ArrayLike<{ isFinal?: boolean; [key: number]: { transcript?: string } }>;
+  resultIndex?: number;
+};
+
+type WebSpeechRecognitionErrorEvent = {
+  error?: string;
+};
+
+type WebSpeechRecognition = {
+  lang: string;
+  continuous: boolean;
+  interimResults: boolean;
+  start: () => void;
+  stop: () => void;
+  abort: () => void;
+  onresult: ((event: WebSpeechRecognitionEvent) => void) | null;
+  onerror: ((event: WebSpeechRecognitionErrorEvent) => void) | null;
+  onend: (() => void) | null;
+};
+
+type WebSpeechRecognitionConstructor = new () => WebSpeechRecognition;
 
 function splitLines(value: string) {
   return value
@@ -115,10 +140,30 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
     options: SuggestedQuestions;
   } | null>(null);
   const [loadingSuggestions, setLoadingSuggestions] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
+  const [transcribingSpeech, setTranscribingSpeech] = useState(false);
+  const [speechError, setSpeechError] = useState<string | null>(null);
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const typingTimeoutRef = useRef<number | null>(null);
   const progressIntervalRef = useRef<number | null>(null);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const mediaStreamRef = useRef<MediaStream | null>(null);
+  const recordedChunksRef = useRef<Blob[]>([]);
+  const componentUnmountedRef = useRef(false);
+  const recognitionRef = useRef<WebSpeechRecognition | null>(null);
+  const webSpeechTranscriptRef = useRef('');
+  const webSpeechActiveRef = useRef(false);
+  const recognitionLanguage = useMemo(() => {
+    switch (locale) {
+      case 'ms':
+        return 'ms-MY';
+      case 'zh':
+        return 'zh-CN';
+      default:
+        return 'en-US';
+    }
+  }, [locale]);
 
   useEffect(() => {
     const node = scrollRef.current;
@@ -152,6 +197,38 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
 
     return () => clearTimeout(timeoutId);
   }, [isStreamingReply, loading]);
+
+  useEffect(() => {
+    return () => {
+      componentUnmountedRef.current = true;
+
+      if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
+        recordedChunksRef.current = [];
+        try {
+          mediaRecorderRef.current.stop();
+        } catch (stopError) {
+          console.error('Failed to stop media recorder during cleanup:', stopError);
+        }
+      }
+
+      if (mediaStreamRef.current) {
+        mediaStreamRef.current.getTracks().forEach((track) => track.stop());
+        mediaStreamRef.current = null;
+      }
+
+      if (recognitionRef.current) {
+        try {
+          recognitionRef.current.stop();
+        } catch (recognitionError) {
+          console.error('Failed to stop speech recognition during cleanup:', recognitionError);
+        }
+        recognitionRef.current = null;
+      }
+
+      webSpeechActiveRef.current = false;
+      webSpeechTranscriptRef.current = '';
+    };
+  }, []);
 
   const trimmedDraft = draft.trim();
   const canSend =
@@ -221,6 +298,354 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
 
   const displayedScore = persistedScore;
   const reportActionDisabled = !sessionId || finalizing || (reportGenerated && !finalReport);
+  const speechButtonLabel = isRecording ? t('speech.stop') : t('speech.start');
+  const speechAriaLabel = transcribingSpeech ? t('speech.transcribing') : speechButtonLabel;
+  const speechButtonDisabled =
+    !isRecording && (conversationBusy || conversationComplete || transcribingSpeech);
+
+  const updateSpeechError = useCallback(
+    (message: string | null) => {
+      if (componentUnmountedRef.current) {
+        return;
+      }
+      setSpeechError(message);
+    },
+    [componentUnmountedRef],
+  );
+
+  const stopSpeechCapture = useCallback(() => {
+    if (!isRecording) {
+      return;
+    }
+
+    if (webSpeechActiveRef.current && recognitionRef.current) {
+      try {
+        recognitionRef.current.stop();
+      } catch (recognitionError) {
+        console.error('Failed to stop speech recognition:', recognitionError);
+        updateSpeechError(t('speech.error'));
+      }
+      return;
+    }
+
+    const recorder = mediaRecorderRef.current;
+    if (recorder && recorder.state !== 'inactive') {
+      try {
+        recorder.stop();
+      } catch (recorderError) {
+        console.error('Failed to stop recorder:', recorderError);
+        updateSpeechError(t('speech.error'));
+      }
+    }
+  }, [isRecording, t, updateSpeechError]);
+
+  const startSpeechCapture = useCallback(async () => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    if (isRecording || transcribingSpeech || conversationComplete || conversationBusy) {
+      return;
+    }
+
+    const speechRecognitionCtor: WebSpeechRecognitionConstructor | undefined =
+      ((window as typeof window & {
+        SpeechRecognition?: WebSpeechRecognitionConstructor;
+        webkitSpeechRecognition?: WebSpeechRecognitionConstructor;
+      }).SpeechRecognition ??
+        (window as typeof window & { webkitSpeechRecognition?: WebSpeechRecognitionConstructor }).webkitSpeechRecognition);
+
+    if (speechRecognitionCtor) {
+      try {
+        updateSpeechError(null);
+        const recognition = new speechRecognitionCtor();
+        recognition.lang = recognitionLanguage;
+        recognition.interimResults = true;
+        recognition.continuous = false;
+        recognition.onresult = (event) => {
+          if (!event?.results) {
+            return;
+          }
+
+          let aggregate = '';
+          for (let index = 0; index < event.results.length; index += 1) {
+            const result = event.results[index];
+            if (!result || !result[0]) {
+              continue;
+            }
+
+            const transcript = result[0]?.transcript ?? '';
+            if (transcript) {
+              aggregate = `${aggregate} ${transcript}`.trim();
+            }
+          }
+
+          if (aggregate) {
+            webSpeechTranscriptRef.current = aggregate;
+            updateSpeechError(null);
+          }
+        };
+
+        recognition.onerror = (event) => {
+          console.error('Speech recognition error:', event);
+          webSpeechActiveRef.current = false;
+          webSpeechTranscriptRef.current = '';
+
+          if (componentUnmountedRef.current) {
+            return;
+          }
+
+          if (event?.error === 'aborted') {
+            return;
+          }
+
+          setIsRecording(false);
+          setTranscribingSpeech(false);
+          recognitionRef.current = null;
+
+          if (event?.error === 'not-allowed') {
+            updateSpeechError(t('speech.permissionDenied'));
+          } else if (event?.error === 'no-speech') {
+            updateSpeechError(t('speech.error'));
+          } else {
+            updateSpeechError(t('speech.error'));
+          }
+        };
+
+        recognition.onend = () => {
+          if (componentUnmountedRef.current) {
+            return;
+          }
+
+          webSpeechActiveRef.current = false;
+          recognitionRef.current = null;
+          setIsRecording(false);
+          setTranscribingSpeech(false);
+
+          const transcript = webSpeechTranscriptRef.current.trim();
+          webSpeechTranscriptRef.current = '';
+
+          if (transcript) {
+            updateSpeechError(null);
+            setDraft((prev) => {
+              if (!prev) {
+                return transcript;
+              }
+
+              const needsSpace = !/\s$/.test(prev);
+              return `${prev}${needsSpace ? ' ' : ''}${transcript}`;
+            });
+          }
+        };
+
+        recognitionRef.current = recognition;
+        webSpeechActiveRef.current = true;
+        webSpeechTranscriptRef.current = '';
+        recognition.start();
+        setIsRecording(true);
+        setTranscribingSpeech(false);
+        return;
+      } catch (speechError) {
+        console.error('Unable to start speech recognition:', speechError);
+        recognitionRef.current = null;
+        webSpeechActiveRef.current = false;
+        webSpeechTranscriptRef.current = '';
+        // Fall through to MediaRecorder fallback if browser recognition fails unexpectedly.
+      }
+    }
+
+    if (!navigator.mediaDevices?.getUserMedia) {
+      updateSpeechError(t('speech.unsupported'));
+      return;
+    }
+
+    try {
+      updateSpeechError(null);
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      if (componentUnmountedRef.current) {
+        stream.getTracks().forEach((track) => track.stop());
+        return;
+      }
+      mediaStreamRef.current = stream;
+
+      const mimeCandidates = [
+        'audio/webm;codecs=opus',
+        'audio/webm',
+        'audio/mp4',
+      ];
+      const supportedMime = mimeCandidates.find((candidate) => {
+        return typeof MediaRecorder !== 'undefined' && MediaRecorder.isTypeSupported(candidate);
+      });
+
+      recordedChunksRef.current = [];
+      const recorder = new MediaRecorder(stream, supportedMime ? { mimeType: supportedMime } : undefined);
+
+      recorder.ondataavailable = (event) => {
+        if (event.data && event.data.size > 0) {
+          recordedChunksRef.current.push(event.data);
+        }
+      };
+
+      recorder.onerror = (event) => {
+        console.error('MediaRecorder error:', event);
+        updateSpeechError(t('speech.error'));
+        stopSpeechCapture();
+      };
+
+      recorder.onstop = async () => {
+        if (componentUnmountedRef.current) {
+          return;
+        }
+
+        const chunks = recordedChunksRef.current;
+        recordedChunksRef.current = [];
+        setIsRecording(false);
+
+        if (mediaStreamRef.current) {
+          mediaStreamRef.current.getTracks().forEach((track) => track.stop());
+          mediaStreamRef.current = null;
+        }
+
+        mediaRecorderRef.current = null;
+
+        if (chunks.length === 0) {
+          updateSpeechError(t('speech.error'));
+          return;
+        }
+
+        const blob = new Blob(chunks, { type: supportedMime ?? 'audio/webm' });
+        if (!blob || blob.size === 0) {
+          updateSpeechError(t('speech.error'));
+          return;
+        }
+
+        setTranscribingSpeech(true);
+
+        try {
+          const formData = new FormData();
+          formData.append('audio', blob, 'speech-input.webm');
+
+          const response = await fetch('/api/stt', {
+            method: 'POST',
+            body: formData,
+          });
+
+          if (!response.ok) {
+            const errorText = await response.text();
+            console.error('Speech transcription failed:', errorText);
+
+            let displayMessage = t('speech.error');
+            try {
+              const parsed = JSON.parse(errorText) as { error?: string };
+              if (parsed?.error && typeof parsed.error === 'string') {
+                displayMessage = parsed.error;
+              }
+            } catch (_jsonError) {
+              if (errorText) {
+                displayMessage = errorText;
+              }
+            }
+
+            updateSpeechError(displayMessage);
+            return;
+          }
+
+          const payload = (await response.json()) as { text?: string };
+          const text = payload?.text?.trim();
+
+          if (!text) {
+            updateSpeechError(t('speech.error'));
+            return;
+          }
+
+          updateSpeechError(null);
+          setDraft((prev) => {
+            if (!prev) {
+              return text;
+            }
+
+            const needsSpace = !/\s$/.test(prev);
+            return `${prev}${needsSpace ? ' ' : ''}${text}`;
+          });
+        } catch (transcriptionError) {
+          console.error('Speech transcription error:', transcriptionError);
+          updateSpeechError(t('speech.error'));
+        } finally {
+          setTranscribingSpeech(false);
+        }
+      };
+
+      mediaRecorderRef.current = recorder;
+      recorder.start();
+      setIsRecording(true);
+    } catch (recorderError) {
+      console.error('Unable to access microphone:', recorderError);
+
+      if (recorderError instanceof DOMException && recorderError.name === 'NotAllowedError') {
+        updateSpeechError(t('speech.permissionDenied'));
+      } else {
+        updateSpeechError(t('speech.error'));
+      }
+
+      if (mediaStreamRef.current) {
+        mediaStreamRef.current.getTracks().forEach((track) => track.stop());
+        mediaStreamRef.current = null;
+      }
+
+      mediaRecorderRef.current = null;
+      recordedChunksRef.current = [];
+      setIsRecording(false);
+    }
+  }, [
+    componentUnmountedRef,
+    conversationBusy,
+    conversationComplete,
+    isRecording,
+    t,
+    transcribingSpeech,
+    stopSpeechCapture,
+    updateSpeechError,
+    recognitionLanguage,
+  ]);
+
+  useEffect(() => {
+    if (!isRecording) {
+      return;
+    }
+
+    if (conversationBusy || conversationComplete) {
+      stopSpeechCapture();
+    }
+  }, [conversationBusy, conversationComplete, isRecording, stopSpeechCapture]);
+
+  const speechButton = (
+    <Button
+      type="button"
+      size="icon"
+      variant="outline"
+      aria-pressed={isRecording}
+      aria-label={speechAriaLabel}
+      aria-busy={transcribingSpeech}
+      disabled={isRecording ? false : speechButtonDisabled}
+      onClick={() => {
+        if (isRecording) {
+          stopSpeechCapture();
+        } else {
+          void startSpeechCapture();
+        }
+      }}
+      title={speechButtonLabel}
+      className={`h-11 w-11 rounded-full border border-slate-200 bg-white/90 text-slate-600 transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-60 dark:border-slate-700 dark:bg-slate-800/70 dark:text-slate-100 ${isRecording ? 'bg-rose-100 text-rose-600 shadow-inner shadow-rose-500/20 dark:bg-rose-500/20 dark:text-rose-200' : ''}`}
+    >
+      {transcribingSpeech ? (
+        <Loader2 className="size-4 animate-spin" />
+      ) : isRecording ? (
+        <Square className="size-4" />
+      ) : (
+        <Mic className="size-4" />
+      )}
+    </Button>
+  );
 
   async function handleDownloadFinalReportDocx() {
     if (!finalReport) return;
@@ -955,10 +1380,15 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
           disabled={textareaDisabled}
           busy={conversationBusy}
           onSend={handleSend}
+          speechButton={speechButton}
           placeholder={t('placeholder', { name: displayTemplate.npcName })}
           sendLabel={t('buttons.send')}
           sendingLabel={t('buttons.sending')}
         />
+
+        {speechError && (
+          <p className="px-1 text-xs text-rose-600 dark:text-rose-400">{speechError}</p>
+        )}
       </div>
 
       <ChatSummaryPanel

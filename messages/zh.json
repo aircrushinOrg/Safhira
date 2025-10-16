@@ -2032,6 +2032,16 @@
     "title": "快速建议",
     "loading": "正在构思贴心的后续问题..."
   },
+  "speech": {
+    "hint": "点按麦克风开始说话。",
+    "start": "开始语音输入",
+    "stop": "停止录音",
+    "recording": "正在聆听…",
+    "transcribing": "正在转写…",
+    "error": "暂时无法转写，请重试。",
+    "unsupported": "你的浏览器不支持语音输入。",
+    "permissionDenied": "麦克风权限被阻止，请允许访问后再试。"
+  },
   "safetyAlerts": "安全提醒",
   "rawReport": "查看原始报告 JSON",
       "dialog": {
