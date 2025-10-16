@@ -167,7 +167,10 @@ export default function MythListClient({ items, allItems }: { items: Item[]; all
   }, [completeList, viewAllFilter]);
 
   const handleClick = (item: Item) => {
-    setSelected(item);
+    const hydrated =
+      completeList.find((candidate) => candidate.id === item.id) ?? item;
+
+    setSelected(hydrated);
     setOpen(true);
   };
 
