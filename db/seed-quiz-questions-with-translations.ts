@@ -229,6 +229,7 @@ export async function seedQuizQuestionsWithTranslations() {
       const questionId = insertedQuestionIds[idx];
       const malayRecord = malayRecords[idx];
       const chineseRecord = chineseRecords[idx];
+      const englishRecord = englishRecords[idx];
 
       translationValues.push(
         {
@@ -236,12 +237,14 @@ export async function seedQuizQuestionsWithTranslations() {
           locale: 'ms',
           statement: malayRecord.statement,
           explanation: malayRecord.explanation,
+          category: malayRecord.category || englishRecord.category,
         },
         {
           questionId,
           locale: 'zh',
           statement: chineseRecord.statement,
           explanation: chineseRecord.explanation,
+          category: chineseRecord.category || englishRecord.category,
         },
       );
     }

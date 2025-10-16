@@ -14,6 +14,8 @@ export interface QuizQuestionTranslationRecord {
   statement: string;
   explanation: string;
   hasTranslation: boolean;
+  category: string;
+  fallbackCategory: string;
   fallbackStatement: string;
   fallbackExplanation: string;
 }
@@ -47,6 +49,7 @@ export async function getQuizQuestionTranslation(
       id: quizQuestions.id,
       statement: quizQuestions.statement,
       explanation: quizQuestions.explanation,
+      category: quizQuestions.category,
     })
     .from(quizQuestions)
     .where(eq(quizQuestions.id, questionId))
@@ -65,6 +68,8 @@ export async function getQuizQuestionTranslation(
       statement: base.statement,
       explanation: base.explanation,
       hasTranslation: true,
+      category: base.category,
+      fallbackCategory: base.category,
       fallbackStatement: base.statement,
       fallbackExplanation: base.explanation,
     };
@@ -74,6 +79,7 @@ export async function getQuizQuestionTranslation(
     .select({
       statement: quizQuestionTranslations.statement,
       explanation: quizQuestionTranslations.explanation,
+      category: quizQuestionTranslations.category,
     })
     .from(quizQuestionTranslations)
     .where(
@@ -93,6 +99,8 @@ export async function getQuizQuestionTranslation(
     statement: hasTranslation ? translated!.statement : base.statement,
     explanation: hasTranslation ? translated!.explanation : base.explanation,
     hasTranslation,
+    category: hasTranslation ? translated!.category : base.category,
+    fallbackCategory: base.category,
     fallbackStatement: base.statement,
     fallbackExplanation: base.explanation,
   };
@@ -103,6 +111,7 @@ interface UpsertQuizQuestionTranslationInput {
   locale: SupportedQuizTranslationLocale;
   statement: string;
   explanation: string;
+  category?: string;
 }
 
 export async function upsertQuizQuestionTranslation({
@@ -110,6 +119,7 @@ export async function upsertQuizQuestionTranslation({
   locale,
   statement,
   explanation,
+  category,
 }: UpsertQuizQuestionTranslationInput): Promise<QuizQuestionTranslationRecord> {
   if (!Number.isFinite(questionId) || questionId <= 0) {
     throw new Error("A valid numeric questionId is required.");
@@ -120,6 +130,7 @@ export async function upsertQuizQuestionTranslation({
 
   const trimmedStatement = (statement ?? "").trim();
   const trimmedExplanation = (explanation ?? "").trim();
+  const trimmedCategory = (category ?? "").trim();
 
   if (!trimmedStatement || !trimmedExplanation) {
     throw new Error("Both statement and explanation are required.");
@@ -130,6 +141,7 @@ export async function upsertQuizQuestionTranslation({
       id: quizQuestions.id,
       statement: quizQuestions.statement,
       explanation: quizQuestions.explanation,
+      category: quizQuestions.category,
     })
     .from(quizQuestions)
     .where(eq(quizQuestions.id, questionId))
@@ -140,6 +152,7 @@ export async function upsertQuizQuestionTranslation({
   }
 
   const base = baseRows[0];
+  const resolvedCategory = trimmedCategory || base.category;
 
   await db
     .insert(quizQuestionTranslations)
@@ -148,12 +161,14 @@ export async function upsertQuizQuestionTranslation({
       locale: resolvedLocale,
       statement: trimmedStatement,
       explanation: trimmedExplanation,
+      category: resolvedCategory,
     })
     .onConflictDoUpdate({
       target: [quizQuestionTranslations.questionId, quizQuestionTranslations.locale],
       set: {
         statement: trimmedStatement,
         explanation: trimmedExplanation,
+        category: resolvedCategory,
       },
     });
 
@@ -163,6 +178,8 @@ export async function upsertQuizQuestionTranslation({
     statement: trimmedStatement,
     explanation: trimmedExplanation,
     hasTranslation: true,
+    category: resolvedCategory,
+    fallbackCategory: base.category,
     fallbackStatement: base.statement,
     fallbackExplanation: base.explanation,
   };
