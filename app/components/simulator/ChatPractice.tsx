@@ -935,6 +935,7 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
         <ChatMessageList
           messages={messages}
           npcName={displayTemplate.npcName}
+          npcId={displayTemplate.npcId}
           loading={loading}
           typingNpcMessage={typingNpcMessage}
           thinkingLabel={t('thinking')}

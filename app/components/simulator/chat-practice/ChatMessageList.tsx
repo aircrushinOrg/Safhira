@@ -1,17 +1,19 @@
 'use client';
 
-import { type RefObject } from 'react';
+import { type RefObject, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { useTranslations } from 'next-intl';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Volume2 } from 'lucide-react';
 
 import { cn } from '@/app/components/ui/utils';
+import { getNpcVoiceId } from '@/lib/simulator/npc-voices';
 
 import { type ConversationTurn, type SuggestedQuestions } from './types';
 
 type ChatMessageListProps = {
   messages: ConversationTurn[];
   npcName: string;
+  npcId?: string;
   loading: boolean;
   typingNpcMessage: string | null;
   thinkingLabel: string;
@@ -25,6 +27,7 @@ type ChatMessageListProps = {
 export function ChatMessageList({
   messages,
   npcName,
+  npcId,
   loading,
   typingNpcMessage,
   thinkingLabel,
@@ -40,6 +43,68 @@ export function ChatMessageList({
   const hasSuggestionContent = positiveOption.length > 0 || negativeOption.length > 0;
   const showSuggestionLoading = suggestionsLoading && !hasSuggestionContent;
 
+  const [playingMessageId, setPlayingMessageId] = useState<string | null>(null);
+  const [audioElements] = useState<Map<string, HTMLAudioElement>>(new Map());
+
+  const voiceId = getNpcVoiceId(npcId);
+
+  const handlePlayTTS = async (messageId: string, text: string) => {
+    if (!voiceId) {
+      console.error('No voice ID found for this NPC');
+      return;
+    }
+
+    if (playingMessageId === messageId) {
+      const audio = audioElements.get(messageId);
+      if (audio) {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+      setPlayingMessageId(null);
+      return;
+    }
+
+    if (playingMessageId) {
+      const currentAudio = audioElements.get(playingMessageId);
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+      }
+    }
+
+    setPlayingMessageId(messageId);
+
+    try {
+      let audio = audioElements.get(messageId);
+      
+      if (!audio) {
+        const response = await fetch('/api/tts', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text, voiceId }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to generate speech');
+        }
+
+        const audioBlob = await response.blob();
+        const audioUrl = URL.createObjectURL(audioBlob);
+        audio = new Audio(audioUrl);
+        audioElements.set(messageId, audio);
+
+        audio.addEventListener('ended', () => {
+          setPlayingMessageId(null);
+        });
+      }
+
+      await audio.play();
+    } catch (error) {
+      console.error('Error playing TTS:', error);
+      setPlayingMessageId(null);
+    }
+  };
+
   return (
     <div className="flex min-h-[24rem] flex-1 flex-col gap-3 overflow-hidden rounded-2xl border border-slate-200/60 bg-slate-50/80 dark:border-white/5 dark:bg-slate-950/60">
       <div ref={scrollRef} className="flex h-[50vh] flex-col gap-3 overflow-y-auto px-4 py-5">
@@ -53,8 +118,31 @@ export function ChatMessageList({
                   : 'bg-white text-slate-800 shadow-slate-900/10 dark:bg-slate-800 dark:text-slate-100',
               )}
             >
-              <div className="prose prose-sm max-w-none dark:prose-invert">
-                <ReactMarkdown>{message.content}</ReactMarkdown>
+              <div className="flex items-start gap-2">
+                <div className="prose prose-sm max-w-none flex-1 dark:prose-invert">
+                  <ReactMarkdown>{message.content}</ReactMarkdown>
+                </div>
+                {message.role === 'npc' && voiceId && (
+                  <button
+                    type="button"
+                    onClick={() => handlePlayTTS(message.id, message.content)}
+                    disabled={!voiceId}
+                    className={cn(
+                      'flex-shrink-0 rounded-full p-1.5 transition-all duration-200',
+                      playingMessageId === message.id
+                        ? 'bg-teal-100 text-teal-600 dark:bg-teal-500/20 dark:text-teal-400'
+                        : 'hover:bg-slate-100 text-slate-500 hover:text-slate-700 dark:hover:bg-slate-700 dark:text-slate-400 dark:hover:text-slate-300',
+                    )}
+                    title="Play voice"
+                  >
+                    <Volume2 
+                      className={cn(
+                        'size-4 transition-transform',
+                        playingMessageId === message.id && 'animate-pulse'
+                      )} 
+                    />
+                  </button>
+                )}
               </div>
               <span className="mt-2 block text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
                 {new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}

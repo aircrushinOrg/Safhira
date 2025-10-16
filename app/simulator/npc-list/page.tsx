@@ -12,7 +12,7 @@ import { BreadcrumbTrail } from '@/app/components/BreadcrumbTrail';
 const npcAvatarById: Record<string, string> = {
   'classmate-both-01': '/simulator-landing-classmate-both-01.png',
   'doctor-boy-01': '/simulator-landing-doctor-boy-01.png',
-  'doctor-girl-01': '/simulator-landing-doctor-girl-01r.png',
+  'doctor-girl-01': '/simulator-landing-doctor-girl-01.png',
   'friend-boy-01': '/simulator-landing-friend-boy-01.png',
   'friend-girl-01': '/simulator-landing-friend-girl-01.png',
 };
