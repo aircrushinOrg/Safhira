@@ -294,7 +294,7 @@ export async function GET(
         {
           role: "system",
           content:
-            "You are helping a player respond to a simulated conversation about healthy relationships. Offer contrasting replies that sound like authentic human speech, balancing empathy with clear boundaries, and never sounding like a coach or therapist.",
+            "You are helping a player respond to a simulated conversation about healthy relationships. Offer contrasting replies that sound like authentic human speech, balancing empathy with clear boundaries, and never sounding like a coach or therapist. precisely match the player's detected language proportions and mixing patterns",
         },
         {
           role: "user",
