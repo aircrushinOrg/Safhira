@@ -82,7 +82,7 @@ export function MusicProvider({ children }: { children: React.ReactNode }) {
     // Create audio element
     const audio = new Audio('/simulator-music.mp3');
     audio.loop = true;
-    audio.volume = 0.4;
+    audio.volume = 0.3;
     audioRef.current = audio;
 
     // Set initial mute state
