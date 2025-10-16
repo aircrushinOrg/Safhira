@@ -2026,6 +2026,16 @@
     "title": "Quick Picks",
     "loading": "Crafting thoughtful follow-ups..."
   },
+  "speech": {
+    "hint": "Tap the mic to speak.",
+    "start": "Start voice input",
+    "stop": "Stop recording",
+    "recording": "Listening…",
+    "transcribing": "Transcribing…",
+    "error": "We couldn't transcribe that. Try again.",
+    "unsupported": "Your browser doesn't support voice input.",
+    "permissionDenied": "Microphone access was blocked. Please allow it and try again."
+  },
   "safetyAlerts": "Safety alerts",
   "rawReport": "View raw report JSON",
       "dialog": {

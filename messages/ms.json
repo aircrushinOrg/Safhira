@@ -2029,6 +2029,16 @@
     "title": "Cadangan Pantas",
     "loading": "Sedang menyusun susulan yang sesuai..."
   },
+  "speech": {
+    "hint": "Ketuk mikrofon untuk bercakap.",
+    "start": "Mulakan input suara",
+    "stop": "Hentikan rakaman",
+    "recording": "Sedang mendengar…",
+    "transcribing": "Sedang transkripsi…",
+    "error": "Rakaman tidak dapat ditranskripsi. Cuba lagi.",
+    "unsupported": "Pelayar anda tidak menyokong input suara.",
+    "permissionDenied": "Akses mikrofon disekat. Benarkan akses dan cuba sekali lagi."
+  },
   "safetyAlerts": "Amaran keselamatan",
   "rawReport": "Lihat JSON laporan mentah",
       "dialog": {
