@@ -187,6 +187,62 @@ export default function LifestylePage() {
             </div>
           </motion.header>
 
+          {/* Video Resources Section */}
+          <motion.div
+            initial={{opacity: 0, y: reduceMotion ? 0 : 10}}
+            whileInView={{opacity: 1, y: 0}}
+            viewport={{once: true, amount: 0.2}}
+            transition={{duration: reduceMotion ? 0 : 0.35}}
+            className="mb-8 md:mb-12"
+          >
+            <Card className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm md:p-7 dark:border-slate-800 dark:bg-slate-900">
+              <div className="mb-6">
+                <h2 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">
+                  {t("lifestyle.videoResources.title") || "Video Resources"}
+                </h2>
+                <p className="text-sm text-slate-600 dark:text-slate-300">
+                  {t("lifestyle.videoResources.description") || "Educational videos to support your wellness journey"}
+                </p>
+              </div>
+
+              <div className="grid gap-6 lg:grid-cols-2">
+                {/* First Video */}
+                <div className="space-y-3">
+                  <div className="relative w-full" style={{paddingBottom: '56.25%'}}>
+                    <iframe
+                      className="absolute inset-0 w-full h-full rounded-xl border border-slate-200 dark:border-slate-700"
+                      src="https://www.youtube.com/embed/oacPicP2qwE"
+                      title="Lifestyle and Wellness Video 1"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                    />
+                  </div>
+                  <h3 className="font-medium text-slate-900 dark:text-white text-sm">
+                    {t("lifestyle.videoResources.video1Title") || "Wellness and Self-Care"}
+                  </h3>
+                </div>
+
+                {/* Second Video */}
+                <div className="space-y-3">
+                  <div className="relative w-full" style={{paddingBottom: '56.25%'}}>
+                    <iframe
+                      className="absolute inset-0 w-full h-full rounded-xl border border-slate-200 dark:border-slate-700"
+                      src="https://www.youtube.com/embed/1Wen7LqP17E"
+                      title="Lifestyle and Wellness Video 2"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                    />
+                  </div>
+                  <h3 className="font-medium text-slate-900 dark:text-white text-sm">
+                    {t("lifestyle.videoResources.video2Title") || "Mental Health and Relationships"}
+                  </h3>
+                </div>
+              </div>
+            </Card>
+          </motion.div>
+
           <motion.div
             initial={{opacity: 0, y: reduceMotion ? 0 : 10}}
             whileInView={{opacity: 1, y: 0}}

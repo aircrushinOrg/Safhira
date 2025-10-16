@@ -1399,6 +1399,12 @@
         "title": "Sokongan & sumber"
       },
       "emptyBookmarks": "Belum ada simpanan.",
+      "videoResources": {
+        "title": "Sumber Video",
+        "description": "Video pendidikan untuk menyokong perjalanan kesejahteraan anda",
+        "video1Title": "Kesejahteraan dan Penjagaan Diri",
+        "video2Title": "Kesihatan Mental dan Perhubungan"
+      },
       "report": {
         "title": "Lapor kandungan?",
         "desc": "Kami akan sorokkan pada peranti anda dan hantar isyarat pemantauan tanpa data peribadi.",
