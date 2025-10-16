@@ -2060,8 +2060,12 @@
         "scenarioMessages": {
           "party-pressure-girl": "喂，我是{name}！大家都在聊今晚的派对——你要不要一起去，还是又想逃走？",
           "party-pressure-boy": "嘿，我是{name}。今晚有派对，你准备好去认识新人了吗，还是要我再推你一下？",
+          "drunk-consent-girl": "嘿嘿，我是{name}。我有点醉，但跟你在一起让我觉得很安心——可以陪我一下吗？我们继续享受今晚，好吗？",
+          "drunk-consent-boy": "嗨，我是{name}。我有点微醺，和你在一起好舒服——我们去个安静的地方聊聊，把这种感觉留住好吗？",
           "health-checkup-girl": "你好，我是{name}。今天是什么情况让你来呢？有没有什么地方不舒服？",
           "health-checkup-boy": "嗨，我是{name}。最近发生了什么，或有任何不舒服，让你想来做这次性病筛检吗？",
+          "partner-talk-girl": "嗨，我是{name}。我们可以坐下来聊聊保护、筛检，还有我们是不是都准备好了，再决定要不要更进一步吗？",
+          "partner-talk-boy": "嗨，我是{name}。我真的很期待我们，但能不能先确认避孕、筛检，以及我们是不是都准备好了？",
           "correcting-misinformation-both": "嘿，我是{name}。有人说只要双方都觉得身体健康，约会几次之后就可以不戴安全套——你觉得这样靠谱吗？"
         }
       }

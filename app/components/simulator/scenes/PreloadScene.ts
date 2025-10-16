@@ -137,6 +137,14 @@ export class PreloadScene extends Phaser.Scene {
       frameWidth: 32,
       frameHeight: 64,
     });
+    this.load.spritesheet('simulator-npc-girl-josh', '/simulator-npc-girl-josh.png', {
+      frameWidth: 32,
+      frameHeight: 64,
+    });
+    this.load.spritesheet('simulator-npc-boy-priya', '/simulator-npc-boy-priya.png', {
+      frameWidth: 32,
+      frameHeight: 64,
+    });
     this.load.spritesheet('simulator-npc-both-amir', '/simulator-npc-both-amir.png', {
       frameWidth: 32,
       frameHeight: 64,

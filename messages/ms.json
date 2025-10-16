@@ -2063,8 +2063,12 @@
         "scenarioMessages": {
           "party-pressure-girl": "Hoi, ini {name}! Semua orang tengah semangat nak pergi parti malam ni — awak ikut sekali ke nak tarik diri lagi?",
           "party-pressure-boy": "Yo, {name} di sini. Parti malam ni — awak berani nak sembang dengan orang baru tak atau perlu aku tolong push?",
+          "drunk-consent-girl": "Heii, {name} ni. Saya dah agak mabuk tapi bila dengan awak rasa selamat — boleh temankan saya sekejap? Jom teruskan suasana malam ni.",
+          "drunk-consent-boy": "Hai, {name} di sini. Saya pun tipsy dan rasa tenang bila dengan awak — boleh kita cari tempat lebih senyap dan kekalkan rasa ni?",
           "health-checkup-girl": "Hai, saya {name}. Apa yang bawa awak datang hari ni, ada lelehan atau perubahan lain yang awak risaukan?",
           "health-checkup-boy": "Hai, saya {name}. Ada pengalaman atau gejala baru-baru ni yang buat awak nak jalani pemeriksaan STI ni?",
+          "partner-talk-girl": "Hai, {name} ni. Boleh kita duduk sekejap dan bincang tentang perlindungan, ujian, dan sejauh mana kita berdua rasa bersedia sebelum teruskan?",
+          "partner-talk-boy": "Hai, saya {name}. Saya teruja tentang kita, tapi boleh kita semak tentang kontrasepsi, ujian, dan sama ada kita berdua betul-betul bersedia sekarang?",
           "correcting-misinformation-both": "Hei, {name} ni. Ada kawan kata kalau dua-dua rasa sihat, lepas beberapa temu janji boleh je tak guna kondom — logik ke tu?"
         }
       }

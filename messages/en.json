@@ -2060,8 +2060,12 @@
         "scenarioMessages": {
           "party-pressure-girl": "Hey, it's {name}! We're hyping up the party tonight — are you coming with us or sitting it out again?",
           "party-pressure-boy": "Yo, it's {name}. Party's on later — are you ready to chat someone up or do I need to nudge you?",
+          "drunk-consent-girl": "Heyyy, it's {name}. I'm kinda buzzed and you make me feel safe—stay with me a bit, okay? Let's keep the night going.",
+          "drunk-consent-boy": "Hey, it's {name}. I'm tipsy and everything feels calm with you—can we slip somewhere quieter and hang onto this feeling?",
           "health-checkup-girl": "Hi, I'm {name}. What brought you in today, and are you noticing any discharge or changes you want to talk through?",
           "health-checkup-boy": "Hey there, I'm {name}. Did something happen recently or are there any symptoms you're worried about that made you book this STI check?",
+          "partner-talk-girl": "Hey, it's {name}. Can we sit for a minute and talk about protection, testing, and how ready we both feel before things go further?",
+          "partner-talk-boy": "Hi, it's {name}. I'm excited about us, but could we check in about contraception, testing, and whether we both feel ready right now?",
           "correcting-misinformation-both": "Hey, it's {name}. Some friends say if both people feel healthy you can skip condoms after a few dates — does that actually sound right to you?"
         }
       }

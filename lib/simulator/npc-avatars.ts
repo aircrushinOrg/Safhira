@@ -6,6 +6,10 @@ const NPC_AVATAR_PATHS: Record<string, string> = {
   'doctor-girl-01': '/simulator-landing-doctor-girl-01r.png',
   'friend-boy-01': '/simulator-landing-friend-boy-01.png',
   'friend-girl-01': '/simulator-landing-friend-girl-01.png',
+  'drunk-boy-01': '/simulator-landing-drunk-boy-01.png',
+  'drunk-girl-01': '/simulator-landing-drunk-girl-01.png',
+  'partner-boy-01': '/simulator-landing-partner-boy-01.png',
+  'partner-girl-01': '/simulator-landing-partner-girl-01.png',
 };
 
 export function getNpcAvatarPath(npcId: string | null | undefined): string {

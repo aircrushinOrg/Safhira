@@ -378,6 +378,10 @@ export class GameScene extends Phaser.Scene {
       'simulator-npc-girl-maya',
       'simulator-npc-boy-drtan',
       'simulator-npc-girl-drwong',
+      'simulator-npc-girl-alex',
+      'simulator-npc-boy-alexa',
+      'simulator-npc-girl-josh',
+      'simulator-npc-boy-priya',
       'simulator-npc-both-amir',
     ];
 
@@ -537,8 +541,16 @@ export class GameScene extends Phaser.Scene {
         sprite: this.playerGender === 'girl' ? 'simulator-npc-girl-maya' : 'simulator-npc-boy-jordan',
       },
       {
+        scenarioId: this.playerGender === 'girl' ? 'drunk-consent-girl' : 'drunk-consent-boy',
+        sprite: this.playerGender === 'girl' ? 'simulator-npc-girl-alex' : 'simulator-npc-boy-alexa',
+      },
+      {
         scenarioId: this.playerGender === 'girl' ? 'health-checkup-girl' : 'health-checkup-boy',
         sprite: this.playerGender === 'girl' ? 'simulator-npc-girl-drwong' : 'simulator-npc-boy-drtan',
+      },
+      {
+        scenarioId: this.playerGender === 'girl' ? 'partner-talk-girl' : 'partner-talk-boy',
+        sprite: this.playerGender === 'girl' ? 'simulator-npc-girl-josh' : 'simulator-npc-boy-priya',
       },
       {
         scenarioId: 'correcting-misinformation-both',
@@ -554,8 +566,12 @@ export class GameScene extends Phaser.Scene {
     const npcPositions: Record<string, { x: number; y: number }> = {
       'party-pressure-girl': { x: 1675, y: 1150 },
       'party-pressure-boy': { x: 1675, y: 1150 },
+      'drunk-consent-girl': { x: 320, y: 3100 },
+      'drunk-consent-boy': { x: 320, y: 3100 },
       'health-checkup-girl': { x: 360, y: 2400 },
       'health-checkup-boy': { x: 360, y: 2400 },
+      'partner-talk-girl': { x: 2200, y: 2350 },
+      'partner-talk-boy': { x: 2200, y: 2350 },
       'correcting-misinformation-both': { x: 688, y: 768 },
     };
     const resolvedConfigs = npcConfigs

@@ -31,6 +31,10 @@ function getNpcImagePath(npcId: string): string {
     'doctor-girl-01': '/simulator-landing-doctor-girl-01.png',
     'doctor-boy-01': '/simulator-landing-doctor-boy-01.png',
     'classmate-both-01': '/simulator-landing-classmate-both-01.png',
+    'drunk-boy-01': '/simulator-landing-drunk-boy-01.png',
+    'drunk-girl-01': '/simulator-landing-drunk-girl-01.png',
+    'partner-boy-01': '/simulator-landing-partner-boy-01.png',
+    'partner-girl-01': '/simulator-landing-partner-girl-01.png',
   };
 
   return imageMap[npcId] || '/simulator-landing-classmate-both-01.png'; // fallback image
