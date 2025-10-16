@@ -22,7 +22,7 @@ export default async function QuizPage() {
   const locale = await getLocale()
 
   const [randomQuestions, allQuestions] = await Promise.all([
-    getRandomQuizQuestions('myths', 8, locale),
+    getRandomQuizQuestions('general', 8, locale),
     getAllQuizQuestions(locale),
   ])
 
