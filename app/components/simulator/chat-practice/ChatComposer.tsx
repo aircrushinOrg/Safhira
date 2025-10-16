@@ -14,6 +14,7 @@ type ChatComposerProps = {
   placeholder: string;
   sendLabel: string;
   sendingLabel: string;
+  speechButton?: React.ReactNode;
 };
 
 export function ChatComposer({
@@ -26,6 +27,7 @@ export function ChatComposer({
   placeholder,
   sendLabel,
   sendingLabel,
+  speechButton,
 }: ChatComposerProps) {
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -50,15 +52,20 @@ export function ChatComposer({
           disabled={disabled}
           className="min-h-[60px] flex-1 resize-none rounded-2xl border border-slate-200 bg-transparent px-4 py-3 text-sm text-slate-800 shadow-inner shadow-slate-900/5 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500/30 disabled:cursor-not-allowed dark:border-slate-700 dark:text-slate-100 dark:shadow-none"
         />
-        <Button
-          type="submit"
-          size="lg"
-          disabled={!canSend}
-          className="self-center bg-teal-500 text-slate-900 hover:bg-teal-400 disabled:cursor-not-allowed disabled:bg-teal-500/60"
-        >
-          {busy ? <Loader2 className="size-4 animate-spin" /> : <Send className="size-4" />}
-          <span className="hidden sm:inline">{busy ? sendingLabel : sendLabel}</span>
-        </Button>
+        <div className="flex flex-col justify-center gap-2">
+          <div className="flex items-center gap-2">
+            {speechButton}
+            <Button
+              type="submit"
+              size="lg"
+              disabled={!canSend}
+              className="bg-teal-500 text-slate-900 hover:bg-teal-400 disabled:cursor-not-allowed disabled:bg-teal-500/60"
+            >
+              {busy ? <Loader2 className="size-4 animate-spin" /> : <Send className="size-4" />}
+              <span className="hidden sm:inline">{busy ? sendingLabel : sendLabel}</span>
+            </Button>
+          </div>
+        </div>
       </div>
     </form>
   );

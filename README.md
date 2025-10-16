@@ -38,6 +38,7 @@ Safhira is a comprehensive sexual health education platform specifically designe
   - Real-time confidence and risk scoring
   - Detailed performance reports and feedback
   - Interactive game environment built with Phaser.js
+  - Optional speech-to-text capture for spoken practice responses
 - **🏥 Healthcare Provider Directory**:
   - Searchable database of STI testing centers
   - Location-based filtering and distance calculation
