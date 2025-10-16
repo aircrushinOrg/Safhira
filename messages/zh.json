@@ -1399,6 +1399,12 @@
         "title": "支持与资源"
       },
       "emptyBookmarks": "暂时没有收藏",
+      "videoResources": {
+        "title": "视频资源",
+        "description": "支持您健康之路的教育视频",
+        "video1Title": "健康与自我护理",
+        "video2Title": "心理健康与人际关系"
+      },
       "report": {
         "title": "要举报此内容吗？",
         "desc": "我们会在你的设备上将其隐藏，并发送不含个人信息的审核信号。",
