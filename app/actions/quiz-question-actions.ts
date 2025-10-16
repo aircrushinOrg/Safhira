@@ -44,7 +44,7 @@ function buildLocalizedSelection(locale?: string) {
     statement: sql<string>`COALESCE(${quizQuestionTranslations.statement}, ${quizQuestions.statement})`,
     isTrue: quizQuestions.isTrue,
     explanation: sql<string>`COALESCE(${quizQuestionTranslations.explanation}, ${quizQuestions.explanation})`,
-    category: quizQuestions.category,
+    category: sql<string>`COALESCE(${quizQuestionTranslations.category}, ${quizQuestions.category})`,
     createdAt: quizQuestions.createdAt,
     updatedAt: quizQuestions.updatedAt,
     _locale: sql<string>`${resolved}`,

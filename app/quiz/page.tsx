@@ -4,7 +4,7 @@
  * Helps users learn about sexual health through gamified content while breaking down stigma and misconceptions.
  */
 import { TiltedScrollDemo } from '@/app/components/quiz/TiltedScrollDemo'
-import { getRandomQuizQuestions, getAllQuizQuestions, type QuizQuestionRecord } from '@/app/actions/quiz-question-actions'
+import { getAllQuizQuestions, type QuizQuestionRecord } from '@/app/actions/quiz-question-actions'
 import { getTranslations, getLocale } from 'next-intl/server'
 import BreadcrumbTrail from '@/app/components/BreadcrumbTrail'
 
@@ -21,10 +21,10 @@ export default async function QuizPage() {
   const tQuiz = await getTranslations('Quiz')
   const locale = await getLocale()
 
-  const [randomQuestions, allQuestions] = await Promise.all([
-    getRandomQuizQuestions('myths', 8, locale),
-    getAllQuizQuestions(locale),
-  ])
+  const allQuestions = await getAllQuizQuestions(locale)
+  const randomQuestions = [...allQuestions]
+    .sort(() => Math.random() - 0.5)
+    .slice(0, Math.min(8, allQuestions.length))
 
   const factLabel = tQuiz('fact')
   const mythLabel = tQuiz('myth')

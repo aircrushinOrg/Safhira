@@ -98,19 +98,81 @@ export function buildLocaleDirective(options: {
   locale?: string;
   fallback?: string;
   includeMirrorHint?: boolean;
+  languageMix?: { ms: number; en: number; zh: number } | undefined;
 }): string {
   const {
     locale,
     fallback = "Use approachable, empathetic English suitable for young adults.",
     includeMirrorHint = true,
+    languageMix,
   } = options;
   const languageName = languageNameFromLocale(locale);
   const mirrorHint = includeMirrorHint
     ? " Mirror the player's tone and switch languages gracefully if the player does."
     : "";
-  if (languageName) {
-    return `Use ${languageName}.${mirrorHint}`.trim();
+
+  // Handle language mix with enhanced proportion-based logic
+  if (languageMix && (languageMix.ms > 0 || languageMix.en > 0 || languageMix.zh > 0)) {
+    const total = (languageMix.ms ?? 0) + (languageMix.en ?? 0) + (languageMix.zh ?? 0);
+    if (total === 0) {
+      return `${fallback}${mirrorHint}`.trim();
+    }
+
+    const toPercent = (value: number) => Math.round((value / total) * 100);
+    const percentages = {
+      ms: toPercent(languageMix.ms),
+      en: toPercent(languageMix.en),
+      zh: toPercent(languageMix.zh)
+    };
+
+    // If one language dominates (≥95%), use only that language
+    if (percentages.ms >= 95) {
+      return `Use natural, empathetic Malay exclusively. Avoid mixing other languages.${mirrorHint}`.trim();
+    }
+    if (percentages.en >= 95) {
+      return `Use natural, empathetic English exclusively. Avoid mixing other languages.${mirrorHint}`.trim();
+    }
+    if (percentages.zh >= 95) {
+      return `Use natural, empathetic Simplified Chinese exclusively. Avoid mixing other languages.${mirrorHint}`.trim();
+    }
+
+    // Handle significant language mixing
+    const activeLangs = Object.entries(percentages).filter(([, pct]) => pct >= 5);
+    if (activeLangs.length > 1) {
+      const parts = [
+        languageMix.ms >= 0.05 * total ? `Malay ~${percentages.ms}%` : null,
+        languageMix.en >= 0.05 * total ? `English ~${percentages.en}%` : null,
+        languageMix.zh >= 0.05 * total ? `Chinese ~${percentages.zh}%` : null,
+      ]
+        .filter(Boolean)
+        .join(" / ");
+
+      // Enhanced instructions for bahasa rojak (Malay-English mix)
+      if (languageMix.ms >= 0.15 * total && languageMix.en >= 0.15 * total) {
+        const mixHint = percentages.ms > percentages.en
+          ? " Use natural Bahasa rojak with Malay as the structural base. Include Malay particles (lah, kan, je, kot) and discourse markers while incorporating English vocabulary."
+          : " Use natural Bahasa rojak blending both languages. Include Malay particles (lah, kan, je, kot) and maintain Malaysian code-switching patterns.";
+
+        const examples = " Examples: 'I nak go shopping lah', 'You sure or not?', 'Cannot lah like that', 'Macam tu je'. Mix within sentences, not in separate blocks.";
+
+        const dialectGuidance = " IMPORTANT: Use standard, easily understandable Bahasa rojak without heavy regional dialects or complex slang. Keep vocabulary accessible to all Malaysian speakers.";
+
+        return `Match the player's language proportions (${parts}).${mixHint}${examples}${dialectGuidance}${mirrorHint}`.trim();
+      }
+
+      // Other language combinations
+      return `Use mixed languages matching the player's proportions (${parts}). Maintain natural code-switching patterns and keep the same ratio throughout your response. Use standard vocabulary without heavy dialects.${mirrorHint}`.trim();
+    }
   }
+
+  // Single language or fallback
+  if (languageName) {
+    const mixHint = languageName.includes("Malay")
+      ? " When the player code-switches to English (Bahasa rojak), respond with natural Malaysian speech patterns, keeping Malay as the structural base while incorporating English vocabulary. Use standard, easily understandable language without heavy regional dialects."
+      : "";
+    return `Use ${languageName}.${mixHint}${mirrorHint}`.trim();
+  }
+
   return `${fallback}${mirrorHint}`.trim();
 }
 
@@ -193,6 +255,7 @@ export function buildSystemPrompt(options: {
   const localeLine = buildLocaleDirective({
     locale,
     fallback: "Use accessible, empathetic English suitable for teens.",
+    languageMix: undefined, // System prompt doesn't have access to current message mix
   });
 
   const scoringGuidance = assessmentDue

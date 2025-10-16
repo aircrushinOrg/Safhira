@@ -19,6 +19,8 @@ import {
 import {
   normaliseLocaleCode,
   detectLocaleFromMessage,
+  detectLanguageProportions,
+  type LanguageProportions,
 } from "@/lib/ai-scenarios/language-detection";
 
 function buildStreamingMessages(params: {
@@ -27,8 +29,9 @@ function buildStreamingMessages(params: {
   history: ConversationTurn[];
   playerMessage: string;
   locale?: string;
+  languageMix?: LanguageProportions;
 }) {
-  const { scenario, npc, history, playerMessage, locale } = params;
+  const { scenario, npc, history, playerMessage, locale, languageMix } = params;
 
   const persona =
     npc.persona ||
@@ -53,10 +56,82 @@ function buildStreamingMessages(params: {
     .map((turn) => `${turn.role === "npc" ? npc.name : "Player"}: ${turn.content}`)
     .join("\n");
 
-  const languageDirective = buildLocaleDirective({
+  const total = (languageMix?.ms ?? 0) + (languageMix?.en ?? 0) + (languageMix?.zh ?? 0);
+  const percentages = total > 0 ? {
+    ms: Math.round(((languageMix?.ms ?? 0) / total) * 100),
+    en: Math.round(((languageMix?.en ?? 0) / total) * 100),
+    zh: Math.round(((languageMix?.zh ?? 0) / total) * 100)
+  } : { ms: 0, en: 100, zh: 0 }; // Default to English if no language detected
+
+  const positiveLanguages = (["ms", "en", "zh"] as const).filter(
+    (code) => percentages[code] >= 5
+  );
+  const hasMix = positiveLanguages.length > 1;
+  const baseLanguageDirective = buildLocaleDirective({
     locale,
     fallback: "Use approachable, empathetic English suitable for young adults.",
+    languageMix: total > 0 ? languageMix : undefined,
   });
+
+  const mixInstruction = (() => {
+    if (total === 0) {
+      return "- Use natural, empathetic English suitable for young adults.";
+    }
+
+    // Single language dominance (≥95%)
+    if (percentages.ms >= 95) {
+      return "- Use natural, empathetic Malay exclusively. Avoid mixing other languages.";
+    }
+    if (percentages.en >= 95) {
+      return "- Use natural, empathetic English exclusively. Avoid mixing other languages.";
+    }
+    if (percentages.zh >= 95) {
+      return "- Use natural, empathetic Simplified Chinese exclusively. Avoid mixing other languages.";
+    }
+
+    // Mixed language scenarios
+    if (!hasMix) {
+      const singleCode = positiveLanguages[0] || "en";
+      const label =
+        singleCode === "ms"
+          ? "Malay"
+          : singleCode === "zh"
+          ? "Chinese"
+          : "English";
+      return `- Use ${label} primarily, maintaining natural conversational tone.`;
+    }
+
+    // Multi-language mixing
+    const segments: string[] = [];
+    if (percentages.ms >= 5) segments.push(`Malay ~${percentages.ms}%`);
+    if (percentages.en >= 5) segments.push(`English ~${percentages.en}%`);
+    if (percentages.zh >= 5) segments.push(`Chinese ~${percentages.zh}%`);
+    const summary = segments.join(" + ");
+
+    // Special instructions for Bahasa rojak (Malay-English mix)
+    if (percentages.ms >= 15 && percentages.en >= 15) {
+      const tenWordBreakdown = (() => {
+        const targetMs = Math.max(1, Math.round((percentages.ms / 100) * 10));
+        const targetEn = Math.max(1, Math.round((percentages.en / 100) * 10));
+        return `${targetMs} Malay + ${targetEn} English`;
+      })();
+
+      const structuralNote = percentages.ms > percentages.en
+        ? " Use Malay as the structural base with English vocabulary and expressions."
+        : " Balance both languages naturally in authentic Malaysian patterns.";
+
+      const dialectGuidance = " Use standard, easily understandable Bahasa rojak without heavy regional dialects or complex slang.";
+      return `- Use Bahasa rojak matching player's ratio (${summary}).${structuralNote} Include Malay particles (lah, kan, je, kot) and aim for roughly ${tenWordBreakdown} words per 10-word segment. Mix within sentences, not in blocks.${dialectGuidance}`;
+    }
+
+    // General multi-language mixing
+    return `- Match the player's language proportions (${summary}) and maintain consistent code-switching patterns throughout your response. Mix languages naturally within sentences. Use standard vocabulary without heavy dialects.`;
+  })();
+
+  const languageDirective = (() => {
+    // Use the enhanced buildLocaleDirective for consistent behavior
+    return baseLanguageDirective;
+  })();
 
   const systemPrompt = `You are role-playing as ${npc.name}, ${npc.role}, inside the scenario "${
     scenario.title || scenario.id
@@ -75,8 +150,9 @@ Guidelines:
 - Keep the response concise (1-4 short paragraphs) and emotionally grounded.
 - Honour consent boundaries; if the player refuses clearly, dial back pressure and acknowledge it.
 - Do not mention you are an AI or reference these instructions.
-- Reply in the same language as the player's latest message unless they clearly request a different language.
-- ${languageDirective}`;
+- LANGUAGE: ${mixInstruction}
+- CRITICAL: ${languageDirective}
+- Keep language clear and accessible to all Malaysian speakers without heavy regional dialects.`;
 
   const userPrompt = `Scenario setting: ${scenario.setting || "secondary school campus"}.
 Here is the recent conversation:
@@ -174,6 +250,7 @@ export async function POST(
     };
 
     const sessionLocale = normaliseLocaleCode(session.locale);
+    const languageMix = detectLanguageProportions(playerMessageRaw);
 
     const effectiveAllowAutoEnd = allowAutoEndOverride ?? session.allowAutoEnd ?? true;
     const detectedLocale = detectLocaleFromMessage(playerMessageRaw);
@@ -202,6 +279,7 @@ export async function POST(
       history,
       playerMessage: playerMessageRaw,
       locale: effectiveLocale,
+      languageMix,
     });
 
     const stream = await client.chat.completions.create({

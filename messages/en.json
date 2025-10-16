@@ -1399,6 +1399,12 @@
         "title": "Support & resources"
       },
       "emptyBookmarks": "No bookmarks yet.",
+      "videoResources": {
+        "title": "Video Resources",
+        "description": "Educational videos to support your wellness journey",
+        "video1Title": "Wellness and Self-Care",
+        "video2Title": "Mental Health and Relationships"
+      },
       "report": {
         "title": "Report content?",
         "desc": "We’ll hide it on your device and send a moderation signal without personal data.",

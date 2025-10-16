@@ -247,6 +247,7 @@ export const quizQuestionTranslations = pgTable('quiz_question_translations', {
   locale: localeEnum('locale').notNull(),
   statement: text('statement').notNull(),
   explanation: text('explanation').notNull(),
+  category: varchar('category', { length: 255 }).notNull(),
 }, (table) => [
   primaryKey({ columns: [table.questionId, table.locale] }),
   index('idx_quiz_question_translations_locale').on(table.locale),
