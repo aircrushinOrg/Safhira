@@ -137,9 +137,10 @@ export async function GET(
       "- Never mix languages.",
       "",
       "Content requirements:",
-      "- Option A (positive) should sound warm and empathetic while reinforcing healthy communication.",
-      "- Option B (negative) should assert boundaries, surface concerns, or challenge unsafe pressure firmly yet respectfully.",
+      "- Option A (positive) should feel warm and empathetic, keeping the conversation open and caring.",
+      "- Option B (negative) should set boundaries or voice concerns plainly and respectfully.",
       "- Make each reply feel human and conversational, reference the NPC's latest message, and keep it under 160 characters.",
+      "- Keep language casual and grounded; avoid sounding like a coach, therapist, or scripted training.",
       "- Avoid stage directions or labels; deliver natural speech the player could genuinely use.",
       "",
       'Return a strict JSON object with keys "positive" and "negative". Example:',
@@ -167,7 +168,7 @@ export async function GET(
         {
           role: "system",
           content:
-            "You are a communication coach helping a player respond to a simulated conversation about healthy relationships. Provide contrasting response suggestions that respect safety and feel natural.",
+            "You are helping a player respond to a simulated conversation about healthy relationships. Offer contrasting replies that sound like authentic human speech, balancing empathy with clear boundaries, and never sounding like a coach or therapist.",
         },
         {
           role: "user",
