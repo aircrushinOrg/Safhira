@@ -1,7 +1,7 @@
 import { detect as tinyldDetect } from "tinyld";
 
 const SUPPORTED_LOCALES = new Set(["en", "ms", "zh"]);
-const WORD_REGEX = /[\p{L}']+/gu;
+const WORD_REGEX = /[a-zA-Z\u00C0-\u017F\u0100-\u024F\u1E00-\u1EFF\u3400-\u9FFF\u4E00-\u9FFF']+/g;
 
 // High-confidence Malay tokens - standard vocabulary accessible to all Malaysian speakers
 const MALAY_HIGH_CONFIDENCE_TOKENS = new Set([
