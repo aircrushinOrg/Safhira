@@ -12,6 +12,7 @@ import {
   getLanguageDisplayName,
   isNonEmptyString,
 } from "@/lib/ai-scenarios/engine";
+import { detectLocaleFromMessage } from "@/lib/ai-scenarios/language-detection";
 
 type SuggestedResponsePair = {
   positive: string;
@@ -114,12 +115,10 @@ export async function GET(
       npcDescriptorLines.push(`Setting: ${session.scenarioSetting}`);
     }
 
-    const localeInstruction = buildLocaleDirective({
-      locale: session.locale ?? undefined,
-      includeMirrorHint: false,
-    });
-    const languageLabel = getLanguageDisplayName(session.locale ?? undefined);
-
+    // Get latest player message - suggestions will follow its language exclusively
+    const latestPlayerTurn = [...orderedTurns].reverse().find((turn) => turn.role === "player");
+    const latestPlayerMessage = latestPlayerTurn?.content || "";
+    
     const prompt = [
       npcDescriptorLines.join("\n"),
       "",
@@ -129,12 +128,19 @@ export async function GET(
       "Recent conversation transcript:",
       transcript,
       "",
-      `Craft two contrasting follow-up replies the player could say next, written in ${languageLabel.toLowerCase()}.`,
+      `Latest player message: "${latestPlayerMessage}"`,
+      "",
+      "CRITICAL: Detect the language in the LATEST PLAYER MESSAGE and generate suggestions in THAT LANGUAGE ONLY.",
+      "- Analyze the latest player message language: English, Malay (Bahasa Melayu), or Chinese.",
+      "- Generate BOTH suggestions in the SAME language as the latest player message.",
+      "- Ignore all previous conversation languages - only match the latest player message.",
+      "- Never mix languages.",
+      "",
+      "Content requirements:",
       "- Option A (positive) should sound warm and empathetic while reinforcing healthy communication.",
       "- Option B (negative) should assert boundaries, surface concerns, or challenge unsafe pressure firmly yet respectfully.",
       "- Make each reply feel human and conversational, reference the NPC's latest message, and keep it under 160 characters.",
       "- Avoid stage directions or labels; deliver natural speech the player could genuinely use.",
-      localeInstruction ? `- ${localeInstruction}` : "",
       "",
       'Return a strict JSON object with keys "positive" and "negative". Example:',
       '{ "positive": "I get that this matters to you, and I want us both to feel comfortable moving forward.", "negative": "I hear what you\'re saying, but I need you to stop pushing - my boundaries aren\'t up for negotiation right now." }',

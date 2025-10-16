@@ -16,73 +16,10 @@ import {
   buildLocaleDirective,
   normaliseStringArray,
 } from "@/lib/ai-scenarios/engine";
-
-const SUPPORTED_LOCALES = new Set(["en", "ms", "zh"]);
-const HAN_CHARACTER_REGEX = /[\u3400-\u9FFF]/;
-const MALAY_KEYWORDS = [
-  "saya",
-  "anda",
-  "awak",
-  "kamu",
-  "kita",
-  "kami",
-  "tidak",
-  "tak",
-  "boleh",
-  "kerana",
-  "sebab",
-  "bagaimana",
-  "kenapa",
-  "mengapa",
-  "terima kasih",
-  "tolong",
-  "selamat",
-  "harap",
-  "maaf",
-  "mungkin",
-  "jangan",
-  "akan",
-  "perlu",
-  "suka",
-  "benci",
-  "betul",
-  "salah",
-  "sangat",
-];
-
-function normaliseLocaleCode(raw: unknown): "en" | "ms" | "zh" | undefined {
-  if (typeof raw !== "string") return undefined;
-  const trimmed = raw.trim().toLowerCase();
-  if (!trimmed) return undefined;
-  if (SUPPORTED_LOCALES.has(trimmed as "en" | "ms" | "zh")) {
-    return trimmed as "en" | "ms" | "zh";
-  }
-  if (trimmed.startsWith("zh")) return "zh";
-  if (trimmed.startsWith("ms") || trimmed.startsWith("id")) return "ms";
-  if (trimmed.startsWith("en")) return "en";
-  return undefined;
-}
-
-function detectLocaleFromMessage(message: string): "en" | "ms" | "zh" | undefined {
-  const content = message.trim();
-  if (!content) return undefined;
-
-  if (HAN_CHARACTER_REGEX.test(content)) {
-    return "zh";
-  }
-
-  const lower = content.toLowerCase();
-  const hasMalayKeyword = MALAY_KEYWORDS.some((keyword) => lower.includes(keyword));
-  if (hasMalayKeyword) {
-    return "ms";
-  }
-
-  if (/[a-zA-Z]/.test(content)) {
-    return "en";
-  }
-
-  return undefined;
-}
+import {
+  normaliseLocaleCode,
+  detectLocaleFromMessage,
+} from "@/lib/ai-scenarios/language-detection";
 
 function buildStreamingMessages(params: {
   scenario: ScenarioDescriptor;
