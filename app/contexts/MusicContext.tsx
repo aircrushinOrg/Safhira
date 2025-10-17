@@ -88,12 +88,43 @@ export function MusicProvider({ children }: { children: React.ReactNode }) {
     // Set initial mute state
     audio.muted = shouldBeMuted;
 
+    const eventsForUnlock: Array<keyof DocumentEventMap> = ['pointerdown', 'touchstart', 'keydown'];
+    let removeGestureUnlock: (() => void) | null = null;
+
+    const detachGestureUnlock = () => {
+      if (!removeGestureUnlock) return;
+      removeGestureUnlock();
+      removeGestureUnlock = null;
+    };
+
+    const attemptPlay = () => {
+      if (!audioRef.current) return;
+      audioRef.current.play().then(() => {
+        setIsPlaying(true);
+        detachGestureUnlock();
+      }).catch((error) => {
+        const message = error instanceof Error ? error.message : String(error);
+        if (!message.includes('interrupted by a call to pause')) {
+          console.log('Music autoplay prevented:', message);
+        }
+        if (!removeGestureUnlock) {
+          const handler = () => {
+            attemptPlay();
+          };
+          eventsForUnlock.forEach((eventName) => {
+            document.addEventListener(eventName, handler, { passive: true });
+          });
+          removeGestureUnlock = () => {
+            eventsForUnlock.forEach((eventName) => {
+              document.removeEventListener(eventName, handler);
+            });
+          };
+        }
+      });
+    };
+
     // Always start playing the audio, but it will be muted if needed
-    audio.play().then(() => {
-      setIsPlaying(true);
-    }).catch((error) => {
-      console.log('Music autoplay prevented:', error.message);
-    });
+    attemptPlay();
 
     // Add event listeners
     const handlePlay = () => setIsPlaying(true);
@@ -113,6 +144,7 @@ export function MusicProvider({ children }: { children: React.ReactNode }) {
     window.addEventListener('music-toggle-mute', handleGlobalToggle);
 
     return () => {
+      detachGestureUnlock();
       audio.removeEventListener('play', handlePlay);
       audio.removeEventListener('pause', handlePause);
       audio.removeEventListener('ended', handleEnded);

@@ -76,8 +76,48 @@ const quotes: Quote[] = [
   }
 ];
 
+// Custom hook to get header height dynamically
+function useHeaderHeight() {
+  const [headerHeight, setHeaderHeight] = useState(88); // Default fallback height (5.5rem = 88px)
+
+  useEffect(() => {
+    const updateHeaderHeight = () => {
+      const header = document.querySelector('header');
+      if (header) {
+        const height = header.getBoundingClientRect().height;
+        setHeaderHeight(height);
+      }
+    };
+
+    // Update on mount
+    updateHeaderHeight();
+
+    // Update on resize
+    window.addEventListener('resize', updateHeaderHeight);
+
+    // Use ResizeObserver for more accurate header size changes
+    const header = document.querySelector('header');
+    let resizeObserver: ResizeObserver | null = null;
+
+    if (header && 'ResizeObserver' in window) {
+      resizeObserver = new ResizeObserver(updateHeaderHeight);
+      resizeObserver.observe(header);
+    }
+
+    return () => {
+      window.removeEventListener('resize', updateHeaderHeight);
+      if (resizeObserver) {
+        resizeObserver.disconnect();
+      }
+    };
+  }, []);
+
+  return headerHeight;
+}
+
 export function AnimatedHeroSection() {
   const t = useTranslations();
+  const headerHeight = useHeaderHeight();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(true);
   const [nextIndex, setNextIndex] = useState(0);
@@ -203,8 +243,8 @@ export function AnimatedHeroSection() {
 
   return (
     <div 
-      className="relative w-full h-[92vh] md:h-[95vh] bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-pink-950 dark:via-gray-800 dark:to-teal-950 overflow-hidden"
-      style={{ touchAction: 'pan-y' }}
+      className="relative w-full bg-gradient-to-br from-pink-50 via-white to-teal-50 dark:from-pink-950 dark:via-gray-800 dark:to-teal-950 overflow-hidden"
+      style={{ touchAction: 'pan-y', height: `calc(100svh - ${headerHeight}px)` }}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
@@ -428,7 +468,7 @@ export function AnimatedHeroSection() {
       </div>
 
       {/* Navigation Dots and Progress Bar */}
-      <div className="absolute bottom-24 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center space-y-4">
+      <div className="absolute bottom-16 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center space-y-4">
         {/* Progress Bar */}
         {!isInitialLoad && !isAnimating && (
           <div className="w-16 h-1 bg-white/30 rounded-full overflow-hidden">
