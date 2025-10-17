@@ -531,8 +531,8 @@
       "title": "All Myths & Facts",
       "subtitle": "Complete list of all statements and their explanations. Click any item to view details.",
       "filterAll": "All ({count})",
-      "filterMyths": "Myths ({count})",
-      "filterFacts": "Facts ({count})"
+      "filterCategory": "{category} ({count})",
+      "uncategorized": "Uncategorized"
     }
   },
   "NotFound": {

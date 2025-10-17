@@ -25,7 +25,7 @@ import { submitQuizScore } from "../../actions/leaderboard-actions";
 import { LeaderboardResponse } from "@/types/leaderboard";
 import {useTranslations} from 'next-intl';
 
-type Item = { id: string; text: string; fact?: string; isTrue?: boolean };
+type Item = { id: string; text: string; fact?: string; isTrue?: boolean; category?: string };
 
 type QuizQuestion = {
   id: string;
@@ -33,6 +33,13 @@ type QuizQuestion = {
   isTrue: boolean;
   fact?: string;
 };
+
+const UNCATEGORIZED_KEY = 'uncategorized';
+
+function normalizeCategoryValue(category?: string) {
+  const trimmed = category?.trim();
+  return trimmed && trimmed.length > 0 ? trimmed.toLowerCase() : UNCATEGORIZED_KEY;
+}
 
 // Utils
 function escapeRegExp(value: string) {
@@ -147,7 +154,7 @@ export default function MythListClient({ items, allItems }: { items: Item[]; all
   const [userStats, setUserStats] = useState<any>(null);
   const [leaderboardData, setLeaderboardData] = useState<LeaderboardResponse | null>(null);
   const [viewAllOpen, setViewAllOpen] = useState(false);
-  const [viewAllFilter, setViewAllFilter] = useState<"all" | "myth" | "fact">("all");
+  const [viewAllCategory, setViewAllCategory] = useState<string>("all");
 
   const completeList = useMemo(() => {
     if (allItems && allItems.length > 0) {
@@ -156,15 +163,60 @@ export default function MythListClient({ items, allItems }: { items: Item[]; all
     return items;
   }, [items, allItems]);
 
+  const categories = useMemo(() => {
+    const summary = new Map<string, { raw: string; count: number }>();
+    completeList.forEach((item) => {
+      const normalized = normalizeCategoryValue(item.category);
+      const raw = item.category?.trim() ?? "";
+      const existing = summary.get(normalized);
+      if (existing) {
+        existing.count += 1;
+        if (!existing.raw && raw) {
+          existing.raw = raw;
+        }
+      } else {
+        summary.set(normalized, { raw, count: 1 });
+      }
+    });
+    return Array.from(summary.entries()).map(([normalized, data]) => ({
+      normalized,
+      raw: data.raw,
+      count: data.count,
+    }));
+  }, [completeList]);
+
+  const formatCategoryLabel = useCallback((category?: string) => {
+    const raw = category?.trim() ?? "";
+    if (!raw) {
+      return t('viewAll.uncategorized');
+    }
+    if (raw === raw.toLowerCase()) {
+      return raw
+        .split(/[\s_-]+/)
+        .filter(Boolean)
+        .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+        .join(' ');
+    }
+    return raw;
+  }, [t]);
+
+  const sortedCategories = useMemo(() => {
+    return categories
+      .map((entry) => ({
+        ...entry,
+        label: formatCategoryLabel(entry.raw),
+      }))
+      .sort((a, b) => a.label.localeCompare(b.label, undefined, { sensitivity: 'base' }));
+  }, [categories, formatCategoryLabel]);
+
   const filteredList = useMemo(() => {
-    if (viewAllFilter === "all") {
+    if (viewAllCategory === "all") {
       return completeList;
     }
-    return completeList.filter((item) => {
-      const isFactual = deriveTruth(item.fact, item.isTrue);
-      return viewAllFilter === "fact" ? isFactual : !isFactual;
-    });
-  }, [completeList, viewAllFilter]);
+    return completeList.filter(
+      (item) => normalizeCategoryValue(item.category) === viewAllCategory,
+    );
+  }, [completeList, viewAllCategory]);
 
   const handleClick = (item: Item) => {
     const hydrated =
@@ -175,6 +227,7 @@ export default function MythListClient({ items, allItems }: { items: Item[]; all
   };
 
   const handleViewAll = () => {
+    setViewAllCategory("all");
     setViewAllOpen(true);
   };
 
@@ -691,31 +744,29 @@ export default function MythListClient({ items, allItems }: { items: Item[]; all
           </DialogHeader>
           
           {/* Filter Buttons */}
-          <div className="flex gap-2 border-b pb-3">
+          <div className="flex flex-wrap gap-2 border-b pb-3">
             <Button
               size="sm"
-              variant={viewAllFilter === "all" ? "default" : "outline"}
-              onClick={() => setViewAllFilter("all")}
+              variant={viewAllCategory === "all" ? "default" : "outline"}
+              onClick={() => setViewAllCategory("all")}
               className="transition-all duration-200"
             >
-              {t('viewAll.filterAll', {count: completeList.length})}
+              {t('viewAll.filterAll', { count: completeList.length })}
             </Button>
-            <Button
-              size="sm"
-              variant={viewAllFilter === "myth" ? "default" : "outline"}
-              onClick={() => setViewAllFilter("myth")}
-              className="transition-all duration-200"
-            >
-              ✗ {t('viewAll.filterMyths', {count: completeList.filter(item => !deriveTruth(item.fact, item.isTrue)).length})}
-            </Button>
-            <Button
-              size="sm"
-              variant={viewAllFilter === "fact" ? "default" : "outline"}
-              onClick={() => setViewAllFilter("fact")}
-              className="transition-all duration-200"
-            >
-              ✓ {t('viewAll.filterFacts', {count: completeList.filter(item => deriveTruth(item.fact, item.isTrue)).length})}
-            </Button>
+            {sortedCategories.map((category) => (
+              <Button
+                key={category.normalized}
+                size="sm"
+                variant={viewAllCategory === category.normalized ? "default" : "outline"}
+                onClick={() => setViewAllCategory(category.normalized)}
+                className="transition-all duration-200"
+              >
+                {t('viewAll.filterCategory', {
+                  category: category.label,
+                  count: category.count,
+                })}
+              </Button>
+            ))}
           </div>
           
           <div className="flex-1 overflow-y-auto pr-2">

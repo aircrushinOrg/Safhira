@@ -13,6 +13,7 @@ type QuizListItem = {
   text: string
   fact?: string
   isTrue: boolean
+  category: string
 }
 
 export default async function QuizPage() {
@@ -37,6 +38,7 @@ export default async function QuizPage() {
       text: question.statement,
       fact: explanation ? `${prefix} ${explanation}` : prefix,
       isTrue: question.isTrue,
+      category: question.category,
     }
   }
 

@@ -7,7 +7,7 @@
 
 import MythListClient from "./MythListClient"
 
-type Item = { id: string; text: string; fact?: string; isTrue?: boolean }
+type Item = { id: string; text: string; fact?: string; isTrue?: boolean; category?: string }
 
 type TiltedScrollDemoProps = {
   featuredItems: Item[]
