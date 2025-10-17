@@ -3,7 +3,7 @@ const NPC_VOICE_IDS: Record<string, string> = {
   "friend-girl-01": "lcMyyd2HUfFzxdCaC4Ta", // Maya
   "classmate-both-01": "93nuHbke4dTER9x2pDwE", // Amir
   "doctor-boy-01": "93nuHbke4dTER9x2pDwE", // Dr. Tan
-  "doctor-girl-01": "FUfBrNit0NNZAwb58KWH", // Dr. Wong
+  "doctor-girl-01": "lcMyyd2HUfFzxdCaC4Ta", // Dr. Wong
   "drunk-boy-01": "lcMyyd2HUfFzxdCaC4Ta", // Alexa
   "drunk-girl-01": "93nuHbke4dTER9x2pDwE", // Alex
   "partner-boy-01": "lcMyyd2HUfFzxdCaC4Ta", // Priya
