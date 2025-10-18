@@ -84,21 +84,10 @@ export async function submitQuizScore(data: SubmitScoreRequest) {
       };
     }
 
+    const now = new Date();
+
     // Start a transaction
     const result = await db.transaction(async (tx) => {
-      // Insert quiz result
-      const insertedResult = await tx
-        .insert(quizResults)
-        .values({
-          nickname: sanitizedNickname,
-          score,
-          totalQuestions,
-          correctAnswers,
-          quizType,
-        })
-        .returning({ id: quizResults.id });
-
-      // Get current stats for this nickname and quiz type
       const existingStats = await tx
         .select()
         .from(quizLeaderboardStats)
@@ -116,10 +105,11 @@ export async function submitQuizScore(data: SubmitScoreRequest) {
           .values({
             nickname: sanitizedNickname,
             bestScore: score,
-            averageScore: score.toString(),
+            averageScore: score.toFixed(2),
             totalAttempts: 1,
             quizType,
-            lastPlayedAt: new Date(),
+            lastPlayedAt: now,
+            updatedAt: now,
           });
       } else {
         // Update existing stats
@@ -135,8 +125,8 @@ export async function submitQuizScore(data: SubmitScoreRequest) {
             bestScore: newBestScore,
             averageScore: newAverageScore.toFixed(2),
             totalAttempts: newTotalAttempts,
-            lastPlayedAt: new Date(),
-            updatedAt: new Date(),
+            lastPlayedAt: now,
+            updatedAt: now,
           })
           .where(
             and(
@@ -145,6 +135,17 @@ export async function submitQuizScore(data: SubmitScoreRequest) {
             )
           );
       }
+
+      const insertedResult = await tx
+        .insert(quizResults)
+        .values({
+          nickname: sanitizedNickname,
+          score,
+          totalQuestions,
+          correctAnswers,
+          quizType,
+        })
+        .returning({ id: quizResults.id });
 
       return insertedResult[0];
     });

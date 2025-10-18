@@ -44,21 +44,10 @@ export async function POST(request: NextRequest) {
     // Sanitize nickname
     const sanitizedNickname = nickname.trim();
 
-    // Start a transaction
-    const result = await db.transaction(async (tx) => {
-      // Insert quiz result
-      const insertedResult = await tx
-        .insert(quizResults)
-        .values({
-          nickname: sanitizedNickname,
-          score,
-          totalQuestions,
-          correctAnswers,
-          quizType,
-        })
-        .returning({ id: quizResults.id });
+    const now = new Date();
 
-      // Get current stats for this nickname and quiz type
+    // Start a transaction and ensure leaderboard stats exist before inserting the quiz result
+    const result = await db.transaction(async (tx) => {
       const existingStats = await tx
         .select()
         .from(quizLeaderboardStats)
@@ -70,19 +59,18 @@ export async function POST(request: NextRequest) {
         );
 
       if (existingStats.length === 0) {
-        // First time playing - create new stats record
         await tx
           .insert(quizLeaderboardStats)
           .values({
             nickname: sanitizedNickname,
             bestScore: score,
-            averageScore: score.toString(),
+            averageScore: score.toFixed(2),
             totalAttempts: 1,
             quizType,
-            lastPlayedAt: new Date(),
+            lastPlayedAt: now,
+            updatedAt: now,
           });
       } else {
-        // Update existing stats
         const current = existingStats[0];
         const newTotalAttempts = current.totalAttempts + 1;
         const currentAverage = parseFloat(current.averageScore);
@@ -95,8 +83,8 @@ export async function POST(request: NextRequest) {
             bestScore: newBestScore,
             averageScore: newAverageScore.toFixed(2),
             totalAttempts: newTotalAttempts,
-            lastPlayedAt: new Date(),
-            updatedAt: new Date(),
+            lastPlayedAt: now,
+            updatedAt: now,
           })
           .where(
             and(
@@ -105,6 +93,17 @@ export async function POST(request: NextRequest) {
             )
           );
       }
+
+      const insertedResult = await tx
+        .insert(quizResults)
+        .values({
+          nickname: sanitizedNickname,
+          score,
+          totalQuestions,
+          correctAnswers,
+          quizType,
+        })
+        .returning({ id: quizResults.id });
 
       return insertedResult[0];
     });
