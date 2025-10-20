@@ -1901,6 +1901,75 @@
       "subtitle": "先了解每个情境背后的角色，再立即进入对话练习。选择一个 NPC 体验他们的故事，或使用快捷工具即时自定义提示。",
       "startChat": "开始对话"
     },
+    "history": {
+      "badge": "模拟档案",
+      "title": "查看 AI 情景对话",
+      "subtitle": "选择一个模拟会话查看对话记录。",
+      "breadcrumbs": {
+        "simulator": "模拟器"
+      },
+      "list": {
+        "title": "会话",
+        "empty": "暂无模拟会话记录。",
+        "score": "得分 {value}%",
+        "completed": "已完成"
+      },
+      "details": {
+        "sessionId": "会话 ID",
+        "latestRisk": "风险 {value}",
+        "tension": "紧张度 {value}",
+        "npcName": "NPC 名称",
+        "npcRole": "NPC 角色",
+        "locale": "语言",
+        "createdAt": "创建时间",
+        "updatedAt": "最近活动",
+        "completedAt": "完成时间",
+        "lastScore": "最新得分",
+        "completionReason": "完成原因",
+        "learningObjectives": "学习目标",
+        "supportingFacts": "支撑要点",
+        "npcGoals": "NPC 目标",
+        "npcTactics": "NPC 策略",
+        "npcBoundaries": "NPC 边界",
+        "conversation": "对话记录",
+        "noTurns": "此会话暂无对话内容。",
+        "latestSummary": "最新摘要与指导",
+        "notFound": "未找到该会话。",
+        "noSelection": "请从列表中选择一个会话查看记录。",
+        "labels": {
+          "player": "玩家",
+          "npc": "NPC",
+          "turnLabel": "第 {value} 回合",
+          "summaryTitle": "摘要",
+          "riskBadge": "风险",
+          "keyRisks": "主要风险",
+          "effectiveResponses": "有效回应",
+          "scoresTitle": "评分",
+          "confidence": "信心值",
+          "riskScore": "风险分",
+          "finalReportTitle": "最终报告",
+          "strengths": "优势",
+          "areasForGrowth": "待提升",
+          "recommendedPractice": "建议练习",
+          "complete": "已完成",
+          "riskLevels": {
+            "low": "低",
+            "medium": "中",
+            "high": "高"
+          },
+          "tensionLevels": {
+            "low": "低",
+            "medium": "中",
+            "high": "高"
+          }
+        }
+      },
+      "pagination": {
+        "previous": "上一页",
+        "next": "下一页",
+        "pageStatus": "第 {current} 页，共 {total} 页"
+      }
+    },
     "chat": {
       "back": "返回角色列表",
       "badge": "模拟练习",

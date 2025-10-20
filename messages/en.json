@@ -1901,6 +1901,75 @@
       "subtitle": "Review the personalities guiding each scenario, then launch straight into conversation practice. Choose an NPC to step into their story or head to the quick tools to customise prompts on the fly.",
       "startChat": "Start chat"
     },
+    "history": {
+      "badge": "Simulation archive",
+      "title": "Review AI scenario conversations",
+      "subtitle": "Choose a simulator session to read its conversation history.",
+      "breadcrumbs": {
+        "simulator": "Simulator"
+      },
+      "list": {
+        "title": "Sessions",
+        "empty": "No simulator sessions have been recorded yet.",
+        "score": "Score {value}%",
+        "completed": "Completed"
+      },
+      "details": {
+        "sessionId": "Session ID",
+        "latestRisk": "Risk {value}",
+        "tension": "Tension {value}",
+        "npcName": "NPC name",
+        "npcRole": "NPC role",
+        "locale": "Locale",
+        "createdAt": "Created",
+        "updatedAt": "Last activity",
+        "completedAt": "Completed at",
+        "lastScore": "Latest score",
+        "completionReason": "Completion reason",
+        "learningObjectives": "Learning objectives",
+        "supportingFacts": "Supporting facts",
+        "npcGoals": "NPC goals",
+        "npcTactics": "NPC tactics",
+        "npcBoundaries": "NPC boundaries",
+        "conversation": "Conversation history",
+        "noTurns": "No turns recorded for this session yet.",
+        "latestSummary": "Latest summary & coaching",
+        "notFound": "We couldn't find that session.",
+        "noSelection": "Select a session from the list to view the transcript.",
+        "labels": {
+          "player": "Player",
+          "npc": "NPC",
+          "turnLabel": "Turn #{value}",
+          "summaryTitle": "Summary",
+          "riskBadge": "Risk",
+          "keyRisks": "Key risks",
+          "effectiveResponses": "Effective responses",
+          "scoresTitle": "Scores",
+          "confidence": "Confidence",
+          "riskScore": "Risk score",
+          "finalReportTitle": "Final report",
+          "strengths": "Strengths",
+          "areasForGrowth": "Areas for growth",
+          "recommendedPractice": "Recommended practice",
+          "complete": "Complete",
+          "riskLevels": {
+            "low": "Low",
+            "medium": "Medium",
+            "high": "High"
+          },
+          "tensionLevels": {
+            "low": "Low",
+            "medium": "Medium",
+            "high": "High"
+          }
+        }
+      },
+      "pagination": {
+        "previous": "Previous",
+        "next": "Next",
+        "pageStatus": "Page {current} of {total}"
+      }
+    },
     "chat": {
       "back": "Back to roster",
       "badge": "Simulation practice",

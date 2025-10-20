@@ -1904,6 +1904,75 @@
       "subtitle": "Tinjau personaliti yang membimbing setiap senario, kemudian teruskan ke latihan perbualan. Pilih NPC untuk masuk ke cerita mereka atau gunakan alat pantas untuk sesuaikan prompt secara langsung.",
       "startChat": "Mulakan sembang"
     },
+    "history": {
+      "badge": "Arkib simulasi",
+      "title": "Semak perbualan senario AI",
+      "subtitle": "Pilih sesi simulator untuk membaca sejarah perbualannya.",
+      "breadcrumbs": {
+        "simulator": "Simulator"
+      },
+      "list": {
+        "title": "Sesi",
+        "empty": "Tiada sesi simulator direkodkan lagi.",
+        "score": "Skor {value}%",
+        "completed": "Selesai"
+      },
+      "details": {
+        "sessionId": "ID sesi",
+        "latestRisk": "Risiko {value}",
+        "tension": "Tahap ketegangan {value}",
+        "npcName": "Nama NPC",
+        "npcRole": "Peranan NPC",
+        "locale": "Bahasa",
+        "createdAt": "Dicipta",
+        "updatedAt": "Aktiviti terakhir",
+        "completedAt": "Disiapkan pada",
+        "lastScore": "Skor terkini",
+        "completionReason": "Sebab penutupan",
+        "learningObjectives": "Objektif pembelajaran",
+        "supportingFacts": "Fakta sokongan",
+        "npcGoals": "Matlamat NPC",
+        "npcTactics": "Taktik NPC",
+        "npcBoundaries": "Batasan NPC",
+        "conversation": "Sejarah perbualan",
+        "noTurns": "Tiada giliran direkodkan untuk sesi ini.",
+        "latestSummary": "Ringkasan & bimbingan terkini",
+        "notFound": "Kami tidak jumpa sesi tersebut.",
+        "noSelection": "Pilih satu sesi dalam senarai untuk melihat transkrip.",
+        "labels": {
+          "player": "Pemain",
+          "npc": "NPC",
+          "turnLabel": "Giliran #{value}",
+          "summaryTitle": "Ringkasan",
+          "riskBadge": "Risiko",
+          "keyRisks": "Risiko utama",
+          "effectiveResponses": "Respons berkesan",
+          "scoresTitle": "Skor",
+          "confidence": "Keyakinan",
+          "riskScore": "Skor risiko",
+          "finalReportTitle": "Laporan akhir",
+          "strengths": "Kekuatan",
+          "areasForGrowth": "Ruang penambahbaikan",
+          "recommendedPractice": "Latihan disyorkan",
+          "complete": "Selesai",
+          "riskLevels": {
+            "low": "Rendah",
+            "medium": "Sederhana",
+            "high": "Tinggi"
+          },
+          "tensionLevels": {
+            "low": "Rendah",
+            "medium": "Sederhana",
+            "high": "Tinggi"
+          }
+        }
+      },
+      "pagination": {
+        "previous": "Sebelum",
+        "next": "Seterusnya",
+        "pageStatus": "Halaman {current} daripada {total}"
+      }
+    },
     "chat": {
       "back": "Kembali ke senarai NPC",
       "badge": "Latihan simulasi",
