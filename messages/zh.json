@@ -1967,7 +1967,10 @@
       "pagination": {
         "previous": "上一页",
         "next": "下一页",
-        "pageStatus": "第 {current} 页，共 {total} 页"
+        "pageStatus": "第 {current} 页，共 {total} 页",
+        "goToLabel": "跳至页码",
+        "goToPlaceholder": "请输入 1-{total}",
+        "goToButton": "跳转"
       }
     },
     "chat": {
@@ -2122,10 +2125,18 @@
           "overall": "整体评估",
           "strengths": "优势",
           "areas": "待提升之处",
-          "recommended": "建议练习"
+          "recommended": "建议练习",
+          "keyMoments": "关键时刻",
+          "nextSteps": "建议的下一个场景"
         },
         "close": "关闭",
-        "download": "下载报告"
+        "download": "下载报告",
+        "share": "分享胶囊",
+        "sharing": "正在创建胶囊...",
+        "copyLink": "复制链接",
+        "linkCopied": "链接已复制!",
+        "capsuleCreated": "您的可分享胶囊已准备好!",
+        "capsuleError": "创建胶囊失败。请重试。"
       },
       "pdf": {
         "title": "模拟最终报告",

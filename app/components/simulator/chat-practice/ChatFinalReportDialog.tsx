@@ -1,6 +1,7 @@
 'use client';
 
-import { Award, BarChart3, Brain, AlertTriangle, CheckCircle, TrendingUp, BookOpen, Download, X } from 'lucide-react';
+import { useState } from 'react';
+import { Award, BarChart3, Brain, AlertTriangle, CheckCircle, TrendingUp, BookOpen, Download, X, Share2, Copy, Check, Sparkles, ArrowRight } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import { Button } from '@/app/components/ui/button';
@@ -15,6 +16,27 @@ import {
 
 import { type ApiFinalReport } from './types';
 
+type Snippet = {
+  turnIndex: number;
+  role: string;
+  content: string;
+  annotation: string;
+  impactReason: string;
+};
+
+type NextScenario = {
+  scenarioId: string;
+  title: string;
+  reason: string;
+};
+
+type Capsule = {
+  shareUrl: string;
+  narrativeSummary: string;
+  suggestedNextScenarios: NextScenario[];
+  snippets?: Snippet[];
+};
+
 type ChatFinalReportDialogProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -24,6 +46,7 @@ type ChatFinalReportDialogProps = {
     riskScore: number;
   };
   onDownload: () => void | Promise<void>;
+  sessionId?: string | null;
 };
 
 export function ChatFinalReportDialog({
@@ -32,11 +55,60 @@ export function ChatFinalReportDialog({
   finalReport,
   displayedScore,
   onDownload,
+  sessionId,
 }: ChatFinalReportDialogProps) {
   const t = useTranslations('Simulator.chatPractice');
+  const [capsule, setCapsule] = useState<Capsule | null>(null);
+  const [loadingCapsule, setLoadingCapsule] = useState(false);
+  const [capsuleError, setCapsuleError] = useState<string | null>(null);
+  const [linkCopied, setLinkCopied] = useState(false);
 
   const confidenceLabel = t('metrics.confidence', { score: displayedScore.confidence }).split(':')[0];
   const riskLabel = t('metrics.riskScore', { score: displayedScore.riskScore }).split(':')[0];
+
+  async function handleShareCapsule() {
+    if (!sessionId || loadingCapsule) return;
+
+    try {
+      setLoadingCapsule(true);
+      setCapsuleError(null);
+
+      const response = await fetch(`/api/ai-scenarios/session/${sessionId}/capsule`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ expiryDays: 30 }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create capsule');
+      }
+
+      const data = await response.json();
+
+      const snippetsResponse = await fetch(`/api/ai-scenarios/session/${sessionId}/snippets`);
+      const snippetsData = snippetsResponse.ok ? await snippetsResponse.json() : { snippets: [] };
+
+      setCapsule({
+        shareUrl: data.shareUrl,
+        narrativeSummary: data.narrativeSummary,
+        suggestedNextScenarios: data.suggestedNextScenarios || [],
+        snippets: snippetsData.snippets || [],
+      });
+    } catch (error) {
+      console.error('Failed to create capsule:', error);
+      setCapsuleError(t('dialog.capsuleError'));
+    } finally {
+      setLoadingCapsule(false);
+    }
+  }
+
+  function handleCopyLink() {
+    if (!capsule?.shareUrl) return;
+
+    navigator.clipboard.writeText(capsule.shareUrl);
+    setLinkCopied(true);
+    setTimeout(() => setLinkCopied(false), 2000);
+  }
 
   return (
     <Dialog open={open && Boolean(finalReport)} onOpenChange={onOpenChange}>
@@ -184,6 +256,81 @@ export function ChatFinalReportDialog({
                 </ul>
               </div>
             )}
+
+            {capsule && (
+              <>
+                {capsule.snippets && capsule.snippets.length > 0 && (
+                  <div className="rounded-2xl border border-purple-100 bg-gradient-to-r from-purple-50 to-pink-50 p-6 dark:border-purple-800/30 dark:from-purple-900/20 dark:to-pink-900/20">
+                    <div className="mb-4 flex items-center gap-3">
+                      <div className="flex size-10 items-center justify-center rounded-xl bg-purple-500 text-white shadow-md">
+                        <Sparkles className="size-5" />
+                      </div>
+                      <h3 className="font-semibold text-purple-900 dark:text-purple-100">{t('dialog.sections.keyMoments')}</h3>
+                    </div>
+                    <div className="space-y-4">
+                      {capsule.snippets.map((snippet, index) => (
+                        <div key={index} className="rounded-xl border border-purple-200 bg-white p-4 dark:border-purple-700/30 dark:bg-purple-950/30">
+                          <p className="mb-2 italic text-purple-800 dark:text-purple-200">&ldquo;{snippet.content}&rdquo;</p>
+                          <p className="text-sm text-purple-700 dark:text-purple-300">{snippet.annotation}</p>
+                          {snippet.impactReason && (
+                            <span className="mt-2 inline-block rounded-full bg-purple-100 px-2 py-1 text-xs text-purple-700 dark:bg-purple-800/40 dark:text-purple-200">
+                              {snippet.impactReason}
+                            </span>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {capsule.suggestedNextScenarios && capsule.suggestedNextScenarios.length > 0 && (
+                  <div className="rounded-2xl border border-indigo-100 bg-gradient-to-r from-indigo-50 to-blue-50 p-6 dark:border-indigo-800/30 dark:from-indigo-900/20 dark:to-blue-900/20">
+                    <div className="mb-4 flex items-center gap-3">
+                      <div className="flex size-10 items-center justify-center rounded-xl bg-indigo-500 text-white shadow-md">
+                        <ArrowRight className="size-5" />
+                      </div>
+                      <h3 className="font-semibold text-indigo-900 dark:text-indigo-100">{t('dialog.sections.nextSteps')}</h3>
+                    </div>
+                    <div className="space-y-3">
+                      {capsule.suggestedNextScenarios.map((scenario, index) => (
+                        <div key={index} className="rounded-xl border border-indigo-200 bg-white p-4 dark:border-indigo-700/30 dark:bg-indigo-950/30">
+                          <h4 className="mb-1 font-semibold text-indigo-900 dark:text-indigo-100">{scenario.title}</h4>
+                          <p className="text-sm text-indigo-700 dark:text-indigo-300">{scenario.reason}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {capsule.shareUrl && (
+                  <div className="rounded-2xl border border-teal-100 bg-gradient-to-r from-teal-50 to-emerald-50 p-4 dark:border-teal-800/30 dark:from-teal-900/20 dark:to-emerald-900/20">
+                    <p className="mb-2 text-sm font-semibold text-teal-900 dark:text-teal-100">{t('dialog.capsuleCreated')}</p>
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="text"
+                        readOnly
+                        value={capsule.shareUrl}
+                        className="flex-1 rounded-lg border border-teal-200 bg-white px-3 py-2 text-sm text-teal-800 dark:border-teal-700 dark:bg-teal-950/50 dark:text-teal-200"
+                      />
+                      <Button
+                        size="sm"
+                        onClick={handleCopyLink}
+                        className="bg-teal-500 hover:bg-teal-600"
+                      >
+                        {linkCopied ? <Check className="size-4" /> : <Copy className="size-4" />}
+                        {linkCopied ? t('dialog.linkCopied') : t('dialog.copyLink')}
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </>
+            )}
+
+            {capsuleError && (
+              <div className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700 dark:border-rose-500/40 dark:bg-rose-500/10 dark:text-rose-100">
+                {capsuleError}
+              </div>
+            )}
           </div>
         ) : null}
 
@@ -191,17 +338,36 @@ export function ChatFinalReportDialog({
           <Button
             variant="secondary"
             onClick={() => onOpenChange(false)}
-            className="order-2 flex items-center gap-2 sm:order-1"
+            className="order-3 flex items-center gap-2 sm:order-1"
           >
             <X className="size-4" />
             {t('dialog.close')}
+          </Button>
+          <Button
+            disabled={!finalReport || !sessionId || loadingCapsule}
+            onClick={() => {
+              void handleShareCapsule();
+            }}
+            className="order-2 flex items-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg hover:from-purple-600 hover:to-pink-600 sm:order-2"
+          >
+            {loadingCapsule ? (
+              <>
+                <div className="size-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                {t('dialog.sharing')}
+              </>
+            ) : (
+              <>
+                <Share2 className="size-4" />
+                {t('dialog.share')}
+              </>
+            )}
           </Button>
           <Button
             disabled={!finalReport}
             onClick={() => {
               void onDownload();
             }}
-            className="order-1 flex items-center gap-2 bg-gradient-to-r from-teal-500 to-emerald-500 text-white shadow-lg hover:from-teal-600 hover:to-emerald-600 sm:order-2"
+            className="order-1 flex items-center gap-2 bg-gradient-to-r from-teal-500 to-emerald-500 text-white shadow-lg hover:from-teal-600 hover:to-emerald-600 sm:order-3"
           >
             <Download className="size-4" />
             {t('dialog.download')}

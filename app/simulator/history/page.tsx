@@ -4,6 +4,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { db } from "@/app/db";
 import { BreadcrumbTrail } from "@/app/components/BreadcrumbTrail";
 import { Button } from "@/app/components/ui/button";
+import { Input } from "@/app/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/app/components/ui/card";
 import { ScrollArea } from "@/app/components/ui/scroll-area";
 import { cn } from "@/app/components/ui/utils";
@@ -118,26 +119,38 @@ function ConversationTurnRow({
   turnIndexLabel: string;
 }) {
   return (
-    <div
-      className={cn(
-        "flex flex-col gap-1 rounded-xl border border-slate-200/70 bg-white/80 p-4 dark:border-white/10 dark:bg-slate-900/60",
-        isPlayer ? "items-end" : "items-start",
-      )}
-    >
-      <div className="flex items-center gap-2 text-xs uppercase tracking-wide text-slate-500 dark:text-slate-400">
-        <span>{roleLabel}</span>
-        <span>·</span>
-        <span>{timestampLabel}</span>
-        <span>·</span>
-        <span>{turnIndexLabel}</span>
-      </div>
-      <p className={cn(
-        "text-sm leading-relaxed text-slate-700 dark:text-slate-200",
-        isPlayer ? "text-right" : "text-left",
-      )}
+    <div className={cn("flex", isPlayer ? "justify-end" : "justify-start")}>
+      <div
+        className={cn(
+          "max-w-[82%] rounded-3xl px-5 py-4 text-sm leading-relaxed shadow-lg ring-1 ring-inset transition",
+          "backdrop-blur-[1.5px]",
+          isPlayer
+            ? "bg-gradient-to-br from-teal-500 via-teal-500 to-emerald-500 text-white shadow-teal-500/30 ring-teal-400/50 dark:from-teal-600 dark:via-teal-600 dark:to-emerald-500"
+            : "bg-white/90 text-slate-800 shadow-slate-900/10 ring-slate-200/70 dark:bg-slate-800/85 dark:text-slate-100 dark:ring-white/10",
+        )}
       >
-        {content}
-      </p>
+        <div
+          className={cn(
+            "text-xs font-semibold uppercase tracking-[0.24em]",
+            isPlayer ? "text-white/70" : "text-emerald-600 dark:text-emerald-300",
+          )}
+        >
+          {roleLabel}
+        </div>
+        <p className="mt-2 whitespace-pre-wrap break-words text-sm leading-relaxed text-current">
+          {content}
+        </p>
+        <div
+          className={cn(
+            "mt-3 flex flex-wrap items-center gap-2 text-[10px] uppercase tracking-[0.28em]",
+            isPlayer ? "text-white/60" : "text-slate-500 dark:text-slate-400",
+          )}
+        >
+          <span>{timestampLabel}</span>
+          <span aria-hidden>•</span>
+          <span>{turnIndexLabel}</span>
+        </div>
+      </div>
     </div>
   );
 }
@@ -191,6 +204,9 @@ export default async function SimulatorHistoryPage({ searchParams }: PageProps) 
     previous: t("pagination.previous"),
     next: t("pagination.next"),
     status: t("pagination.pageStatus", { current: currentPage, total: totalPages }),
+    goToLabel: t("pagination.goToLabel"),
+    goToPlaceholder: t("pagination.goToPlaceholder", { total: totalPages }),
+    goToButton: t("pagination.goToButton"),
   };
 
   const hasPrev = currentPage > 1;
@@ -268,40 +284,77 @@ export default async function SimulatorHistoryPage({ searchParams }: PageProps) 
                   </ScrollArea>
 
                   {totalPages > 1 && (
-                    <div className="mt-6 flex items-center justify-between gap-3">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        asChild
-                        className="min-w-[96px]"
-                        disabled={!hasPrev}
+                    <div className="mt-6 space-y-4">
+                      <div className="flex flex-wrap items-center justify-between gap-3">
+                        <div className="flex items-center gap-3">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            asChild
+                            className="min-w-[96px]"
+                            disabled={!hasPrev}
+                          >
+                            <Link
+                              href={hasPrev ? createPageHref(currentPage - 1, detailSessionId) : "#"}
+                              aria-disabled={!hasPrev}
+                              tabIndex={hasPrev ? undefined : -1}
+                            >
+                              {paginationLabels.previous}
+                            </Link>
+                          </Button>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            asChild
+                            className="min-w-[96px]"
+                            disabled={!hasNext}
+                          >
+                            <Link
+                              href={hasNext ? createPageHref(currentPage + 1, detailSessionId) : "#"}
+                              aria-disabled={!hasNext}
+                              tabIndex={hasNext ? undefined : -1}
+                            >
+                              {paginationLabels.next}
+                            </Link>
+                          </Button>
+                        </div>
+                        <span className="text-sm font-medium text-slate-600 dark:text-slate-200">
+                          {paginationLabels.status}
+                        </span>
+                      </div>
+
+                      <form
+                        className="flex flex-wrap items-center gap-3 rounded-2xl bg-slate-100/60 px-4 py-3 text-sm text-slate-600 shadow-inner shadow-slate-200/40 dark:bg-slate-900/60 dark:text-slate-200 dark:shadow-slate-950/40"
+                        action="/simulator/history"
+                        method="get"
                       >
-                        <Link
-                          href={hasPrev ? createPageHref(currentPage - 1) : "#"}
-                          aria-disabled={!hasPrev}
-                          tabIndex={hasPrev ? undefined : -1}
+                        <label
+                          htmlFor="history-page-input"
+                          className="text-xs font-semibold uppercase tracking-[0.28em] text-slate-500 dark:text-slate-400"
                         >
-                          {paginationLabels.previous}
-                        </Link>
-                      </Button>
-                      <span className="text-sm font-medium text-slate-600 dark:text-slate-200">
-                        {paginationLabels.status}
-                      </span>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        asChild
-                        className="min-w-[96px]"
-                        disabled={!hasNext}
-                      >
-                        <Link
-                          href={hasNext ? createPageHref(currentPage + 1) : "#"}
-                          aria-disabled={!hasNext}
-                          tabIndex={hasNext ? undefined : -1}
-                        >
-                          {paginationLabels.next}
-                        </Link>
-                      </Button>
+                          {paginationLabels.goToLabel}
+                        </label>
+                        {detailSessionId ? (
+                          <input type="hidden" name="sessionId" value={detailSessionId} />
+                        ) : null}
+                        <div className="flex items-center gap-2">
+                          <Input
+                            id="history-page-input"
+                            name="page"
+                            type="number"
+                            inputMode="numeric"
+                            min={1}
+                            max={totalPages}
+                            defaultValue={currentPage}
+                            placeholder={paginationLabels.goToPlaceholder}
+                            className="h-9 w-24 text-center text-sm font-medium"
+                            aria-label={paginationLabels.goToLabel}
+                          />
+                          <Button type="submit" size="sm" className="min-w-[72px]">
+                            {paginationLabels.goToButton}
+                          </Button>
+                        </div>
+                      </form>
                     </div>
                   )}
                 </>
@@ -323,13 +376,13 @@ export default async function SimulatorHistoryPage({ searchParams }: PageProps) 
               ) : detail.turns.length === 0 ? (
                 <p className="text-sm text-slate-500 dark:text-slate-300">{t("details.noTurns")}</p>
               ) : (
-                <ScrollArea className="h-[540px] pr-5">
-                  <div className="space-y-4">
+                <ScrollArea className="h-[540px] overflow-hidden rounded-3xl border border-slate-200/70 bg-white/70 shadow-sm dark:border-white/10 dark:bg-slate-900/60">
+                  <div className="flex flex-col gap-5 px-6 py-6">
                     {detail.turns.map((turn) => {
                       const isPlayer = turn.role === "player";
                       return (
                         <ConversationTurnRow
-                          key={`${turn.turnIndex}-${turn.role}`}
+                          key={turn.id ?? `${turn.turnIndex}-${turn.role}`}
                           content={turn.content}
                           isPlayer={isPlayer}
                           roleLabel={isPlayer ? conversationLabels.player : conversationLabels.npc}

@@ -1410,6 +1410,7 @@ export default function ChatPractice({ template: displayTemplate, aiTemplate }: 
         finalReport={finalReport}
         displayedScore={displayedScore}
         onDownload={handleDownloadFinalReportDocx}
+        sessionId={sessionId}
       />
     </div>
   );

@@ -326,3 +326,35 @@ export const aiScenarioResponses = pgTable('ai_scenario_responses', {
   uniqueIndex('uq_ai_scenario_responses_session_turns').on(table.sessionId, table.playerTurnCount),
 ]);
 
+// AI Scenario Capsules - Shareable session summaries with secure tokens
+export const aiScenarioCapsules = pgTable('ai_scenario_capsules', {
+  id: serial('id').primaryKey(),
+  sessionId: varchar('session_id', { length: 128 }).notNull().references(() => aiScenarioSessions.sessionId, { onDelete: 'cascade' }),
+  shareToken: varchar('share_token', { length: 128 }).notNull(),
+  narrativeSummary: text('narrative_summary').notNull(),
+  suggestedNextScenarios: jsonb('suggested_next_scenarios').notNull().default(sql`'[]'::jsonb`),
+  toneMetrics: jsonb('tone_metrics'),
+  expiresAt: timestamp('expires_at'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  viewCount: integer('view_count').notNull().default(0),
+}, (table) => [
+  uniqueIndex('uq_ai_scenario_capsules_share_token').on(table.shareToken),
+  index('idx_ai_scenario_capsules_session').on(table.sessionId),
+  index('idx_ai_scenario_capsules_expires').on(table.expiresAt),
+]);
+
+// AI Scenario Snippets - Impactful dialogue turns with AI annotations
+export const aiScenarioSnippets = pgTable('ai_scenario_snippets', {
+  id: serial('id').primaryKey(),
+  sessionId: varchar('session_id', { length: 128 }).notNull().references(() => aiScenarioSessions.sessionId, { onDelete: 'cascade' }),
+  turnIndex: integer('turn_index').notNull(),
+  role: varchar('role', { length: 16 }).notNull(),
+  content: text('content').notNull(),
+  annotation: text('annotation').notNull(),
+  impactReason: varchar('impact_reason', { length: 255 }),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+}, (table) => [
+  index('idx_ai_scenario_snippets_session').on(table.sessionId),
+  index('idx_ai_scenario_snippets_turn_index').on(table.turnIndex),
+]);
+

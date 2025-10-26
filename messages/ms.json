@@ -1970,7 +1970,10 @@
       "pagination": {
         "previous": "Sebelum",
         "next": "Seterusnya",
-        "pageStatus": "Halaman {current} daripada {total}"
+        "pageStatus": "Halaman {current} daripada {total}",
+        "goToLabel": "Pergi ke halaman",
+        "goToPlaceholder": "Masukkan 1-{total}",
+        "goToButton": "Pergi"
       }
     },
     "chat": {
@@ -2125,10 +2128,18 @@
           "overall": "Penilaian keseluruhan",
           "strengths": "Kekuatan",
           "areas": "Bidang penambahbaikan",
-          "recommended": "Amalan disyorkan"
+          "recommended": "Amalan disyorkan",
+          "keyMoments": "Momen Utama",
+          "nextSteps": "Senario Seterusnya yang Disyorkan"
         },
         "close": "Tutup",
-        "download": "Muat turun laporan"
+        "download": "Muat turun laporan",
+        "share": "Kongsi kapsul",
+        "sharing": "Mencipta kapsul...",
+        "copyLink": "Salin pautan",
+        "linkCopied": "Pautan disalin!",
+        "capsuleCreated": "Kapsul boleh kongsi anda sudah siap!",
+        "capsuleError": "Gagal mencipta kapsul. Sila cuba lagi."
       },
       "pdf": {
         "title": "Laporan Akhir Simulasi",

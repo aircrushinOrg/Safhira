@@ -1967,7 +1967,10 @@
       "pagination": {
         "previous": "Previous",
         "next": "Next",
-        "pageStatus": "Page {current} of {total}"
+        "pageStatus": "Page {current} of {total}",
+        "goToLabel": "Go to page",
+        "goToPlaceholder": "Enter 1-{total}",
+        "goToButton": "Go"
       }
     },
     "chat": {
@@ -2122,10 +2125,18 @@
           "overall": "Overall Assessment",
           "strengths": "Strengths",
           "areas": "Areas for growth",
-          "recommended": "Recommended practice"
+          "recommended": "Recommended practice",
+          "keyMoments": "Key Moments",
+          "nextSteps": "Suggested Next Scenarios"
         },
         "close": "Close",
-        "download": "Download report"
+        "download": "Download report",
+        "share": "Share capsule",
+        "sharing": "Creating capsule...",
+        "copyLink": "Copy link",
+        "linkCopied": "Link copied!",
+        "capsuleCreated": "Your shareable capsule is ready!",
+        "capsuleError": "Failed to create capsule. Please try again."
       },
       "pdf": {
         "title": "Simulation Final Report",
