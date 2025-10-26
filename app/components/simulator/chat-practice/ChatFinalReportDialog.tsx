@@ -1,8 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { Award, BarChart3, Brain, AlertTriangle, CheckCircle, TrendingUp, BookOpen, Download, X, Share2, Copy, Check, Sparkles, ArrowRight } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 
 import { Button } from '@/app/components/ui/button';
 import {
@@ -26,6 +27,7 @@ type Snippet = {
 
 type NextScenario = {
   scenarioId: string;
+  npcId?: string;
   title: string;
   reason: string;
 };
@@ -58,6 +60,7 @@ export function ChatFinalReportDialog({
   sessionId,
 }: ChatFinalReportDialogProps) {
   const t = useTranslations('Simulator.chatPractice');
+  const locale = useLocale();
   const [capsule, setCapsule] = useState<Capsule | null>(null);
   const [loadingCapsule, setLoadingCapsule] = useState(false);
   const [capsuleError, setCapsuleError] = useState<string | null>(null);
@@ -292,12 +295,27 @@ export function ChatFinalReportDialog({
                       <h3 className="font-semibold text-indigo-900 dark:text-indigo-100">{t('dialog.sections.nextSteps')}</h3>
                     </div>
                     <div className="space-y-3">
-                      {capsule.suggestedNextScenarios.map((scenario, index) => (
-                        <div key={index} className="rounded-xl border border-indigo-200 bg-white p-4 dark:border-indigo-700/30 dark:bg-indigo-950/30">
-                          <h4 className="mb-1 font-semibold text-indigo-900 dark:text-indigo-100">{scenario.title}</h4>
-                          <p className="text-sm text-indigo-700 dark:text-indigo-300">{scenario.reason}</p>
-                        </div>
-                      ))}
+                      {capsule.suggestedNextScenarios.map((scenario, index) => {
+                        const chatUrl = scenario.npcId 
+                          ? `/${locale}/simulator/chat?scenario=${scenario.scenarioId}&npc=${scenario.npcId}`
+                          : `/${locale}/simulator/chat?scenario=${scenario.scenarioId}`;
+                        
+                        return (
+                          <Link
+                            key={index}
+                            href={chatUrl}
+                            className="block rounded-xl border border-indigo-200 bg-white p-4 transition-all hover:border-indigo-400 hover:shadow-md dark:border-indigo-700/30 dark:bg-indigo-950/30 dark:hover:border-indigo-500"
+                          >
+                            <div className="flex items-start justify-between gap-2">
+                              <div className="flex-1">
+                                <h4 className="mb-1 font-semibold text-indigo-900 dark:text-indigo-100">{scenario.title}</h4>
+                                <p className="text-sm text-indigo-700 dark:text-indigo-300">{scenario.reason}</p>
+                              </div>
+                              <ArrowRight className="mt-1 size-4 flex-shrink-0 text-indigo-500" />
+                            </div>
+                          </Link>
+                        );
+                      })}
                     </div>
                   </div>
                 )}

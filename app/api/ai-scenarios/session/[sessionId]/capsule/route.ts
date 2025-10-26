@@ -13,7 +13,19 @@ import {
   aiScenarioSnippets,
   aiScenarioResponses,
 } from "@/db/schema";
-import { DEFAULT_MODEL } from "@/lib/ai-scenarios/engine";
+import { REPORT_MODEL_NAME } from "@/lib/ai-scenarios/engine";
+
+const AVAILABLE_SCENARIOS = [
+  { id: "party-pressure-girl", npcId: "friend-girl-01", title: "Party Pressure", description: "Resist peer pressure and assertive refusal skills" },
+  { id: "party-pressure-boy", npcId: "friend-boy-01", title: "Party Pressure", description: "Resist ego-based peer pressure and stay confident" },
+  { id: "drunk-consent-girl", npcId: "drunk-girl-01", title: "Tipsy Boundaries", description: "Slow down flirtation from intoxicated person, focus on consent" },
+  { id: "drunk-consent-boy", npcId: "drunk-boy-01", title: "Tipsy Boundaries", description: "Navigate consent with intoxicated acquaintance" },
+  { id: "health-checkup-girl", npcId: "doctor-girl-01", title: "The STI Check", description: "Learn about STI check-up for women" },
+  { id: "health-checkup-boy", npcId: "doctor-boy-01", title: "The STI Check", description: "Learn about STI check-up for men" },
+  { id: "partner-talk-girl", npcId: "partner-girl-01", title: "The Talk", description: "Discuss testing, protection, and boundaries with partner" },
+  { id: "partner-talk-boy", npcId: "partner-boy-01", title: "The Talk", description: "Talk about sexual health with potential partner" },
+  { id: "correcting-misinformation-both", npcId: "friend-both-01", title: "Myth-Busting", description: "Correct dangerous STI myths with evidence" }
+];
 
 function generateShareToken(): string {
   return crypto.randomBytes(32).toString("base64url");
@@ -96,6 +108,10 @@ export async function POST(
       .where(eq(aiScenarioSnippets.sessionId, sessionId))
       .orderBy(asc(aiScenarioSnippets.turnIndex));
 
+    const availableScenariosText = AVAILABLE_SCENARIOS.map(s => 
+      `- ${s.id} (NPC: ${s.npcId}): ${s.title} - ${s.description}`
+    ).join('\n');
+
     const systemPrompt = `You are creating a narrative summary capsule for a completed conversation simulation session.
 
 Session Details:
@@ -112,17 +128,24 @@ Your task: Create a story-like narrative that:
 
 Write in a warm, coaching tone (2-3 paragraphs). Use second person ("you").
 
-Also suggest 3 relevant next scenarios the learner should try, formatted as:
+Also suggest 3 relevant next scenarios the learner should try. IMPORTANT: You MUST choose from these available scenarios:
+
+${availableScenariosText}
+
+Return the response in this exact JSON format:
 {
   "narrativeSummary": "<your narrative here>",
   "suggestedNextScenarios": [
     {
-      "scenarioId": "<scenario-id>",
+      "scenarioId": "<exact scenario-id from list above>",
+      "npcId": "<exact npc-id from list above>",
       "title": "<scenario title>",
       "reason": "<1 sentence why this is a good next step>"
     }
   ]
-}`;
+}
+
+CRITICAL: The scenarioId and npcId must EXACTLY match the values from the available scenarios list above.`;
 
     const snippetSummary = snippetsAfterGen
       .map((s) => `- ${s.content}\n  → ${s.annotation}`)
@@ -139,7 +162,7 @@ Also suggest 3 relevant next scenarios the learner should try, formatted as:
     });
 
     const completion = await client.chat.completions.create({
-      model: DEFAULT_MODEL,
+      model: REPORT_MODEL_NAME,
       temperature: 0.8,
       messages: [
         { role: "system", content: systemPrompt },

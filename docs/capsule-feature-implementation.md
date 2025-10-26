@@ -132,8 +132,10 @@ New translation keys:
 
 ## AI Integration
 
+All AI features use the `REPORT_MODEL_NAME` configuration for consistent, high-quality analysis and generation.
+
 ### Smart Snippets Analysis
-Uses OpenAI API to:
+Uses OpenAI API (REPORT_MODEL_NAME) to:
 - Analyze conversation history
 - Identify impactful player responses
 - Focus on moments showing:
@@ -145,7 +147,7 @@ Uses OpenAI API to:
   - Growth and learning
 
 ### Narrative Synthesis
-Uses OpenAI API to:
+Uses OpenAI API (REPORT_MODEL_NAME) to:
 - Create story-like summaries (2-3 paragraphs)
 - Explain why the scenario mattered
 - Highlight learner responses and growth
@@ -220,6 +222,23 @@ Indexes created for:
 - Session ID queries
 - Expiration checks
 - Turn index ordering
+
+## Environment Variables
+
+### Required
+- **OPENAI_API_KEY**: OpenAI API key for AI generation (required)
+
+### Optional Model Configuration
+- **REPORT_MODEL_NAME**: Model used for capsule generation, snippets, and final reports
+  - Default: `google/gemini-2.5-flash-lite-preview-09-2025`
+  - Recommended: `gpt-4o-mini` or `gpt-4o` for better analysis quality
+  - Both snippets and capsule generation use this model for consistency
+
+**Example `.env.local`:**
+```env
+OPENAI_API_KEY=sk-proj-xxxxx
+REPORT_MODEL_NAME=gpt-4o-mini
+```
 
 ## Success Metrics (as per PRD)
 

@@ -6,7 +6,7 @@ export const runtime = "nodejs";
 
 import { db } from "@/app/db";
 import { aiScenarioSessions, aiScenarioTurns, aiScenarioSnippets, aiScenarioResponses } from "@/db/schema";
-import { DEFAULT_MODEL } from "@/lib/ai-scenarios/engine";
+import { REPORT_MODEL_NAME } from "@/lib/ai-scenarios/engine";
 
 type SnippetData = {
   turnIndex: number;
@@ -112,7 +112,7 @@ ${score ? `\nRisk Score: ${score.riskScore}/100` : ""}`;
     });
 
     const completion = await client.chat.completions.create({
-      model: DEFAULT_MODEL,
+      model: REPORT_MODEL_NAME,
       temperature: 0.7,
       messages: [
         { role: "system", content: systemPrompt },
